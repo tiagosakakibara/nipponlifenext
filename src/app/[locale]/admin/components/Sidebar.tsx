@@ -26,7 +26,7 @@ const menuItems = [
     { name: 'Posts', key: 'admin.menu.posts', path: '/admin/posts', icon: FileText },
     { name: 'Posts da Comunidade', key: 'admin.menu.communityPosts', path: '/admin/comunidade/posts', icon: LayoutDashboard },
     { name: 'Reels da Comunidade', key: 'admin.menu.communityReels', path: '/admin/comunidade/reels', icon: Film },
-    { name: 'Guias de Usuários', key: 'admin.menu.userGuides', path: '/admin/guias', icon: BookOpen },
+    { name: 'Guias de Usuários', key: 'admin.menu.userGuides', path: '/admin/guides', icon: BookOpen },
     { name: 'Usuários Registrados', key: 'admin.menu.users', path: '/admin/users', icon: Users },
     { name: 'Business', key: 'admin.menu.business', path: '/admin/business', icon: Building2 },
     { name: 'Jobs', key: 'admin.menu.jobs', path: '/admin/jobs', icon: Briefcase },
