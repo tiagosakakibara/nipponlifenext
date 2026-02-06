@@ -103,11 +103,13 @@ export const storageService = {
         // Ensure path starts with / if it's relative
         const cleanPath = path.startsWith('/') ? path : `/${path}`;
 
-        // Use Supabase URL structure or fallback to site URL if needed, 
-        // but for now, we assume simple relative paths are likely legacy or local assets.
-        // If it's a Supabase path, it usually comes full. 
-        // If we need to prepend Site URL:
-        return `${this.isProduction() ? '' : 'http://localhost:3000'}${cleanPath}`;
+        // Use Supabase URL structure or fallback to site URL if needed.
+        // On server: use env var. On client: result depends on isProduction check or fallback.
+        const baseUrl = typeof window === 'undefined'
+            ? (process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000')
+            : (this.isProduction() ? '' : 'http://localhost:3000');
+
+        return `${baseUrl}${cleanPath}`;
     },
 
     /**
