@@ -32,13 +32,52 @@ export default function AdminGalleryPage() {
     const fetchAlbums = async () => {
         try {
             setLoading(true);
-            const { data, error } = await supabase
-                .from('gallery_albums')
+            // 1. Fetch albums from stats view (contains photo_count)
+            const { data: albumsData, error: albumsError } = await supabase
+                .from('gallery_album_stats')
                 .select('*')
                 .order('created_at', { ascending: false });
 
-            if (error) throw error;
-            setAlbums(data || []);
+            if (albumsError) throw albumsError;
+
+            if (!albumsData || albumsData.length === 0) {
+                setAlbums([]);
+                return;
+            }
+
+            // 2. Extract cover photo IDs
+            const coverIds = albumsData
+                .map(a => a.cover_photo_id)
+                .filter(id => id !== null) as string[];
+
+            // 3. Fetch cover images
+            let photoMap: Record<string, string> = {};
+            if (coverIds.length > 0) {
+                const { data: photosData } = await supabase
+                    .from('gallery_photos')
+                    .select('id, image_url')
+                    .in('id', coverIds);
+
+                if (photosData) {
+                    photosData.forEach(p => {
+                        photoMap[p.id] = p.image_url;
+                    });
+                }
+            }
+
+            // 4. Merge data
+            const formattedAlbums: GalleryAlbum[] = albumsData.map(a => ({
+                id: a.id,
+                title: a.title,
+                description: a.description,
+                cover_image_url: a.cover_photo_id ? photoMap[a.cover_photo_id] : null,
+                view_count: a.view_count || 0,
+                photo_count: a.photo_count || 0,
+                created_at: a.created_at,
+                status: a.status
+            }));
+
+            setAlbums(formattedAlbums);
         } catch (err) {
             console.error('Error fetching albums:', err);
             setError('Erro ao carregar álbuns');
@@ -196,11 +235,10 @@ export default function AdminGalleryPage() {
                                         <Eye className="w-4 h-4" />
                                         {album.view_count || 0}
                                     </div>
-                                    <div className={`px-2 py-0.5 rounded-full font-bold ${
-                                        album.status === 'published'
+                                    <div className={`px-2 py-0.5 rounded-full font-bold ${album.status === 'published'
                                             ? 'bg-emerald-500/10 text-emerald-500'
                                             : 'bg-secondary/10 text-secondary'
-                                    }`}>
+                                        }`}>
                                         {album.status === 'published' ? 'Publicado' : 'Rascunho'}
                                     </div>
                                 </div>
