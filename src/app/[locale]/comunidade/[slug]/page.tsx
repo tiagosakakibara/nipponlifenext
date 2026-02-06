@@ -12,6 +12,9 @@ import { FloatingPostActions } from '../components/FloatingPostActions';
 import { ArrowLeft, Calendar, User, Eye, TrendingUp, ThumbsUp, Share2 } from 'lucide-react';
 import { generateSEOMetadata } from '@/lib/metadata';
 
+// ISR: Revalidate every 2 minutes for community posts
+export const revalidate = 120;
+
 type Props = {
     params: Promise<{ locale: string; slug: string }>;
 };

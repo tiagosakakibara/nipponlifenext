@@ -14,6 +14,9 @@ import { ArticleTracking } from '@/components/ArticleTracking';
 import { generateSEOMetadata, generateArticleSchema, generateBreadcrumbSchema } from '@/lib/metadata';
 import { StructuredData } from '@/components/StructuredData';
 
+// ISR: Revalidate every 3 minutes for news pages
+export const revalidate = 180;
+
 type Props = {
     params: Promise<{ locale: string; slug: string }>;
 };

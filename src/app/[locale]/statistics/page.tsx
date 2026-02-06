@@ -1,14 +1,19 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import dynamic from 'next/dynamic';
 import { useTranslations, useLocale } from 'next-intl';
 import { Link } from '@/i18n/routing';
 import { adminStatisticsService, CompleteStatisticsData } from '@/lib/adminStatisticsService';
 import { Users, Globe, Coins, ArrowRight, TrendingUp, RefreshCw, Home, Utensils, Bus, Wallet, MessageSquare } from 'lucide-react';
-import JapanChoroplethMap from '@/components/JapanChoroplethMap';
 import { TourismVisualCard } from '@/components/TourismVisualCard';
 import { communityCostOfLivingService } from '@/lib/communityCostOfLivingService';
 import { getPrefectureLabel } from '@/constants/prefectures';
+
+const JapanChoroplethMap = dynamic(() => import('@/components/JapanChoroplethMap'), {
+    loading: () => <div className="flex items-center justify-center h-96"><RefreshCw className="w-8 h-8 animate-spin text-link" /></div>,
+    ssr: false
+});
 
 const COUNTRY_CODES: Record<string, string> = {
     "China": "cn",

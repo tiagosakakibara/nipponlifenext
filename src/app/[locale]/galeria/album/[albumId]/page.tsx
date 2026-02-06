@@ -1,13 +1,18 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import dynamic from 'next/dynamic';
 import { useParams, useRouter } from 'next/navigation';
 import { useTranslations, useLocale } from 'next-intl';
-import { PhotoGallery } from '@/components/gallery/PhotoGallery';
 import { galleryService } from '@/lib/galleryService';
 import { GalleryPhoto, GalleryAlbumWithStats } from '@/types/gallery';
 import { Loader2, ArrowLeft, Calendar, Eye, Camera, User } from 'lucide-react';
 import { Link } from '@/i18n/routing';
+
+const PhotoGallery = dynamic(() => import('@/components/gallery/PhotoGallery').then(mod => ({ default: mod.PhotoGallery })), {
+    loading: () => <div className="flex items-center justify-center h-96"><Loader2 className="w-8 h-8 animate-spin text-link" /></div>,
+    ssr: false
+});
 
 export default function AlbumViewPage() {
     const params = useParams();

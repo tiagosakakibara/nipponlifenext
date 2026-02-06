@@ -9,6 +9,9 @@ import { EventSidebar } from './components/EventSidebar';
 import { generateSEOMetadata, generateEventSchema, generateBreadcrumbSchema } from '@/lib/metadata';
 import { StructuredData } from '@/components/StructuredData';
 
+// ISR: Revalidate every 5 minutes for event pages
+export const revalidate = 300;
+
 interface EventPageProps {
     params: Promise<{
         locale: string;

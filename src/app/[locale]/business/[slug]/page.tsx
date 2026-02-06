@@ -12,6 +12,9 @@ import { MapPin, Globe, Phone, Instagram, Clock, ArrowLeft, Eye, ExternalLink } 
 import { generateSEOMetadata, generateBusinessSchema, generateBreadcrumbSchema } from '@/lib/metadata';
 import { StructuredData } from '@/components/StructuredData';
 
+// ISR: Revalidate every 10 minutes for business pages
+export const revalidate = 600;
+
 type Props = {
     params: Promise<{ locale: string; slug: string }>;
 };

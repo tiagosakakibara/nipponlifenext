@@ -3,6 +3,7 @@
 import { useAdminDashboard } from './hooks/useAdminDashboard';
 import { useRouter } from '@/i18n/routing';
 import { useTranslations, useLocale } from 'next-intl';
+import dynamic from 'next/dynamic';
 import {
     FileText,
     Calendar,
@@ -17,9 +18,13 @@ import {
     Eye,
     Camera
 } from 'lucide-react';
-import { ActivityChart } from './components/DashboardCharts';
 import { Link } from '@/i18n/routing';
 import { useEffect, useState } from 'react';
+
+const ActivityChart = dynamic(() => import('./components/DashboardCharts').then(mod => ({ default: mod.ActivityChart })), {
+    loading: () => <div className="flex items-center justify-center h-64"><Loader2 className="w-6 h-6 animate-spin text-link" /></div>,
+    ssr: false
+});
 
 export default function AdminDashboardPage() {
     const { kpis, charts, lists, loading, error } = useAdminDashboard();
