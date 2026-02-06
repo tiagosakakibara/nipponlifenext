@@ -13,9 +13,14 @@ export function ReelsRow() {
 
     useEffect(() => {
         const loadReels = async () => {
-            const data = await fetchActiveReels(5);
-            setReels(data);
-            setLoading(false);
+            try {
+                const data = await fetchActiveReels(5);
+                setReels(data);
+            } catch (error) {
+                console.error('Failed to load reels:', error);
+            } finally {
+                setLoading(false);
+            }
         };
         loadReels();
     }, []);
