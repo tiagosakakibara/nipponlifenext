@@ -39,6 +39,16 @@ const nextConfig: NextConfig = {
         protocol: 'https' as const,
         hostname: 'platform-lookaside.fbsbx.com',
         pathname: '/**',
+      },
+      {
+        protocol: 'http' as const,
+        hostname: 'localhost',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https' as const,
+        hostname: 'nippon-life.com',
+        pathname: '/**',
       }
     ],
   },
