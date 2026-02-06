@@ -1,0 +1,28 @@
+
+> nipponlife-next@0.1.0 build
+> next build
+
+⚠ turbopack.root should be absolute, using: d:\Antigravity\nipponlife-next
+▲ Next.js 16.1.6 (Turbopack)
+- Environments: .env.local
+
+⚠ The "middleware" file convention is deprecated. Please use "proxy" instead. Learn more: https://nextjs.org/docs/messages/middleware-to-proxy
+  Creating an optimized production build ...
+✓ Compiled successfully in 4.7s
+  Running TypeScript ...
+Failed to compile.
+
+./next.config.ts:40:29
+Type error: Argument of type '{ turbopack: { root: string; }; images: { remotePatterns: ({ protocol: string; hostname: string; pathname: string; } | { protocol: string; hostname: string; pathname?: undefined; })[]; }; }' is not assignable to parameter of type 'NextConfig'.
+  The types of 'images.remotePatterns' are incompatible between these types.
+    Type '({ protocol: string; hostname: string; pathname: string; } | { protocol: string; hostname: string; pathname?: undefined; })[]' is not assignable to type '(URL | RemotePattern)[]'.
+      Type '{ protocol: string; hostname: string; pathname: string; } | { protocol: string; hostname: string; pathname?: undefined; }' is not assignable to type 'URL | RemotePattern'.
+        Type '{ protocol: string; hostname: string; pathname: string; }' is not assignable to type 'URL | RemotePattern'.
+          Type '{ protocol: string; hostname: string; pathname: string; }' is missing the following properties from type 'URL': hash, host, href, origin, and 6 more.
+
+[0m [90m 38 |[39m }[33m;[39m
+ [90m 39 |[39m
+[31m[1m>[22m[39m[90m 40 |[39m [36mexport[39m [36mdefault[39m withNextIntl(nextConfig)[33m;[39m
+ [90m    |[39m                             [31m[1m^[22m[39m
+ [90m 41 |[39m[0m
+Next.js build worker exited with code: 1 and signal: null

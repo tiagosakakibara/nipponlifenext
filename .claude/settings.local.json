@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(supabase db push:*)",
+      "Bash(node scripts/apply-migration.mjs:*)"
+    ]
+  },
+  "enableAllProjectMcpServers": true
+}
