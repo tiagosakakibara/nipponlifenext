@@ -1,6 +1,7 @@
 # NipponLife Next.js Migration Status
 
 ## Phase 1: Core & Home Page (Completed)
+
 - [x] **Project Setup**: Next.js 16, Tailwind v4, Supabase SSR, Next-intl.
 - [x] **Layout**: Root Layout with i18n, Fonts, and Theme Provider.
 - [x] **Components Ported**:
@@ -16,6 +17,7 @@
 - [x] **Translations**: Copied from `src/locales` to `messages/*.json`.
 
 ## Phase 2: Remaining Home Page Components (Completed)
+
 - [x] **HeroSection**: Ported (using `storageService`, `next-intl`, and new layout).
 - [x] **Community Cards**: `CommunityCard`, `CommunityQuestionsCard` migrated.
 - [x] **Statistics Widgets**: `StatisticsCard`, `JapanChoroplethMap` migrated.
@@ -26,6 +28,7 @@
 - [x] **Build Fix**: Resolved Tailwind v4 / Turbopack root conflict and fixed translation keys.
 
 ## Phase 3: Other Core Pages
+
 - [x] **News Page**: `/noticias` (List & Detail migrated)
 - [x] **Jobs Page**: `/jobs` (List & Detail migrated)
 - [x] **Events Page**: `/eventos` (List & Detail migrated)
@@ -36,10 +39,10 @@
 - [x] Admin Layout & Navigation
 - [x] Admin Dashboard (Home)
 - [x] Admin Posts (News)
-    - [x] List View
-    - [x] Create Post
-    - [x] Edit Post
-    - [x] Rich Text Editor Integration
+  - [x] List View
+  - [x] Create Post
+  - [x] Edit Post
+  - [x] Rich Text Editor Integration
 - [x] Admin Community Posts
 - [x] Admin Businesses
 - [x] Admin Jobs
@@ -50,6 +53,7 @@
 - [x] Admin Settings
 
 ## Notes
+
 - `src/features` was temporarily removed to unblock the build. Re-add features incrementally.
 - `next-themes` is used for Dark Mode.
 - `next-intl` handles routing and translations.

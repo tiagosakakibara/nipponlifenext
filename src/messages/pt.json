@@ -1194,6 +1194,10 @@
             "cameraPlaceholder": "Ex: Sony A7III",
             "lens": "Lente",
             "lensPlaceholder": "Ex: 35mm f/1.4"
+        },
+        "seo": {
+            "title": "Galeria de Fotos do Japão",
+            "description": "Explore nossa galeria com álbuns fotográficos da cultura japonesa, paisagens e vida cotidiana no Japão."
         }
     },
     "categories": {
@@ -1289,6 +1293,10 @@
             "title": "Contribua com informações reais",
             "body": "Ajude a tornar o portal mais preciso. Sua colaboração é anônima e essencial para a comunidade estrangeira.",
             "button": "Participar agora"
+        },
+        "seo": {
+            "title": "Estatísticas do Japão",
+            "description": "Dados e estatísticas sobre população estrangeira, salários, turismo e custo de vida no Japão."
         }
     },
     "countries": {
@@ -1308,18 +1316,6 @@
     "seo": {
         "siteTitle": "NipponLife - Portal da Cultura Japonesa",
         "siteDescription": "Seu portal completo sobre o Japão: notícias, empregos, eventos, negócios e comunidade brasileira no Japão."
-    },
-    "gallery": {
-        "seo": {
-            "title": "Galeria de Fotos do Japão",
-            "description": "Explore nossa galeria com álbuns fotográficos da cultura japonesa, paisagens e vida cotidiana no Japão."
-        }
-    },
-    "statistics": {
-        "seo": {
-            "title": "Estatísticas do Japão",
-            "description": "Dados e estatísticas sobre população estrangeira, salários, turismo e custo de vida no Japão."
-        }
     },
     "breadcrumb": {
         "home": "Início"

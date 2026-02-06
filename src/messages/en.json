@@ -1161,6 +1161,10 @@
             "cameraPlaceholder": "e.g. Sony A7III",
             "lens": "Lens",
             "lensPlaceholder": "e.g. 35mm f/1.4"
+        },
+        "seo": {
+            "title": "Japan Photo Gallery",
+            "description": "Explore our gallery with photo albums of Japanese culture, landscapes and everyday life in Japan."
         }
     },
     "categories": {
@@ -1256,6 +1260,10 @@
             "title": "Contribute real information",
             "body": "Help make the portal more accurate. Your contribution is anonymous and essential to the foreign community.",
             "button": "Participate now"
+        },
+        "seo": {
+            "title": "Japan Statistics",
+            "description": "Data and statistics about foreign population, salaries, tourism and cost of living in Japan."
         }
     },
     "countries": {
@@ -1275,18 +1283,6 @@
     "seo": {
         "siteTitle": "NipponLife - Japanese Culture Portal",
         "siteDescription": "Your complete portal about Japan: news, jobs, events, businesses and Brazilian community in Japan."
-    },
-    "gallery": {
-        "seo": {
-            "title": "Japan Photo Gallery",
-            "description": "Explore our gallery with photo albums of Japanese culture, landscapes and everyday life in Japan."
-        }
-    },
-    "statistics": {
-        "seo": {
-            "title": "Japan Statistics",
-            "description": "Data and statistics about foreign population, salaries, tourism and cost of living in Japan."
-        }
     },
     "breadcrumb": {
         "home": "Home"
