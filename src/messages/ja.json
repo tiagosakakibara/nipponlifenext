@@ -107,6 +107,10 @@
             "featuredSubtitle": "今日の主なニュース",
             "businessGuideBadge": "ビジネスガイド"
         },
+        "seo": {
+            "title": "ホーム - 日本文化ポータル",
+            "description": "NipponLifeで日本を発見：最新ニュース、求人情報、文化イベント、ビジネスガイド、アクティブコミュニティ。"
+        },
         "stats": {
             "members": "メンバー",
             "businesses": "ビジネス",
@@ -1257,12 +1261,6 @@
     "seo": {
         "siteTitle": "NipponLife - 日本文化ポータル",
         "siteDescription": "日本に関する完全なポータル：ニュース、求人、イベント、ビジネス、ブラジルコミュニティ。"
-    },
-    "home": {
-        "seo": {
-            "title": "ホーム - 日本文化ポータル",
-            "description": "NipponLifeで日本を発見：最新ニュース、求人情報、文化イベント、ビジネスガイド、アクティブコミュニティ。"
-        }
     },
     "gallery": {
         "seo": {

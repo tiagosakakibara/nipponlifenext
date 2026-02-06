@@ -107,6 +107,10 @@
             "featuredSubtitle": "Today's top stories",
             "businessGuideBadge": "Business Guide"
         },
+        "seo": {
+            "title": "Home - Japanese Culture Portal",
+            "description": "Discover Japan with NipponLife: updated news, job opportunities, cultural events, business guide and active community."
+        },
         "stats": {
             "members": "Members",
             "businesses": "Businesses",
@@ -1271,12 +1275,6 @@
     "seo": {
         "siteTitle": "NipponLife - Japanese Culture Portal",
         "siteDescription": "Your complete portal about Japan: news, jobs, events, businesses and Brazilian community in Japan."
-    },
-    "home": {
-        "seo": {
-            "title": "Home - Japanese Culture Portal",
-            "description": "Discover Japan with NipponLife: updated news, job opportunities, cultural events, business guide and active community."
-        }
     },
     "gallery": {
         "seo": {
