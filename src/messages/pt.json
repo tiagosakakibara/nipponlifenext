@@ -164,6 +164,10 @@
             "updated": "Atualizado: {{year}}",
             "source": "Fonte: Governo & Comunidade",
             "view": "Ver estatísticas"
+        },
+        "seo": {
+            "title": "Home - Portal da Cultura Japonesa",
+            "description": "Descubra o Japão com NipponLife: notícias atualizadas, oportunidades de emprego, eventos culturais, guia de negócios e comunidade ativa."
         }
     },
     "news": {
@@ -1304,12 +1308,6 @@
     "seo": {
         "siteTitle": "NipponLife - Portal da Cultura Japonesa",
         "siteDescription": "Seu portal completo sobre o Japão: notícias, empregos, eventos, negócios e comunidade brasileira no Japão."
-    },
-    "home": {
-        "seo": {
-            "title": "Home - Portal da Cultura Japonesa",
-            "description": "Descubra o Japão com NipponLife: notícias atualizadas, oportunidades de emprego, eventos culturais, guia de negócios e comunidade ativa."
-        }
     },
     "gallery": {
         "seo": {
