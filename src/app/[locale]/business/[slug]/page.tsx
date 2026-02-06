@@ -72,7 +72,7 @@ export default async function BusinessProfilePage({ params }: Props) {
         address: address || '',
         city: city || '',
         prefecture: prefecture || '',
-        phone: b.whatsapp,
+        phone: b.whatsapp || undefined,
         website: b.website_url || pageUrl,
     });
 

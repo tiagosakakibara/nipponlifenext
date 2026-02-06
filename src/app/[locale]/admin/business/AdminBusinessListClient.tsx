@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react';
 import { Plus, Search, Edit, Trash2, MapPin, Tag, Loader2, ChevronRight, Star } from 'lucide-react';
 import { Link, useRouter } from '@/i18n/routing';
 import { useAdminBusiness } from './hooks/useAdminBusiness';
-import { useTranslation } from 'react-i18next'; // Still using this or next-intl? 
 import { useTranslations } from 'next-intl';
 
 export default function AdminBusinessListClient() {
@@ -143,8 +142,8 @@ export default function AdminBusinessListClient() {
                                         </td>
                                         <td className="px-6 py-4 text-center">
                                             <span className={`inline-flex items-center px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest border transition-all ${business.status === 'published'
-                                                    ? 'bg-emerald-500/10 text-emerald-600 border-emerald-500/20 shadow-[0_0_15px_-5px_#10b98155]'
-                                                    : 'bg-amber-500/10 text-amber-600 border-amber-500/20'
+                                                ? 'bg-emerald-500/10 text-emerald-600 border-emerald-500/20 shadow-[0_0_15px_-5px_#10b98155]'
+                                                : 'bg-amber-500/10 text-amber-600 border-amber-500/20'
                                                 }`}>
                                                 <span className={`w-1.5 h-1.5 rounded-full mr-2 ${business.status === 'published' ? 'bg-emerald-500 animate-pulse' : 'bg-amber-500'
                                                     }`}></span>
@@ -190,8 +189,8 @@ export default function AdminBusinessListClient() {
                                     key={i}
                                     onClick={() => setPage(i + 1)}
                                     className={`w-8 h-8 rounded-lg text-[10px] font-black transition-all ${page === i + 1
-                                            ? 'bg-[#5593C3] text-white shadow-lg'
-                                            : 'text-secondary hover:bg-app'
+                                        ? 'bg-[#5593C3] text-white shadow-lg'
+                                        : 'text-secondary hover:bg-app'
                                         }`}
                                 >
                                     {i + 1}

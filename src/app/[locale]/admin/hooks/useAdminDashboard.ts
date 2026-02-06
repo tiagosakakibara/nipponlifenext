@@ -102,7 +102,7 @@ export function useAdminDashboard(): UseAdminDashboardResult {
             if (result.status === 'fulfilled') {
                 return result.value.count || 0;
             }
-            console.warn(`Query ${index} failed:`, result.reason);
+            // Silent fail for dashboard robustness
             return 0;
         };
 
@@ -112,11 +112,13 @@ export function useAdminDashboard(): UseAdminDashboardResult {
             if (result.status === 'fulfilled') {
                 return result.value.data;
             }
-            console.warn(`Query ${index} failed:`, result.reason);
             return null;
         };
 
-        const sumViews = (data: any[] | null) => data?.reduce((acc, curr) => acc + (curr.view_count || 0), 0) || 0;
+        const sumViews = (data: any[] | null) => {
+            if (!data || !Array.isArray(data)) return 0;
+            return data.reduce((acc, curr) => acc + (curr.view_count || 0), 0);
+        };
 
         return {
             totalPosts: getCount(0),
@@ -262,12 +264,14 @@ export function useAdminDashboard(): UseAdminDashboardResult {
         const recentAnswers = results[4].status === 'fulfilled' ? results[4].value.data : null;
         const recentPostComments = results[5].status === 'fulfilled' ? results[5].value.data : null;
 
-        // Log any failures
-        results.forEach((result, index) => {
-            if (result.status === 'rejected') {
-                console.warn(`List query ${index} failed:`, result.reason);
-            }
-        });
+        // Log any failures only in development
+        if (process.env.NODE_ENV === 'development') {
+            results.forEach((result, index) => {
+                if (result.status === 'rejected') {
+                    console.warn(`List query ${index} failed:`, result.reason);
+                }
+            });
+        }
 
         const activities: any[] = [
             ...(recentAnswers || []).map(a => ({

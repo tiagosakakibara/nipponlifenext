@@ -3,7 +3,7 @@
 import { MoreHorizontal, Heart, MessageCircle, Share2, Eye } from 'lucide-react';
 import { useRouter } from '@/i18n/routing';
 import { useState, useEffect } from 'react';
-import { createClient } from '../lib/supabaseClient';
+import { createClient } from '@/utils/supabase/client';
 // import { useAuth } from '../../../contexts/AuthContext'; // Auth context not yet available in next app, we will mock or implement later
 import { storageService } from '../lib/storageService';
 import { useTranslations } from 'next-intl';

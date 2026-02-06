@@ -1,0 +1,26 @@
+
+> nipponlife-next@0.1.0 build
+> next build
+
+⚠ turbopack.root should be absolute, using: D:\Antigravity\nipponlife-next
+▲ Next.js 16.1.6 (Turbopack)
+- Environments: .env.local
+
+⚠ The "middleware" file convention is deprecated. Please use "proxy" instead. Learn more: https://nextjs.org/docs/messages/middleware-to-proxy
+  Creating an optimized production build ...
+✓ Compiled successfully in 3.7s
+  Running TypeScript ...
+Failed to compile.
+
+./src/app/[locale]/eventos/[slug]/page.tsx:85:9
+Type error: Type 'string | undefined' is not assignable to type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+
+[0m [90m 83 |[39m         description[33m:[39m description [33m||[39m [32m''[39m[33m,[39m
+ [90m 84 |[39m         url[33m:[39m [32m`${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/${locale}/eventos/${slug}`[39m[33m,[39m
+[31m[1m>[22m[39m[90m 85 |[39m         image[33m:[39m event[33m.[39mcover_image_url [33m||[39m undefined[33m,[39m
+ [90m    |[39m         [31m[1m^[22m[39m
+ [90m 86 |[39m         startDate[33m:[39m event[33m.[39mstarts_at[33m,[39m
+ [90m 87 |[39m         endDate[33m:[39m event[33m.[39mends_at[33m,[39m
+ [90m 88 |[39m         location[33m:[39m locationName[33m,[39m[0m
+Next.js build worker exited with code: 1 and signal: null

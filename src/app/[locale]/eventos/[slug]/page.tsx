@@ -82,10 +82,10 @@ export default async function EventDetailPage({ params }: EventPageProps) {
         name: title,
         description: description || '',
         url: `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/${locale}/eventos/${slug}`,
-        image: event.cover_image_url,
+        image: event.cover_image_url || '',
         startDate: event.starts_at,
-        endDate: event.ends_at,
-        location: locationName,
+        endDate: event.ends_at || undefined,
+        location: locationName || '',
     });
 
     const breadcrumbSchema = generateBreadcrumbSchema([

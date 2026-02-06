@@ -53,7 +53,7 @@ export const MediaUploader: React.FC<MediaUploaderProps> = ({
             setError(null);
 
             // Use unified storage service
-            const publicUrl = await storageService.uploadFile(file, folderPrefix);
+            const publicUrl = await storageService.uploadFile(file, folderPrefix || 'media');
 
             // 3. Save metadata to public.media table
             const { data: { user } } = await supabase.auth.getUser();
@@ -61,7 +61,7 @@ export const MediaUploader: React.FC<MediaUploaderProps> = ({
             const { error: dbError } = await supabase
                 .from('media')
                 .insert({
-                    bucket: 'server_local',
+                    bucket: 'media',
                     path: publicUrl, // or relative path if preferred
                     public_url: publicUrl,
                     mime_type: file.type,

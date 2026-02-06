@@ -26,17 +26,7 @@ export const storageService = {
      * @param albumId - Optional album ID for organizing gallery photos by album
      */
     async uploadFile(file: File, folder: StorageFolder, userId?: string, albumId?: string): Promise<string> {
-        const isProd = this.isProduction();
-
-        // You can force PHP upload handler here for testing if the API is online
-        // const useLocalAPI = true; 
-        const useLocalAPI = isProd;
-
-        if (useLocalAPI) {
-            return this.uploadToLocalAPI(file, folder, userId, albumId);
-        } else {
-            return this.uploadToSupabase(file, folder);
-        }
+        return this.uploadToSupabase(file, folder);
     },
 
     /**
@@ -106,28 +96,18 @@ export const storageService = {
      */
     getFileUrl(path: string | null | undefined): string {
         if (!path) return '';
-
-        // Handle absolute URLs - keep .com URLs as they are (DNS is configured for .com only)
-        // Convert any .net URLs to .com since .net doesn't have DNS configured
-        let targetPath = path;
-        if (targetPath.startsWith('https://nippon-life.net/uploads')) {
-            targetPath = targetPath.replace('nippon-life.net', 'nippon-life.com');
-        }
-
-        if (targetPath.startsWith('http')) return targetPath;
-        if (targetPath.startsWith('data:')) return targetPath; // Base64
-        if (targetPath.startsWith('blob:')) return targetPath; // Object URL
-
-        // For relative paths, we need to know where they are hosted
-        const isProd = this.isProduction();
-
-        // Production base URL (ColorfulBox server) - use .com as it has DNS configured
-        const baseUrl = isProd ? '' : 'https://nippon-life.com';
+        if (path.startsWith('http')) return path;
+        if (path.startsWith('data:')) return path;
+        if (path.startsWith('blob:')) return path;
 
         // Ensure path starts with / if it's relative
-        const cleanPath = targetPath.startsWith('/') ? targetPath : `/${targetPath}`;
+        const cleanPath = path.startsWith('/') ? path : `/${path}`;
 
-        return `${baseUrl}${cleanPath}`;
+        // Use Supabase URL structure or fallback to site URL if needed, 
+        // but for now, we assume simple relative paths are likely legacy or local assets.
+        // If it's a Supabase path, it usually comes full. 
+        // If we need to prepend Site URL:
+        return `${this.isProduction() ? '' : 'http://localhost:3000'}${cleanPath}`;
     },
 
     /**
@@ -140,19 +120,7 @@ export const storageService = {
     async deleteFile(path: string | null | undefined): Promise<boolean> {
         if (!path) return true;
 
-        const isProd = this.isProduction();
-        const useLocalAPI = isProd;
-
-        // If it's a full URL, try to extract the relative path
-        let relativePath = path;
-        if (path.includes('/uploads/')) {
-            relativePath = 'uploads/' + path.split('/uploads/')[1];
-        }
-
-        if (useLocalAPI && relativePath.startsWith('uploads/')) {
-            return this.deleteFromLocalAPI(relativePath);
-        } else if (path.includes('supabase.co')) {
-            // It's a Supabase URL, try to delete from Supabase storage
+        if (path.includes('supabase.co')) {
             return this.deleteFromSupabase(path);
         }
 
