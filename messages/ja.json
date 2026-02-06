@@ -1,0 +1,1282 @@
+{
+    "nav": {
+        "home": "ホーム",
+        "news": "ニュース",
+        "jobs": "求人",
+        "events": "イベント",
+        "community": "コミュニティ",
+        "business": "ビジネス",
+        "guides": "ガイド",
+        "guide": "ガイド",
+        "backToGuide": "ガイドに戻る"
+    },
+    "auth": {
+        "login": "ログイン",
+        "register": "登録",
+        "logout": "ログアウト",
+        "myProfile": "マイプロフィール",
+        "myAccount": "マイアカウント",
+        "loginPage": {
+            "title": "アカウントにログイン",
+            "subtitle": "コミュニティに参加するためにログインしてください",
+            "emailLabel": "メールアドレス",
+            "emailPlaceholder": "example@email.com",
+            "passwordLabel": "パスワード",
+            "passwordPlaceholder": "••••••••",
+            "loginButton": "ログイン",
+            "loggingIn": "ログイン中...",
+            "socialLoginPrompt": "または以下で続ける",
+            "noAccount": "アカウントをお持ちでないですか？",
+            "createAccount": "アカウントを作成",
+            "errors": {
+                "fillFields": "すべての項目を入力してください。",
+                "invalidLogin": "メールアドレスまたはパスワードが正しくありません。",
+                "emailDisabled": "メールログインが無効になっています。設定を確認してください。",
+                "emailNotConfirmed": "メールアドレスが確認されていません。受信トレイを確認してください。",
+                "unexpected": "予期しないエラーが発生しました。もう一度お試しください。",
+                "socialAuth": "ソーシャルログインの開始に失敗しました。"
+            }
+        },
+        "registerPage": {
+            "title": "アカウント作成",
+            "subtitle": "NipponLifeコミュニティに参加しましょう",
+            "emailLabel": "メールアドレス",
+            "emailPlaceholder": "example@email.com",
+            "passwordLabel": "パスワード",
+            "passwordPlaceholder": "6文字以上",
+            "confirmPasswordLabel": "パスワードの確認",
+            "confirmPasswordPlaceholder": "もう一度入力してください",
+            "registerButton": "アカウントを作成",
+            "registering": "作成中...",
+            "alreadyHaveAccount": "既にアカウントをお持ちですか？",
+            "loginLink": "ログイン",
+            "successTitle": "アカウントが作成されました！",
+            "successSubtitle": "コミュニティへリダイレクトしています...",
+            "errors": {
+                "fillFields": "すべての項目を入力してください。",
+                "passwordsDontMatch": "パスワードが一致しません。",
+                "passwordTooShort": "パスワードは6文字以上である必要があります。",
+                "emailTaken": "このメールアドレスは既に登録されています。",
+                "unexpected": "予期しないエラーが発生しました。もう一度お試しください。"
+            }
+        }
+    },
+    "common": {
+        "search": "検索",
+        "searchPlaceholder": "ニュース、求人、イベントを検索...",
+        "all": "すべて",
+        "readMore": "続きを読む",
+        "loading": "読み込み中...",
+        "error": "エラー",
+        "success": "成功",
+        "save": "保存",
+        "cancel": "キャンセル",
+        "delete": "削除",
+        "edit": "編集",
+        "add": "追加",
+        "back": "戻る",
+        "next": "次へ",
+        "previous": "前へ",
+        "viewAll": "すべて見る",
+        "viewDetails": "詳細を見る",
+        "noResults": "結果が見つかりませんでした",
+        "views": "回視聴",
+        "reviews": "件のレビュー",
+        "guide": "ガイド",
+        "share": "共有",
+        "shareX": "Xで共有",
+        "shareFB": "Facebookで共有",
+        "copyLink": "リンクをコピー",
+        "copied": "リンクをコピーしました！",
+        "copy": "コピー",
+        "confirmDelete": "本当に削除しますか？",
+        "saved": "保存しました！",
+        "deleted": "削除しました！",
+        "prefecture": "都道府県",
+        "city": "市区町村",
+        "select": "選択...",
+        "optional": "任意",
+        "submitting": "送信中..."
+    },
+    "home": {
+        "hero": {
+            "title": "NipponLifeへようこそ",
+            "subtitle": "日本での生活のための完全なポータル",
+            "cta": "探索する",
+            "featuredTitle": "注目のニュース",
+            "featuredSubtitle": "今日の主なニュース",
+            "businessGuideBadge": "ビジネスガイド"
+        },
+        "stats": {
+            "members": "メンバー",
+            "businesses": "ビジネス",
+            "posts": "投稿",
+            "events": "イベント",
+            "jobs": "求人"
+        },
+        "sections": {
+            "latestNews": "最新ニュース",
+            "featuredJobs": "求人情報",
+            "upcomingEvents": "今後のイベント",
+            "businessGuide": "ビジネスガイド",
+            "communities": "コミュニティ",
+            "statistics": "統計",
+            "gallery": "イベントギャラリー"
+        },
+        "empty": {
+            "news": "ニュースが見つかりません。",
+            "jobs": "現在、求人情報はありません。",
+            "events": "予定されているイベントはありません。",
+            "business": "登録されているビジネスはありません。",
+            "community": "投稿が見つかりません。"
+        },
+        "statistics": {
+            "title": "数字で見る在日外国人",
+            "description": "公式の人口統計、地域分布、給与データを明確かつ視覚的な形式で探索します。",
+            "updated": "更新: {{year}}",
+            "source": "出典: 政府とコミュニティ",
+            "view": "統計を見る"
+        }
+    },
+    "news": {
+        "title": "ニュースアーカイブ",
+        "subtitle": "日本での生活の完全ガイドを探索",
+        "featured": "注目",
+        "readingTime": "分で読める",
+        "publishedOn": "公開日",
+        "category": "カテゴリー",
+        "tags": "タグ",
+        "share": "共有",
+        "trending": "人気記事",
+        "shareText": "NipponLifeでこのニュースをチェックしてください",
+        "newsletterTitle": "Nippon Life Daily",
+        "newsletterDesc": "日本からの最も重要なニュースを直接受信トレイにお届けします。",
+        "newsletterPlaceholder": "メールアドレス",
+        "newsletterButton": "今すぐ登録"
+    },
+    "business": {
+        "title": "ビジネスガイド",
+        "subtitle": "最高の店舗やサービスを見つける",
+        "shareText": "NipponLifeで{name}をチェックしてください",
+        "notFound": "ビジネスが見つかりません",
+        "backToDirectory": "ディレクトリに戻る",
+        "back": "戻る",
+        "premiumPartner": "プレミアムパートナー",
+        "about": "について",
+        "presentation": "プレゼンテーション",
+        "openNewTab": "新しいタブで開く",
+        "viewPresentation": "プレゼンテーションを見る",
+        "fullscreenHint": "上のボタンをタップしてフルスクリーンで表示",
+        "gallery": "ギャラリー",
+        "contactReservations": "お問い合わせ・予約",
+        "openGoogleMaps": "Googleマップで開く",
+        "businessHours": "営業時間",
+        "weekdays": "月曜 - 金曜",
+        "saturday": "土曜",
+        "sunday": "日曜",
+        "closed": "休業",
+        "premium": "プレミアム",
+        "foundCount": "{{count}}件の結果を表示中",
+        "noResults": "ビジネスが見つかりませんでした",
+        "noResultsDesc": "検索フィルターを調整してみてください。",
+        "featuredTitle": "おすすめのビジネス",
+        "searchPlaceholder": "会社名...",
+        "clearFilters": "フィルターをクリア",
+        "locationLabel": "場所",
+        "locationPlaceholder": "市区町村・都道府県",
+        "categoriesLabel": "カテゴリー",
+        "filtersTitle": "フィルター",
+        "directoryTitlePart1": "日本で",
+        "directoryTitleHighlight": "最高のサービス",
+        "directoryTitlePart2": "を見つける",
+        "directorySubtitle": "日本在住のブラジル人や外国人を対象としたプレミアムディレクトリ。",
+        "categories": {
+            "Gastronomia": "レストラン・グルメ",
+            "Saúde & Bem-estar": "健康・ウェルネス",
+            "Serviços": "サービス",
+            "Imobiliárias": "不動産",
+            "Jurídico e Vistos": "法律・ビザ",
+            "Mudanças e Logística": "引越し・物流",
+            "Tecnologia": "テクノロジー",
+            "Outros": "その他"
+        }
+    },
+    "community": {
+        "categoriesTitle": "カテゴリー",
+        "categories": {
+            "home": "ホーム",
+            "ceotips": "CEOのヒント",
+            "nihongoclass": "日本語クラス",
+            "governmentnotices": "政府からのお知らせ",
+            "tourism": "観光",
+            "general": "一般",
+            "visa": "ビザと移民",
+            "health": "健康と保険",
+            "work": "仕事",
+            "housing": "住居",
+            "documents": "書類と登録",
+            "culture": "共生と文化",
+            "others": "その他"
+        },
+        "newcomerGuide": {
+            "title": "新生活ガイド",
+            "subtitle": "日本での新生活のすべて",
+            "description": "日本での新生活に必要なすべての情報。",
+            "action": "ガイドを見る"
+        },
+        "reels": "リール",
+        "empty": "現在、投稿はありません。",
+        "time": {
+            "now": "たった今",
+            "hours": "{{count}}時間前",
+            "days": "{{count}}日前"
+        },
+        "widgets": {
+            "upcomingEvents": "今後のイベント",
+            "contributors": "コントリビューター",
+            "viewAll": "すべて見る"
+        },
+        "post": {
+            "shareText": "NipponLifeコミュニティのこの投稿をチェックしてください：{{title}}",
+            "readMore": "もっと読む",
+            "backLink": "コミュニティに戻る",
+            "views": "閲覧数",
+            "comment": "コメントする",
+            "trending": "人気記事",
+            "joinTitle": "コミュニティに参加する",
+            "joinDescription": "日本に住む何千人ものブラジル人と交流し、貴重な体験やヒントを共有しましょう。",
+            "viewAllAction": "すべてのコミュニティを見る",
+            "infoAlert": "お見逃しなく！Nippon Lifeの最新情報をご確認ください。"
+        },
+        "questions": {
+            "title": "コミュニティに質問する",
+            "subtitle": "NipponLife Hubは、日本での生活における悩みや手続きについて、すでに経験した人たちからアドバイスをもらえる安全な場所です。",
+            "postAction": "質問を投稿する",
+            "viewFaq": "よくある質問を見る",
+            "statsHero": "日本でのつながりを作る",
+            "publishTitle": "新しい質問を投稿する",
+            "formTitleLabel": "質問のタイトル",
+            "formTitlePlaceholder": "例：家族滞在ビザの更新方法は？",
+            "formCategoryLabel": "カテゴリー",
+            "formCategoryHint": "素早い回答を得るために、正しいカテゴリーを選択してください。",
+            "formDescriptionLabel": "詳細な説明",
+            "formDescriptionPlaceholder": "あなたの状況をできるだけ詳しく説明してください...",
+            "loginToPublish": "投稿するにはログインが必要です。",
+            "loggedInToPublish": "ログイン済み。投稿が可能です。",
+            "publishButton": "質問を投稿する",
+            "publishing": "投稿中...",
+            "recentTitle": "最近の質問",
+            "emptyTitle": "質問はまだありません",
+            "emptySubtitle": "コミュニティで最初の質問をしてみましょう！",
+            "loadMore": "もっと質問を読み込む",
+            "answersCount": "件の回答",
+            "anonymous": "匿名",
+            "success": "質問が正常に投稿されました！",
+            "error": "投稿中にエラーが発生しました。もう一度お試しください。",
+            "profileUpdated": "プロフィールが更新されました！これで投稿が可能です。",
+            "time": {
+                "now": "たった今",
+                "hours": "{count, plural, other {#時間前}}",
+                "days": "{count, plural, other {#日前}}",
+                "months": "{count, plural, other {#ヶ月前}}"
+            }
+        },
+        "answerPage": {
+            "notFoundTitle": "質問が見つかりません",
+            "notFoundSubtitle": "お探しの質問は削除されたか、存在しない可能性があります。",
+            "backToCommunity": "コミュニティに戻る",
+            "membroComunidade": "コミュニティメンバー",
+            "curtir": "いいね",
+            "responder": "返信する",
+            "util": "役立つ",
+            "compartilhar": "共有する",
+            "respostas": "回答",
+            "maisRecentes": "新着順",
+            "maisVotadas": "投票数順",
+            "nenhumaResposta": "回答はまだありません",
+            "ajudePrimeiro": "最初の回答者になりましょう！",
+            "suaResposta": "あなたの回答",
+            "replyPlaceholder": "ここに回答を入力して、質問者を助けてください...",
+            "diretrizes": "返信することで、私たちの",
+            "diretrizesLink": "コミュニティガイドライン",
+            "enviarResposta": "回答を送信する",
+            "enviando": "送信中...",
+            "success": "回答が正常に送信されました！",
+            "error": "回答の送信中にエラーが発生しました。もう一度お試しください。",
+            "profileUpdated": "プロフィールが更新されました！これで返信が可能です。",
+            "emptyReplyError": "送信する前に回答を入力してください。",
+            "visualizacoes": "閲覧数"
+        },
+        "costOfLiving": {
+            "title": "コミュニティ生活費調査",
+            "subtitle": "毎月の支出を匿名で共有し、他の人が日本の実際の生活費を理解するのに役立ててください。",
+            "loginRequiredTitle": "コミュニティに参加する",
+            "loginRequiredDesc": "データを提供するにはログインしてください。コミュニティを支援するために、給与と生活費のデータを匿名で収集しています。",
+            "successMessage": "データが正常に送信されました！あなたの情報は統計に反映されています。",
+            "canUpdate": "この記録はいつでも更新できます。",
+            "monthlyStatus": "今月はすでに投稿済みです。",
+            "update": "投稿を更新",
+            "submit": "投稿を送信",
+            "sectionRegionJob": "場所と仕事",
+            "jobCategory": "職種",
+            "employmentType": "雇用形態",
+            "householdSize": "世帯人数",
+            "sectionIncome": "収入",
+            "hourlyWage": "時給 (円)",
+            "monthlyNet": "月間手取り収入 (任意)",
+            "sectionExpenses": "月間支出 (円)",
+            "rent": "家賃",
+            "utilities": "光熱費 (電気/ガス/水道)",
+            "internet": "インターネット・携帯電話",
+            "food": "食費",
+            "transport": "交通費",
+            "healthInsurance": "健康保険",
+            "pension": "年金",
+            "other": "その他の必需品",
+            "totalEstimated": "推定月間必需品合計",
+            "notes": "コミュニティへのメッセージ・注意点",
+            "notesPlaceholder": "この地域の生活費に関するヒント、観察、または重要な注意点を共有してください...",
+            "errors": {
+                "wageRange": "時給は800円〜3000円の間である必要があります",
+                "householdRange": "世帯人数は1〜12人の間である必要があります"
+            }
+        }
+    },
+    "admin": {
+        "dashboard": "ダッシュボード",
+        "lastUpdateLabel": "最終更新",
+        "dashboardError": "ダッシュボードの読み込み中にエラーが発生しました",
+        "newUsers": "新規ユーザー",
+        "last7Days": "過去7日間",
+        "thisWeek": "今週",
+        "futureEvents": "今後のイベント",
+        "scheduled": "予定済み",
+        "new7Days": "新規 (7日間)",
+        "activity14Days": "アクティビティ (過去14日間)",
+        "upcomingEvents": "今後のイベント",
+        "noUpcomingEvents": "今後のイベントはありません。",
+        "viewFullCalendar": "カレンダー全体を表示",
+        "recentPosts": "最近の投稿",
+        "noRecentPosts": "最近の投稿はありません。",
+        "posts_chart": "投稿",
+        "jobs_chart": "求人",
+        "community_chart": "コミュニティ",
+        "totalPosts": "投稿総数",
+        "categories": {
+            "title": "カテゴリー",
+            "subtitle": "システム全体のカテゴリーを管理します。",
+            "form": {
+                "new": "新規カテゴリー",
+                "edit": "カテゴリーを編集",
+                "name": "名前",
+                "slug": "スラッグ/キー",
+                "create": "カテゴリーを作成",
+                "update": "カテゴリーを更新",
+                "cancel": "キャンセル"
+            },
+            "table": {
+                "category": "カテゴリー",
+                "slug": "スラッグ",
+                "actions": "操作"
+            },
+            "messages": {
+                "deleteConfirm": "カテゴリー「{{label}}」を削除しますか？",
+                "loading": "カテゴリーを読み込み中..."
+            }
+        },
+        "calendarEvents": "カレンダーイベント",
+        "drafts": "下書き（投稿）",
+        "totalBusinesses": "ビジネス",
+        "totalGuides": "ユーザーガイド",
+        "totalJobs": "求人（Jobs）",
+        "totalCommunityQuestions": "コミュニティの質問",
+        "totalReels": "コミュニティリール",
+        "events": {
+            "title": "イベントカレンダー",
+            "subtitle": "コミュニティの無料または有料イベントを管理します。",
+            "addNew": "新しいイベントを追加",
+            "searchPlaceholder": "名前または場所で検索...",
+            "filters": {
+                "all": "すべて",
+                "active": "公開中",
+                "drafts": "下書き"
+            },
+            "table": {
+                "event": "イベント",
+                "dateTime": "日時",
+                "status": "ステータス",
+                "actions": "操作"
+            },
+            "actions": {
+                "edit": "イベントを編集",
+                "delete": "イベントを削除"
+            },
+            "messages": {
+                "deleteConfirm": "イベント「{{title}}」を削除してもよろしいですか？",
+                "noResults": "選択したフィルターに一致するイベントは見つかりませんでした。",
+                "clear": "フィルターをクリア"
+            },
+            "form": {
+                "new": "新しいイベントを追加",
+                "edit": "イベントを編集",
+                "subtitle": "日本人のコミュニティのためにイベントを作成します。",
+                "editSubtitle": "イベント情報を更新します。",
+                "title": "イベントタイトル",
+                "titlePlaceholder": "例：2024年夏祭り",
+                "start": "開始日時",
+                "end": "終了日時（任意）",
+                "location": "場所",
+                "locationPlaceholder": "例：東京都代々木公園",
+                "maps": "Googleマップリンク",
+                "contact": "イベントの連絡先",
+                "contactPlaceholder": "例: 080-1234-5678 または https://wa.me/...",
+                "contactHint": "番号のみを入力すると、モバイルデバイスで自動的にダイヤラーが開きます。",
+                "slug": "スラッグ（URLフレンドリー）",
+                "description": "イベントの説明",
+                "descriptionPlaceholder": "イベントの詳細内容、アトラクション、料金など...",
+                "multilingual": {
+                    "title": "多言語コンテンツ",
+                    "subtitle": "オプション：日本語と英語の翻訳を追加します。",
+                    "filled": "入力済み",
+                    "japanese": "日本語",
+                    "english": "英語",
+                    "titleLabel": "タイトル",
+                    "locationLabel": "場所",
+                    "descriptionLabel": "説明",
+                    "placeholderJa": {
+                        "title": "イベントのタイトル",
+                        "location": "場所",
+                        "description": "イベントの詳細説明"
+                    },
+                    "placeholderEn": {
+                        "title": "Event Title",
+                        "location": "Location",
+                        "description": "Event Detailed Description"
+                    }
+                },
+                "publishSettings": "公開設定",
+                "visibility": "公開状況",
+                "save": "イベントを保存",
+                "cancel": "キャンセル",
+                "coverImage": "カバー画像",
+                "requiredFields": "タイトル、スラッグ、開始日を入力してください。"
+            }
+        },
+        "atAGlance": "概要",
+        "welcomeMessage": "ダッシュボードへようこそ。ここでサイトのアクティビティの概要を確認できます。",
+        "editBusiness": "ビジネスを編集",
+        "newBusiness": "新しいビジネス",
+        "basicInfo": "基本情報",
+        "businessName": "ビジネス名",
+        "businessNameRequired": "名前は必須です",
+        "category": "カテゴリー",
+        "categoryRequired": "カテゴリーは必須です",
+        "selectCategory": "選択...",
+        "status": "ステータス",
+        "draftStatus": "下書き（非表示）",
+        "publishedStatus": "公開済み（表示）",
+        "published_short": "公開",
+        "draft_short": "下書",
+        "shortDescription": "短い説明（SEO）",
+        "shortDescriptionRequired": "短い説明は必須です",
+        "shortDescriptionPlaceholder": "一文で要約...",
+        "fullDescription": "完全な説明",
+        "featuredBusiness": "このビジネスを強調表示（プレミアム）",
+        "media": "メディア",
+        "logo": "ロゴ",
+        "uploadLogo": "ロゴをアップロード",
+        "coverImage": "カバー画像",
+        "uploadCover": "カバーをアップロード",
+        "gallery": "ギャラリー",
+        "addImage": "画像を追加",
+        "presentation": "プレゼンテーション（PDF）",
+        "uploadPresentation": "PDFをアップロード",
+        "location": "場所",
+        "address": "住所",
+        "addressPlaceholder": "通り、番号",
+        "complement": "補足",
+        "city": "市",
+        "prefecture": "都道府県",
+        "postalCode": "郵便番号",
+        "googleMapsUrl": "Google Maps URL",
+        "contact": "お問い合わせ",
+        "phone": "電話",
+        "email": "メール",
+        "website": "ウェブサイト",
+        "instagram": "Instagram",
+        "save": "保存",
+        "saving": "保存中...",
+        "errorSaving": "ビジネスの保存エラー",
+        "errorLoading": "ビジネスデータの読み込みエラー",
+        "successSaved": "ビジネスが正常に保存されました！",
+        "uploadingFile": "アップロードを計算中...",
+        "uploadingImage": "画像をアップロード中...",
+        "uploadComplete": "アップロード完了！",
+        "uploadError": "ファイルのアップロード中にエラーが発生しました",
+        "translationsTitle": "翻訳（オプション）",
+        "japaneseLanguage": "日本語",
+        "englishLanguage": "英語 (English)",
+        "hasContent": "内容あり",
+        "menu": {
+            "dashboard": "ダッシュボード",
+            "posts": "投稿",
+            "communityPosts": "コミュニティ投稿",
+            "communityReels": "コミュニティリール",
+            "userGuides": "ユーザーガイド",
+            "business": "ビジネス",
+            "jobs": "求人",
+            "calendar": "カレンダー",
+            "statistics": "統計",
+            "categories": "カテゴリー",
+            "media": "メディア",
+            "footer": "フッターページ",
+            "settings": "設定",
+            "goToSite": "サイトへ移動",
+            "users": "登録ユーザー"
+        },
+        "statistics": {
+            "title": "統計管理",
+            "subtitle": "公開ポータルに表示されるすべての人口・経済データを管理します。",
+            "refreshData": "データを更新",
+            "config": {
+                "title": "スナップショット設定",
+                "year": "対象年度",
+                "badge": "ポータルバッジテキスト",
+                "badgePlaceholder": "例：2024年統計データ",
+                "update": "設定を更新"
+            },
+            "kpis": {
+                "title": "主要業績評価指標 (KPIs)",
+                "value": "数値",
+                "delta": "成長指標 (デルタ)",
+                "deltaPlaceholder": "+5.2% (前年比)",
+                "prefix": "表示プレフィックス",
+                "prefixPlaceholder": "例：¥",
+                "sync": "KPIを同期",
+                "total_foreigners": {
+                    "title": "外国人総数"
+                },
+                "nationalities": {
+                    "title": "国籍数"
+                },
+                "avgSalary": {
+                    "title": "全国平均賃金"
+                }
+            },
+            "financial": {
+                "title": "家計・経済指標",
+                "officialStatus": "公的ステータス (e-Stat)",
+                "communityAvg": "コミュニティ平均 (¥)",
+                "officialNote": "公的データに関する注釈",
+                "communityNote": "コミュニティデータに関する注釈",
+                "save": "家計データを保存",
+                "status": {
+                    "comingSoon": "近日公開",
+                    "ready": "公開中"
+                }
+            },
+            "demographics": {
+                "title": "長期滞在者",
+                "rank": "順位",
+                "iso": "ISOコード",
+                "country": "国名",
+                "update": "ランキングを更新"
+            },
+            "regional": {
+                "title": "地域別密度",
+                "initialize": "全47都道府県を初期化",
+                "save": "地域マップを保存",
+                "notInitialized": "マップデータがまだ初期化されていません。"
+            },
+            "tourism": {
+                "title": "訪日外国人旅行者",
+                "update": "旅行者数を更新"
+            },
+            "messages": {
+                "successMetadata": "スナップショット設定を保存しました",
+                "successKPIs": "KPIを保存しました",
+                "successNationalities": "国別統計を保存しました",
+                "successPrefectures": "地域別密度を保存しました",
+                "successSeed": "都道府県を初期化しました",
+                "successSalary": "家計比較データを保存しました"
+            },
+            "residents_short": "居住者"
+        },
+        "businessListTitle": "ビジネス一覧",
+        "businessListSubtitle": "ポータルサイト上の施設と表示設定を管理します。",
+        "addNew": "新規追加",
+        "searchHint": "名前、都市で検索...",
+        "tableBusiness": "ビジネス",
+        "tableCategory": "カテゴリー",
+        "tableLocation": "場所",
+        "tableStatus": "ステータス",
+        "tableActions": "操作",
+        "noResults": "ビジネスが見つかりませんでした。",
+        "featured": "注目",
+        "confirmDelete": "このビジネスを削除してもよろしいですか？",
+        "successDeleted": "ビジネスが正常に削除されました",
+        "errorDeleting": "ビジネスの削除中にエラーが発生しました",
+        "errorFetching": "ビジネスの読み込み中にエラーが発生しました",
+        "previous": "前へ",
+        "next": "次へ",
+        "pageOf": "ページ {{page}} / {{total}}",
+        "community": {
+            "title": "コミュニティ投稿",
+            "newPost": "新規投稿",
+            "editPost": "投稿を編集",
+            "addReels": "リールを追加",
+            "searchPlaceholder": "投稿タイトル...",
+            "all": "すべて",
+            "draft": "下書き",
+            "published": "公開済み",
+            "scheduled": "予約済み",
+            "archived": "アーカイブ済み",
+            "sorting": {
+                "recent": "新しい順",
+                "oldest": "古い順"
+            },
+            "form": {
+                "title": "投稿タイトル",
+                "content": "投稿内容",
+                "excerpt": "概要（オプション）",
+                "category": "カテゴリー",
+                "tags": "タグ",
+                "tagsPlaceholder": "Enterキーで追加",
+                "coverImage": "アイキャッチ画像",
+                "settings": "設定",
+                "visibility": "公開設定"
+            },
+            "messages": {
+                "saveSuccess": "投稿が正常に保存されました！",
+                "saveError": "投稿の保存中にエラーが発生しました",
+                "loadError": "投稿の読み込み中にエラーが発生しました",
+                "deleteConfirm": "投稿 \"{{title}}\" を削除しますか？",
+                "uploadError": "画像のアップロード中にエラーが発生しました"
+            }
+        },
+        "jobs": {
+            "title": "求人情報管理",
+            "subtitle": "求人情報を掲載・管理します。",
+            "addNew": "新しい求人を追加",
+            "searchPlaceholder": "タイトルまたは会社名で検索...",
+            "filters": {
+                "all": "すべて",
+                "active": "募集中",
+                "drafts": "下書き",
+                "archived": "アーカイブ",
+                "noResults": "選択したフィルターに一致する求人は見つかりませんでした。",
+                "clear": "フィルターをクリア"
+            },
+            "table": {
+                "featured": "注目",
+                "opportunity": "機会",
+                "company": "企業",
+                "locationStatus": "場所とステータス",
+                "actions": "操作"
+            },
+            "actions": {
+                "edit": "求人を編集",
+                "delete": "求人を削除"
+            },
+            "messages": {
+                "deleteConfirm": "求人「{{title}}」を削除してもよろしいですか？",
+                "fillRequired": "タイトルとスラッグを入力してください。",
+                "urlRequired": "外部URLモードの場合、応募URLは必須です。",
+                "whatsappRequired": "WhatsAppモードの場合、WhatsApp番号は必須です。"
+            },
+            "benefits": {
+                "shield": "保険 (shield)",
+                "bus": "交通費 (bus)",
+                "home": "住居 (home)",
+                "gift": "ボーナス (gift)",
+                "utensils": "食事 (utensils)",
+                "clock": "勤務時間 (clock)",
+                "calendar": "休暇 (calendar)",
+                "heart": "健康 (heart)",
+                "free": "無料",
+                "transportation": "交通費",
+                "insurance": "保険"
+            },
+            "form": {
+                "addNew": "新しい求人を追加",
+                "editJob": "求人を編集",
+                "basicInfo": "基本情報",
+                "jobTitle": "求人タイトル",
+                "company": "会社名",
+                "slug": "スラッグ",
+                "location": "場所",
+                "prefecture": "都道府県",
+                "city": "市区町村",
+                "locationLegacy": "場所（レガシー）",
+                "payment": "給与・支払い",
+                "salaryText": "給与表示テキスト",
+                "salaryPlaceholder": "例: ¥1,200/時",
+                "bonusText": "ボーナス表示テキスト",
+                "bonusPlaceholder": "例: 入社祝い金 ¥50,000",
+                "payRate": "金額 (円)",
+                "payUnit": "単位",
+                "units": {
+                    "hour": "時間",
+                    "day": "日",
+                    "month": "月"
+                },
+                "tags": "タグ",
+                "tagsPlaceholder": "例: シフト制, N4+, 寮完備",
+                "generateTags": "タグを自動生成",
+                "requirements": "要件・条件",
+                "reqPlaceholder": "例: 工場経験者歓迎",
+                "benefits": "福利厚生",
+                "benefitLabel": "ラベル",
+                "description": "仕事内容・詳細",
+                "appMode": "応募方法",
+                "modes": {
+                    "internal": "内部フォーム",
+                    "external": "外部URL",
+                    "whatsapp": "WhatsApp"
+                },
+                "appUrl": "応募URL",
+                "whatsapp": "WhatsApp",
+                "contactLegacy": "連絡先（レガシー）",
+                "translations": "翻訳（オプション）",
+                "hasContent": "コンテンツあり",
+                "japanese": "日本語 (Japanese)",
+                "english": "英語 (English)",
+                "status": "ステータス",
+                "save": "求人を保存",
+                "saving": "保存中...",
+                "featured": "注目の求人",
+                "titleJa": "タイトル (日本語)",
+                "salaryTextJa": "給与表示 (日本語)",
+                "bonusTextJa": "ボーナス表示 (日本語)",
+                "locationJa": "勤務地 (日本語)",
+                "descriptionJa": "詳細 (日本語)",
+                "requirementsJa": "要件 (日本語)",
+                "benefitsJa": "福利厚生 (日本語)",
+                "titleEn": "タイトル (英語)",
+                "salaryTextEn": "給与表示 (英語)",
+                "bonusTextEn": "ボーナス表示 (英語)",
+                "locationEn": "勤務地 (英語)",
+                "descriptionEn": "詳細 (英語)",
+                "requirementsEn": "要件 (英語)",
+                "benefitsEn": "福利厚生 (英語)",
+                "jobImage": "求人画像 / ロゴ",
+                "notFound": "求人が見つかりません。",
+                "cancel": "キャンセル"
+            }
+        },
+        "users": {
+            "unnamed": "名前なしユーザー",
+            "title": "ユーザー管理",
+            "subtitle": "プラットフォームに登録されているすべてのユーザーを表示・管理します。",
+            "filters": {
+                "all": "すべて",
+                "admins": "管理者",
+                "photographers": "フォトグラファー",
+                "users": "ユーザー",
+                "clear": "フィルターをクリア",
+                "noResults": "選択したフィルターに一致するユーザーは見つかりませんでした。"
+            },
+            "searchPlaceholder": "名前またはユーザー名で検索...",
+            "table": {
+                "user": "ユーザー",
+                "role": "役割",
+                "registeredAt": "登録日",
+                "actions": "操作"
+            },
+            "roles": {
+                "admin": "管理者",
+                "photographer": "フォトグラファー",
+                "user": "ユーザー"
+            },
+            "actions": {
+                "makePhotographer": "フォトグラファーにする",
+                "makeAdmin": "管理者にする",
+                "removeAdmin": "管理者を解除",
+                "removePhotographer": "フォトグラファーを解除",
+                "unban": "アクセス禁止を解除",
+                "reactivate": "再有効化",
+                "suspend": "停止",
+                "suspendTitle": "追って通知があるまで停止",
+                "ban": "アクセス禁止",
+                "banTitle": "永久にアクセス禁止"
+            },
+            "status": {
+                "active": "アクティブ",
+                "suspended": "一時停止",
+                "suspendedFull": "一時停止中",
+                "banned": "禁止",
+                "bannedFull": "永久アクセス禁止"
+            },
+            "messages": {
+                "confirmRoleChange": "このユーザーの役割を {{role}} に変更してもよろしいですか？",
+                "roleUpdateSuccess": "ユーザーの役割を {{role}} に更新しました！",
+                "confirmStatusChange": "このユーザーのステータスを {{status}} に変更してもよろしいですか？",
+                "statusUpdateSuccess": "ステータスを {{status}} に更新しました！",
+                "enterReason": "理由（任意）:",
+                "enterUntil": "停止期間（ISO日付）:"
+            }
+        }
+    },
+    "jobs": {
+        "title": "求人情報",
+        "subtitle": "日本での仕事の機会を見つける",
+        "applyNow": "応募する",
+        "viewJobDetails": "詳細を見る",
+        "salary": "給与",
+        "location": "場所",
+        "type": "タイプ",
+        "company": "会社",
+        "searchPlaceholder": "職種、会社名、都市で検索...",
+        "searchLabel": "求人を検索",
+        "regionLabel": "地域",
+        "typeLabel": "雇用形態",
+        "allRegions": "すべての地域",
+        "quickFilters": "クイックフィルター",
+        "loading": "求人を読み込み中...",
+        "jobsFound": "{count} 件の求人が見つかりました",
+        "noJobsTitle": "求人が見つかりませんでした",
+        "noJobsDescription": "フィルターを調整するか、他の検索キーワードをお試しください。",
+        "previousPage": "前のページ",
+        "nextPage": "次のページ",
+        "page": "ページ {{page}}",
+        "pagination": "ページネーション",
+        "filters": {
+            "all": "すべて",
+            "withAccommodation": "住居付き",
+            "beginnerOk": "初心者OK",
+            "n4Plus": "N4以上",
+            "partTime": "パートタイム",
+            "automotive": "自動車"
+        },
+        "types": {
+            "all": "すべての雇用形態",
+            "fullTime": "正社員",
+            "partTime": "パートタイム",
+            "contract": "契約社員",
+            "temporary": "派遣・臨時"
+        },
+        "modal": {
+            "careerOpportunity": "キャリア機会",
+            "closeModal": "モーダルを閉じる",
+            "jobDescription": "仕事内容",
+            "requirements": "応募条件",
+            "benefits": "福利厚生",
+            "privacyNotice": "送信することで、プライバシー規約に同意したものとみなされます。",
+            "cancel": "キャンセル",
+            "submitApplication": "応募する",
+            "formTitle": "応募フォーム",
+            "fullName": "氏名",
+            "fullNamePlaceholder": "お名前",
+            "fullNameRequired": "氏名は必須です",
+            "whatsapp": "WhatsApp",
+            "whatsappPlaceholder": "+81 90-1234-5678",
+            "whatsappRequired": "WhatsAppは必須です",
+            "whatsappInvalid": "形式が無効です",
+            "cityProvince": "市区町村",
+            "optional": "（任意）",
+            "cityPlaceholder": "例：愛知県豊田市",
+            "message": "メッセージ",
+            "messagePlaceholder": "ご自身のことや、この求人に興味を持った理由を教えてください...",
+            "sending": "送信中...",
+            "successTitle": "応募完了！",
+            "successMessage": "<strong>{{jobTitle}}</strong>の求人にご応募いただきありがとうございます。",
+            "successContact": "お知らせいただいたWhatsAppにご連絡いたします。",
+            "close": "閉じる"
+        },
+        "applyButton": "応募する",
+        "viewDetails": "求人詳細を見る: {{company}}の{{title}}",
+        "regions": {
+            "allRegions": "すべての地域",
+            "aichi": "愛知県",
+            "tokyo": "東京都",
+            "osaka": "大阪府",
+            "kanagawa": "神奈川県",
+            "shizuoka": "静岡県",
+            "gunma": "群馬県",
+            "saitama": "埼玉県"
+        },
+        "tags": {
+            "withAccommodation": "住居付き",
+            "beginnerOk": "初心者OK",
+            "n4Plus": "N4以上",
+            "partTime": "パートタイム",
+            "automotive": "自動車",
+            "fullTime": "正社員"
+        }
+    },
+    "eventsCalendar": {
+        "title": "イベント",
+        "titleHighlight": "カレンダー",
+        "searchPlaceholder": "イベント名またはキーワード...",
+        "allMonths": "すべての月",
+        "allYears": "すべての年",
+        "months": {
+            "january": "1月",
+            "february": "2月",
+            "march": "3月",
+            "april": "4月",
+            "may": "5月",
+            "june": "6月",
+            "july": "7月",
+            "august": "8月",
+            "september": "9月",
+            "october": "10月",
+            "november": "11月",
+            "december": "12月"
+        },
+        "noEventsTitle": "イベントが見つかりません",
+        "noEventsDescription": "選択したフィルターに一致するイベントが見つかりませんでした。他のキーワードや日付で検索してください。",
+        "clearFilters": "フィルターをクリア",
+        "loadMore": "もっとイベントを読み込む",
+        "loading": "読み込み中...",
+        "viewList": "リスト表示",
+        "viewCalendar": "カレンダー表示"
+    },
+    "eventDetails": {
+        "notFound": "イベントが見つかりません",
+        "backToCalendar": "カレンダーに戻る",
+        "noDescription": "説明はありません。",
+        "location": "場所",
+        "contact": "お問い合わせ",
+        "noContact": "このイベントの連絡先情報は利用できません。",
+        "shareText": "NipponLifeでこのイベントをチェックしてください：{{title}}"
+    },
+    "guides": {
+        "hero": {
+            "badge": "サポートポータル 2026",
+            "title": "新生活ガイド",
+            "titleHighlight": "日本での。",
+            "description": "安心と安全、そしてコミュニティのサポートを受けながら日本で生活するための完全ガイド。必要な情報がすべて一箇所に。",
+            "cta": "コミュニティに参加",
+            "fallbackTitle": "日本での新生活",
+            "fallbackSubtitle": "ここから始まります",
+            "updated": "更新日",
+            "unmute": "音声を有効にする",
+            "mute": "ミュート"
+        },
+        "categories": {
+            "title": "カテゴリーで探す",
+            "subtitle": "クリックして詳細なトピックにアクセスしてください。",
+            "health": {
+                "title": "健康と保険",
+                "description": "日本の医療制度、保険、病院、緊急時の対応について理解する。"
+            },
+            "housing": {
+                "title": "住居",
+                "description": "日本での賃貸、契約、初期費用、住居のルールについてのすべて。"
+            },
+            "documents": {
+                "title": "書類と登録",
+                "description": "在留カード、マイナンバー、市役所、必須登録について。"
+            },
+            "community": {
+                "title": "共生と文化",
+                "description": "社会的ルール、ゴミ出し、近所付き合い、習慣について。"
+            },
+            "work": {
+                "title": "仕事と権利",
+                "description": "労働権、契約、職場環境について。"
+            },
+            "safety": {
+                "title": "重要な注意事項",
+                "description": "よくある詐欺、緊急時の対応、よくある間違いについて。"
+            }
+        },
+        "questions": {
+            "title": "コミュニティの最近の質問",
+            "viewAll": "すべて見る",
+            "empty": "最近の質問は見つかりませんでした。",
+            "by": "投稿者"
+        },
+        "contentInDevelopment": "コンテンツ準備中",
+        "preparingContent": "現在、詳細なコンテンツを準備中です。まもなく完全なガイドにアクセスできるようになります。",
+        "cta": {
+            "title": "一人でこの旅をしないでください",
+            "description": "コミュニティに参加して、あなたが経験していることを経験した人々のサポートを受けましょう。質問をしたり、経験を共有したり、つながりを築いたりしましょう。",
+            "primary": "コミュニティに参加",
+            "secondary": "私たちについて詳しく知る"
+        },
+        "newcomerGuide": "新規来日者ガイド",
+        "newcomerDescription": "日本での生活を安全かつ自信を持って始めるために必要なすべての情報。",
+        "viewGuides": "ガイドを見る",
+        "needHelp": "お困りですか？",
+        "communityHelp": "私たちのコミュニティが、あなたの質問に答え、経験を共有します。",
+        "askCommunity": "コミュニティに質問する",
+        "noGuidesYet": "このカテゴリにはまだガイドがありません。",
+        "backToCategories": "カテゴリに戻る",
+        "readMore": "続きを読む",
+        "minutesRead": "分",
+        "views": "閲覧数",
+        "moreGuides": "もっと知りたいですか？",
+        "exploreMore": "このカテゴリの他のガイドを見て、さらに学びましょう。",
+        "viewCategory": "もっとガイドを見る"
+    },
+    "footer": {
+        "about": "NipponLifeについて",
+        "contact": "お問い合わせ",
+        "privacy": "プライバシー",
+        "terms": "利用規約",
+        "followUs": "フォローする",
+        "allRightsReserved": "全著作権所有"
+    },
+    "gallery": {
+        "label": "展示会",
+        "tag": "ギャラリー",
+        "title": "NipponLifeギャラリー",
+        "subtitle": "NipponLifeコミュニティによって撮影された瞬間の厳選コレクション。",
+        "back": "ギャラリーに戻る",
+        "noAlbums": "現在、ギャラリーはありません。",
+        "loading": "展示を読み込み中...",
+        "photo": "写真",
+        "photos": "写真",
+        "views": "回閲覧",
+        "albumHeader": "フォトアルバム",
+        "photographer": "写真家",
+        "by": "撮影者",
+        "dashboard": {
+            "title": "マイアルバム",
+            "newAlbum": "新規アルバム",
+            "noAlbums": "アルバムはまだありません",
+            "createFirst": "最初のイベントアルバムを作成しましょう",
+            "confirmDelete": "このアルバムを削除してもよろしいですか？この操作は取り消せません。",
+            "deleted": "アルバムを削除しました",
+            "deleteError": "アルバムの削除に失敗しました",
+            "loadError": "アルバムの読み込み中にエラーが発生しました",
+            "manage": "管理",
+            "edit": "編集",
+            "delete": "削除",
+            "adminTitle": "ギャラリー管理",
+            "managementHub": "管理ハブ",
+            "photographerDashboard": "フォトグラファーダッシュボード",
+            "loading": "ギャラリーを読み込み中...",
+            "owner": "所有者",
+            "public": "公開",
+            "private": "非公開"
+        },
+        "manager": {
+            "title": "アルバムマネージャー",
+            "importMedia": "メディアをインポート",
+            "importDesc": "このコレクションに新しい写真を追加します。下書きに設定しない限り、自動的に公開されます。",
+            "mediaLibrary": "メディアライブラリ",
+            "totalCaptures": "総写真数",
+            "previewAlbum": "アルバムをプレビュー",
+            "deselectAll": "全解除",
+            "selectAll": "すべて選択",
+            "selected": "枚の画像を選択中",
+            "publish": "公開",
+            "hide": "非表示",
+            "delete": "削除",
+            "noMedia": "メディアが見つかりません",
+            "emptyLibrary": "ライブラリは空です。インポーターを使用して作品を追加してください。",
+            "draft": "下書き",
+            "organizing": "スタジオを整理中...",
+            "preview": "プレビュー",
+            "publishedPhotos": "枚公開中",
+            "noPublishedPreview": "公開された写真はありません。まず写真を公開してください。",
+            "dashboardLink": "ギャラリーダッシュボード",
+            "dropHere": "放して写真を追加",
+            "dragDrop": "ライトテーブルに写真をドラッグ",
+            "orClick": "またはクリックしてファイルを選択",
+            "multipleHint": "Ctrl (Windows) または Cmd (Mac) を押しながら複数選択",
+            "uploading": "アップロード中...",
+            "uploadSuccess": "写真がアルバムに追加されました",
+            "uploadError": "写真のアップロードに失敗しました",
+            "deletePhotoSuccess": "写真を削除しました",
+            "deletePhotoError": "写真の削除に失敗しました",
+            "updatePhotoSuccess": "写真を更新しました",
+            "updatePhotoError": "写真の更新に失敗しました",
+            "bulkDeleteSuccess": "枚の写真を削除しました",
+            "bulkUpdateSuccess": "枚の写真を更新しました"
+        },
+        "studio": {
+            "title": "スタジオ",
+            "subtitle": "デジタル暗室",
+            "albumDetails": "アルバムの詳細",
+            "photos": "写真",
+            "filmStrip": "フィルムストリップ",
+            "publish": "アルバムを公開",
+            "publishing": "公開中...",
+            "titleLabel": "タイトル",
+            "titlePlaceholder": "例: 京都の秋",
+            "descriptionLabel": "説明",
+            "descriptionPlaceholder": "これらの写真の裏話を教えてください..."
+        },
+        "create": {
+            "title": "新規アルバム作成",
+            "subtitle": "新しいコレクション",
+            "form": {
+                "title": "アルバムのタイトル",
+                "titlePlaceholder": "例：夏祭り 2024",
+                "description": "説明",
+                "descriptionPlaceholder": "イベントやアルバムについて説明してください...",
+                "date": "イベント日",
+                "visibility": "公開設定",
+                "public": "公開",
+                "private": "非公開",
+                "publicDesc": "このアルバムはサイトのすべての訪問者に公開されます。",
+                "privateDesc": "このアルバムはあなたと管理者のみが閲覧できます。",
+                "cancel": "キャンセル",
+                "create": "アルバムを作成",
+                "creating": "作成中..."
+            },
+            "messages": {
+                "success": "アルバムが正常に作成されました！",
+                "error": "アルバムの作成中にエラーが発生しました"
+            }
+        },
+        "edit": {
+            "title": "アルバムの編集",
+            "subtitle": "アルバム情報の更新",
+            "notFound": "アルバムが見つかりません",
+            "back": "ギャラリーに戻る",
+            "save": "変更を保存",
+            "saving": "保存中...",
+            "success": "アルバムが更新されました！",
+            "error": "アルバムの更新中にエラーが発生しました"
+        },
+        "noPhotos": "表示する画像はありません",
+        "modal": {
+            "finalize": "展示を完了",
+            "title": "タイトル",
+            "untitled": "無題",
+            "camera": "カメラ",
+            "cameraPlaceholder": "例: Sony A7III",
+            "lens": "レンズ",
+            "lensPlaceholder": "例: 35mm f/1.4"
+        }
+    },
+    "categories": {
+        "news": "ニュース",
+        "communities": "コミュニティ",
+        "events": "イベント",
+        "jobs": "求人",
+        "business": "ビジネス",
+        "work": "仕事",
+        "culture": "文化",
+        "language": "言語",
+        "visa": "ビザ",
+        "general": "一般",
+        "home": "ホーム",
+        "ceotips": "CEOのヒント",
+        "governmentnotices": "政府からのお知らせ",
+        "nihongoclass": "日本語レッスン",
+        "business_premium": "プレミアムビジネス",
+        "tourism": "観光"
+    },
+    "statistics": {
+        "badge": "人口統計データ 2024",
+        "hero": {
+            "title": "数字で見る在日外国人",
+            "subtitle": "在留外国人および日本のエコシステムの研究者のための、構造化された統計と公式データのプロフェッショナルポータル。"
+        },
+        "kpis": {
+            "totalForeigners": {
+                "title": "外国人総数",
+                "delta": "対2023年"
+            },
+            "nationalities": {
+                "title": "国籍数",
+                "delta": "新規地域"
+            },
+            "avgSalary": {
+                "title": "全国平均給与",
+                "delta": "年次"
+            }
+        },
+        "topNationalities": {
+            "title": "在留外国人",
+            "viewAll": "すべて見る"
+        },
+        "regionalDistribution": {
+            "title": "都道府県別外国人合計",
+            "subtitle": "都道府県別在留外国人数",
+            "selectedPrefecture": "選択された都道府県",
+            "hoverHint": "クリックして選択",
+            "foreignResidents": "在留外国人",
+            "legendTitle": "在留外国人数",
+            "lowerTotal": "少ない",
+            "higherTotal": "多い"
+        },
+        "salaryComparison": {
+            "title": "給与比較",
+            "subtitle": "ビザカテゴリ別の月平均",
+            "tabs": {
+                "official": "公式データ (e-Stat)",
+                "community": "コミュニティデータ"
+            },
+            "officialBadge": "近日公開",
+            "officialLoading": "更新待ち...",
+            "communityValue": "{{year}}年に{{count}}+人のユーザーから報告",
+            "communityNote": "2024年に12,000人以上のユーザーから報告",
+            "communityTop10": "コミュニティトップ10",
+            "sortedBy": "投稿数順",
+            "noContributions": "投稿はまだありません。",
+            "beTheFirst": "最初の一人になりましょう！",
+            "avgMonthlyNet": "月平均手取り",
+            "perHour": "/時間",
+            "contributeData": "データを投稿"
+        },
+        "tourism": {
+            "title": "訪日外国人観光客",
+            "description": "日本への短期訪問者数が多い国トップ10",
+            "source_label": "出典",
+            "source_value": "観光・入国統計"
+        },
+        "expenses": {
+            "title": "月間支出の分布",
+            "subtitle": "コミュニティから共有されたデータに基づいています。都道府県別の平均値。",
+            "estTotal": "推定合計",
+            "rent": "家賃",
+            "food": "食費",
+            "transport": "交通費"
+        },
+        "notes": {
+            "title": "コミュニティの声",
+            "subtitle": "日本に住む外国人による経験や観察の共有"
+        },
+        "cta": {
+            "title": "リアルな情報を提供する",
+            "body": "ポータルをより正確にする手助けをしてください。あなたの貢献は匿名であり、外国人コミュニティにとって不可欠です。",
+            "button": "今すぐ参加する"
+        }
+    },
+    "countries": {
+        "China": "中国",
+        "Vietnam": "ベトナム",
+        "South Korea": "韓国",
+        "Philippines": "フィリピン",
+        "Brazil": "ブラジル",
+        "Nepal": "ネパール",
+        "Indonesia": "インドネシア",
+        "Myanmar": "ミャンマー",
+        "United States": "米国",
+        "Taiwan": "台湾",
+        "Thailand": "タイ",
+        "Peru": "ペルー"
+    },
+    "seo": {
+        "siteTitle": "NipponLife - 日本文化ポータル",
+        "siteDescription": "日本に関する完全なポータル：ニュース、求人、イベント、ビジネス、ブラジルコミュニティ。"
+    },
+    "home": {
+        "seo": {
+            "title": "ホーム - 日本文化ポータル",
+            "description": "NipponLifeで日本を発見：最新ニュース、求人情報、文化イベント、ビジネスガイド、アクティブコミュニティ。"
+        }
+    },
+    "gallery": {
+        "seo": {
+            "title": "日本の写真ギャラリー",
+            "description": "日本文化、風景、日常生活の写真アルバムを含むギャラリーをご覧ください。"
+        }
+    },
+    "statistics": {
+        "seo": {
+            "title": "日本の統計",
+            "description": "外国人人口、給与、観光、日本の生活費に関するデータと統計。"
+        }
+    },
+    "breadcrumb": {
+        "home": "ホーム"
+    }
+}

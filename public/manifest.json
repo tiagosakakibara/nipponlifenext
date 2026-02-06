@@ -1,0 +1,22 @@
+{
+  "name": "NipponLife - Portal da Cultura Japonesa",
+  "short_name": "NipponLife",
+  "description": "Portal da cultura japonesa no Brasil e comunidade brasileira no Japão",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#D70F24",
+  "icons": [
+    {
+      "src": "/images/logo-icon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/images/logo-full.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ]
+}
