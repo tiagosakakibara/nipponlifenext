@@ -177,7 +177,7 @@ export function HeroSection({ featuredNews, stats }: HeroSectionProps) {
                                 <h4 className="text-primary font-black text-2xl leading-none mb-1 tracking-tight">{t('nav.events')}</h4>
                                 <p className="text-secondary text-[11px] font-bold opacity-60 uppercase tracking-widest">{monthName} {today.getFullYear()}</p>
                             </div>
-                            <div className="w-14 h-14 rounded-2xl bg-white border border-app shadow-lg shadow-black/5 flex flex-col items-center justify-center group-hover:scale-110 transition-transform duration-500 overflow-hidden relative">
+                            <div className="w-14 h-14 rounded-2xl bg-surface border border-app shadow-lg shadow-black/5 flex flex-col items-center justify-center group-hover:scale-110 transition-transform duration-500 overflow-hidden relative">
                                 <div className="absolute top-0 left-0 right-0 h-1.5 bg-[var(--nl-accent)]" />
                                 <span className="text-[var(--nl-accent)] font-black text-2xl leading-none mt-1">{dayNum}</span>
                                 <span className="text-[10px] text-secondary font-black uppercase leading-none">{dayName.slice(0, 3)}</span>
@@ -203,7 +203,7 @@ export function HeroSection({ featuredNews, stats }: HeroSectionProps) {
                         {/* Jobs Stat */}
                         <div
                             className="bg-surface border border-app rounded-[2.5rem] p-7 flex flex-col justify-between hover:border-[var(--nl-accent)]/30 transition-all duration-500 cursor-pointer group relative overflow-hidden shadow-sm hover:shadow-xl hover:shadow-[var(--nl-accent)]/5"
-                            onClick={() => router.push('/vagas')}
+                            onClick={() => router.push('/jobs')}
                         >
                             <div className="absolute -bottom-10 -right-10 w-24 h-24 bg-blue-500/5 rounded-full blur-2xl group-hover:bg-blue-500/10 transition-all" />
 

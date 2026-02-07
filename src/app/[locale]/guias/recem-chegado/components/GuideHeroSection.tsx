@@ -83,12 +83,12 @@ export default function GuideHeroSection({ locale }: GuideHeroSectionProps) {
                             )}
                         </div>
 
-                        <h1 className="font-heading text-3xl md:text-4xl lg:text-5xl font-bold text-[#003768] dark:text-primary leading-tight mb-4">
+                        <h1 className="font-heading text-3xl md:text-4xl lg:text-5xl font-bold text-[#003768] dark:text-white leading-tight mb-4">
                             {t('guides.hero.title')}{' '}
                             <span className="text-accent">{t('guides.hero.titleHighlight')}</span>
                         </h1>
 
-                        <p className="text-gray-700 dark:text-secondary text-base md:text-lg leading-relaxed mb-8 max-w-lg">
+                        <p className="text-gray-700 dark:text-gray-300 text-base md:text-lg leading-relaxed mb-8 max-w-lg">
                             {t('guides.hero.description')}
                         </p>
 

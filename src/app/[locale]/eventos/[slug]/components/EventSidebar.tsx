@@ -31,10 +31,10 @@ export function EventSidebar({ contactUrl, viewCount, dateStr, title }: EventSid
     };
 
     return (
-        <div className="p-8 bg-zinc-50 rounded-[40px] border border-zinc-100 sticky top-24 space-y-8 shadow-sm">
+        <div className="p-8 bg-surface rounded-[40px] border border-app sticky top-24 space-y-8 shadow-sm">
             <div className="space-y-6">
                 <div className="flex items-start gap-4">
-                    <div className="w-10 h-10 rounded-xl bg-white flex items-center justify-center text-[#D70F24] shadow-sm">
+                    <div className="w-10 h-10 rounded-xl bg-app flex items-center justify-center text-[#D70F24] shadow-sm">
                         <Calendar className="w-5 h-5" />
                     </div>
                     <div>
@@ -44,7 +44,7 @@ export function EventSidebar({ contactUrl, viewCount, dateStr, title }: EventSid
                 </div>
 
                 <div className="flex items-start gap-4">
-                    <div className="w-10 h-10 rounded-xl bg-white flex items-center justify-center text-[#D70F24] shadow-sm">
+                    <div className="w-10 h-10 rounded-xl bg-app flex items-center justify-center text-[#D70F24] shadow-sm">
                         <Eye className="w-5 h-5" />
                     </div>
                     <div>
@@ -54,12 +54,12 @@ export function EventSidebar({ contactUrl, viewCount, dateStr, title }: EventSid
                 </div>
             </div>
 
-            <div className="h-px bg-zinc-200" />
+            <div className="h-px bg-app/10" />
 
             <div className="space-y-4">
                 <button
                     onClick={handleContact}
-                    className="w-full py-4 bg-[#D70F24] text-white font-bold text-xs uppercase tracking-widest rounded-2xl transition-all shadow-lg shadow-red-200 hover:opacity-90 active:scale-95 flex items-center justify-center gap-2"
+                    className="w-full py-4 bg-[#D70F24] text-white font-bold text-xs uppercase tracking-widest rounded-2xl transition-all shadow-lg shadow-red-500/20 hover:opacity-90 active:scale-95 flex items-center justify-center gap-2"
                 >
                     <MessageCircle className="w-4 h-4" />
                     {t('contact')}

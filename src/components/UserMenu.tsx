@@ -80,7 +80,7 @@ export function UserMenu() {
             {/* Unified Dropdown for Desktop and Mobile */}
             {isOpen && (
                 <div
-                    className="absolute right-0 top-full mt-3 w-72 max-w-[92vw] bg-white/90 dark:bg-slate-900/95 border border-app rounded-2xl shadow-2xl z-[100] overflow-hidden animate-slide-up origin-top-right backdrop-blur-xl"
+                    className="absolute right-0 top-full mt-3 w-72 max-w-[92vw] bg-app/95 border border-app rounded-2xl shadow-2xl z-[100] overflow-hidden animate-slide-up origin-top-right backdrop-blur-xl"
                 >
                     {/* Header */}
                     <div className="px-5 py-4 border-b border-app bg-app/50">

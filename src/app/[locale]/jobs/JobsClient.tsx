@@ -111,13 +111,13 @@ export default function JobsClient() {
     );
 
     return (
-        <div className="min-h-screen bg-white">
+        <div className="min-h-screen bg-app">
             {/* Hero Section - Premium Design */}
-            <section className="relative pt-32 pb-20 overflow-hidden bg-white border-b border-zinc-100">
-                <div className="absolute top-0 right-0 w-1/3 h-full bg-gradient-to-l from-red-50/50 to-transparent pointer-events-none" />
+            <section className="relative pt-32 pb-20 overflow-hidden bg-surface border-b border-app">
+                <div className="absolute top-0 right-0 w-1/3 h-full bg-gradient-to-l from-red-50/50 dark:from-red-900/10 to-transparent pointer-events-none" />
                 <div className="container mx-auto px-6 relative z-10 text-center md:text-left">
                     <div className="max-w-3xl space-y-6">
-                        <div className="inline-flex items-center gap-2 px-3 py-1 bg-red-50 text-red-600 rounded-full text-[10px] font-bold uppercase tracking-widest mx-auto md:mx-0">
+                        <div className="inline-flex items-center gap-2 px-3 py-1 bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 rounded-full text-[10px] font-bold uppercase tracking-widest mx-auto md:mx-0">
                             <Briefcase className="w-3 h-3" />
                             {t('modal.careerOpportunity')}
                         </div>
@@ -132,18 +132,18 @@ export default function JobsClient() {
             </section>
 
             {/* Sticky Search & Filter Bar */}
-            <section className="sticky top-20 z-30 bg-white/80 backdrop-blur-xl border-b border-zinc-100 shadow-sm transition-all duration-300">
+            <section className="sticky top-20 z-30 bg-surface/80 backdrop-blur-xl border-b border-app shadow-sm transition-all duration-300">
                 <div className="container mx-auto px-6 py-4 space-y-4">
                     <div className="flex flex-col lg:flex-row items-center gap-4">
                         {/* Search */}
                         <div className="relative flex-1 group w-full">
-                            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-300 group-focus-within:text-[#D70F24] transition-colors" />
+                            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-400 dark:text-zinc-500 group-focus-within:text-[#D70F24] transition-colors" />
                             <input
                                 type="text"
                                 value={searchQuery}
                                 onChange={(e) => { setSearchQuery(e.target.value); setCurrentPage(1); }}
                                 placeholder={t('searchPlaceholder')}
-                                className="w-full pl-11 pr-6 py-3.5 bg-zinc-100/50 border border-zinc-100 rounded-2xl text-xs font-bold text-primary focus:bg-white focus:border-[#D70F24] transition-all outline-none"
+                                className="w-full pl-11 pr-6 py-3.5 bg-app/50 border border-app rounded-2xl text-xs font-bold text-primary placeholder:text-zinc-400 dark:placeholder:text-zinc-600 focus:bg-surface focus:border-[#D70F24] transition-all outline-none"
                             />
                         </div>
 
@@ -152,7 +152,7 @@ export default function JobsClient() {
                             <select
                                 value={selectedLocation}
                                 onChange={(e) => { setSelectedLocation(e.target.value); setCurrentPage(1); }}
-                                className="w-full px-5 py-3.5 bg-zinc-100/50 border border-zinc-100 rounded-2xl text-xs font-bold text-primary appearance-none focus:bg-white focus:border-[#D70F24] transition-all outline-none"
+                                className="w-full px-5 py-3.5 bg-app/50 border border-app rounded-2xl text-xs font-bold text-primary appearance-none focus:bg-surface focus:border-[#D70F24] transition-all outline-none"
                             >
                                 {regions.map(r => <option key={r.key} value={r.key}>{r.label}</option>)}
                             </select>
@@ -164,7 +164,7 @@ export default function JobsClient() {
                             <select
                                 value={selectedType}
                                 onChange={(e) => { setSelectedType(e.target.value); setCurrentPage(1); }}
-                                className="w-full px-5 py-3.5 bg-zinc-100/50 border border-zinc-100 rounded-2xl text-xs font-bold text-primary appearance-none focus:bg-white focus:border-[#D70F24] transition-all outline-none"
+                                className="w-full px-5 py-3.5 bg-app/50 border border-app rounded-2xl text-xs font-bold text-primary appearance-none focus:bg-surface focus:border-[#D70F24] transition-all outline-none"
                             >
                                 {jobTypes.map(t => <option key={t.value} value={t.value}>{t.label}</option>)}
                             </select>
@@ -180,7 +180,7 @@ export default function JobsClient() {
                                 onClick={() => { setActiveChip(chip.key); setCurrentPage(1); }}
                                 className={`px-5 py-2 rounded-xl text-[10px] font-bold uppercase tracking-widest transition-all whitespace-nowrap ${activeChip === chip.key
                                     ? 'bg-[#D70F24] text-white shadow-lg shadow-red-500/20'
-                                    : 'bg-zinc-100 text-muted hover:bg-zinc-200'
+                                    : 'bg-app text-muted hover:bg-zinc-200 dark:hover:bg-zinc-800'
                                     }`}
                             >
                                 {chip.label}
@@ -210,55 +210,59 @@ export default function JobsClient() {
                                 <article
                                     key={job.id}
                                     onClick={() => { setSelectedJob(job); setShowApplyForm(false); }}
-                                    className="group relative bg-white border border-zinc-100 rounded-[40px] p-8 shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all cursor-pointer overflow-hidden"
+                                    className="group relative bg-surface border border-app rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 cursor-pointer flex flex-col h-full"
                                 >
-                                    {/* Accent Blur */}
-                                    <div className="absolute -top-20 -right-20 w-40 h-40 bg-red-500/5 blur-[80px] group-hover:bg-red-500/10 transition-all" />
+                                    {/* Image Section */}
+                                    <div className="relative h-56 w-full overflow-hidden bg-muted/30">
+                                        {job.logo ? (
+                                            <img
+                                                src={job.logo}
+                                                alt={job.company}
+                                                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                                            />
+                                        ) : (
+                                            <div className="w-full h-full flex items-center justify-center bg-app text-muted">
+                                                <Briefcase className="w-12 h-12 opacity-50" />
+                                            </div>
+                                        )}
 
-                                    <div className="space-y-6 relative z-10">
-                                        <div className="flex items-center justify-between">
-                                            {job.logo ? (
-                                                <img src={job.logo} className="w-14 h-14 rounded-2xl object-contain bg-zinc-50 p-2 shadow-sm" alt={job.company} />
-                                            ) : (
-                                                <div className="w-14 h-14 rounded-2xl bg-zinc-50 flex items-center justify-center text-zinc-300">
-                                                    <Briefcase className="w-6 h-6" />
-                                                </div>
+                                        <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-black/10" />
+
+                                        {/* Badges */}
+                                        <div className="absolute top-4 left-4 flex flex-wrap gap-2 pr-4">
+                                            {/* Premium Badge - Only if featured */}
+                                            {job.featured && (
+                                                <span className="px-3 py-1 bg-[#D70F24] text-white text-[10px] font-black uppercase tracking-widest rounded-lg shadow-md border border-white/10">
+                                                    Premium
+                                                </span>
                                             )}
-                                            <div className="flex items-center gap-1.5 px-3 py-1.5 bg-emerald-50 text-emerald-600 rounded-full text-[9px] font-bold uppercase tracking-widest">
-                                                {job.type}
-                                            </div>
-                                        </div>
 
-                                        <div className="space-y-2">
-                                            <h3 className="text-xl font-heading font-bold text-primary group-hover:text-red-600 transition-colors leading-tight">
-                                                {job.title}
-                                            </h3>
-                                            <div className="flex items-center gap-2 text-muted text-[11px] font-bold uppercase tracking-wider">
-                                                <span className="text-primary">{job.company}</span>
-                                                <span>•</span>
-                                                <span className="flex items-center gap-1">
-                                                    <MapPin className="w-3 h-3" />
-                                                    {job.location}
-                                                </span>
-                                            </div>
+                                            {/* Type Badge */}
+                                            <span className="px-3 py-1 bg-black/70 backdrop-blur-md text-white text-[10px] font-black uppercase tracking-widest rounded-lg border border-white/10 shadow-sm">
+                                                {jobTypes.find(t => t.value === job.type)?.label || job.type}
+                                            </span>
                                         </div>
+                                    </div>
 
-                                        <div className="flex flex-wrap gap-1.5">
-                                            {job.tags.slice(0, 3).map((tag, i) => (
-                                                <span key={i} className="px-3 py-1 bg-zinc-50 text-secondary rounded-lg text-[9px] font-bold uppercase tracking-widest border border-zinc-100">
-                                                    {tag}
-                                                </span>
-                                            ))}
-                                        </div>
+                                    {/* Content Section */}
+                                    <div className="p-6 flex flex-col flex-1">
+                                        {/* Company Name */}
+                                        <h3 className="text-xl font-black text-primary mb-2 line-clamp-1 group-hover:text-[#D70F24] transition-colors tracking-tight">
+                                            {job.company}
+                                        </h3>
 
-                                        <div className="pt-6 border-t border-zinc-50 flex items-center justify-between">
-                                            <div>
-                                                <p className="text-[9px] font-black text-zinc-300 uppercase tracking-widest">{t('salary')}</p>
-                                                <p className="text-lg font-black text-[#1a1a1a]">{job.salary}</p>
-                                            </div>
-                                            <div className="w-10 h-10 rounded-2xl bg-zinc-50 flex items-center justify-center group-hover:bg-red-500 group-hover:text-white transition-all transform group-hover:rotate-45">
-                                                <ArrowRight className="w-5 h-5" />
-                                            </div>
+                                        {/* Job Title / Description Excerpt */}
+                                        <p className="text-sm font-medium text-secondary mb-6 line-clamp-2 flex-1">
+                                            {job.title}
+                                            {job.description && job.description.length > 0 && (
+                                                <span className="font-normal opacity-80"> — {job.description[0]}</span>
+                                            )}
+                                        </p>
+
+                                        {/* Location */}
+                                        <div className="pt-4 border-t border-app mt-auto flex items-center gap-2 text-xs font-bold text-muted uppercase tracking-wider">
+                                            <MapPin className="w-3.5 h-3.5" />
+                                            <span className="line-clamp-1">{job.location}</span>
                                         </div>
                                     </div>
                                 </article>
@@ -271,7 +275,7 @@ export default function JobsClient() {
                                 <button
                                     onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
                                     disabled={currentPage === 1}
-                                    className="p-4 rounded-2xl bg-white border border-zinc-100 text-zinc-400 hover:text-[#1a1a1a] disabled:opacity-30 transition-all font-black text-xs"
+                                    className="p-4 rounded-2xl bg-surface border border-app text-zinc-400 hover:text-primary disabled:opacity-30 transition-all font-black text-xs"
                                 >
                                     {ct('previous')}
                                 </button>
@@ -281,7 +285,7 @@ export default function JobsClient() {
                                         onClick={() => setCurrentPage(i + 1)}
                                         className={`w-12 h-12 rounded-2xl font-black text-xs transition-all ${currentPage === i + 1
                                             ? 'bg-red-500 text-white shadow-xl shadow-red-500/20'
-                                            : 'bg-white border border-zinc-100 text-zinc-400 hover:text-[#1a1a1a]'
+                                            : 'bg-surface border border-app text-zinc-400 hover:text-primary'
                                             }`}
                                     >
                                         {i + 1}
@@ -290,7 +294,7 @@ export default function JobsClient() {
                                 <button
                                     onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
                                     disabled={currentPage === totalPages}
-                                    className="p-4 rounded-2xl bg-white border border-zinc-100 text-zinc-400 hover:text-[#1a1a1a] disabled:opacity-30 transition-all font-black text-xs"
+                                    className="p-4 rounded-2xl bg-surface border border-app text-zinc-400 hover:text-primary disabled:opacity-30 transition-all font-black text-xs"
                                 >
                                     {ct('next')}
                                 </button>
@@ -299,15 +303,16 @@ export default function JobsClient() {
                     </>
                 ) : (
                     <div className="flex flex-col items-center justify-center py-32 text-center space-y-4">
-                        <div className="w-20 h-20 bg-zinc-100 rounded-[32px] flex items-center justify-center text-zinc-300">
+                        <div className="w-20 h-20 bg-app rounded-[32px] flex items-center justify-center text-zinc-300 dark:text-zinc-600">
                             <Search className="w-10 h-10" />
                         </div>
-                        <h3 className="text-2xl font-black text-[#1a1a1a]">{t('noJobsTitle')}</h3>
-                        <p className="text-zinc-400 max-w-sm font-medium">{t('noJobsDescription')}</p>
+                        <h3 className="text-2xl font-black text-primary">{t('noJobsTitle')}</h3>
+                        <p className="text-secondary max-w-sm font-medium">{t('noJobsDescription')}</p>
                     </div>
                 )}
             </main>
 
+            {/* Premium Job Details Modal */}
             {/* Premium Job Details Modal */}
             {selectedJob && (
                 <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 sm:p-12">
@@ -315,46 +320,46 @@ export default function JobsClient() {
                         className="absolute inset-0 bg-[#1a1a1a]/80 backdrop-blur-md animate-fade-in"
                         onClick={() => setSelectedJob(null)}
                     />
-                    <div className="relative w-full max-w-5xl bg-white rounded-[48px] shadow-2xl overflow-hidden flex flex-col md:flex-row h-full max-h-[85vh] animate-slide-up">
+                    <div className="relative w-full max-w-5xl bg-white dark:bg-[#0B1020] rounded-[48px] shadow-2xl overflow-hidden flex flex-col md:flex-row h-full max-h-[85vh] animate-slide-up border border-zinc-100 dark:border-zinc-800">
                         <button
                             onClick={() => setSelectedJob(null)}
-                            className="absolute top-8 right-8 z-[110] w-12 h-12 rounded-2xl bg-white border border-zinc-100 flex items-center justify-center shadow-lg hover:rotate-90 transition-all duration-500"
+                            className="absolute top-8 right-8 z-[110] w-12 h-12 rounded-2xl bg-white dark:bg-white/10 border border-zinc-100 dark:border-zinc-700 flex items-center justify-center shadow-lg hover:rotate-90 transition-all duration-500 text-zinc-500 dark:text-white"
                         >
                             <X className="w-6 h-6" />
                         </button>
 
                         {/* Modal Lead Section */}
-                        <div className="w-full md:w-[40%] bg-zinc-50/50 p-12 flex flex-col justify-between border-r border-zinc-100">
+                        <div className="w-full md:w-[40%] bg-zinc-50 dark:bg-white/5 p-12 flex flex-col justify-between border-r border-zinc-100 dark:border-zinc-800">
                             <div className="space-y-8">
                                 {selectedJob.logo && (
-                                    <img src={selectedJob.logo} className="w-24 h-24 rounded-3xl object-contain bg-white p-4 shadow-xl shadow-zinc-200/50" alt={selectedJob.company} />
+                                    <img src={selectedJob.logo} className="w-24 h-24 rounded-3xl object-contain bg-white dark:bg-white/10 p-4 shadow-xl shadow-black/5" alt={selectedJob.company} />
                                 )}
                                 <div>
-                                    <div className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-red-50 text-red-600 rounded-full text-[10px] font-black uppercase tracking-widest mb-4">
+                                    <div className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-red-50 dark:bg-red-500/20 text-red-600 dark:text-red-400 rounded-full text-[10px] font-black uppercase tracking-widest mb-4">
                                         {selectedJob.type}
                                     </div>
-                                    <h2 className="text-4xl font-black text-[#1a1a1a] tracking-tight leading-tight">
+                                    <h2 className="text-4xl font-black text-primary tracking-tight leading-tight">
                                         {selectedJob.title}
                                     </h2>
-                                    <p className="text-xl font-bold text-zinc-400 mt-2 uppercase tracking-wide">{selectedJob.company}</p>
+                                    <p className="text-xl font-bold text-secondary mt-2 uppercase tracking-wide">{selectedJob.company}</p>
                                 </div>
                                 <div className="space-y-4">
                                     <div className="flex items-center gap-3">
-                                        <div className="w-10 h-10 rounded-xl bg-white shadow-sm flex items-center justify-center text-red-500">
+                                        <div className="w-10 h-10 rounded-xl bg-white dark:bg-white/10 shadow-sm flex items-center justify-center text-red-500">
                                             <MapPin className="w-5 h-5" />
                                         </div>
                                         <div>
-                                            <p className="text-[10px] font-black text-zinc-300 uppercase tracking-widest">Office Location</p>
-                                            <p className="text-sm font-black text-[#1a1a1a]">{selectedJob.location}</p>
+                                            <p className="text-[10px] font-black text-zinc-400 dark:text-zinc-500 uppercase tracking-widest">Office Location</p>
+                                            <p className="text-sm font-black text-primary">{selectedJob.location}</p>
                                         </div>
                                     </div>
                                     <div className="flex items-center gap-3">
-                                        <div className="w-10 h-10 rounded-xl bg-white shadow-sm flex items-center justify-center text-emerald-500">
+                                        <div className="w-10 h-10 rounded-xl bg-white dark:bg-white/10 shadow-sm flex items-center justify-center text-emerald-500">
                                             <Eye className="w-5 h-5" />
                                         </div>
                                         <div>
-                                            <p className="text-[10px] font-black text-zinc-300 uppercase tracking-widest">Global Visibility</p>
-                                            <p className="text-sm font-black text-[#1a1a1a]">{selectedJob.db_fields?.view_count || 0} Views</p>
+                                            <p className="text-[10px] font-black text-zinc-400 dark:text-zinc-500 uppercase tracking-widest">Global Visibility</p>
+                                            <p className="text-sm font-black text-primary">{selectedJob.db_fields?.view_count || 0} Views</p>
                                         </div>
                                     </div>
                                 </div>
@@ -370,7 +375,7 @@ export default function JobsClient() {
                             ) : (
                                 <button
                                     onClick={() => setShowApplyForm(false)}
-                                    className="w-full bg-zinc-100 text-[#1a1a1a] py-5 rounded-3xl font-black text-sm transition-all"
+                                    className="w-full bg-white dark:bg-white/10 text-primary border border-zinc-100 dark:border-zinc-700 py-5 rounded-3xl font-black text-sm transition-all hover:bg-zinc-50 dark:hover:bg-white/20"
                                 >
                                     {ct('back')}
                                 </button>
@@ -403,7 +408,7 @@ export default function JobsClient() {
                                         </div>
                                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                             {selectedJob.requirements?.map((req, i) => (
-                                                <div key={i} className="p-4 bg-zinc-50 flex items-start gap-3 rounded-2xl border border-zinc-100">
+                                                <div key={i} className="p-4 bg-zinc-50 dark:bg-white/5 flex items-start gap-3 rounded-2xl border border-zinc-100 dark:border-zinc-800">
                                                     <div className="w-5 h-5 rounded-full bg-emerald-500 text-white flex-shrink-0 flex items-center justify-center mt-0.5">
                                                         <ChevronRight className="w-3 h-3" />
                                                     </div>
@@ -420,7 +425,7 @@ export default function JobsClient() {
                                         </div>
                                         <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
                                             {selectedJob.benefits?.map((benefit: any, i) => (
-                                                <div key={i} className="p-6 bg-white border border-zinc-100 rounded-3xl text-center space-y-2 hover:border-emerald-200 transition-colors">
+                                                <div key={i} className="p-6 bg-white dark:bg-white/5 border border-zinc-100 dark:border-zinc-800 rounded-3xl text-center space-y-2 hover:border-emerald-200 dark:hover:border-emerald-800 transition-colors">
                                                     <p className="text-xs font-bold text-primary uppercase tracking-wider">{benefit.label}</p>
                                                 </div>
                                             ))}

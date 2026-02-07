@@ -11,7 +11,7 @@ export function StatsCard({ membersCount, questionsCount, answersCount }: StatsC
     const t = useTranslations();
 
     return (
-        <div className="bg-gradient-to-br from-[#EAEAEA] to-[#f5f5f5] dark:from-gray-800 dark:to-gray-700 border border-app rounded-2xl p-8 shadow-sm h-full">
+        <div className="glass-card p-8 h-full">
             <div className="flex items-center justify-center gap-4">
                 <div className="w-16 h-16 bg-[#D70F24]/10 rounded-full flex items-center justify-center relative">
                     <Users className="w-8 h-8 text-[#D70F24]" />

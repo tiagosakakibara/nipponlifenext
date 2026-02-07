@@ -39,27 +39,27 @@ function QuestionCard({ title, slug, authorName, answersCount, category, created
     return (
         <Link
             href={`/comunidade/duvidas/${slug}`}
-            className="block bg-white dark:bg-surface border border-gray-200 dark:border-app rounded-xl p-5 hover:shadow-md hover:border-blue-500/30 transition-all duration-200"
+            className="block bg-[var(--bg-card)] border border-[var(--border-card)] rounded-xl p-5 hover:shadow-md hover:border-blue-500/30 dark:hover:border-accent/30 transition-all duration-200"
         >
             {/* Category Badge + Time */}
             <div className="flex items-center justify-between mb-3">
                 <span className="text-[10px] font-bold text-accent uppercase tracking-wider px-2.5 py-1 rounded-md bg-red-50 dark:bg-accent/10">
                     {category || 'GERAL'}
                 </span>
-                <div className="flex items-center gap-1 text-gray-500 dark:text-muted text-xs">
+                <div className="flex items-center gap-1 text-muted text-xs">
                     <Clock className="w-3 h-3" />
                     <span>{timeAgo(createdAt)}</span>
                 </div>
             </div>
 
             {/* Title */}
-            <h3 className="font-semibold text-[#003768] dark:text-primary text-base mb-4 line-clamp-2 hover:text-blue-600 dark:hover:text-accent transition-colors min-h-[3rem]">
+            <h3 className="font-semibold text-primary text-base mb-4 line-clamp-2 hover:text-blue-600 dark:hover:text-accent transition-colors min-h-[3rem]">
                 {title}
             </h3>
 
             {/* Footer */}
-            <div className="flex items-center justify-between pt-3 border-t border-gray-100 dark:border-app">
-                <span className="text-gray-600 dark:text-muted text-xs truncate max-w-[140px]">
+            <div className="flex items-center justify-between pt-3 border-t border-gray-100 dark:border-zinc-800">
+                <span className="text-muted text-xs truncate max-w-[140px]">
                     por {authorName}
                 </span>
 
@@ -113,11 +113,11 @@ export default function CommunityRecommendations({ locale }: CommunityRecommenda
     }, []);
 
     return (
-        <section className="py-12 md:py-16 bg-gray-50 dark:bg-surface/50">
+        <section className="py-12 md:py-16 bg-app">
             <div className="max-w-7xl mx-auto px-4">
                 {/* Section Header */}
                 <div className="mb-8 flex items-center justify-between">
-                    <h2 className="text-[#003768] dark:text-primary text-2xl md:text-3xl font-bold">
+                    <h2 className="text-primary text-2xl md:text-3xl font-bold">
                         {t('guides.questions.title')}
                     </h2>
                     <Link
@@ -132,10 +132,10 @@ export default function CommunityRecommendations({ locale }: CommunityRecommenda
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
                     {loading ? (
                         [...Array(4)].map((_, i) => (
-                            <div key={i} className="bg-white dark:bg-surface border border-gray-200 dark:border-app rounded-xl p-5 h-48 animate-pulse">
-                                <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-1/3 mb-3"></div>
-                                <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-full mb-2"></div>
-                                <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-2/3"></div>
+                            <div key={i} className="bg-[var(--bg-card)] border border-[var(--border-card)] rounded-xl p-5 h-48 animate-pulse">
+                                <div className="h-4 bg-gray-200 dark:bg-zinc-800 rounded w-1/3 mb-3"></div>
+                                <div className="h-4 bg-gray-200 dark:bg-zinc-800 rounded w-full mb-2"></div>
+                                <div className="h-4 bg-gray-200 dark:bg-zinc-800 rounded w-2/3"></div>
                             </div>
                         ))
                     ) : questions.length > 0 ? (
@@ -152,7 +152,7 @@ export default function CommunityRecommendations({ locale }: CommunityRecommenda
                         ))
                     ) : (
                         <div className="col-span-full py-16 text-center">
-                            <p className="text-gray-500 dark:text-muted italic text-sm">
+                            <p className="text-gray-500 dark:text-gray-400 italic text-sm">
                                 Nenhuma dúvida recente encontrada.
                             </p>
                         </div>

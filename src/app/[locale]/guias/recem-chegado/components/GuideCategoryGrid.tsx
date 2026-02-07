@@ -119,10 +119,10 @@ export default function GuideCategoryGrid({ locale }: GuideCategoryGridProps) {
             <div className="max-w-7xl mx-auto px-4">
                 {/* Section Header */}
                 <div className="mb-8">
-                    <h2 className="section-title text-[#003768] dark:text-primary text-2xl md:text-3xl font-bold mb-2">
+                    <h2 className="section-title text-primary text-2xl md:text-3xl font-bold mb-2">
                         {t('guides.categories.title')}
                     </h2>
-                    <p className="text-gray-600 dark:text-secondary text-sm">
+                    <p className="text-secondary text-sm">
                         {t('guides.categories.subtitle')}
                     </p>
                 </div>
@@ -131,10 +131,10 @@ export default function GuideCategoryGrid({ locale }: GuideCategoryGridProps) {
                 {loading ? (
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
                         {[...Array(6)].map((_, i) => (
-                            <div key={i} className="bg-surface border border-app rounded-2xl p-6 animate-pulse">
-                                <div className="w-12 h-12 rounded-xl bg-gray-200 dark:bg-gray-700 mb-4" />
-                                <div className="h-5 bg-gray-200 dark:bg-gray-700 rounded w-2/3 mb-2" />
-                                <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-full" />
+                            <div key={i} className="bg-[var(--bg-card)] border border-[var(--border-card)] rounded-2xl p-6 animate-pulse">
+                                <div className="w-12 h-12 rounded-xl bg-gray-200 dark:bg-zinc-800 mb-4" />
+                                <div className="h-5 bg-gray-200 dark:bg-zinc-800 rounded w-2/3 mb-2" />
+                                <div className="h-4 bg-gray-200 dark:bg-zinc-800 rounded w-full" />
                             </div>
                         ))}
                     </div>
@@ -144,17 +144,17 @@ export default function GuideCategoryGrid({ locale }: GuideCategoryGridProps) {
                             <Link
                                 key={category.id}
                                 href={category.href}
-                                className="group bg-white dark:bg-surface border border-gray-200 dark:border-app rounded-2xl p-6 hover:shadow-xl hover:border-blue-500/30 transition-all duration-300 transform hover:-translate-y-1"
+                                className="group bg-[var(--bg-card)] border border-[var(--border-card)] rounded-2xl p-6 hover:shadow-xl hover:border-blue-500/30 dark:hover:border-accent/30 transition-all duration-300 transform hover:-translate-y-1"
                             >
                                 <div className="flex items-start gap-4">
-                                    <div className="w-12 h-12 bg-blue-600 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform text-white">
+                                    <div className="w-12 h-12 bg-blue-600 dark:bg-accent/10 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform text-white dark:text-accent">
                                         {category.icon}
                                     </div>
                                     <div className="flex-1">
-                                        <h3 className="text-base font-bold text-[#003768] dark:text-primary mb-2 group-hover:text-blue-600 transition-colors">
+                                        <h3 className="text-base font-bold text-primary mb-2 group-hover:text-blue-600 dark:group-hover:text-accent transition-colors">
                                             {category.title}
                                         </h3>
-                                        <p className="text-sm text-gray-600 dark:text-muted line-clamp-2">
+                                        <p className="text-sm text-secondary line-clamp-2">
                                             {category.description}
                                         </p>
                                     </div>

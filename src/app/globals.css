@@ -93,6 +93,10 @@
   --nl-text-3: rgba(0, 55, 104, 0.55);
   --nl-link: #5593C3;
   --nl-accent: #D70F24;
+
+  /* Semantic Card Colors */
+  --bg-card: #FFFFFF;
+  --border-card: #E5E7EB;
 }
 
 .dark {
@@ -104,6 +108,12 @@
   --nl-text-3: rgba(255, 255, 255, 0.55);
   --nl-link: #5593C3;
   --nl-accent: #D70F24;
+
+  /* Semantic Card Colors - Dark Mode */
+  --bg-card: rgba(255, 255, 255, 0.08);
+  /* #FFFFFF14 - Matches bg-surface */
+  --border-card: rgba(255, 255, 255, 0.12);
+  /* Matches border-app */
 }
 
 @layer base {

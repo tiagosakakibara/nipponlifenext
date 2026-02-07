@@ -248,13 +248,13 @@ export default function EventsClient() {
     ];
 
     return (
-        <div className="min-h-screen bg-white">
+        <div className="min-h-screen bg-app">
             {/* Hero Section */}
-            <section className="relative pt-32 pb-20 overflow-hidden bg-white border-b border-zinc-100">
-                <div className="absolute top-0 right-0 w-1/3 h-full bg-gradient-to-l from-red-50/50 to-transparent pointer-events-none" />
+            <section className="relative pt-32 pb-20 overflow-hidden bg-surface border-b border-app">
+                <div className="absolute top-0 right-0 w-1/3 h-full bg-gradient-to-l from-red-50/50 dark:from-red-900/10 to-transparent pointer-events-none" />
                 <div className="container mx-auto px-6 relative z-10">
                     <div className="max-w-3xl space-y-6">
-                        <div className="inline-flex items-center gap-2 px-3 py-1 bg-red-50 text-red-600 rounded-full text-[10px] font-bold uppercase tracking-widest">
+                        <div className="inline-flex items-center gap-2 px-3 py-1 bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 rounded-full text-[10px] font-bold uppercase tracking-widest">
                             <CalendarDays className="w-3 h-3" />
                             {t('titleHighlight')}
                         </div>
@@ -269,7 +269,7 @@ export default function EventsClient() {
             </section>
 
             {/* Filters Bar */}
-            <section className="sticky top-[52px] z-30 bg-white/80 backdrop-blur-xl border-b border-zinc-100 shadow-sm">
+            <section className="sticky top-[52px] z-30 bg-surface/80 backdrop-blur-xl border-b border-app shadow-sm">
                 <div className="container mx-auto px-6 py-4">
                     <div className="flex flex-col lg:flex-row gap-4">
                         <div className="flex-1 relative group">
@@ -279,7 +279,7 @@ export default function EventsClient() {
                                 value={search}
                                 onChange={(e) => setSearch(e.target.value)}
                                 placeholder={t('searchPlaceholder')}
-                                className="w-full pl-11 pr-6 py-3.5 bg-zinc-100/50 border border-zinc-100 rounded-2xl text-xs font-bold text-primary focus:bg-white focus:border-[#D70F24] transition-all outline-none"
+                                className="w-full pl-11 pr-6 py-3.5 bg-app/50 border border-app rounded-2xl text-xs font-bold text-primary placeholder:text-zinc-400 dark:placeholder:text-zinc-600 focus:bg-surface focus:border-[#D70F24] transition-all outline-none"
                             />
                         </div>
 
@@ -288,7 +288,7 @@ export default function EventsClient() {
                                 <select
                                     value={selectedMonth}
                                     onChange={(e) => setSelectedMonth(e.target.value === '' ? '' : Number(e.target.value))}
-                                    className="px-5 py-3.5 bg-zinc-100/50 border border-zinc-100 rounded-2xl text-xs font-bold text-primary appearance-none focus:bg-white focus:border-[#D70F24] transition-all outline-none pr-10 min-w-[140px]"
+                                    className="px-5 py-3.5 bg-app/50 border border-app rounded-2xl text-xs font-bold text-primary appearance-none focus:bg-surface focus:border-[#D70F24] transition-all outline-none pr-10 min-w-[140px]"
                                 >
                                     {months.map(m => <option key={m.value} value={m.value}>{m.label}</option>)}
                                 </select>
@@ -299,18 +299,18 @@ export default function EventsClient() {
                                 <select
                                     value={selectedYear}
                                     onChange={(e) => setSelectedYear(Number(e.target.value))}
-                                    className="px-5 py-3.5 bg-zinc-100/50 border border-zinc-100 rounded-2xl text-xs font-bold text-primary appearance-none focus:bg-white focus:border-[#D70F24] transition-all outline-none pr-10 min-w-[100px]"
+                                    className="px-5 py-3.5 bg-app/50 border border-app rounded-2xl text-xs font-bold text-primary appearance-none focus:bg-surface focus:border-[#D70F24] transition-all outline-none pr-10 min-w-[100px]"
                                 >
                                     {years.map(y => <option key={y.value} value={y.value}>{y.label}</option>)}
                                 </select>
                                 <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-muted pointer-events-none" />
                             </div>
 
-                            <div className="flex items-center gap-1 p-1 bg-zinc-100 rounded-2xl border border-zinc-200">
+                            <div className="flex items-center gap-1 p-1 bg-app rounded-2xl border border-app">
                                 <button
                                     onClick={() => setViewMode('calendar')}
                                     className={`px-4 py-2.5 rounded-xl transition-all flex items-center gap-2 ${viewMode === 'calendar'
-                                        ? 'bg-white text-[#D70F24] shadow-md border border-zinc-200'
+                                        ? 'bg-[#D70F24] text-white shadow-lg shadow-red-500/20'
                                         : 'text-muted hover:text-primary'
                                         }`}
                                 >
@@ -320,7 +320,7 @@ export default function EventsClient() {
                                 <button
                                     onClick={() => setViewMode('list')}
                                     className={`px-4 py-2.5 rounded-xl transition-all flex items-center gap-2 ${viewMode === 'list'
-                                        ? 'bg-white text-[#D70F24] shadow-md border border-zinc-200'
+                                        ? 'bg-[#D70F24] text-white shadow-lg shadow-red-500/20'
                                         : 'text-muted hover:text-primary'
                                         }`}
                                 >
@@ -342,8 +342,8 @@ export default function EventsClient() {
                     </div>
                 ) : events.length === 0 ? (
                     <div className="text-center py-20 max-w-md mx-auto">
-                        <div className="w-20 h-20 bg-zinc-50 rounded-[32px] flex items-center justify-center mx-auto mb-6">
-                            <CalendarIcon className="w-8 h-8 text-zinc-300" />
+                        <div className="w-20 h-20 bg-app rounded-[32px] flex items-center justify-center mx-auto mb-6">
+                            <CalendarIcon className="w-8 h-8 text-muted" />
                         </div>
                         <h3 className="text-xl font-heading font-bold text-primary mb-2">{t('noEventsTitle')}</h3>
                         <p className="text-secondary mb-8">{t('noEventsDescription')}</p>
@@ -355,20 +355,64 @@ export default function EventsClient() {
                         </button>
                     </div>
                 ) : viewMode === 'calendar' ? (
-                    <div className="bg-white rounded-[40px] border border-zinc-100 shadow-2xl p-4 md:p-8 animate-in fade-in slide-in-from-bottom-4 duration-700 min-h-[800px]">
+                    <div className="bg-surface rounded-[40px] border border-app shadow-2xl p-4 md:p-8 animate-in fade-in slide-in-from-bottom-4 duration-700 min-h-[800px]">
                         <style>{`
                             .sx__calendar-wrapper {
                                 --sx-color-primary: #D70F24;
                                 --sx-color-on-primary: #fff;
-                                --sx-color-background: #fff;
-                                --sx-color-on-background: #003768;
-                                --sx-color-surface: #f8f9fa;
-                                --sx-color-on-surface: rgba(0, 55, 104, 0.72);
-                                --sx-color-border: #EAEAEA;
+                                --sx-color-background: var(--nl-bg);
+                                --sx-color-on-background: var(--nl-text);
+                                --sx-color-surface: var(--nl-surface);
+                                --sx-color-on-surface: var(--nl-text-2);
+                                --sx-color-border: var(--nl-border);
+                                
+                                /* Override schedule-x internal standard colors for dark mode visibility */
+                                --sx-color-neutral-30: var(--nl-border);
+                                --sx-color-neutral-90: var(--nl-text); /* Main text color */
+                                --sx-color-neutral-50: var(--nl-text-3); /* Secondary text */
+                                
+                                border-radius: 24px;
+                                color: var(--nl-text) !important;
                             }
+                            
+                            /* Force text color on calendar internal elements */
+                            .sx__month-grid-day__header-day-number,
+                            .sx__view-container,
+                            .sx__week-grid__date-axis-day-name,
+                            .sx__week-grid__date-axis-day-number {
+                                color: var(--nl-text) !important;
+                            }
+
                             .sx__month-grid-day {
                                 min-height: 140px;
+                                border-color: var(--nl-border) !important;
                             }
+
+                            /* Navigation arrows and header controls */
+                            .sx__chevron {
+                                color: var(--nl-text) !important;
+                            }
+                            
+                            .sx__chevron-wrapper svg {
+                                stroke: var(--nl-text) !important;
+                            }
+                            
+                            .sx__chevron-wrapper:hover {
+                                background-color: var(--nl-surface) !important;
+                            }
+
+                            /* Button text colors (Today, views, etc) */
+                            .sx__calendar-header-content button,
+                            .sx__view-selection-selected-item,
+                            .sx__view-selection-items {
+                                color: var(--nl-text) !important;
+                            }
+
+                            /* Specific fix for Today button container/text */
+                            .sx__now-indicator {
+                                background-color: #D70F24 !important;
+                            }
+                            
                             .sx__event {
                                 background-color: #D70F24 !important;
                                 border: none !important;
@@ -399,7 +443,7 @@ export default function EventsClient() {
                                     <h2 className="text-2xl font-heading font-bold text-primary uppercase tracking-tight whitespace-nowrap">
                                         {formatMonthHeader(monthKey)}
                                     </h2>
-                                    <div className="h-px w-full bg-gradient-to-r from-zinc-200 to-transparent" />
+                                    <div className="h-px w-full bg-gradient-to-r from-zinc-200 dark:from-zinc-800 to-transparent" />
                                 </div>
 
                                 <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
@@ -415,7 +459,7 @@ export default function EventsClient() {
                                 <button
                                     onClick={() => setPage(p => p + 1)}
                                     disabled={loadingMore}
-                                    className="px-8 py-4 rounded-2xl bg-zinc-50 border border-zinc-100 text-primary font-bold text-xs uppercase tracking-widest hover:bg-zinc-100 transition-all flex items-center gap-3 disabled:opacity-50"
+                                    className="px-8 py-4 rounded-2xl bg-surface border border-app text-primary font-bold text-xs uppercase tracking-widest hover:bg-app transition-all flex items-center gap-3 disabled:opacity-50"
                                 >
                                     {loadingMore ? <Loader2 className="w-4 h-4 animate-spin" /> : <div className="w-1.5 h-1.5 rounded-full bg-[#D70F24]" />}
                                     {loadingMore ? t('loading') : t('loadMore')}
