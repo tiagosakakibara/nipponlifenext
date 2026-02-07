@@ -320,19 +320,19 @@ export default function JobsClient() {
                         className="absolute inset-0 bg-[#1a1a1a]/80 backdrop-blur-md animate-fade-in"
                         onClick={() => setSelectedJob(null)}
                     />
-                    <div className="relative w-full max-w-4xl bg-white dark:bg-[#0B1020] rounded-[48px] shadow-2xl overflow-hidden flex flex-col md:flex-row h-auto max-h-[90vh] animate-slide-up border border-zinc-100 dark:border-zinc-800">
+                    <div className="relative w-full max-w-4xl bg-app rounded-[48px] shadow-2xl overflow-hidden flex flex-col md:flex-row h-auto max-h-[90vh] animate-slide-up border border-app">
                         <button
                             onClick={() => setSelectedJob(null)}
-                            className="absolute top-8 right-8 z-[110] w-12 h-12 rounded-2xl bg-white dark:bg-white/10 border border-zinc-100 dark:border-zinc-700 flex items-center justify-center shadow-lg hover:rotate-90 transition-all duration-500 text-zinc-500 dark:text-white"
+                            className="absolute top-8 right-8 z-[110] w-12 h-12 rounded-2xl bg-surface border border-app flex items-center justify-center shadow-lg hover:rotate-90 transition-all duration-500 text-primary"
                         >
                             <X className="w-6 h-6" />
                         </button>
 
                         {/* Modal Lead Section */}
-                        <div className="w-full md:w-[38%] bg-zinc-50 dark:bg-white/5 p-6 md:p-10 flex flex-col border-r border-zinc-100 dark:border-zinc-800 max-h-[50vh] md:max-h-none overflow-y-auto md:overflow-visible shrink-0">
+                        <div className="w-full md:w-[38%] bg-surface p-6 md:p-10 flex flex-col border-r border-app max-h-[50vh] md:max-h-none overflow-y-auto md:overflow-visible shrink-0">
                             <div className="space-y-6 md:space-y-8 flex-1">
                                 {selectedJob.logo && (
-                                    <img src={selectedJob.logo} className="w-24 h-24 rounded-3xl object-contain bg-white dark:bg-white/10 p-4 shadow-xl shadow-black/5" alt={selectedJob.company} />
+                                    <img src={selectedJob.logo} className="w-24 h-24 rounded-3xl object-contain bg-surface border border-app p-4 shadow-xl shadow-black/5" alt={selectedJob.company} />
                                 )}
                                 <div>
                                     <div className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-red-50 dark:bg-red-500/20 text-red-600 dark:text-red-400 rounded-full text-[10px] font-black uppercase tracking-widest mb-4">
@@ -345,7 +345,7 @@ export default function JobsClient() {
                                 </div>
                                 <div className="space-y-4">
                                     <div className="flex items-center gap-3">
-                                        <div className="w-10 h-10 rounded-xl bg-white dark:bg-white/10 shadow-sm flex items-center justify-center text-red-500">
+                                        <div className="w-10 h-10 rounded-xl bg-surface shadow-sm flex items-center justify-center text-red-500 border border-app">
                                             <MapPin className="w-5 h-5" />
                                         </div>
                                         <div>
@@ -354,7 +354,7 @@ export default function JobsClient() {
                                         </div>
                                     </div>
                                     <div className="flex items-center gap-3">
-                                        <div className="w-10 h-10 rounded-xl bg-white dark:bg-white/10 shadow-sm flex items-center justify-center text-emerald-500">
+                                        <div className="w-10 h-10 rounded-xl bg-surface shadow-sm flex items-center justify-center text-emerald-500 border border-app">
                                             <Eye className="w-5 h-5" />
                                         </div>
                                         <div>
@@ -376,7 +376,7 @@ export default function JobsClient() {
                                 ) : (
                                     <button
                                         onClick={() => setShowApplyForm(false)}
-                                        className="w-full bg-white dark:bg-white/10 text-primary border border-zinc-100 dark:border-zinc-700 py-5 rounded-3xl font-black text-sm transition-all hover:bg-zinc-50 dark:hover:bg-white/20"
+                                        className="w-full bg-surface text-primary border border-app py-5 rounded-3xl font-black text-sm transition-all hover:bg-zinc-100 dark:hover:bg-white/10"
                                     >
                                         {ct('back')}
                                     </button>
@@ -385,7 +385,7 @@ export default function JobsClient() {
                         </div>
 
                         {/* Modal Content Section */}
-                        <div className="flex-1 p-6 md:p-10 overflow-y-auto">
+                        <div className="flex-1 p-6 md:p-10 overflow-y-auto bg-app">
                             {showApplyForm ? (
                                 <ApplyForm
                                     jobTitle={selectedJob.title}
@@ -410,7 +410,7 @@ export default function JobsClient() {
                                         </div>
                                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                             {selectedJob.requirements?.map((req, i) => (
-                                                <div key={i} className="p-4 bg-zinc-50 dark:bg-white/5 flex items-start gap-3 rounded-2xl border border-zinc-100 dark:border-zinc-800">
+                                                <div key={i} className="p-4 bg-surface flex items-start gap-3 rounded-2xl border border-app">
                                                     <div className="w-5 h-5 rounded-full bg-emerald-500 text-white flex-shrink-0 flex items-center justify-center mt-0.5">
                                                         <ChevronRight className="w-3 h-3" />
                                                     </div>
@@ -427,7 +427,7 @@ export default function JobsClient() {
                                         </div>
                                         <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
                                             {selectedJob.benefits?.map((benefit: any, i) => (
-                                                <div key={i} className="p-6 bg-white dark:bg-white/5 border border-zinc-100 dark:border-zinc-800 rounded-3xl text-center space-y-2 hover:border-emerald-200 dark:hover:border-emerald-800 transition-colors">
+                                                <div key={i} className="p-6 bg-surface border border-app rounded-3xl text-center space-y-2 hover:border-emerald-200 dark:hover:border-emerald-800 transition-colors">
                                                     <p className="text-xs font-bold text-primary uppercase tracking-wider">{benefit.label}</p>
                                                 </div>
                                             ))}

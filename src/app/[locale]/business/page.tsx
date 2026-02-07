@@ -2,6 +2,7 @@ import { getTranslations } from 'next-intl/server';
 import { createClient } from '@/utils/supabase/server';
 import { BusinessDirectory } from './BusinessDirectory';
 import { Business } from '@/types/business';
+import { Filter } from 'lucide-react';
 
 type Props = {
     params: Promise<{ locale: string }>;
@@ -51,15 +52,17 @@ export default async function BusinessPage({ params, searchParams }: Props) {
 
     return (
         <main className="min-h-screen bg-app">
-            {/* Hero */}
-            <div className="relative bg-surface h-[136px] flex items-center px-4 overflow-hidden border-b border-app">
-                <div className="absolute inset-0 bg-gradient-to-r from-[#D70F24]/5 to-indigo-900/5 dark:from-[#D70F24]/10 dark:to-indigo-900/10 pointer-events-none" />
-                <div className="max-w-7xl mx-auto relative z-10 text-center w-full">
-                    <h1 className="text-4xl md:text-5xl font-display font-black text-[#003768] tracking-tighter">
-                        {t('business.directoryTitlePart1', { defaultMessage: 'Encontre os' })} <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#D70F24] via-[#E63946] to-[#FF4D6D]">{t('business.directoryTitleHighlight', { defaultMessage: 'melhores serviços' })}</span> {t('business.directoryTitlePart2', { defaultMessage: 'no Japão' })}
-                    </h1>
+            {/* Hero Section - Standard Pattern */}
+            <section className="relative min-h-[130px] pt-12 pb-6 flex items-center overflow-hidden bg-surface border-b border-app">
+                <div className="absolute top-0 right-0 w-1/3 h-full bg-gradient-to-l from-red-50/50 dark:from-red-900/10 to-transparent pointer-events-none" />
+                <div className="container mx-auto px-6 relative z-10">
+                    <div className="max-w-4xl mx-auto flex flex-col items-center text-center space-y-4">
+                        <h1 className="text-3xl md:text-5xl font-heading font-black text-primary tracking-tight leading-[1.1]">
+                            {t('business.directoryTitlePart1', { defaultMessage: 'Encontre os' })} <span className="text-[#D70F24]">{t('business.directoryTitleHighlight', { defaultMessage: 'Melhores Serviços' })}</span> {t('business.directoryTitlePart2', { defaultMessage: 'no Japão' })}
+                        </h1>
+                    </div>
                 </div>
-            </div>
+            </section>
 
             <BusinessDirectory businesses={(businesses as Business[]) || []} />
         </main>

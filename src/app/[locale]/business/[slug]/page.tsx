@@ -93,7 +93,7 @@ export default async function BusinessProfilePage({ params }: Props) {
             <ArticleTracking slug={slug} type="business" />
 
             {/* Hero / Cover */}
-            <div className="relative h-64 md:h-80 bg-gray-900 overflow-hidden">
+            <div className="relative h-56 md:h-64 bg-gray-900 overflow-hidden">
                 {b.cover_image_url && (
                     <img
                         src={storageService.getFileUrl(b.cover_image_url)}

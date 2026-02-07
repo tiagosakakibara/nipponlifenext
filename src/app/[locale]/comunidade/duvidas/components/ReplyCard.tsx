@@ -69,7 +69,7 @@ export function ReplyCard({ answer, isLiked, onToggleLike, onUpdate, onDelete, o
     };
 
     const handleDelete = async () => {
-        if (window.confirm(t('admin.confirmDelete', { defaultMessage: 'Tem certeza?' }))) {
+        if (window.confirm(t('common.confirmDelete', { defaultMessage: 'Tem certeza?' }))) {
             const success = await onDelete(answer.id);
             if (success) {
                 toast.success(t('common.deleted', { defaultMessage: 'Excluído com sucesso!' }));

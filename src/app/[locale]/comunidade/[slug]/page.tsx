@@ -75,15 +75,8 @@ export default async function CommunityPostDetailPage({ params }: Props) {
     const content = getTranslatedField(post, 'content', locale);
     const categoryName = (post.community_categories as any)?.name || 'Geral';
     const categorySlug = (post.community_categories as any)?.slug || 'geral';
-    // Map database slugs to translation keys
-    const categoryKeyMap: Record<string, string> = {
-        'inicio': 'home',
-        'dicas-do-ceo': 'ceotips',
-        'nihongo-class': 'nihongoclass',
-        'avisos-governamentais': 'governmentnotices'
-    };
-    const categoryKey = categoryKeyMap[categorySlug.toLowerCase()] || categorySlug;
-    const categoryLabel = t(`community.categories.${categoryKey}`, { defaultMessage: categoryName });
+
+    const categoryLabel = t(`community.categories.${categorySlug}`, { defaultMessage: categoryName });
     const authorName = (post.author as any)?.full_name || (post.author as any)?.username || t('community.questions.anonymous', { defaultMessage: 'Anônimo' });
     const authorAvatar = (post.author as any)?.avatar_url;
 
@@ -148,7 +141,7 @@ export default async function CommunityPostDetailPage({ params }: Props) {
                         </div>
                         <div className="flex items-center gap-2">
                             <Eye className="w-3.5 h-3.5 text-[#D70F24]" />
-                            <span>{post.view_count || 0} {t('common.views', { defaultMessage: 'visualizações' })}</span>
+                            <span>{post.view_count || 0} {t('community.post.views', { defaultMessage: 'visualizações' })}</span>
                         </div>
                         <div className="flex items-center gap-2">
                             <User className="w-3.5 h-3.5 text-[#D70F24]" />
@@ -228,7 +221,7 @@ export default async function CommunityPostDetailPage({ params }: Props) {
                                                 {getTranslatedField(pop, 'title', locale)}
                                             </h4>
                                             <span className="text-[10px] text-zinc-400 mt-1 block">
-                                                {pop.view_count || 0} {t('common.views', { defaultMessage: 'visualizações' })}
+                                                {pop.view_count || 0} {t('community.post.views', { defaultMessage: 'visualizações' })}
                                             </span>
                                         </div>
                                     </Link>

@@ -74,6 +74,8 @@
         "delete": "削除",
         "edit": "編集",
         "add": "追加",
+        "access": "アクセス",
+        "like": "いいね",
         "back": "戻る",
         "next": "次へ",
         "previous": "前へ",
@@ -97,7 +99,10 @@
         "select": "選択...",
         "optional": "任意",
         "submitting": "送信中...",
-        "event": "イベント"
+        "event": "イベント",
+        "comments": {
+            "posted": "コメントを投稿しました！"
+        }
     },
     "home": {
         "hero": {
@@ -160,6 +165,7 @@
         "newsletterButton": "今すぐ登録"
     },
     "business": {
+        "titleHighlight": "最高のサービス",
         "title": "ビジネスガイド",
         "subtitle": "最高の店舗やサービスを見つける",
         "shareText": "NipponLifeで{name}をチェックしてください",
@@ -207,21 +213,24 @@
         }
     },
     "community": {
+        "title": "コミュニティ",
+        "subtitle": "日本のコミュニティとつながる",
         "categoriesTitle": "カテゴリー",
         "categories": {
-            "home": "ホーム",
-            "ceotips": "CEOのヒント",
-            "nihongoclass": "日本語クラス",
-            "governmentnotices": "政府からのお知らせ",
-            "tourism": "観光",
-            "general": "一般",
-            "visa": "ビザと移民",
-            "health": "健康と保険",
-            "work": "仕事",
-            "housing": "住居",
-            "documents": "書類と登録",
-            "culture": "共生と文化",
-            "others": "その他"
+            "inicio": "ホーム",
+            "dicas-do-ceo": "CEOのヒント",
+            "nihongo": "日本語",
+            "classy": "Classy",
+            "avisos-governamentais": "政府からのお知らせ",
+            "turismo": "観光",
+            "geral": "一般",
+            "visto": "ビザと移民",
+            "saude": "健康と保険",
+            "trabalho": "仕事",
+            "moradia": "住居",
+            "documentos": "書類と登録",
+            "cultura": "共生と文化",
+            "outros": "その他"
         },
         "newcomerGuide": {
             "title": "新生活ガイド",
@@ -233,11 +242,12 @@
         "empty": "現在、投稿はありません。",
         "time": {
             "now": "たった今",
-            "hours": "{{count}}時間前",
-            "days": "{{count}}日前"
+            "hours": "{count, plural, other {#時間前}}",
+            "days": "{count, plural, other {#日前}}"
         },
         "widgets": {
             "upcomingEvents": "今後のイベント",
+            "noEvents": "予定されているイベントはありません。",
             "contributors": "コントリビューター",
             "viewAll": "すべて見る"
         },
@@ -246,6 +256,7 @@
             "readMore": "もっと読む",
             "backLink": "コミュニティに戻る",
             "views": "閲覧数",
+            "viewComments": "コメントを表示",
             "comment": "コメントする",
             "trending": "人気記事",
             "joinTitle": "コミュニティに参加する",
@@ -1272,6 +1283,7 @@
         "siteDescription": "日本に関する完全なポータル：ニュース、求人、イベント、ビジネス、ブラジルコミュニティ。"
     },
     "breadcrumb": {
-        "home": "ホーム"
+        "home": "ホーム",
+        "business": "ビジネス"
     }
 }

@@ -74,6 +74,8 @@
         "delete": "Delete",
         "edit": "Edit",
         "add": "Add",
+        "access": "Access",
+        "like": "Like",
         "back": "Back",
         "next": "Next",
         "previous": "Previous",
@@ -97,7 +99,10 @@
         "select": "Select...",
         "optional": "Optional",
         "submitting": "Submitting...",
-        "event": "Event"
+        "event": "Event",
+        "comments": {
+            "posted": "Comment posted!"
+        }
     },
     "home": {
         "hero": {
@@ -160,6 +165,7 @@
         "newsletterButton": "Subscribe Now"
     },
     "business": {
+        "titleHighlight": "Best Services",
         "title": "Business Guide",
         "subtitle": "Find the best establishments and services",
         "shareText": "Check out {name} on NipponLife",
@@ -207,21 +213,24 @@
         }
     },
     "community": {
+        "title": "Community",
+        "subtitle": "Connect with the community in Japan",
         "categoriesTitle": "CATEGORIES",
         "categories": {
-            "home": "Home",
-            "ceotips": "CEO Tips",
-            "nihongoclass": "Nihongo Class",
-            "governmentnotices": "Government Notices",
-            "tourism": "Tourism",
-            "general": "General",
-            "visa": "Visa and Immigration",
-            "health": "Health and Insurance",
-            "work": "Work",
-            "housing": "Housing",
-            "documents": "Documents and Records",
-            "culture": "Culture and Community",
-            "others": "Others"
+            "inicio": "Home",
+            "dicas-do-ceo": "CEO Tips",
+            "nihongo": "Nihongo",
+            "classy": "Classy",
+            "avisos-governamentais": "Government Notices",
+            "turismo": "Tourism",
+            "geral": "General",
+            "visto": "Visa and Immigration",
+            "saude": "Health and Insurance",
+            "trabalho": "Work",
+            "moradia": "Housing",
+            "documentos": "Documents and Records",
+            "cultura": "Culture and Community",
+            "outros": "Others"
         },
         "newcomerGuide": {
             "title": "Newcomer Guide",
@@ -233,13 +242,12 @@
         "empty": "No posts found at the moment.",
         "time": {
             "now": "Just now",
-            "hours_one": "{{count}} hour ago",
-            "hours_other": "{{count}} hours ago",
-            "days_one": "{{count}} day ago",
-            "days_other": "{{count}} days ago"
+            "hours": "{count, plural, =1 {1 hour ago} other {# hours ago}}",
+            "days": "{count, plural, =1 {1 day ago} other {# days ago}}"
         },
         "widgets": {
             "upcomingEvents": "Upcoming Events",
+            "noEvents": "No upcoming events scheduled.",
             "contributors": "Contributors",
             "viewAll": "View all"
         },
@@ -248,6 +256,7 @@
             "readMore": "Read more",
             "backLink": "Back to Community",
             "views": "views",
+            "viewComments": "View comments",
             "comment": "Comment",
             "trending": "Trending",
             "joinTitle": "Join the Community",
@@ -1286,6 +1295,7 @@
         "siteDescription": "Your complete portal about Japan: news, jobs, events, businesses and Brazilian community in Japan."
     },
     "breadcrumb": {
-        "home": "Home"
+        "home": "Home",
+        "business": "Business"
     }
 }

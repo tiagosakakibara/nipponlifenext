@@ -65,7 +65,7 @@ export function ApplyForm({ jobTitle, onClose }: ApplyFormProps) {
     if (isSuccess) {
         return (
             <div className="text-center py-12 space-y-6">
-                <div className="w-20 h-20 mx-auto rounded-[32px] bg-emerald-50 flex items-center justify-center">
+                <div className="w-20 h-20 mx-auto rounded-[32px] bg-emerald-50 dark:bg-emerald-500/10 flex items-center justify-center">
                     <CheckCircle className="w-10 h-10 text-emerald-500" />
                 </div>
                 <div className="space-y-2">
@@ -101,7 +101,7 @@ export function ApplyForm({ jobTitle, onClose }: ApplyFormProps) {
                         type="text"
                         value={formData.name}
                         onChange={(e) => handleChange('name', e.target.value)}
-                        className={`w-full px-6 py-4 bg-zinc-50 border rounded-2xl text-xs font-bold text-primary focus:bg-white focus:border-[#D70F24] transition-all outline-none ${errors.name ? 'border-red-200' : 'border-zinc-100'
+                        className={`w-full px-6 py-4 bg-surface border rounded-2xl text-xs font-bold text-primary focus:bg-app focus:border-[#D70F24] transition-all outline-none ${errors.name ? 'border-red-500' : 'border-app'
                             }`}
                         placeholder={t('fullNamePlaceholder')}
                     />
@@ -117,7 +117,7 @@ export function ApplyForm({ jobTitle, onClose }: ApplyFormProps) {
                         type="tel"
                         value={formData.whatsapp}
                         onChange={(e) => handleChange('whatsapp', e.target.value)}
-                        className={`w-full px-6 py-4 bg-zinc-50 border rounded-2xl text-xs font-bold text-primary focus:bg-white focus:border-[#D70F24] transition-all outline-none ${errors.whatsapp ? 'border-red-200' : 'border-zinc-100'
+                        className={`w-full px-6 py-4 bg-surface border rounded-2xl text-xs font-bold text-primary focus:bg-app focus:border-[#D70F24] transition-all outline-none ${errors.whatsapp ? 'border-red-500' : 'border-app'
                             }`}
                         placeholder={t('whatsappPlaceholder')}
                     />
@@ -133,7 +133,7 @@ export function ApplyForm({ jobTitle, onClose }: ApplyFormProps) {
                         type="text"
                         value={formData.city}
                         onChange={(e) => handleChange('city', e.target.value)}
-                        className="w-full px-6 py-4 bg-zinc-50 border border-zinc-100 rounded-2xl text-xs font-bold text-primary focus:bg-white focus:border-[#D70F24] transition-all outline-none"
+                        className="w-full px-6 py-4 bg-surface border border-app rounded-2xl text-xs font-bold text-primary focus:bg-app focus:border-[#D70F24] transition-all outline-none"
                         placeholder={t('cityPlaceholder')}
                     />
                 </div>
@@ -147,7 +147,7 @@ export function ApplyForm({ jobTitle, onClose }: ApplyFormProps) {
                         value={formData.message}
                         onChange={(e) => handleChange('message', e.target.value)}
                         rows={3}
-                        className="w-full px-6 py-4 bg-zinc-50 border border-zinc-100 rounded-2xl text-xs font-bold text-primary focus:bg-white focus:border-[#D70F24] transition-all outline-none resize-none"
+                        className="w-full px-6 py-4 bg-surface border border-app rounded-2xl text-xs font-bold text-primary focus:bg-app focus:border-[#D70F24] transition-all outline-none resize-none"
                         placeholder={t('messagePlaceholder')}
                     />
                 </div>
@@ -156,7 +156,7 @@ export function ApplyForm({ jobTitle, onClose }: ApplyFormProps) {
             <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full bg-[#D70F24] text-white font-bold text-xs uppercase tracking-widest py-5 rounded-3xl transition-all shadow-xl shadow-red-100 hover:opacity-90 disabled:opacity-50 flex items-center justify-center gap-2"
+                className="w-full bg-[#D70F24] text-white font-bold text-xs uppercase tracking-widest py-5 rounded-3xl transition-all shadow-xl shadow-red-500/10 hover:opacity-90 disabled:opacity-50 flex items-center justify-center gap-2"
             >
                 {isSubmitting ? (
                     <>

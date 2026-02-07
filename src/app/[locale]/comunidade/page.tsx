@@ -77,26 +77,29 @@ export default async function CommunityPage({ params, searchParams }: Props) {
     }
 
     // 4. Fetch Categories with Stats
-    // Try RPC first? Or manual.
-    // Manual fetch of categories + post counts/views is expensive if we fetch all posts.
-    // For now, let's just fetch categories. Stat calculation might be too heavy for Server Component on every request without caching.
-    // We will simulate stats or fetch simple list.
-    // Let's try to fetch categories and just map them.
     const { data: categoriesData } = await supabase
         .from('community_categories')
-        .select('id, name, slug, icon')
+        .select(`
+            id, 
+            name, 
+            slug, 
+            icon,
+            posts:community_posts(view_count)
+        `)
+        .eq('community_posts.status', 'published')
         .order('sort_order', { ascending: true });
 
-    // Mock stats or separate query?
-    // Using a separate query to count posts per category is better: .select('id, count', { count: 'exact', head: true }).eq('category_id', ...)
-    // But doing it for N categories is N queries.
-    // Let's skip heavy stats for now and just set 0 or random, OR rely on a View if it existed.
-    // The old code fetched ALL posts. I will skip that for performance and just show categories.
-    const categories: CategoryWithStats[] = (categoriesData || []).map(c => ({
-        ...c,
-        total_views: 0, // Placeholder
-        post_count: 0   // Placeholder
-    }));
+    const categories: CategoryWithStats[] = (categoriesData || []).map(c => {
+        const posts = (c.posts as any[]) || [];
+        return {
+            id: c.id,
+            name: c.name,
+            slug: c.slug,
+            icon: c.icon,
+            total_views: posts.reduce((sum, p) => sum + (p.view_count || 0), 0),
+            post_count: posts.length
+        };
+    });
 
     // 5. Fetch Events (Right Sidebar)
     const { data: eventsData } = await supabase
@@ -170,7 +173,8 @@ export default async function CommunityPage({ params, searchParams }: Props) {
                                     // Let's assume it works as `post.author`.
 
                                     const tags = (post.tags as any[])?.map(t => `#${t.tag}`) || [];
-                                    const categoryName = (post.community_categories as any)?.name || 'Geral';
+                                    const categorySlug = (post.community_categories as any)?.slug || 'geral';
+                                    const categoryDisplay = (post.community_categories as any)?.name || 'Geral';
 
                                     return (
                                         <PostCard
@@ -180,7 +184,7 @@ export default async function CommunityPage({ params, searchParams }: Props) {
                                             avatar={author?.avatar_url || `https://api.dicebear.com/7.x/avataaars/svg?seed=${author?.username || 'Nippon'}`}
                                             name={author?.full_name || author?.username || 'Membro NipponLife'}
                                             time={getTimeAgo(post.published_at || post.created_at)}
-                                            category={t(`community.categories.${categoryName}`, { defaultMessage: categoryName })}
+                                            category={t(`community.categories.${categorySlug}`, { defaultMessage: categoryDisplay })}
                                             title={getTranslatedField(post as any, 'title', locale)}
                                             content={(getTranslatedField(post as any, 'excerpt', locale) || getTranslatedField(post as any, 'content', locale) || '').substring(0, 180) + '...'}
                                             image={post.cover_image_url}

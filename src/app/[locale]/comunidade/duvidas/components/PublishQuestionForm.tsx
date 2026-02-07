@@ -110,13 +110,13 @@ export function PublishQuestionForm() {
                                 <option value="">{t('admin.selectCategory', { defaultMessage: 'Selecione uma categoria...' })}</option>
                                 {QUESTION_CATEGORIES.map((cat) => {
                                     const CATEGORY_MAP: Record<string, string> = {
-                                        'Visto e imigração': 'visa',
-                                        'Saúde e seguros': 'health',
-                                        'Trabalho': 'work',
-                                        'Moradia': 'housing',
-                                        'Documentos e registros': 'documents',
-                                        'Convivência e cultura': 'culture',
-                                        'Outros': 'others'
+                                        'Visto e imigração': 'visto',
+                                        'Saúde e seguros': 'saude',
+                                        'Trabalho': 'trabalho',
+                                        'Moradia': 'moradia',
+                                        'Documentos e registros': 'documentos',
+                                        'Convivência e cultura': 'cultura',
+                                        'Outros': 'outros'
                                     };
                                     const catKey = CATEGORY_MAP[cat] || cat;
                                     return (

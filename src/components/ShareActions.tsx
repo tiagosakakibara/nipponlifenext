@@ -141,14 +141,14 @@ export function ShareActions({
     }
 
     return (
-        <div className={`flex gap-3 ${className}`}>
+        <div className={`flex flex-wrap gap-2 ${className}`}>
             <button
                 onClick={handleNativeShare}
                 className="flex items-center gap-2 px-4 py-2 bg-surface border border-app rounded-xl text-sm font-medium text-secondary hover:text-[var(--nl-accent)] hover:border-[var(--nl-accent)]/30 transition-all"
                 aria-label={t('common.share')}
             >
                 <Share2 className="w-4 h-4" />
-                <span className="hidden sm:inline">{t('common.share')}</span>
+                <span className="hidden lg:inline">{t('common.share')}</span>
             </button>
             <button
                 onClick={handleShareX}
@@ -172,12 +172,12 @@ export function ShareActions({
                 {copied ? (
                     <>
                         <Check className="w-4 h-4 text-green-600" />
-                        <span className="hidden sm:inline text-green-600">{t('common.copied')}</span>
+                        <span className="hidden lg:inline text-green-600">{t('common.copied')}</span>
                     </>
                 ) : (
                     <>
                         <LinkIcon className="w-4 h-4" />
-                        <span className="hidden sm:inline">{t('common.copy')}</span>
+                        <span className="hidden lg:inline">{t('common.copy')}</span>
                     </>
                 )}
             </button>

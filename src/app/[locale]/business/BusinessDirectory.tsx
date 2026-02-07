@@ -219,7 +219,7 @@ export function BusinessDirectory({ businesses }: BusinessDirectoryProps) {
                         <p className="text-muted text-sm mt-2">{t('business.noResultsDesc', { defaultMessage: 'Tente ajustar seus filtros de busca.' })}</p>
                     </div>
                 ) : (
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 justify-items-center md:justify-items-stretch">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-8">
                         {businesses.map(business => (
                             <BusinessCard key={business.id} business={business} />
                         ))}

@@ -45,10 +45,33 @@ export default function GuideHeroSection({ locale }: GuideHeroSectionProps) {
             }
         };
 
-        loadSettings();
+        const loadViews = async () => {
+            try {
+                // Fetch current views
+                const response = await fetch('/api/site-settings/newcomer_guide_views');
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data?.views !== undefined) {
+                        setViewCount(Number(data.views));
+                    }
+                }
 
-        // Simulate view count (in production, this would come from analytics)
-        setViewCount(Math.floor(Math.random() * 5000) + 1000);
+                // Increment views (after initial render to avoid double counting on strict mode potentially, or just accept slightly inaccurate counts)
+                // Using POST to increment
+                const incResponse = await fetch('/api/site-settings/newcomer_guide_views', { method: 'POST' });
+                if (incResponse.ok) {
+                    const incData = await incResponse.json();
+                    if (incData?.views !== undefined) {
+                        setViewCount(Number(incData.views));
+                    }
+                }
+            } catch (error) {
+                console.error('Error loading views:', error);
+            }
+        };
+
+        loadSettings();
+        loadViews();
     }, []);
 
     const formatDate = (dateString: string) => {
@@ -78,7 +101,7 @@ export default function GuideHeroSection({ locale }: GuideHeroSectionProps) {
                             </span>
                             {viewCount > 0 && (
                                 <span className="text-xs text-gray-600 dark:text-muted">
-                                    {viewCount.toLocaleString()} {t('guides.views')}
+                                    {viewCount.toLocaleString(locale)} {t('guides.views')}
                                 </span>
                             )}
                         </div>

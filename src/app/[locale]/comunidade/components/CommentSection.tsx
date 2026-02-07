@@ -107,7 +107,7 @@ export function CommentSection({ postId }: CommentSectionProps) {
     };
 
     const handleDelete = async (commentId: string) => {
-        if (window.confirm(t('admin.confirmDelete', { defaultMessage: 'Tem certeza que deseja excluir?' }))) {
+        if (window.confirm(t('common.confirmDelete', { defaultMessage: 'Tem certeza que deseja excluir?' }))) {
             const success = await deleteComment(commentId);
             if (success) {
                 toast.success(t('common.deleted', { defaultMessage: 'Excluído com sucesso!' }));

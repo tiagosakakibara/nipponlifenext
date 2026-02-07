@@ -16,7 +16,7 @@ export function BusinessCard({ business, inCarousel = false }: BusinessCardProps
     return (
         <Link
             href={`/business/${business.slug}`}
-            className={`${inCarousel ? 'w-[280px] md:w-[301px]' : 'w-full md:w-[301px]'} group bg-surface border border-app rounded-2xl overflow-hidden hover:border-accent/50 transition-all duration-500 hover:shadow-lg hover:shadow-accent/20 flex flex-col h-[350px] shrink-0`}
+            className={`${inCarousel ? 'w-[280px] md:w-[301px] shrink-0' : 'w-full'} group bg-surface border border-app rounded-2xl overflow-hidden hover:border-accent/50 transition-all duration-500 hover:shadow-lg hover:shadow-accent/20 flex flex-col h-[420px]`}
         >
             {/* Cover Image */}
             <div className="relative h-[200px] overflow-hidden shrink-0">

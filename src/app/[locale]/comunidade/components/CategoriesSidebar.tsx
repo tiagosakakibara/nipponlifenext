@@ -2,7 +2,7 @@
 
 import { Link } from '@/i18n/routing';
 import { useTranslations } from 'next-intl';
-import { Home, Lightbulb, GraduationCap, Building2, MapPin, ChevronRight, Eye } from 'lucide-react';
+import { Home, Lightbulb, GraduationCap, Building2, MapPin, ChevronRight, Eye, Star } from 'lucide-react';
 
 export interface CategoryWithStats {
     id: string;
@@ -17,8 +17,11 @@ const ICON_MAP: Record<string, any> = {
     'home': Home,
     'lightbulb': Lightbulb,
     'graduation-cap': GraduationCap,
+    'nihongo': GraduationCap,
     'building': Building2,
     'map-pin': MapPin,
+    'star': Star,
+    'eye': Eye
 };
 
 interface CategoriesSidebarProps {
@@ -52,7 +55,7 @@ export function CategoriesSidebar({ categories }: CategoriesSidebarProps) {
                             >
                                 <div className="flex items-center gap-3">
                                     <Icon className={`w-5 h-5 ${isActive ? 'text-white' : 'text-muted group-hover:text-primary transition-colors'}`} />
-                                    <span>{t(`community.categories.${category.name}`, { defaultMessage: category.name })}</span>
+                                    <span>{t(`community.categories.${category.slug}`, { defaultMessage: category.name })}</span>
                                 </div>
 
                                 <div className="flex items-center gap-1.5 opacity-60 group-hover:opacity-100 transition-opacity">

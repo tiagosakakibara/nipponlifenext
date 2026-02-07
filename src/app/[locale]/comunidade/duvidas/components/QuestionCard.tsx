@@ -25,22 +25,22 @@ export function QuestionCard({ question }: QuestionCardProps) {
         const diffInMs = now.getTime() - past.getTime();
         const diffInHours = Math.floor(diffInMs / (1000 * 60 * 60));
 
-        if (diffInHours < 1) return t('community.questions.time.now', { defaultMessage: 'Agora' });
-        if (diffInHours < 24) return t('community.questions.time.hours', { count: diffInHours });
+        if (diffInHours < 1) return t('community.time.now', { defaultMessage: 'Agora' });
+        if (diffInHours < 24) return t('community.time.hours', { count: diffInHours });
         const diffInDays = Math.floor(diffInHours / 24);
-        if (diffInDays < 30) return t('community.questions.time.days', { count: diffInDays });
+        if (diffInDays < 30) return t('community.time.days', { count: diffInDays });
         const diffInMonths = Math.floor(diffInDays / 30);
         return t('community.questions.time.months', { count: diffInMonths });
     };
 
     const CATEGORY_MAP: Record<string, string> = {
-        'Visto e imigração': 'visa',
-        'Saúde e seguros': 'health',
-        'Trabalho': 'work',
-        'Moradia': 'housing',
-        'Documentos e registros': 'documents',
-        'Convivência e cultura': 'culture',
-        'Outros': 'others'
+        'Visto e imigração': 'visto',
+        'Saúde e seguros': 'saude',
+        'Trabalho': 'trabalho',
+        'Moradia': 'moradia',
+        'Documentos e registros': 'documentos',
+        'Convivência e cultura': 'cultura',
+        'Outros': 'outros'
     };
 
     const categoryKey = question.category ? (CATEGORY_MAP[question.category] || question.category) : 'general';

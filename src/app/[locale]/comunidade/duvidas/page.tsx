@@ -100,8 +100,6 @@ export default async function CommunityQuestionsPage({ params, searchParams }: P
                             questionsCount={questionsCount || 0}
                             answersCount={answersCount || 0}
                         />
-                        {/* Decorative Grid */}
-                        <div className="absolute -top-4 -right-4 w-full h-full border border-[#D70F24]/10 rounded-2xl -z-10 translate-x-4 translate-y-4" />
                     </div>
                 </section>
 
