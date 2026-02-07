@@ -103,6 +103,11 @@ export const storageService = {
         // Ensure path starts with / if it's relative
         const cleanPath = path.startsWith('/') ? path : `/${path}`;
 
+        // If it's a local static asset (public folder), return as is
+        if (cleanPath.startsWith('/images/') || cleanPath.startsWith('/assets/')) {
+            return cleanPath;
+        }
+
         // Use Supabase URL structure or fallback to site URL if needed.
         // On server: use env var. On client: result depends on isProduction check or fallback.
         const baseUrl = typeof window === 'undefined'

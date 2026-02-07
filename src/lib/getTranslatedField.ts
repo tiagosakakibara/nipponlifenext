@@ -107,17 +107,12 @@ export function normalizeCategorySlug(slug: string | undefined | null): string {
         'vaga': 'jobs',
         'negocios': 'business',
         'negocio': 'business',
-        'trabalho': 'work',
-        'cultura': 'culture',
+        // 'trabalho', 'cultura', 'visto' etc removed to preserve original slug which matches i18n keys
         'idioma': 'language',
-        'visto': 'visa',
-        'geral': 'general',
-        'inicio': 'home',
-        'dicas do ceo': 'ceotips',
-        'avisos governamentais': 'governmentnotices',
-        'nihongo class': 'nihongoclass',
+        'dicas do ceo': 'dicas-do-ceo', // Fixed: matches i18n key 'dicas-do-ceo'
+        'avisos governamentais': 'avisos-governamentais', // Fixed: matches i18n key 'avisos-governamentais'
+        'nihongo class': 'nihongo', // Fixed: matches i18n key 'nihongo'
         'negocios premium': 'business_premium',
-        'turismo': 'tourism',
     };
 
     return categoryMap[normalized] || normalized;

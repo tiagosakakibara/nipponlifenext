@@ -28,20 +28,20 @@ export function validateSupabaseEnv(): SupabaseEnvValidation {
 
     // Check URL
     if (!supabaseUrl) {
-        errors.push('VITE_SUPABASE_URL is not defined. Check your .env.local file.');
+        errors.push('NEXT_PUBLIC_SUPABASE_URL is not defined. Check your .env.local file.');
     } else if (!supabaseUrl.includes('supabase.co')) {
-        warnings.push('VITE_SUPABASE_URL does not appear to be a valid Supabase URL.');
+        warnings.push('NEXT_PUBLIC_SUPABASE_URL does not appear to be a valid Supabase URL.');
     }
 
     // Check Anon Key
     let keyType: SupabaseEnvValidation['keyType'] = 'missing';
 
     if (!anonKey) {
-        errors.push('VITE_SUPABASE_ANON_KEY is not defined. Check your .env.local file.');
+        errors.push('NEXT_PUBLIC_SUPABASE_ANON_KEY is not defined. Check your .env.local file.');
     } else if (anonKey.startsWith('sb_publishable_')) {
         keyType = 'publishable';
         errors.push(
-            'VITE_SUPABASE_ANON_KEY is using the new "publishable" key format (sb_publishable_...).\n' +
+            'NEXT_PUBLIC_SUPABASE_ANON_KEY is using the new "publishable" key format (sb_publishable_...).\n' +
             'This format is NOT compatible with email/password authentication.\n' +
             'Please use the legacy JWT-based anon key instead.\n' +
             'Go to: Supabase Dashboard → Settings → API → "anon public" key'
@@ -51,7 +51,7 @@ export function validateSupabaseEnv(): SupabaseEnvValidation {
         // Valid JWT format
     } else {
         keyType = 'unknown';
-        warnings.push('VITE_SUPABASE_ANON_KEY format is unrecognized. Make sure you\'re using the correct key.');
+        warnings.push('NEXT_PUBLIC_SUPABASE_ANON_KEY format is unrecognized. Make sure you\'re using the correct key.');
     }
 
     const isValid = errors.length === 0;
