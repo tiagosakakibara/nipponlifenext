@@ -124,7 +124,8 @@
         "city": "Cidade",
         "select": "Selecione...",
         "optional": "Opcional",
-        "submitting": "Enviando..."
+        "submitting": "Enviando...",
+        "event": "Evento"
     },
     "home": {
         "hero": {

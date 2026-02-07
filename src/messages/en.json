@@ -96,7 +96,8 @@
         "city": "City",
         "select": "Select...",
         "optional": "Optional",
-        "submitting": "Submitting..."
+        "submitting": "Submitting...",
+        "event": "Event"
     },
     "home": {
         "hero": {

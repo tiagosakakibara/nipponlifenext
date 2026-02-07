@@ -113,15 +113,15 @@ export default function JobsClient() {
     return (
         <div className="min-h-screen bg-app">
             {/* Hero Section - Premium Design */}
-            <section className="relative pt-32 pb-20 overflow-hidden bg-surface border-b border-app">
+            <section className="relative h-[230px] pt-20 overflow-hidden bg-surface border-b border-app">
                 <div className="absolute top-0 right-0 w-1/3 h-full bg-gradient-to-l from-red-50/50 dark:from-red-900/10 to-transparent pointer-events-none" />
                 <div className="container mx-auto px-6 relative z-10 text-center md:text-left">
-                    <div className="max-w-3xl space-y-6">
+                    <div className="max-w-3xl space-y-3">
                         <div className="inline-flex items-center gap-2 px-3 py-1 bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 rounded-full text-[10px] font-bold uppercase tracking-widest mx-auto md:mx-0">
                             <Briefcase className="w-3 h-3" />
                             {t('modal.careerOpportunity')}
                         </div>
-                        <h1 className="text-4xl md:text-6xl font-heading font-bold text-primary tracking-tight leading-tight">
+                        <h1 className="text-3xl md:text-5xl font-heading font-bold text-primary tracking-tight leading-tight">
                             {t('title')}
                         </h1>
                         <p className="text-lg text-secondary font-medium max-w-xl mx-auto md:mx-0">
@@ -320,7 +320,7 @@ export default function JobsClient() {
                         className="absolute inset-0 bg-[#1a1a1a]/80 backdrop-blur-md animate-fade-in"
                         onClick={() => setSelectedJob(null)}
                     />
-                    <div className="relative w-full max-w-5xl bg-white dark:bg-[#0B1020] rounded-[48px] shadow-2xl overflow-hidden flex flex-col md:flex-row h-full max-h-[85vh] animate-slide-up border border-zinc-100 dark:border-zinc-800">
+                    <div className="relative w-full max-w-4xl bg-white dark:bg-[#0B1020] rounded-[48px] shadow-2xl overflow-hidden flex flex-col md:flex-row h-auto max-h-[90vh] animate-slide-up border border-zinc-100 dark:border-zinc-800">
                         <button
                             onClick={() => setSelectedJob(null)}
                             className="absolute top-8 right-8 z-[110] w-12 h-12 rounded-2xl bg-white dark:bg-white/10 border border-zinc-100 dark:border-zinc-700 flex items-center justify-center shadow-lg hover:rotate-90 transition-all duration-500 text-zinc-500 dark:text-white"
@@ -329,8 +329,8 @@ export default function JobsClient() {
                         </button>
 
                         {/* Modal Lead Section */}
-                        <div className="w-full md:w-[40%] bg-zinc-50 dark:bg-white/5 p-12 flex flex-col justify-between border-r border-zinc-100 dark:border-zinc-800">
-                            <div className="space-y-8">
+                        <div className="w-full md:w-[38%] bg-zinc-50 dark:bg-white/5 p-6 md:p-10 flex flex-col border-r border-zinc-100 dark:border-zinc-800 max-h-[50vh] md:max-h-none overflow-y-auto md:overflow-visible shrink-0">
+                            <div className="space-y-6 md:space-y-8 flex-1">
                                 {selectedJob.logo && (
                                     <img src={selectedJob.logo} className="w-24 h-24 rounded-3xl object-contain bg-white dark:bg-white/10 p-4 shadow-xl shadow-black/5" alt={selectedJob.company} />
                                 )}
@@ -338,7 +338,7 @@ export default function JobsClient() {
                                     <div className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-red-50 dark:bg-red-500/20 text-red-600 dark:text-red-400 rounded-full text-[10px] font-black uppercase tracking-widest mb-4">
                                         {selectedJob.type}
                                     </div>
-                                    <h2 className="text-4xl font-black text-primary tracking-tight leading-tight">
+                                    <h2 className="text-2xl md:text-4xl font-black text-primary tracking-tight leading-tight">
                                         {selectedJob.title}
                                     </h2>
                                     <p className="text-xl font-bold text-secondary mt-2 uppercase tracking-wide">{selectedJob.company}</p>
@@ -365,25 +365,27 @@ export default function JobsClient() {
                                 </div>
                             </div>
 
-                            {!showApplyForm ? (
-                                <button
-                                    onClick={() => setShowApplyForm(true)}
-                                    className="w-full bg-[#D70F24] hover:bg-[#b50d1f] text-white py-5 rounded-3xl font-black text-sm shadow-2xl shadow-red-500/20 transition-all hover:scale-[1.02] active:scale-[0.98]"
-                                >
-                                    {t('applyButton')}
-                                </button>
-                            ) : (
-                                <button
-                                    onClick={() => setShowApplyForm(false)}
-                                    className="w-full bg-white dark:bg-white/10 text-primary border border-zinc-100 dark:border-zinc-700 py-5 rounded-3xl font-black text-sm transition-all hover:bg-zinc-50 dark:hover:bg-white/20"
-                                >
-                                    {ct('back')}
-                                </button>
-                            )}
+                            <div className="mt-6 md:mt-12">
+                                {!showApplyForm ? (
+                                    <button
+                                        onClick={() => setShowApplyForm(true)}
+                                        className="w-full bg-[#D70F24] hover:bg-[#b50d1f] text-white py-5 rounded-3xl font-black text-sm shadow-2xl shadow-red-500/20 transition-all hover:scale-[1.02] active:scale-[0.98]"
+                                    >
+                                        {t('applyButton')}
+                                    </button>
+                                ) : (
+                                    <button
+                                        onClick={() => setShowApplyForm(false)}
+                                        className="w-full bg-white dark:bg-white/10 text-primary border border-zinc-100 dark:border-zinc-700 py-5 rounded-3xl font-black text-sm transition-all hover:bg-zinc-50 dark:hover:bg-white/20"
+                                    >
+                                        {ct('back')}
+                                    </button>
+                                )}
+                            </div>
                         </div>
 
                         {/* Modal Content Section */}
-                        <div className="flex-1 p-12 overflow-y-auto">
+                        <div className="flex-1 p-6 md:p-10 overflow-y-auto">
                             {showApplyForm ? (
                                 <ApplyForm
                                     jobTitle={selectedJob.title}

@@ -69,7 +69,7 @@ export function EventSidebar({ contactUrl, viewCount, dateStr, title }: EventSid
                     <ShareActions
                         title={title}
                         text={t('shareText', { title })}
-                        className="flex-1"
+                        className="flex-1 flex-wrap"
                         variant="inline"
                     />
                 </div>

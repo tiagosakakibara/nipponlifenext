@@ -11,7 +11,9 @@ interface EventTileCardProps {
 
 export function EventTileCard({ event }: EventTileCardProps) {
     const locale = useLocale();
-    const date = new Date(event.starts_at);
+    const rawDate = new Date(event.starts_at);
+    // Force JST (UTC+9) for display
+    const date = new Date(rawDate.getTime() + 9 * 60 * 60 * 1000);
 
     // Helper to get translated field
     const getTranslatedField = (field: 'title' | 'location' | 'description'): string => {
@@ -28,8 +30,8 @@ export function EventTileCard({ event }: EventTileCardProps) {
         return (event[field] as string) || '';
     };
 
-    const day = date.getDate().toString().padStart(2, '0');
-    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const day = date.getUTCDate().toString().padStart(2, '0');
+    const month = (date.getUTCMonth() + 1).toString().padStart(2, '0');
 
     const cover = event.cover_image_url?.trim();
     const hasImage = !!cover && cover.startsWith('http');
@@ -81,7 +83,7 @@ export function EventTileCard({ event }: EventTileCardProps) {
                                 <div className="flex items-center gap-2 text-white/80 text-sm">
                                     <Calendar className="w-4 h-4 text-[#D70F24]" />
                                     <span className="font-medium tracking-wide">
-                                        {date.toLocaleTimeString(locale, { hour: '2-digit', minute: '2-digit' })}
+                                        {date.toLocaleTimeString(locale, { timeZone: 'UTC', hour: '2-digit', minute: '2-digit' })}
                                     </span>
                                 </div>
                             </div>

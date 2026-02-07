@@ -102,15 +102,24 @@ export default async function EventDetailPage({ params }: EventPageProps) {
             <StructuredData data={eventSchema} />
             <StructuredData data={breadcrumbSchema} />
             {/* Header / Hero Area */}
-            <div className="relative h-[40vh] md:h-[50vh] min-h-[400px] w-full overflow-hidden">
+            <div className="relative h-[32vh] md:h-[40vh] min-h-[320px] w-full overflow-hidden">
                 {event.cover_image_url ? (
                     <>
+                        {/* Background blurred */}
+                        <div className="absolute inset-0">
+                            <img
+                                src={coverUrl}
+                                alt=""
+                                className="w-full h-full object-cover blur-2xl scale-110 opacity-50"
+                            />
+                        </div>
+                        {/* Main Image */}
                         <img
                             src={coverUrl}
                             alt={title}
-                            className="w-full h-full object-cover"
+                            className="w-full h-full object-contain relative z-10"
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-white via-white/20 to-black/30" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-white via-white/20 to-black/30 z-20" />
                     </>
                 ) : (
                     <div className="w-full h-full bg-zinc-50 flex items-center justify-center">
@@ -118,7 +127,7 @@ export default async function EventDetailPage({ params }: EventPageProps) {
                     </div>
                 )}
 
-                <div className="absolute top-32 left-0 w-full">
+                <div className="absolute top-32 left-0 w-full z-30">
                     <div className="container mx-auto px-6">
                         <Link
                             href="/eventos"
@@ -130,14 +139,14 @@ export default async function EventDetailPage({ params }: EventPageProps) {
                     </div>
                 </div>
 
-                <div className="absolute bottom-0 left-0 w-full pb-12">
+                <div className="absolute bottom-0 left-0 w-full pb-12 z-30">
                     <div className="container mx-auto px-6">
                         <div className="max-w-4xl space-y-6">
                             <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#D70F24] text-white rounded-full text-[10px] font-bold uppercase tracking-widest shadow-lg">
                                 <Info className="w-3 h-3" />
                                 {ct('event')}
                             </div>
-                            <h1 className="text-4xl md:text-6xl font-heading font-bold text-primary tracking-tight leading-tight">
+                            <h1 className="text-3xl md:text-5xl font-heading font-bold text-primary tracking-tight leading-tight">
                                 {title}
                             </h1>
                         </div>

@@ -96,7 +96,8 @@
         "city": "市区町村",
         "select": "選択...",
         "optional": "任意",
-        "submitting": "送信中..."
+        "submitting": "送信中...",
+        "event": "イベント"
     },
     "home": {
         "hero": {

@@ -44,7 +44,7 @@ export function LanguageSwitcher() {
             </button>
 
             {isOpen && (
-                <div className="absolute right-0 mt-2 w-40 bg-white dark:bg-zinc-900 rounded-2xl shadow-2xl border border-app py-2 z-[100] animate-in fade-in slide-in-from-top-2 duration-200">
+                <div className="absolute right-0 mt-2 w-40 bg-app/95 backdrop-blur-xl rounded-2xl shadow-2xl border border-app py-2 z-[100] animate-in fade-in slide-in-from-top-2 duration-200">
                     <div className="px-4 py-1 mb-1 border-b border-app/50">
                         <span className="text-[10px] font-bold text-muted uppercase tracking-widest">Idioma</span>
                     </div>

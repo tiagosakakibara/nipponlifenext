@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState, useMemo } from 'react';
-import { Search, Calendar as CalendarIcon, Loader2, ChevronDown, LayoutGrid, Filter, CalendarDays } from 'lucide-react';
+import { Search, Calendar as CalendarIcon, Loader2, ChevronDown, LayoutGrid, Filter, CalendarDays, ChevronLeft } from 'lucide-react';
 import { useTranslations, useLocale } from 'next-intl';
 import { eventService } from '@/lib/eventService';
 import { Event } from '@/types/event';
@@ -63,7 +63,7 @@ export default function EventsClient() {
     const [viewMode, setViewMode] = useState<'calendar' | 'list'>((searchParams.get('view') as 'calendar' | 'list') || 'calendar');
 
     const calendarEventsService = useMemo(() => createEventsServicePlugin(), []);
-    const pageSize = 20;
+    const pageSize = 100;
 
     // Search Debounce
     useEffect(() => {
@@ -134,20 +134,43 @@ export default function EventsClient() {
             .filter(e => e && e.starts_at)
             .map(event => {
                 try {
-                    const date = new Date(event.starts_at);
-                    if (isNaN(date.getTime())) return null;
+                    const formatToJST = (dateStr: string) => {
+                        try {
+                            const date = new Date(dateStr);
+                            if (isNaN(date.getTime())) return null;
 
-                    const formatDateString = (d: Date) => {
-                        const yr = d.getFullYear();
-                        const mo = String(d.getMonth() + 1).padStart(2, '0');
-                        const dy = String(d.getDate()).padStart(2, '0');
-                        const hr = String(d.getHours()).padStart(2, '0');
-                        const mn = String(d.getMinutes()).padStart(2, '0');
-                        return `${yr}-${mo}-${dy} ${hr}:${mn}`;
+                            // Transform to JST (UTC+9)
+                            const jstDate = new Date(date.getTime() + 9 * 60 * 60 * 1000);
+
+                            const yr = jstDate.getUTCFullYear();
+                            const mo = String(jstDate.getUTCMonth() + 1).padStart(2, '0');
+                            const dy = String(jstDate.getUTCDate()).padStart(2, '0');
+                            const hr = String(jstDate.getUTCHours()).padStart(2, '0');
+                            const mn = String(jstDate.getUTCMinutes()).padStart(2, '0');
+
+                            return `${yr}-${mo}-${dy} ${hr}:${mn}`;
+                        } catch (e) {
+                            console.error('Error formatting date:', dateStr, e);
+                            return null;
+                        }
                     };
 
-                    const start = formatDateString(new Date(event.starts_at));
-                    const end = event.ends_at ? formatDateString(new Date(event.ends_at)) : start;
+                    const start = formatToJST(event.starts_at);
+                    if (!start) return null;
+
+                    let end = event.ends_at ? formatToJST(event.ends_at) : null;
+
+                    // If no end date or end equals start, add 1 hour for visibility
+                    if (!end || end === start) {
+                        const startDateObj = new Date(event.starts_at);
+                        const endDateObj = new Date(startDateObj.getTime() + 60 * 60 * 1000); // Add 1 hour
+                        end = formatToJST(endDateObj.toISOString());
+                    }
+
+                    // Fallback if formatting failed
+                    if (!end) end = start;
+
+                    console.log('Formatted Event:', { id: event.id, title: event.title, start, end });
 
                     return {
                         id: event.id,
@@ -204,8 +227,11 @@ export default function EventsClient() {
     const groupedEvents = useMemo(() => {
         const groups: { [key: string]: Event[] } = {};
         (events || []).filter(e => e && e.starts_at).forEach(event => {
-            const date = new Date(event.starts_at);
-            const monthKey = `${date.getFullYear()}-${date.getMonth()}`;
+            const rawDate = new Date(event.starts_at);
+            // Transform to JST (UTC+9) for grouping
+            const date = new Date(rawDate.getTime() + 9 * 60 * 60 * 1000);
+
+            const monthKey = `${date.getUTCFullYear()}-${date.getUTCMonth()}`;
             if (!groups[monthKey]) groups[monthKey] = [];
             groups[monthKey].push(event);
         });
@@ -250,18 +276,18 @@ export default function EventsClient() {
     return (
         <div className="min-h-screen bg-app">
             {/* Hero Section */}
-            <section className="relative pt-32 pb-20 overflow-hidden bg-surface border-b border-app">
+            <section className="relative h-[230px] pt-20 overflow-hidden bg-surface border-b border-app">
                 <div className="absolute top-0 right-0 w-1/3 h-full bg-gradient-to-l from-red-50/50 dark:from-red-900/10 to-transparent pointer-events-none" />
                 <div className="container mx-auto px-6 relative z-10">
-                    <div className="max-w-3xl space-y-6">
+                    <div className="max-w-3xl space-y-2">
                         <div className="inline-flex items-center gap-2 px-3 py-1 bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 rounded-full text-[10px] font-bold uppercase tracking-widest">
                             <CalendarDays className="w-3 h-3" />
                             {t('titleHighlight')}
                         </div>
-                        <h1 className="text-4xl md:text-6xl font-heading font-bold text-primary tracking-tight leading-tight">
+                        <h1 className="text-3xl md:text-5xl font-heading font-bold text-primary tracking-tight leading-tight">
                             {t('title')} <span className="text-[#D70F24]">{t('titleHighlight')}</span>
                         </h1>
-                        <p className="text-lg text-secondary font-medium max-w-xl">
+                        <p className="text-base text-secondary font-medium max-w-lg">
                             {t('noEventsDescription').split('.')[0]}.
                         </p>
                     </div>
@@ -367,7 +393,7 @@ export default function EventsClient() {
                                 --sx-color-border: var(--nl-border);
                                 
                                 /* Override schedule-x internal standard colors for dark mode visibility */
-                                --sx-color-neutral-30: var(--nl-border);
+                                --sx-color-neutral-30: var(--nl-text); /* Changed from border to text for visibility */
                                 --sx-color-neutral-90: var(--nl-text); /* Main text color */
                                 --sx-color-neutral-50: var(--nl-text-3); /* Secondary text */
                                 
@@ -393,6 +419,10 @@ export default function EventsClient() {
                                 color: var(--nl-text) !important;
                             }
                             
+                            .sx__chevron-wrapper {
+                                color: var(--nl-text) !important;
+                            }
+
                             .sx__chevron-wrapper svg {
                                 stroke: var(--nl-text) !important;
                             }
@@ -417,26 +447,56 @@ export default function EventsClient() {
                                 background-color: #D70F24 !important;
                                 border: none !important;
                                 color: white !important;
-                                border-radius: 12px !important;
-                                padding: 8px 12px !important;
-                                font-weight: 700 !important;
-                                font-family: var(--font-dm-sans) !important;
+                                border-radius: 4px !important;
+                                padding: 2px 4px !important;
+                                font-weight: 600 !important;
                                 font-size: 11px !important;
-                                box-shadow: 0 4px 12px rgba(215, 15, 36, 0.15);
+                                box-shadow: 0 2px 4px rgba(215, 15, 36, 0.2);
                             }
-                            .sx__month-grid-day--today {
-                                background-color: rgba(215, 15, 36, 0.03) !important;
+
+                            /* Highlight days that have events */
+                            .sx__month-grid-day:has(.sx__event) {
+                                background-color: rgba(215, 15, 36, 0.04) !important;
                             }
-                            .sx__month-grid-day--today .sx__month-grid-day__header-day-number {
+                            
+                            .sx__month-grid-day:has(.sx__event) .sx__month-grid-day__header-day-number {
                                 color: #D70F24 !important;
                                 font-weight: 900 !important;
-                                font-size: 1.1rem;
+                                transform: scale(1.1);
+                                display: inline-block;
+                            }
+
+                            .sx__month-grid-day--today {
+                                background-color: rgba(255, 255, 255, 0.5) !important;
+                            }
+                            .sx__month-grid-day--today .sx__month-grid-day__header-day-number {
+                                background: #D70F24;
+                                color: white !important;
+                                border-radius: 50%;
+                                width: 24px;
+                                height: 24px;
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                font-size: 0.9rem;
+                                margin-left: 4px;
                             }
                         `}</style>
-                        <ScheduleXCalendar calendarApp={calendarApp} />
+                        <ScheduleXCalendar key={events.length + viewMode + locale} calendarApp={calendarApp} />
                     </div>
                 ) : (
                     <div className="space-y-20">
+                        {/* Back to Calendar Button for List View */}
+                        <div className="flex justify-start">
+                            <button
+                                onClick={() => setViewMode('calendar')}
+                                className="inline-flex items-center gap-2 text-xs font-bold text-muted hover:text-[#D70F24] transition-colors uppercase tracking-widest group"
+                            >
+                                <ChevronLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+                                {t('viewCalendar')}
+                            </button>
+                        </div>
+
                         {Object.entries(groupedEvents).map(([monthKey, monthEvents]) => (
                             <section key={monthKey} className="animate-in fade-in slide-in-from-bottom-4 duration-700">
                                 <div className="flex items-center gap-6 mb-10 overflow-hidden">
