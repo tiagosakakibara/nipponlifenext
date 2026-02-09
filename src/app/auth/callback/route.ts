@@ -48,7 +48,7 @@ export async function GET(request: Request) {
                 // Check if this is a newly created OAuth profile
                 const { data: currentProfile } = await supabase
                     .from('profiles')
-                    .select('id, role, username, full_name, created_at')
+                    .select('id, role, username, full_name, avatar_url, created_at')
                     .eq('id', currentUser.id)
                     .single();
 
@@ -62,7 +62,7 @@ export async function GET(request: Request) {
                         // Strategy: Find admin/photographer accounts with similar data
                         const { data: existingAccounts } = await supabase
                             .from('profiles')
-                            .select('*')
+                            .select('id, role, username, full_name, avatar_url, created_at')
                             .neq('id', currentUser.id)
                             .in('role', ['admin', 'photographer'])
                             .order('created_at', { ascending: true })
@@ -70,7 +70,7 @@ export async function GET(request: Request) {
 
                         if (existingAccounts && existingAccounts.length > 0) {
                             // Find the best match based on name similarity
-                            let bestMatch = null;
+                            let bestMatch: any = null;
                             let highestScore = 0;
 
                             for (const account of existingAccounts) {
