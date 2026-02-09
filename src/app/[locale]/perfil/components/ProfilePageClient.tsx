@@ -99,41 +99,26 @@ export function ProfilePageClient() {
         const file = e.target.files?.[0];
         if (!file || !user?.id) return;
 
-        // Validation
-        if (!file.type.startsWith('image/')) {
-            toast.error(t('auth.profile.errors.avatarInvalidType'));
-            return;
-        }
-        if (file.size > 2 * 1024 * 1024) {
-            toast.error(t('auth.profile.errors.avatarTooLarge'));
-            return;
-        }
-
         // Show preview immediately
         const previewUrl = URL.createObjectURL(file);
         setAvatarPreview(previewUrl);
         setUploading(true);
 
         try {
-            const fileExt = file.name.split('.').pop();
-            const filePath = `${user.id}/${Math.random()}.${fileExt}`;
+            // Use the centralized service which handles validation and correct bucket selection
+            const { url, error } = await import('@/lib/profileService').then(m => m.uploadAvatar(user.id, file));
 
-            const { error: uploadError } = await supabase.storage
-                .from('avatars')
-                .upload(filePath, file);
+            if (error) {
+                throw new Error(error);
+            }
 
-            if (uploadError) throw uploadError;
-
-            // Get public URL
-            const { data: { publicUrl } } = supabase.storage
-                .from('avatars')
-                .getPublicUrl(filePath);
-
-            setAvatarUrl(publicUrl);
-            toast.success(t('auth.profile.success.avatarUpdated'));
+            if (url) {
+                setAvatarUrl(url);
+                toast.success(t('auth.profile.success.avatarUpdated'));
+            }
         } catch (error: any) {
             console.error('Error uploading avatar:', error);
-            toast.error(t('auth.profile.errors.avatarUploadFailed'));
+            toast.error(error.message || t('auth.profile.errors.avatarUploadFailed'));
             setAvatarPreview(null); // Revert preview
         } finally {
             setUploading(false);
@@ -297,8 +282,8 @@ export function ProfilePageClient() {
                                     placeholder={t('auth.profile.usernamePlaceholder')}
                                     maxLength={20}
                                     className={`w-full pl-10 pr-10 py-2.5 border border-app rounded-xl bg-app text-primary placeholder:text-muted text-sm focus:outline-none focus:ring-2 transition-all ${usernameStatus === 'taken' || usernameStatus === 'invalid'
-                                            ? 'focus:ring-red-500/30 focus:border-red-500 border-red-500/50'
-                                            : 'focus:ring-[#D70F24]/30 focus:border-[#D70F24]'
+                                        ? 'focus:ring-red-500/30 focus:border-red-500 border-red-500/50'
+                                        : 'focus:ring-[#D70F24]/30 focus:border-[#D70F24]'
                                         }`}
                                 />
                                 {/* Status indicator */}
