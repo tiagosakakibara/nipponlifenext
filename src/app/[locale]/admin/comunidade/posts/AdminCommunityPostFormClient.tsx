@@ -104,7 +104,7 @@ export default function AdminCommunityPostFormClient({ id, initialData }: Props)
                         <ChevronRight className="w-3 h-3" />
                         <span className="text-[10px] font-black uppercase tracking-[0.2em] text-[#5593C3]">Editor</span>
                     </div>
-                    <h1 className="text-4xl font-black text-[#1a1a1a] tracking-tight">
+                    <h1 className="text-4xl font-black text-[#1a1a1a] dark:text-white tracking-tight">
                         {id ? 'Refine Post' : 'Craft Experience'}
                     </h1>
                 </div>
@@ -113,7 +113,7 @@ export default function AdminCommunityPostFormClient({ id, initialData }: Props)
                     <button
                         type="button"
                         onClick={() => router.back()}
-                        className="bg-white border border-zinc-100 text-zinc-400 px-6 py-3.5 rounded-2xl font-black text-xs hover:bg-zinc-50 transition-all"
+                        className="bg-white dark:bg-white/5 border border-zinc-100 dark:border-white/10 text-zinc-400 px-6 py-3.5 rounded-2xl font-black text-xs hover:bg-zinc-50 dark:hover:bg-white/10 transition-all"
                     >
                         DISCARD
                     </button>
@@ -131,10 +131,10 @@ export default function AdminCommunityPostFormClient({ id, initialData }: Props)
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
                 {/* Main Content */}
                 <div className="lg:col-span-8 space-y-8">
-                    <section className="bg-white rounded-[40px] border border-zinc-100 p-8 shadow-sm space-y-8">
+                    <section className="bg-white dark:bg-white/5 rounded-[40px] border border-zinc-100 dark:border-white/10 p-8 shadow-sm space-y-8">
                         <div className="flex items-center gap-3">
                             <PenTool className="w-6 h-6 text-[#D70F24]" />
-                            <h3 className="font-black text-xl tracking-tight text-[#1a1a1a]">Narrative Core</h3>
+                            <h3 className="font-black text-xl tracking-tight text-[#1a1a1a] dark:text-white">Narrative Core</h3>
                         </div>
 
                         <div className="space-y-6">
@@ -142,7 +142,7 @@ export default function AdminCommunityPostFormClient({ id, initialData }: Props)
                                 <label className="text-[10px] font-black text-zinc-400 uppercase tracking-widest px-1">Engagement Title</label>
                                 <input
                                     {...register('title', { required: true })}
-                                    className="w-full p-5 bg-zinc-50 border border-zinc-100 rounded-2xl text-2xl font-black text-[#1a1a1a] focus:bg-white focus:border-[#5593C3] transition-all outline-none placeholder:text-zinc-200"
+                                    className="w-full p-5 bg-zinc-50 dark:bg-white/5 border border-zinc-100 dark:border-white/10 rounded-2xl text-2xl font-black text-[#1a1a1a] dark:text-white focus:bg-white dark:focus:bg-white/10 focus:border-[#5593C3] transition-all outline-none placeholder:text-zinc-200"
                                     placeholder="The impact of cultural exchange..."
                                 />
                             </div>
@@ -152,7 +152,7 @@ export default function AdminCommunityPostFormClient({ id, initialData }: Props)
                                 <textarea
                                     {...register('excerpt')}
                                     rows={3}
-                                    className="w-full p-5 bg-zinc-50 border border-zinc-100 rounded-2xl text-sm font-bold text-zinc-600 focus:bg-white focus:border-[#5593C3] transition-all outline-none resize-none"
+                                    className="w-full p-5 bg-zinc-50 dark:bg-white/5 border border-zinc-100 dark:border-white/10 rounded-2xl text-sm font-bold text-zinc-600 dark:text-zinc-300 focus:bg-white dark:focus:bg-white/10 focus:border-[#5593C3] transition-all outline-none resize-none"
                                     placeholder="Briefly describe the essence of this discussion..."
                                 />
                             </div>
@@ -162,7 +162,7 @@ export default function AdminCommunityPostFormClient({ id, initialData }: Props)
                                 <textarea
                                     {...register('content', { required: true })}
                                     rows={15}
-                                    className="w-full p-5 bg-zinc-50 border border-zinc-100 rounded-2xl text-sm font-medium text-zinc-600 focus:bg-white focus:border-[#5593C3] transition-all outline-none"
+                                    className="w-full p-5 bg-zinc-50 dark:bg-white/5 border border-zinc-100 dark:border-white/10 rounded-2xl text-sm font-medium text-zinc-600 dark:text-zinc-300 focus:bg-white dark:focus:bg-white/10 focus:border-[#5593C3] transition-all outline-none"
                                     placeholder="Start writing your story here..."
                                 />
                             </div>
@@ -173,12 +173,12 @@ export default function AdminCommunityPostFormClient({ id, initialData }: Props)
                     <section className="space-y-4">
                         <div
                             onClick={() => setShowJapanese(!showJapanese)}
-                            className="bg-white p-6 rounded-3xl border border-zinc-100 shadow-sm flex items-center justify-between cursor-pointer hover:border-red-200 transition-all group"
+                            className="bg-white dark:bg-white/5 p-6 rounded-3xl border border-zinc-100 dark:border-white/10 shadow-sm flex items-center justify-between cursor-pointer hover:border-red-200 transition-all group"
                         >
                             <div className="flex items-center gap-4">
                                 <div className="w-10 h-10 rounded-xl bg-red-50 flex items-center justify-center text-red-500 font-bold">JA</div>
                                 <div>
-                                    <h4 className="font-black text-sm uppercase tracking-widest text-[#1a1a1a]">Japanese Localization</h4>
+                                    <h4 className="font-black text-sm uppercase tracking-widest text-[#1a1a1a] dark:text-white">Japanese Localization</h4>
                                     <p className="text-[10px] text-zinc-400 font-bold uppercase tracking-widest mt-0.5">Translate content for the Nikkei community</p>
                                 </div>
                             </div>
@@ -186,16 +186,16 @@ export default function AdminCommunityPostFormClient({ id, initialData }: Props)
                         </div>
 
                         {showJapanese && (
-                            <div className="bg-zinc-50/50 p-8 rounded-[32px] border border-red-100 border-dashed space-y-6 animate-slide-down">
+                            <div className="bg-zinc-50/50 dark:bg-white/5 p-8 rounded-[32px] border border-red-100 border-dashed space-y-6 animate-slide-down">
                                 <input
                                     {...register('title_ja')}
-                                    className="w-full p-4 bg-white border border-red-50 rounded-2xl text-lg font-black text-[#1a1a1a] outline-none"
+                                    className="w-full p-4 bg-white dark:bg-white/5 border border-red-50 dark:border-red-500/20 rounded-2xl text-lg font-black text-[#1a1a1a] dark:text-white outline-none"
                                     placeholder="日本語のタイトル"
                                 />
                                 <textarea
                                     {...register('content_ja')}
                                     rows={6}
-                                    className="w-full p-4 bg-white border border-red-50 rounded-2xl text-sm font-medium outline-none"
+                                    className="w-full p-4 bg-white dark:bg-white/5 border border-red-50 dark:border-red-500/20 rounded-2xl text-sm font-medium dark:text-zinc-300 outline-none"
                                     placeholder="日本語の内容..."
                                 />
                             </div>
@@ -203,12 +203,12 @@ export default function AdminCommunityPostFormClient({ id, initialData }: Props)
 
                         <div
                             onClick={() => setShowEnglish(!showEnglish)}
-                            className="bg-white p-6 rounded-3xl border border-zinc-100 shadow-sm flex items-center justify-between cursor-pointer hover:border-blue-200 transition-all group"
+                            className="bg-white dark:bg-white/5 p-6 rounded-3xl border border-zinc-100 dark:border-white/10 shadow-sm flex items-center justify-between cursor-pointer hover:border-blue-200 transition-all group"
                         >
                             <div className="flex items-center gap-4">
                                 <div className="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center text-blue-500 font-bold">EN</div>
                                 <div>
-                                    <h4 className="font-black text-sm uppercase tracking-widest text-[#1a1a1a]">English Localization</h4>
+                                    <h4 className="font-black text-sm uppercase tracking-widest text-[#1a1a1a] dark:text-white">English Localization</h4>
                                     <p className="text-[10px] text-zinc-400 font-bold uppercase tracking-widest mt-0.5">Global outreach and international readers</p>
                                 </div>
                             </div>
@@ -216,16 +216,16 @@ export default function AdminCommunityPostFormClient({ id, initialData }: Props)
                         </div>
 
                         {showEnglish && (
-                            <div className="bg-zinc-50/50 p-8 rounded-[32px] border border-blue-100 border-dashed space-y-6 animate-slide-down">
+                            <div className="bg-zinc-50/50 dark:bg-white/5 p-8 rounded-[32px] border border-blue-100 border-dashed space-y-6 animate-slide-down">
                                 <input
                                     {...register('title_en')}
-                                    className="w-full p-4 bg-white border border-blue-50 rounded-2xl text-lg font-black text-[#1a1a1a] outline-none"
+                                    className="w-full p-4 bg-white dark:bg-white/5 border border-blue-50 dark:border-blue-500/20 rounded-2xl text-lg font-black text-[#1a1a1a] dark:text-white outline-none"
                                     placeholder="Post Title in English"
                                 />
                                 <textarea
                                     {...register('content_en')}
                                     rows={6}
-                                    className="w-full p-4 bg-white border border-blue-50 rounded-2xl text-sm font-medium outline-none"
+                                    className="w-full p-4 bg-white dark:bg-white/5 border border-blue-50 dark:border-blue-500/20 rounded-2xl text-sm font-medium dark:text-zinc-300 outline-none"
                                     placeholder="English content details..."
                                 />
                             </div>
@@ -235,8 +235,8 @@ export default function AdminCommunityPostFormClient({ id, initialData }: Props)
 
                 {/* Sidebar */}
                 <div className="lg:col-span-4 space-y-8">
-                    <section className="bg-white rounded-[40px] border border-zinc-100 overflow-hidden shadow-xl">
-                        <div className="bg-zinc-50 px-8 py-5 border-b border-zinc-100">
+                    <section className="bg-white dark:bg-white/5 rounded-[40px] border border-zinc-100 dark:border-white/10 overflow-hidden shadow-xl">
+                        <div className="bg-zinc-50 dark:bg-white/5 px-8 py-5 border-b border-zinc-100 dark:border-white/5">
                             <h4 className="text-[10px] font-black text-zinc-400 uppercase tracking-[0.2em]">Context & Classification</h4>
                         </div>
                         <div className="p-8 space-y-8">
@@ -244,7 +244,7 @@ export default function AdminCommunityPostFormClient({ id, initialData }: Props)
                                 <label className="text-[10px] font-black text-zinc-400 uppercase tracking-widest px-1">Lifecycle Stage</label>
                                 <select
                                     {...register('status')}
-                                    className="w-full p-4 bg-zinc-50 border border-zinc-100 rounded-2xl text-sm font-black text-[#1a1a1a] outline-none focus:bg-white"
+                                    className="w-full p-4 bg-zinc-50 dark:bg-white/5 border border-zinc-100 dark:border-white/10 rounded-2xl text-sm font-black text-[#1a1a1a] dark:text-white outline-none focus:bg-white dark:focus:bg-white/10"
                                 >
                                     <option value="draft">Internal Draft</option>
                                     <option value="published">Live on Feed</option>
@@ -257,7 +257,7 @@ export default function AdminCommunityPostFormClient({ id, initialData }: Props)
                                 <label className="text-[10px] font-black text-zinc-400 uppercase tracking-widest px-1">Community Logic</label>
                                 <select
                                     {...register('category_id', { required: true })}
-                                    className="w-full p-4 bg-zinc-50 border border-zinc-100 rounded-2xl text-sm font-black text-[#1a1a1a] outline-none focus:bg-white"
+                                    className="w-full p-4 bg-zinc-50 dark:bg-white/5 border border-zinc-100 dark:border-white/10 rounded-2xl text-sm font-black text-[#1a1a1a] dark:text-white outline-none focus:bg-white dark:focus:bg-white/10"
                                 >
                                     <option value="">Choose Taxonomy...</option>
                                     {categories.map(c => (
@@ -270,15 +270,15 @@ export default function AdminCommunityPostFormClient({ id, initialData }: Props)
                                 <label className="text-[10px] font-black text-zinc-400 uppercase tracking-widest px-1">System Slug (URL)</label>
                                 <input
                                     {...register('slug', { required: true })}
-                                    className="w-full p-4 bg-zinc-50 border border-zinc-100 rounded-2xl text-xs font-mono font-bold text-[#5593C3] outline-none"
+                                    className="w-full p-4 bg-zinc-50 dark:bg-white/5 border border-zinc-100 dark:border-white/10 rounded-2xl text-xs font-mono font-bold text-[#5593C3] outline-none"
                                     placeholder="url-friendly-slug"
                                 />
                             </div>
                         </div>
                     </section>
 
-                    <section className="bg-white rounded-[40px] border border-zinc-100 overflow-hidden shadow-xl">
-                        <div className="bg-zinc-50 px-8 py-5 border-b border-zinc-100 flex items-center justify-between">
+                    <section className="bg-white dark:bg-white/5 rounded-[40px] border border-zinc-100 dark:border-white/10 overflow-hidden shadow-xl">
+                        <div className="bg-zinc-50 dark:bg-white/5 px-8 py-5 border-b border-zinc-100 dark:border-white/5 flex items-center justify-between">
                             <h4 className="text-[10px] font-black text-zinc-400 uppercase tracking-[0.2em]">Visual Asset</h4>
                         </div>
                         <div className="p-8">

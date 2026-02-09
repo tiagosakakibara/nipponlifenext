@@ -96,7 +96,7 @@ export const MediaUploader: React.FC<MediaUploaderProps> = ({
         <div className={noContainer ? className : `bg-surface rounded-lg shadow-sm border border-app overflow-hidden ${className}`}>
             {!noContainer && (
                 <div className="p-4 border-b border-app bg-surface/50 flex justify-between items-center">
-                    <h3 className="text-sm font-bold text-zinc-800">{label}</h3>
+                    <h3 className="text-sm font-bold text-zinc-800 dark:text-white">{label}</h3>
                     {isUploading && <Loader2 className="w-4 h-4 animate-spin text-accent" />}
                 </div>
             )}
@@ -145,7 +145,7 @@ export const MediaUploader: React.FC<MediaUploaderProps> = ({
                                 </button>
                             </div>
                         </div>
-                        <p className="text-[10px] text-zinc-500 truncate break-all px-1 font-medium bg-zinc-50 py-1 rounded border border-zinc-100">{value}</p>
+                        <p className="text-[10px] text-zinc-500 dark:text-zinc-400 truncate break-all px-1 font-medium bg-zinc-50 dark:bg-white/5 py-1 rounded border border-zinc-100 dark:border-white/5">{value}</p>
                     </div>
                 ) : (
                     <button
@@ -156,7 +156,7 @@ export const MediaUploader: React.FC<MediaUploaderProps> = ({
                             ? 'bg-white/5 border-white/10 cursor-not-allowed text-gray-500'
                             : noContainer
                                 ? 'border-white/10 hover:border-blue-500/50 hover:bg-blue-500/5 cursor-pointer text-gray-600'
-                                : 'border-zinc-200 hover:border-accent hover:bg-[var(--nl-accent)]/5 cursor-pointer text-zinc-400'
+                                : 'border-zinc-200 dark:border-white/10 hover:border-accent hover:bg-[var(--nl-accent)]/5 cursor-pointer text-zinc-400 dark:text-zinc-500'
                             }`}
                     >
                         {isUploading ? (
@@ -166,11 +166,11 @@ export const MediaUploader: React.FC<MediaUploaderProps> = ({
                             </>
                         ) : (
                             <>
-                                <div className={noContainer ? "p-3 bg-white/5 border border-white/10 rounded-full shadow-sm" : "p-3 bg-white border border-zinc-200 rounded-full shadow-sm"}>
+                                <div className={noContainer ? "p-3 bg-white/5 border border-white/10 rounded-full shadow-sm" : "p-3 bg-white dark:bg-white/5 border border-zinc-200 dark:border-white/10 rounded-full shadow-sm"}>
                                     <Upload className="w-6 h-6 text-zinc-400" />
                                 </div>
                                 <div className="text-center">
-                                    <span className={noContainer ? "text-xs font-semibold text-gray-400 block" : "text-xs font-semibold text-zinc-700 block"}>Click to upload</span>
+                                    <span className={noContainer ? "text-xs font-semibold text-gray-400 block" : "text-xs font-semibold text-zinc-700 dark:text-zinc-300 block"}>Click to upload</span>
                                     <span className="text-[10px] text-zinc-400 font-medium">Original format (max 50MB)</span>
                                 </div>
                             </>
