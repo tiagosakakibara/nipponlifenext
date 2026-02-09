@@ -4,14 +4,8 @@ export type StorageFolder = 'profiles' | 'businesses' | 'posts' | 'jobs' | 'even
 
 export const storageService = {
     isProduction(): boolean {
-        if (typeof window === 'undefined') return false; // Default to absolute URLs (dev mode logic) on server
-        const hostname = window.location.hostname;
-        return hostname === 'nippon-life.com' ||
-            hostname === 'www.nippon-life.com' ||
-            hostname === 'nippon-life.net' ||
-            hostname === 'www.nippon-life.net' ||
-            hostname.includes('nipponlife') ||
-            hostname.includes('nippon-life');
+        // ColorfulBox server was deactivated. We are now using Supabase Storage as default.
+        return false;
     },
 
 
@@ -26,6 +20,7 @@ export const storageService = {
      * @param albumId - Optional album ID for organizing gallery photos by album
      */
     async uploadFile(file: File, folder: StorageFolder, userId?: string, albumId?: string): Promise<string> {
+        // Always use Supabase Storage as ColorfulBox is deactivated
         return this.uploadToSupabase(file, folder);
     },
 
@@ -96,6 +91,30 @@ export const storageService = {
      */
     getFileUrl(path: string | null | undefined): string {
         if (!path) return '';
+
+        // Rewrite legacy ColorfulBox URLs to Supabase Storage (Recovery Mode)
+        if (path.includes('nippon-life.com/uploads/') || path.includes('/uploads/media/')) {
+            const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+            if (supabaseUrl) {
+                // Handle Gallery Bucket
+                if (path.includes('/uploads/media/gallery/')) {
+                    const relativePath = path.split('/uploads/media/gallery/')[1];
+                    return `${supabaseUrl}/storage/v1/object/public/gallery/${relativePath}`;
+                }
+                // Handle Media Bucket (posts, businesses, etc.)
+                if (path.includes('/uploads/media/')) {
+                    const relativePath = path.split('/uploads/media/')[1];
+                    return `${supabaseUrl}/storage/v1/object/public/media/${relativePath}`;
+                }
+
+                // Handle Business Uploads (Legacy path: /uploads/businesses/)
+                if (path.includes('/uploads/businesses/')) {
+                    const relativePath = path.split('/uploads/businesses/')[1];
+                    return `${supabaseUrl}/storage/v1/object/public/media/businesses/${relativePath}`;
+                }
+            }
+        }
+
         if (path.startsWith('http')) return path;
         if (path.startsWith('data:')) return path;
         if (path.startsWith('blob:')) return path;

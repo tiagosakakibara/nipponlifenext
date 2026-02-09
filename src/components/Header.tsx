@@ -3,7 +3,7 @@
 import { Search, Menu, X, Sun, Moon, Compass } from 'lucide-react';
 import { LanguageSwitcher } from './LanguageSwitcher';
 import { UserMenu } from './UserMenu';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from '@/i18n/routing';
 import { useTheme } from 'next-themes';
 import { useTranslations } from 'next-intl';
@@ -15,13 +15,19 @@ interface HeaderProps {
     onSearchChange?: (query: string) => void;
 }
 
+
 export function Header({ searchQuery = '', onSearchChange = () => { } }: HeaderProps) {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const { setTheme, theme } = useTheme();
+    const { setTheme, theme, resolvedTheme } = useTheme();
+    const [mounted, setMounted] = useState(false);
     const t = useTranslations();
     const { user } = useAuth();
     const router = useRouter();
     const pathname = usePathname();
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
 
     const isAdmin = pathname?.includes('/admin');
 
@@ -70,14 +76,16 @@ export function Header({ searchQuery = '', onSearchChange = () => { } }: HeaderP
                         </Link>
                     </nav>
 
+
                     {/* Actions */}
                     <div className="flex items-center gap-0.5 sm:gap-2">
                         <button
-                            onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+                            onClick={() => setTheme(theme === 'dark' || resolvedTheme === 'dark' ? 'light' : 'dark')}
                             className="p-1.5 sm:p-2 rounded-xl hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
                             aria-label="Toggle theme"
+                            suppressHydrationWarning
                         >
-                            {theme === 'dark' ? (
+                            {mounted && (theme === 'dark' || resolvedTheme === 'dark') ? (
                                 <Sun className="w-5 h-5 text-zinc-400" />
                             ) : (
                                 <Moon className="w-5 h-5 text-zinc-400" />
