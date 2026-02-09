@@ -312,13 +312,14 @@ export default function AdminPostEditClient() {
                                 <select
                                     value={formData.categoryKey}
                                     onChange={e => setFormData({ ...formData, categoryKey: e.target.value })}
-                                    className="w-full bg-app border border-app rounded-lg px-4 py-2 text-xs"
+                                    className={`w-full bg-app border rounded-lg px-4 py-2 text-xs ${validationErrors.category ? 'border-red-500/50 text-red-500' : 'border-app'}`}
                                 >
                                     <option value="">Select Category</option>
                                     {categories.map((cat: any) => (
                                         <option key={cat.key} value={cat.key}>{cat.label}</option>
                                     ))}
                                 </select>
+                                {validationErrors.category && <p className="text-red-500 text-[10px] pt-1">{validationErrors.category}</p>}
                             </div>
                         </div>
                     </div>

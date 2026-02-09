@@ -145,7 +145,7 @@ export const MediaUploader: React.FC<MediaUploaderProps> = ({
                                 </button>
                             </div>
                         </div>
-                        <p className="text-[10px] text-zinc-500 dark:text-zinc-400 truncate break-all px-1 font-medium bg-zinc-50 dark:bg-white/5 py-1 rounded border border-zinc-100 dark:border-white/5">{value}</p>
+                        <p className="text-[10px] text-zinc-500 dark:text-zinc-400 truncate break-all px-1 font-medium bg-zinc-50 dark:bg-white/5 py-1 rounded border border-zinc-100 dark:border-white/5">{storageService.getFileUrl(value)}</p>
                     </div>
                 ) : (
                     <button
