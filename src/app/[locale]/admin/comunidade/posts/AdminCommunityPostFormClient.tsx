@@ -284,7 +284,10 @@ export default function AdminCommunityPostFormClient({ id, initialData }: Props)
                         <div className="p-8">
                             <MediaUploader
                                 value={coverImage}
-                                onChange={(url: string | null) => setCoverImage(url)}
+                                onChange={(url: string | null) => {
+                                    console.log('🔄 [Parent] MediaUploader onChange called with:', url);
+                                    setCoverImage(url);
+                                }}
                                 folderPrefix="community"
                                 noContainer
                             />

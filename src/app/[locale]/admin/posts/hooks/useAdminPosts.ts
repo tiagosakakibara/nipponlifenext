@@ -245,7 +245,7 @@ export function useAdminPosts() {
     };
 
     // Fetch Single Post
-    const getPost = async (id: string): Promise<AdminPost | null> => {
+    const getPost = useCallback(async (id: string): Promise<AdminPost | null> => {
         try {
             const { data, error } = await supabase
                 .from('posts')
@@ -287,7 +287,7 @@ export function useAdminPosts() {
             console.error(e);
             return null;
         }
-    };
+    }, [supabase]);
 
     return {
         posts,

@@ -37,14 +37,14 @@ export const MediaUploader: React.FC<MediaUploaderProps> = ({
     }, [value]);
 
     const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-        console.log('📁 [MediaUploader] File input changed');
+
         const file = e.target.files?.[0];
         if (!file) {
-            console.log('📁 [MediaUploader] No file selected');
+
             return;
         }
 
-        console.log('📁 [MediaUploader] File selected:', file.name, file.type, file.size);
+
 
         // Validate file type
         const fileType = file.type.split('/')[0];
@@ -63,13 +63,13 @@ export const MediaUploader: React.FC<MediaUploaderProps> = ({
         }
 
         try {
-            console.log('🚀 [MediaUploader] Starting upload...');
+
             setIsUploading(true);
             setError(null);
 
             // Use unified storage service
             const publicUrl = await storageService.uploadFile(file, folderPrefix || 'media');
-            console.log('✅ [MediaUploader] Upload success, URL:', publicUrl);
+
 
             // 3. Save metadata to public.media table
             const { data: { user } } = await supabase.auth.getUser();
@@ -134,21 +134,11 @@ export const MediaUploader: React.FC<MediaUploaderProps> = ({
                                     controls
                                 />
                             ) : (
-                                <>
-                                    <img
-                                        src={storageService.getFileUrl(value)}
-                                        alt="Upload preview"
-                                        className={`w-full h-full object-contain transition-opacity duration-300 ${imageError ? 'hidden' : 'block'}`}
-                                        onError={() => setImageError(true)}
-                                    />
-                                    {/* Fallback for broken images */}
-                                    <div className={`${imageError ? 'flex' : 'hidden'} absolute inset-0 flex-col items-center justify-center text-zinc-400 bg-zinc-50 dark:bg-white/5`}>
-                                        <div className="p-4 rounded-full bg-zinc-100 dark:bg-white/10 mb-2">
-                                            <ImageIcon className="w-8 h-8 opacity-50" />
-                                        </div>
-                                        <span className="text-xs font-medium">Image not found</span>
-                                    </div>
-                                </>
+                                <ResponsiveImage
+                                    src={value}
+                                    alt="Upload preview"
+                                    className="w-full h-full object-contain transition-transform duration-300 group-hover:scale-105"
+                                />
                             )}
 
                             {/* Actions Overlay - Always visible on hover or if image is broken, but accessible */}
@@ -158,7 +148,7 @@ export const MediaUploader: React.FC<MediaUploaderProps> = ({
                                     onClick={(e) => {
                                         e.preventDefault();
                                         e.stopPropagation();
-                                        console.log('Upload button clicked');
+
                                         fileInputRef.current?.click();
                                     }}
                                     className="transform translate-y-2 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-200 p-3 bg-white text-zinc-800 rounded-full hover:bg-zinc-50 shadow-lg border border-zinc-100"

@@ -328,7 +328,7 @@ export default function AdminPostEditClient() {
                         <h3 className="font-bold text-sm">Featured Image</h3>
                         <MediaUploader
                             value={formData.coverImageUrl}
-                            onChange={(url) => setFormData({ ...formData, coverImageUrl: url || '' })}
+                            onChange={(url) => setFormData(prev => prev ? ({ ...prev, coverImageUrl: url || '' }) : null)}
                             folderPrefix="posts"
                             noContainer
                         />
