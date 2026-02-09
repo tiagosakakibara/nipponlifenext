@@ -1,9 +1,9 @@
 "use client";
 
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { createClient } from '@/utils/supabase/client';
 import { storageService } from '@/lib/storageService';
-import { Upload, X, Loader2 } from 'lucide-react';
+import { Upload, X, Loader2, Image as ImageIcon } from 'lucide-react';
 import { ResponsiveImage } from '@/components/ResponsiveImage';
 
 interface MediaUploaderProps {
@@ -29,15 +29,28 @@ export const MediaUploader: React.FC<MediaUploaderProps> = ({
     const [error, setError] = useState<string | null>(null);
     const fileInputRef = useRef<HTMLInputElement>(null);
     const supabase = createClient();
+    const [imageError, setImageError] = useState(false);
+
+    // Reset error state when value changes (e.g. new upload)
+    useEffect(() => {
+        setImageError(false);
+    }, [value]);
 
     const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        console.log('📁 [MediaUploader] File input changed');
         const file = e.target.files?.[0];
-        if (!file) return;
+        if (!file) {
+            console.log('📁 [MediaUploader] No file selected');
+            return;
+        }
+
+        console.log('📁 [MediaUploader] File selected:', file.name, file.type, file.size);
 
         // Validate file type
         const fileType = file.type.split('/')[0];
         if (!allowedTypes.includes(fileType as any)) {
             setError(`Please upload a ${allowedTypes.join(' or ')} file.`);
+            if (fileInputRef.current) fileInputRef.current.value = ''; // Reset input
             return;
         }
 
@@ -45,15 +58,18 @@ export const MediaUploader: React.FC<MediaUploaderProps> = ({
         const maxSize = fileType === 'video' ? 50 * 1024 * 1024 : 5 * 1024 * 1024;
         if (file.size > maxSize) {
             setError(`File size should be less than ${maxSize / 1024 / 1024}MB.`);
+            if (fileInputRef.current) fileInputRef.current.value = ''; // Reset input
             return;
         }
 
         try {
+            console.log('🚀 [MediaUploader] Starting upload...');
             setIsUploading(true);
             setError(null);
 
             // Use unified storage service
             const publicUrl = await storageService.uploadFile(file, folderPrefix || 'media');
+            console.log('✅ [MediaUploader] Upload success, URL:', publicUrl);
 
             // 3. Save metadata to public.media table
             const { data: { user } } = await supabase.auth.getUser();
@@ -103,49 +119,69 @@ export const MediaUploader: React.FC<MediaUploaderProps> = ({
 
             <div className={noContainer ? "" : "p-4 space-y-4"}>
                 {isUploading && noContainer && (
-                    <div className="flex items-center gap-2 mb-2">
-                        <Loader2 className="w-3 h-3 animate-spin text-accent" />
-                        <span className="text-[10px] text-gray-400">Uploading...</span>
+                    <div className="flex items-center gap-2 mb-2 p-2 bg-blue-50 dark:bg-blue-900/20 text-blue-600 rounded-lg animate-pulse">
+                        <Loader2 className="w-4 h-4 animate-spin" />
+                        <span className="text-xs font-bold">Uploading media... please wait</span>
                     </div>
                 )}
                 {value ? (
                     <div className="space-y-3">
-                        <div className="relative group w-full aspect-video rounded-md overflow-hidden bg-surface border border-app flex items-center justify-center">
+                        <div className="relative w-full aspect-video rounded-xl overflow-hidden bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 flex items-center justify-center group">
                             {isVideo(value) ? (
                                 <video
-                                    src={value}
-                                    className="w-full h-auto max-h-[500px]"
+                                    src={storageService.getFileUrl(value)}
+                                    className="w-full h-full object-contain"
                                     controls
                                 />
                             ) : (
-                                <ResponsiveImage
-                                    src={value}
-                                    alt="Upload preview"
-                                    className="w-full h-auto object-contain transition-transform duration-300 group-hover:scale-105"
-                                />
+                                <>
+                                    <img
+                                        src={storageService.getFileUrl(value)}
+                                        alt="Upload preview"
+                                        className={`w-full h-full object-contain transition-opacity duration-300 ${imageError ? 'hidden' : 'block'}`}
+                                        onError={() => setImageError(true)}
+                                    />
+                                    {/* Fallback for broken images */}
+                                    <div className={`${imageError ? 'flex' : 'hidden'} absolute inset-0 flex-col items-center justify-center text-zinc-400 bg-zinc-50 dark:bg-white/5`}>
+                                        <div className="p-4 rounded-full bg-zinc-100 dark:bg-white/10 mb-2">
+                                            <ImageIcon className="w-8 h-8 opacity-50" />
+                                        </div>
+                                        <span className="text-xs font-medium">Image not found</span>
+                                    </div>
+                                </>
                             )}
 
-                            {/* Overlay Actions */}
-                            <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
+                            {/* Actions Overlay - Always visible on hover or if image is broken, but accessible */}
+                            <div className="absolute inset-0 bg-black/0 hover:bg-black/10 transition-colors flex items-center justify-center gap-3">
                                 <button
                                     type="button"
-                                    onClick={() => fileInputRef.current?.click()}
-                                    className="p-2 bg-white text-zinc-800 rounded-full hover:bg-zinc-100 hover:scale-110 transition-all shadow-lg"
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        e.stopPropagation();
+                                        console.log('Upload button clicked');
+                                        fileInputRef.current?.click();
+                                    }}
+                                    className="transform translate-y-2 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-200 p-3 bg-white text-zinc-800 rounded-full hover:bg-zinc-50 shadow-lg border border-zinc-100"
                                     title="Change image"
                                 >
-                                    <Upload className="w-4 h-4" />
+                                    <Upload className="w-5 h-5" />
                                 </button>
                                 <button
                                     type="button"
-                                    onClick={removeImage}
-                                    className="p-2 bg-red-600 text-white rounded-full hover:bg-red-700 hover:scale-110 transition-all shadow-lg"
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        e.stopPropagation();
+                                        removeImage();
+                                    }}
+                                    className="transform translate-y-2 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-200 delay-75 p-3 bg-red-600 text-white rounded-full hover:bg-red-700 shadow-lg shadow-red-600/20"
                                     title="Remove file"
                                 >
-                                    <X className="w-4 h-4" />
+                                    <X className="w-5 h-5" />
                                 </button>
                             </div>
                         </div>
-                        <p className="text-[10px] text-zinc-500 dark:text-zinc-400 truncate break-all px-1 font-medium bg-zinc-50 dark:bg-white/5 py-1 rounded border border-zinc-100 dark:border-white/5">{storageService.getFileUrl(value)}</p>
+                        {/* Show URL only if it looks like a broken legacy link for verify purposes, otherwise hide */}
+                        <div className="hidden text-[10px] text-zinc-400 px-1 truncate">{storageService.getFileUrl(value)}</div>
                     </div>
                 ) : (
                     <button

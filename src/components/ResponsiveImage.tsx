@@ -53,6 +53,7 @@ export const ResponsiveImage: React.FC<ResponsiveImageProps> = ({
                 quality={quality}
                 className={objectFit}
                 onError={() => setIsError(true)}
+                unoptimized={true} // Bypass Next.js optimization to fix Supabase loading issues
             />
         </div>
     );
