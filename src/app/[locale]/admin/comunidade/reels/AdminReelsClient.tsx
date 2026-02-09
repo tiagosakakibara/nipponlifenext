@@ -112,8 +112,8 @@ export default function AdminReelsClient() {
             {/* Header */}
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
                 <div>
-                    <h1 className="text-4xl font-black text-[#1a1a1a] tracking-tight">Community Reels</h1>
-                    <p className="text-zinc-500 mt-1 font-medium italic opacity-60">Manage video content for the community</p>
+                    <h1 className="text-4xl font-black text-[#1a1a1a] dark:text-white tracking-tight">Community Reels</h1>
+                    <p className="text-zinc-500 dark:text-zinc-400 mt-1 font-medium italic opacity-60">Manage video content for the community</p>
                 </div>
 
                 <div className="flex items-center gap-3">
@@ -128,10 +128,10 @@ export default function AdminReelsClient() {
             </div>
 
             {/* List */}
-            <div className="bg-white rounded-[40px] border border-zinc-100 shadow-xl overflow-hidden">
+            <div className="bg-white dark:bg-white/5 rounded-[40px] border border-zinc-100 dark:border-white/10 shadow-xl overflow-hidden">
                 <div className="overflow-x-auto">
                     <table className="w-full text-left border-collapse">
-                        <thead className="bg-zinc-50 text-[#D70F24] text-[10px] font-black uppercase tracking-[0.2em] border-b border-zinc-100">
+                        <thead className="bg-zinc-50 dark:bg-white/5 text-[#D70F24] text-[10px] font-black uppercase tracking-[0.2em] border-b border-zinc-100 dark:border-white/5">
                             <tr>
                                 <th className="px-8 py-6">Video Asset</th>
                                 <th className="px-8 py-6">Provider</th>
@@ -139,25 +139,25 @@ export default function AdminReelsClient() {
                                 <th className="px-8 py-6 text-right">Actions</th>
                             </tr>
                         </thead>
-                        <tbody className="divide-y divide-zinc-50">
+                        <tbody className="divide-y divide-zinc-50 dark:divide-white/5">
                             {loading ? (
                                 <tr>
                                     <td colSpan={4} className="px-8 py-32 text-center">
                                         <div className="flex flex-col items-center gap-4">
                                             <Loader2 className="w-12 h-12 text-[#D70F24] animate-spin" />
-                                            <span className="text-zinc-400 font-extrabold uppercase tracking-widest text-[10px]">Loading Reels...</span>
+                                            <span className="text-zinc-400 dark:text-zinc-500 font-extrabold uppercase tracking-widest text-[10px]">Loading Reels...</span>
                                         </div>
                                     </td>
                                 </tr>
                             ) : reels.length === 0 ? (
                                 <tr>
-                                    <td colSpan={4} className="px-8 py-32 text-center text-zinc-300 italic font-medium">
+                                    <td colSpan={4} className="px-8 py-32 text-center text-zinc-300 dark:text-zinc-600 italic font-medium">
                                         No reels found. Add your first one!
                                     </td>
                                 </tr>
                             ) : (
                                 reels.map((reel) => (
-                                    <tr key={reel.id} className="group hover:bg-red-50/30 transition-colors">
+                                    <tr key={reel.id} className="group hover:bg-red-50/30 dark:hover:bg-white/5 transition-colors">
                                         <td className="px-8 py-6">
                                             <div className="flex items-center gap-5">
                                                 <div className="relative w-24 h-40 bg-black rounded-lg overflow-hidden shadow-md flex-shrink-0">
@@ -175,16 +175,16 @@ export default function AdminReelsClient() {
                                                     </div>
                                                 </div>
                                                 <div className="space-y-1">
-                                                    <a href={reel.url} target="_blank" rel="noopener noreferrer" className="font-bold text-[#1a1a1a] hover:text-[#D70F24] transition-colors line-clamp-2 max-w-[300px] flex items-center gap-2">
+                                                    <a href={reel.url} target="_blank" rel="noopener noreferrer" className="font-bold text-[#1a1a1a] dark:text-white hover:text-[#D70F24] transition-colors line-clamp-2 max-w-[300px] flex items-center gap-2">
                                                         {reel.url}
-                                                        <ExternalLink className="w-3 h-3 text-zinc-400" />
+                                                        <ExternalLink className="w-3 h-3 text-zinc-400 dark:text-zinc-600" />
                                                     </a>
-                                                    <p className="text-[10px] font-mono text-zinc-400">ID: {reel.youtube_video_id || 'N/A'}</p>
+                                                    <p className="text-[10px] font-mono text-zinc-400 dark:text-zinc-600">ID: {reel.youtube_video_id || 'N/A'}</p>
                                                 </div>
                                             </div>
                                         </td>
                                         <td className="px-8 py-6">
-                                            <span className="px-3 py-1 bg-zinc-100 text-zinc-500 rounded-full text-[9px] font-black uppercase tracking-widest border border-zinc-200">
+                                            <span className="px-3 py-1 bg-zinc-100 dark:bg-white/10 text-zinc-500 dark:text-zinc-400 rounded-full text-[9px] font-black uppercase tracking-widest border border-zinc-200 dark:border-white/10">
                                                 {reel.provider}
                                             </span>
                                         </td>
@@ -192,8 +192,8 @@ export default function AdminReelsClient() {
                                             <button
                                                 onClick={() => toggleStatus(reel)}
                                                 className={`px-4 py-1.5 rounded-full text-[9px] font-black uppercase tracking-widest border transition-all ${reel.is_active
-                                                        ? 'bg-emerald-500/10 text-emerald-600 border-emerald-500/20 hover:bg-emerald-500/20'
-                                                        : 'bg-zinc-100 text-zinc-400 border-zinc-200 hover:bg-zinc-200'
+                                                    ? 'bg-emerald-500/10 dark:bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 border-emerald-500/20'
+                                                    : 'bg-zinc-100 dark:bg-white/10 text-zinc-400 dark:text-zinc-500 border-zinc-200 dark:border-white/10 hover:bg-zinc-200 dark:hover:bg-white/20'
                                                     }`}
                                             >
                                                 {reel.is_active ? 'Active' : 'Hidden'}
@@ -203,7 +203,7 @@ export default function AdminReelsClient() {
                                             <div className="flex items-center justify-end gap-1 opacity-100 sm:opacity-0 group-hover:opacity-100 transition-all">
                                                 <button
                                                     onClick={() => handleDelete(reel.id)}
-                                                    className="p-3 text-zinc-400 hover:text-red-500 hover:bg-red-50 rounded-2xl transition-all"
+                                                    className="p-3 text-zinc-400 dark:text-zinc-500 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-2xl transition-all"
                                                 >
                                                     <Trash2 className="w-5 h-5" />
                                                 </button>
@@ -220,35 +220,35 @@ export default function AdminReelsClient() {
             {/* Add Modal */}
             {isAddModalOpen && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fade-in">
-                    <div className="bg-white rounded-[32px] w-full max-w-lg overflow-hidden shadow-2xl animate-scale-up">
-                        <div className="p-8 border-b border-zinc-100 flex items-center justify-between bg-zinc-50">
-                            <h2 className="text-xl font-black text-[#1a1a1a]">Add New Reel</h2>
-                            <button onClick={() => setIsAddModalOpen(false)} className="p-2 hover:bg-zinc-200 rounded-full transition-colors">
-                                <X className="w-5 h-5 text-zinc-400" />
+                    <div className="bg-white dark:bg-[#1a1a1a] rounded-[32px] w-full max-w-lg overflow-hidden shadow-2xl animate-scale-up">
+                        <div className="p-8 border-b border-zinc-100 dark:border-white/10 flex items-center justify-between bg-zinc-50 dark:bg-white/5">
+                            <h2 className="text-xl font-black text-[#1a1a1a] dark:text-white">Add New Reel</h2>
+                            <button onClick={() => setIsAddModalOpen(false)} className="p-2 hover:bg-zinc-200 dark:hover:bg-white/10 rounded-full transition-colors">
+                                <X className="w-5 h-5 text-zinc-400 dark:text-zinc-500" />
                             </button>
                         </div>
 
                         <div className="p-8 space-y-6">
                             <div className="space-y-2">
-                                <label className="text-xs font-black uppercase tracking-widest text-zinc-400">Video URL (YouTube/Shorts)</label>
+                                <label className="text-xs font-black uppercase tracking-widest text-zinc-400 dark:text-zinc-500">Video URL (YouTube/Shorts)</label>
                                 <input
                                     type="text"
                                     value={newReelUrl}
                                     onChange={(e) => handleUrlChange(e.target.value)}
                                     placeholder="https://youtube.com/shorts/..."
-                                    className="w-full p-4 bg-zinc-50 border border-zinc-100 rounded-xl font-medium outline-none focus:border-[#D70F24] transition-all"
+                                    className="w-full p-4 bg-zinc-50 dark:bg-white/5 border border-zinc-100 dark:border-white/10 rounded-xl font-medium text-[#1a1a1a] dark:text-white outline-none focus:border-[#D70F24] transition-all"
                                 />
                                 {previewData?.error && (
-                                    <p className="text-xs font-bold text-red-500">{previewData.error}</p>
+                                    <p className="text-xs font-bold text-red-500 dark:text-red-400">{previewData.error}</p>
                                 )}
                             </div>
 
                             {previewData?.isValid && (
-                                <div className="bg-zinc-50 rounded-2xl p-4 border border-zinc-100 flex gap-4">
+                                <div className="bg-zinc-50 dark:bg-white/5 rounded-2xl p-4 border border-zinc-100 dark:border-white/10 flex gap-4">
                                     <img src={previewData.thumbnailUrl} className="w-20 h-20 object-cover rounded-lg bg-black/10" />
                                     <div className="space-y-1">
-                                        <p className="text-xs font-bold text-emerald-600 uppercase tracking-wider">Valid {previewData.provider} link</p>
-                                        <p className="text-xs text-zinc-400">ID: {previewData.youtubeVideoId}</p>
+                                        <p className="text-xs font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-wider">Valid {previewData.provider} link</p>
+                                        <p className="text-xs text-zinc-400 dark:text-zinc-500">ID: {previewData.youtubeVideoId}</p>
                                     </div>
                                 </div>
                             )}
