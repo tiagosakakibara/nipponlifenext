@@ -19,7 +19,7 @@ export const ResponsiveImage: React.FC<ResponsiveImageProps> = ({
     src,
     alt,
     className = "w-full h-full object-cover",
-    fallbackSrc = "https://via.placeholder.com/800x450?text=No+Image",
+    fallbackSrc = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='450' viewBox='0 0 800 450'%3E%3Crect width='800' height='450' fill='%23f3f4f6'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-size='24' fill='%239ca3af'%3ENo Image%3C/text%3E%3C/svg%3E",
     fill = true,
     sizes = "(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw",
     priority = false,

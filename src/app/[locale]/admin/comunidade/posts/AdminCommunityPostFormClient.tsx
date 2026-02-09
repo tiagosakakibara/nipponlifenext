@@ -10,6 +10,7 @@ import {
 } from 'lucide-react';
 import { communityService } from '@/lib/communityService';
 import { storageService } from '@/lib/storageService';
+import { MediaUploader } from '@/components/MediaUploader';
 import { toast } from 'react-hot-toast';
 import { useRouter } from '@/i18n/routing';
 
@@ -279,33 +280,14 @@ export default function AdminCommunityPostFormClient({ id, initialData }: Props)
                     <section className="bg-white rounded-[40px] border border-zinc-100 overflow-hidden shadow-xl">
                         <div className="bg-zinc-50 px-8 py-5 border-b border-zinc-100 flex items-center justify-between">
                             <h4 className="text-[10px] font-black text-zinc-400 uppercase tracking-[0.2em]">Visual Asset</h4>
-                            {uploading && <Loader2 className="w-4 h-4 animate-spin text-[#5593C3]" />}
                         </div>
                         <div className="p-8">
-                            {coverImage ? (
-                                <div className="relative group">
-                                    <img src={coverImage} className="w-full h-48 object-cover rounded-[32px] shadow-lg ring-4 ring-zinc-50" />
-                                    <button
-                                        type="button"
-                                        onClick={() => setCoverImage(null)}
-                                        className="absolute top-4 right-4 bg-red-500 text-white p-2 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity"
-                                    >
-                                        <X className="w-4 h-4" />
-                                    </button>
-                                </div>
-                            ) : (
-                                <button
-                                    type="button"
-                                    onClick={() => fileInputRef.current?.click()}
-                                    className="w-full h-48 border-2 border-dashed border-zinc-100 rounded-[32px] flex flex-col items-center justify-center gap-3 hover:bg-zinc-50 transition-all group"
-                                >
-                                    <div className="w-12 h-12 rounded-2xl bg-zinc-50 text-zinc-300 flex items-center justify-center group-hover:scale-110 transition-transform">
-                                        <ImageIcon className="w-6 h-6" />
-                                    </div>
-                                    <p className="text-[10px] font-black text-zinc-300 uppercase tracking-widest">Assign Cover Media</p>
-                                </button>
-                            )}
-                            <input ref={fileInputRef} type="file" onChange={handleImageUpload} className="hidden" accept="image/*" />
+                            <MediaUploader
+                                value={coverImage}
+                                onChange={(url: string | null) => setCoverImage(url)}
+                                folderPrefix="community"
+                                noContainer
+                            />
                         </div>
                     </section>
                 </div>

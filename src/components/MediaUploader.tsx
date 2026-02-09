@@ -110,7 +110,7 @@ export const MediaUploader: React.FC<MediaUploaderProps> = ({
                 )}
                 {value ? (
                     <div className="space-y-3">
-                        <div className="relative group w-full rounded-md overflow-hidden bg-surface border border-app flex items-center justify-center">
+                        <div className="relative group w-full aspect-video rounded-md overflow-hidden bg-surface border border-app flex items-center justify-center">
                             {isVideo(value) ? (
                                 <video
                                     src={value}
@@ -124,14 +124,26 @@ export const MediaUploader: React.FC<MediaUploaderProps> = ({
                                     className="w-full h-auto object-contain transition-transform duration-300 group-hover:scale-105"
                                 />
                             )}
-                            <button
-                                type="button"
-                                onClick={removeImage}
-                                className="absolute top-2 right-2 p-1.5 bg-red-600 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity shadow-lg z-10"
-                                title="Remove file"
-                            >
-                                <X className="w-4 h-4" />
-                            </button>
+
+                            {/* Overlay Actions */}
+                            <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
+                                <button
+                                    type="button"
+                                    onClick={() => fileInputRef.current?.click()}
+                                    className="p-2 bg-white text-zinc-800 rounded-full hover:bg-zinc-100 hover:scale-110 transition-all shadow-lg"
+                                    title="Change image"
+                                >
+                                    <Upload className="w-4 h-4" />
+                                </button>
+                                <button
+                                    type="button"
+                                    onClick={removeImage}
+                                    className="p-2 bg-red-600 text-white rounded-full hover:bg-red-700 hover:scale-110 transition-all shadow-lg"
+                                    title="Remove file"
+                                >
+                                    <X className="w-4 h-4" />
+                                </button>
+                            </div>
                         </div>
                         <p className="text-[10px] text-zinc-500 truncate break-all px-1 font-medium bg-zinc-50 py-1 rounded border border-zinc-100">{value}</p>
                     </div>
