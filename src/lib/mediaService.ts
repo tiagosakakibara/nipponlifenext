@@ -31,38 +31,48 @@ export const mediaService = {
     },
 
     async uploadMedia(file: File) {
-        // First upload to storage
-        const folder = 'gallery'; // Default folder for media library
-        const publicUrl = await storageService.uploadFile(file, folder);
+        try {
+            const formData = new FormData()
+            formData.append('file', file)
+            formData.append('folder', 'gallery')
 
-        if (!publicUrl) throw new Error('Failed to upload to storage');
+            const response = await fetch('/api/media/upload', {
+                method: 'POST',
+                body: formData
+            })
 
-        // Then record in DB
-        const { data, error } = await supabase
-            .from(DB_TABLE)
-            .insert([{
-                path: `${folder}/${file.name}`,
-                public_url: publicUrl,
-                mime_type: file.type,
-                size_bytes: file.size
-            }])
-            .select()
-            .single();
+            if (!response.ok) {
+                const errorData = await response.json()
+                throw new Error(errorData.error || 'Failed to upload media')
+            }
 
-        if (error) throw error;
-        return data as MediaItem;
+            const data = await response.json()
+            return data as MediaItem
+        } catch (error: any) {
+            console.error('Error uploading media:', error)
+            throw error
+        }
     },
 
     async deleteMediaItem(id: string, publicUrl: string) {
-        // 1. Delete from storage
-        await storageService.deleteFile(publicUrl);
+        try {
+            const response = await fetch('/api/media/delete', {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ id, publicUrl })
+            })
 
-        // 2. Delete from DB
-        const { error } = await supabase
-            .from(DB_TABLE)
-            .delete()
-            .eq('id', id);
+            if (!response.ok) {
+                const errorData = await response.json()
+                throw new Error(errorData.error || 'Failed to delete media')
+            }
 
-        if (error) throw error;
+            return true
+        } catch (error: any) {
+            console.error('Error deleting media:', error)
+            throw error
+        }
     }
 };

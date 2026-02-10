@@ -69,7 +69,7 @@ export async function deleteUserAction(userId: string) {
         const { error: postsError } = await adminClient
             .from('community_posts')
             .delete()
-            .eq('created_by', userId)
+            .eq('author_id', userId)
 
         if (postsError) {
             console.error('Error deleting community posts:', postsError)
@@ -81,7 +81,7 @@ export async function deleteUserAction(userId: string) {
         const { error: answersError } = await adminClient
             .from('community_answers')
             .delete()
-            .eq('user_id', userId)
+            .eq('author_id', userId)
 
         if (answersError) {
             console.error('Error deleting community answers:', answersError)
@@ -93,7 +93,7 @@ export async function deleteUserAction(userId: string) {
         const { error: questionsError } = await adminClient
             .from('community_questions')
             .delete()
-            .eq('user_id', userId)
+            .eq('author_id', userId)
 
         if (questionsError) {
             console.error('Error deleting community questions:', questionsError)
@@ -117,7 +117,7 @@ export async function deleteUserAction(userId: string) {
         const { error: photosError } = await adminClient
             .from('gallery_photos')
             .delete()
-            .eq('uploaded_by', userId)
+            .eq('user_id', userId)
 
         if (photosError) {
             console.error('Error deleting gallery photos:', photosError)
@@ -125,11 +125,11 @@ export async function deleteUserAction(userId: string) {
             console.log('Deleted gallery photos')
         }
 
-        // Delete comments
+        // Delete post comments
         const { error: commentsError } = await adminClient
-            .from('comments')
+            .from('post_comments')
             .delete()
-            .eq('user_id', userId)
+            .eq('author_id', userId)
 
         if (commentsError) {
             console.error('Error deleting comments:', commentsError)
