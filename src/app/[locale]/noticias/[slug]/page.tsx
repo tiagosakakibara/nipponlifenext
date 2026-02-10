@@ -170,7 +170,7 @@ export default async function NewsArticlePage({ params }: Props) {
             </div>
 
             <main className="max-w-7xl mx-auto px-6 py-16">
-                <div className="flex flex-col lg:flex-row gap-16">
+                <div className="grid grid-cols-1 lg:grid-cols-[1fr_20rem] xl:grid-cols-[auto_minmax(0,1fr)_20rem] gap-8 lg:gap-16 items-start">
                     {/* Left Sidebar - Social Share */}
                     <div className="hidden xl:flex sticky top-32 h-fit">
                         <ShareActions
@@ -181,7 +181,7 @@ export default async function NewsArticlePage({ params }: Props) {
                     </div>
 
                     {/* Main Content */}
-                    <article className="flex-1 max-w-3xl">
+                    <article className="max-w-3xl min-w-0 w-full">
                         {/* Article Text */}
                         {contentMd ? (
                             <div className="prose dark:prose-invert prose-lg max-w-none 
@@ -256,7 +256,7 @@ export default async function NewsArticlePage({ params }: Props) {
                     </article>
 
                     {/* Right Sidebar */}
-                    <aside className="w-full lg:w-80 space-y-12">
+                    <aside className="w-full space-y-12">
                         {/* Trending Section */}
                         <div>
                             <div className="flex items-center gap-2 mb-6">

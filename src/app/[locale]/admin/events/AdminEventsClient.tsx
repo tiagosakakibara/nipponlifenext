@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from 'react';
+import Image from 'next/image';
 import { Plus, Search, Edit, Trash2, MapPin, Calendar, Clock, Loader2, Star, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Link, useRouter } from '@/i18n/routing';
 import { useAdminEvents } from './hooks/useAdminEvents';
@@ -124,11 +125,15 @@ export default function AdminEventsClient() {
                                             <div className="flex items-center gap-4">
                                                 <div className="relative w-14 h-14 flex-shrink-0">
                                                     {event.cover_image_url ? (
-                                                        <img
-                                                            src={event.cover_image_url}
-                                                            alt={event.title}
-                                                            className="w-full h-full rounded-xl object-cover border border-app shadow-sm"
-                                                        />
+                                                        <div className="relative w-full h-full rounded-xl overflow-hidden border border-app shadow-sm">
+                                                            <Image
+                                                                src={event.cover_image_url}
+                                                                alt={event.title}
+                                                                fill
+                                                                className="object-cover"
+                                                                sizes="56px"
+                                                            />
+                                                        </div>
                                                     ) : (
                                                         <div className="w-full h-full rounded-xl bg-app flex items-center justify-center text-secondary/20">
                                                             <Calendar className="w-6 h-6" />
@@ -165,8 +170,8 @@ export default function AdminEventsClient() {
                                         </td>
                                         <td className="px-6 py-4 text-center">
                                             <span className={`inline-flex items-center px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest border transition-all ${event.status === 'published'
-                                                    ? 'bg-emerald-500/10 text-emerald-600 border-emerald-500/20'
-                                                    : 'bg-amber-500/10 text-amber-600 border-amber-500/20'
+                                                ? 'bg-emerald-500/10 text-emerald-600 border-emerald-500/20'
+                                                : 'bg-amber-500/10 text-amber-600 border-amber-500/20'
                                                 }`}>
                                                 {event.status || 'published'}
                                             </span>
@@ -211,8 +216,8 @@ export default function AdminEventsClient() {
                                     key={i}
                                     onClick={() => setPage(i + 1)}
                                     className={`w-8 h-8 rounded-lg text-[10px] font-black transition-all ${page === i + 1
-                                            ? 'bg-[#5593C3] text-white shadow-lg'
-                                            : 'text-secondary hover:bg-app'
+                                        ? 'bg-[#5593C3] text-white shadow-lg'
+                                        : 'text-secondary hover:bg-app'
                                         }`}
                                 >
                                     {i + 1}

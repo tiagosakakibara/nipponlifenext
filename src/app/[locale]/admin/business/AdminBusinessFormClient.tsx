@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from 'react';
+import Image from 'next/image';
 import { useRouter } from '@/i18n/routing';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-hot-toast';
@@ -326,7 +327,13 @@ export default function AdminBusinessFormClient({ id, initialData }: Props) {
                                 <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 gap-4">
                                     {(watchedForm.gallery_images || []).map((url, idx) => (
                                         <div key={idx} className="aspect-square relative group">
-                                            <img src={url} className="w-full h-full object-cover rounded-2xl border border-app shadow-sm group-hover:shadow-xl transition-all" />
+                                            <Image
+                                                src={url}
+                                                alt={`Gallery ${idx}`}
+                                                fill
+                                                className="object-cover rounded-2xl border border-app shadow-sm group-hover:shadow-xl transition-all"
+                                                sizes="(max-width: 768px) 50vw, 20vw"
+                                            />
                                             <button
                                                 type="button"
                                                 onClick={() => {

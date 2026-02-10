@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import { MapPin } from 'lucide-react';
 import { Link } from '@/i18n/routing';
 import { useTranslations, useLocale } from 'next-intl';
@@ -21,10 +22,12 @@ export function BusinessCard({ business, inCarousel = false }: BusinessCardProps
             {/* Cover Image */}
             <div className="relative h-[200px] overflow-hidden shrink-0">
                 {business.cover_image_url ? (
-                    <img
+                    <Image
                         src={business.cover_image_url}
                         alt={getTranslatedField(business, 'business_name', locale)}
-                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                        fill
+                        className="object-cover transition-transform duration-700 group-hover:scale-110"
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     />
                 ) : (
                     <div className="w-full h-full bg-surface border-b border-app flex items-center justify-center text-muted">

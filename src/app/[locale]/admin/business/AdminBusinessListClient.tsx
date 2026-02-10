@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from 'react';
+import Image from 'next/image';
 import { Plus, Search, Edit, Trash2, MapPin, Tag, Loader2, ChevronRight, Star } from 'lucide-react';
 import { Link, useRouter } from '@/i18n/routing';
 import { useAdminBusiness } from './hooks/useAdminBusiness';
@@ -100,11 +101,15 @@ export default function AdminBusinessListClient() {
                                             <div className="flex items-center gap-4">
                                                 <div className="relative w-12 h-12 flex-shrink-0">
                                                     {business.logo_url ? (
-                                                        <img
-                                                            src={business.logo_url}
-                                                            alt={business.business_name}
-                                                            className="w-full h-full rounded-xl object-cover border border-app shadow-sm"
-                                                        />
+                                                        <div className="relative w-full h-full rounded-xl overflow-hidden border border-app shadow-sm">
+                                                            <Image
+                                                                src={business.logo_url}
+                                                                alt={business.business_name}
+                                                                fill
+                                                                className="object-cover"
+                                                                sizes="48px"
+                                                            />
+                                                        </div>
                                                     ) : (
                                                         <div className="w-full h-full rounded-xl bg-app flex items-center justify-center text-secondary/20">
                                                             <Tag className="w-5 h-5" />

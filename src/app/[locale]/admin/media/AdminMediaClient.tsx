@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState, useRef } from 'react';
+import Image from 'next/image';
 import {
     Upload, Search, Trash2, Image as ImageIcon, Copy,
     ExternalLink, FileText, Film, MoreVertical,
@@ -101,8 +102,8 @@ export default function AdminMediaClient() {
                             key={type}
                             onClick={() => setFilterType(type)}
                             className={`px-6 py-2.5 rounded-xl font-black text-[10px] uppercase tracking-widest transition-all whitespace-nowrap ${filterType === type
-                                    ? 'bg-link text-white shadow-lg shadow-link/20'
-                                    : 'bg-[#0037680a] text-secondary hover:bg-[#00376815]'
+                                ? 'bg-link text-white shadow-lg shadow-link/20'
+                                : 'bg-[#0037680a] text-secondary hover:bg-[#00376815]'
                                 }`}
                         >
                             {type}
@@ -139,12 +140,15 @@ export default function AdminMediaClient() {
                             className="group relative bg-surface border border-app rounded-[32px] overflow-hidden shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all aspect-square cursor-default"
                         >
                             {item.type.startsWith('image/') ? (
-                                <img
-                                    src={item.url}
-                                    alt={item.name}
-                                    className="w-full h-full object-cover grayscale-[0.3] group-hover:grayscale-0 transition-all duration-500"
-                                    loading="lazy"
-                                />
+                                <div className="relative w-full h-full">
+                                    <Image
+                                        src={item.url}
+                                        alt={item.name}
+                                        fill
+                                        className="object-cover grayscale-[0.3] group-hover:grayscale-0 transition-all duration-500"
+                                        sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 20vw"
+                                    />
+                                </div>
                             ) : (
                                 <div className="w-full h-full bg-[#0037680a] flex items-center justify-center">
                                     <Film className="w-8 h-8 text-link/40" />

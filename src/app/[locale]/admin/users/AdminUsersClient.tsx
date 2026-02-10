@@ -65,11 +65,11 @@ export default function AdminUsersClient() {
     const getRoleBadge = (role: string) => {
         switch (role) {
             case 'admin':
-                return <span className="bg-[#003768] dark:bg-blue-900 text-white px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest flex items-center gap-1.5 shadow-sm"><Shield className="w-3 h-3" /> {t('roles.admin')}</span>;
+                return <span className="bg-blue-700 dark:bg-blue-900 text-white px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest flex items-center gap-1.5 shadow-sm shadow-blue-500/20"><Shield className="w-3 h-3" /> {t('roles.admin')}</span>;
             case 'photographer':
-                return <span className="bg-purple-500/10 dark:bg-purple-500/20 text-purple-600 dark:text-purple-400 border border-purple-500/20 dark:border-purple-500/30 px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest flex items-center gap-1.5"><Camera className="w-3 h-3" /> {t('roles.photographer')}</span>;
+                return <span className="bg-purple-200 dark:bg-purple-500/10 text-purple-800 dark:text-purple-300 border border-purple-300 dark:border-purple-500/20 px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest flex items-center gap-1.5"><Camera className="w-3 h-3" /> {t('roles.photographer')}</span>;
             default:
-                return <span className="bg-zinc-100 dark:bg-zinc-800 text-zinc-500 dark:text-zinc-400 px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest flex items-center gap-1.5"><UserCheck className="w-3 h-3" /> {t('roles.user')}</span>;
+                return <span className="bg-zinc-200 dark:bg-zinc-800/80 text-zinc-800 dark:text-zinc-200 border border-zinc-300 dark:border-zinc-700/50 px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest flex items-center gap-1.5"><UserCheck className="w-3 h-3" /> {t('roles.user')}</span>;
         }
     };
 
@@ -114,7 +114,7 @@ export default function AdminUsersClient() {
                             onClick={() => setRoleFilter(role)}
                             className={`px-6 py-3 rounded-xl font-black text-[10px] uppercase tracking-widest transition-all whitespace-nowrap ${roleFilter === role
                                 ? 'bg-[#5593C3] text-white shadow-xl shadow-blue-500/20'
-                                : 'bg-white dark:bg-zinc-800 border border-app text-secondary hover:bg-app'
+                                : 'bg-white dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-700 text-zinc-700 dark:text-zinc-400 hover:bg-zinc-50 dark:hover:bg-zinc-700 hover:border-blue-400 dark:hover:border-blue-500 hover:text-blue-600 dark:hover:text-blue-400'
                                 }`}
                         >
                             {t(`filters.${filterKeyMap[role]}`)}
@@ -127,7 +127,7 @@ export default function AdminUsersClient() {
             <div className="bg-surface rounded-[40px] border border-app shadow-xl overflow-hidden">
                 <div className="overflow-x-auto">
                     <table className="w-full text-left border-collapse">
-                        <thead className="bg-[#00376805] dark:bg-blue-900/10 text-[#5593C3] dark:text-blue-400 text-[10px] font-black uppercase tracking-[0.2em] border-b border-app">
+                        <thead className="bg-blue-100 dark:bg-blue-900/10 text-blue-800 dark:text-blue-400 text-[10px] font-black uppercase tracking-[0.2em] border-b border-blue-200 dark:border-blue-900/20">
                             <tr>
                                 <th className="px-8 py-6">{t('table.user')}</th>
                                 <th className="px-8 py-6">{t('table.role')}</th>
@@ -135,7 +135,7 @@ export default function AdminUsersClient() {
                                 <th className="px-8 py-6 text-right">{t('table.actions')}</th>
                             </tr>
                         </thead>
-                        <tbody className="divide-y divide-app">
+                        <tbody className="divide-y divide-zinc-200 dark:divide-zinc-800/50">
                             {loading ? (
                                 <tr>
                                     <td colSpan={4} className="px-8 py-32 text-center">
@@ -243,7 +243,7 @@ export default function AdminUsersClient() {
                                                         )}
                                                         <button
                                                             onClick={() => handleDeleteUser(user.id, user.full_name || t('unnamed'))}
-                                                            className="p-3 text-secondary/30 hover:text-red-500 hover:bg-red-500/10 rounded-2xl transition-all"
+                                                            className="p-3 text-zinc-400/70 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10 rounded-2xl transition-all"
                                                             title={t('actions.delete')}
                                                         >
                                                             <Trash2 className="w-4 h-4" />

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from 'react';
+import Image from 'next/image';
 import { Link, useRouter } from '@/i18n/routing';
 import { useAdminPosts } from './hooks/useAdminPosts';
 import { Trash2, Edit, Plus, FileText, Globe, Search, Loader2 } from 'lucide-react';
@@ -106,11 +107,15 @@ export default function AdminPostsClient() {
                                     <td className="px-6 py-5">
                                         <div className="flex items-center gap-4">
                                             {post.coverImageUrl ? (
-                                                <img
-                                                    src={post.coverImageUrl}
-                                                    alt=""
-                                                    className="w-12 h-12 rounded-lg object-cover border border-app shadow-sm"
-                                                />
+                                                <div className="relative w-12 h-12 flex-shrink-0">
+                                                    <Image
+                                                        src={post.coverImageUrl}
+                                                        alt={post.title}
+                                                        fill
+                                                        className="rounded-lg object-cover border border-app shadow-sm"
+                                                        sizes="48px"
+                                                    />
+                                                </div>
                                             ) : (
                                                 <div className="w-12 h-12 rounded-lg bg-app/50 border border-app flex items-center justify-center text-secondary/30">
                                                     <FileText className="w-6 h-6" />

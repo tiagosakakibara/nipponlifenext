@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from 'react';
+import Image from 'next/image';
 import {
     Plus, Search, Filter, Eye, Heart, MessageCircle,
     Trash2, Edit, Archive, Send, FileText, Loader2,
@@ -140,8 +141,17 @@ export default function AdminCommunityPostsClient() {
                                     <tr key={post.id} className="group hover:bg-blue-50/30 dark:hover:bg-blue-500/5 transition-colors">
                                         <td className="px-8 py-6">
                                             <div className="flex items-center gap-5">
+
                                                 {post.cover_image_url ? (
-                                                    <img src={post.cover_image_url} alt="" className="w-16 h-16 rounded-2xl object-cover shadow-sm ring-4 ring-white dark:ring-white/5" />
+                                                    <div className="relative w-16 h-16 rounded-2xl overflow-hidden shadow-sm ring-4 ring-white dark:ring-white/5">
+                                                        <Image
+                                                            src={post.cover_image_url}
+                                                            alt={post.title}
+                                                            fill
+                                                            className="object-cover"
+                                                            sizes="64px"
+                                                        />
+                                                    </div>
                                                 ) : (
                                                     <div className="w-16 h-16 rounded-2xl bg-zinc-50 dark:bg-white/5 border border-zinc-100 dark:border-white/10 flex items-center justify-center text-zinc-200 dark:text-white/20">
                                                         <FileText className="w-8 h-8" />

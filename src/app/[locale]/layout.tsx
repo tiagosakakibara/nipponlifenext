@@ -78,7 +78,6 @@ export default async function LocaleLayout({
     return (
         <html lang={locale} suppressHydrationWarning>
             <head>
-                <link rel="icon" href="/favicon.ico" />
                 <link rel="apple-touch-icon" href="/images/logo-icon.png" />
                 <meta name="theme-color" content="#D70F24" />
             </head>
