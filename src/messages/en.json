@@ -809,7 +809,8 @@
                 "user": "User",
                 "role": "Role",
                 "registeredAt": "Registered at",
-                "actions": "Actions"
+                "actions": "Actions",
+                "status": "Status"
             },
             "roles": {
                 "admin": "Administrator",
@@ -826,7 +827,8 @@
                 "suspend": "Suspend",
                 "suspendTitle": "Suspend until further notice",
                 "ban": "Ban",
-                "banTitle": "Ban Permanently"
+                "banTitle": "Ban Permanently",
+                "delete": "Delete"
             },
             "status": {
                 "active": "Active",
@@ -841,7 +843,9 @@
                 "confirmStatusChange": "Are you sure you want to change this user's status to: {{status}}?",
                 "statusUpdateSuccess": "User status updated to {{status}} successfully!",
                 "enterReason": "Reason (optional):",
-                "enterUntil": "Suspended until (ISO Date):"
+                "enterUntil": "Suspended until (ISO Date):",
+                "confirmDeleteUser": "Are you sure you want to delete user {{name}}? This action cannot be undone.",
+                "loading": "Retrieving Citizens Registry..."
             }
         }
     },

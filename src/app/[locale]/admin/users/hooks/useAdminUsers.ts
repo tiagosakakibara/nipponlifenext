@@ -2,6 +2,7 @@
 
 import { useState, useCallback } from 'react';
 import { getAllProfiles, updateUserRole, updateUserStatus } from '@/lib/profileService';
+import { deleteUserAction } from '@/app/actions/userAdmin';
 import { toast } from 'react-hot-toast';
 
 export function useAdminUsers() {
@@ -50,11 +51,31 @@ export function useAdminUsers() {
         }
     };
 
+    const deleteUser = async (userId: string) => {
+        try {
+            // Optimistic update could go here, but deletion is critical so waiting is fine
+            // We invoke the server action
+            const result = await deleteUserAction(userId);
+            if (result && !result.success) {
+                // Check if result exists (it should)
+                throw new Error(result.error || 'Falha ao excluir');
+            }
+            toast.success('Usuário excluído');
+            fetchUsers(); // Refresh list
+            return true;
+        } catch (error: any) {
+            console.error('Deletion error:', error);
+            toast.error(error.message || 'Erro ao excluir usuário');
+            return false;
+        }
+    };
+
     return {
         users,
         loading,
         fetchUsers,
         changeRole,
-        changeStatus
+        changeStatus,
+        deleteUser
     };
 }

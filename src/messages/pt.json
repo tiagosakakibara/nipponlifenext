@@ -840,7 +840,8 @@
                 "user": "Usuário",
                 "role": "Função",
                 "registeredAt": "Cadastro em",
-                "actions": "Ações"
+                "actions": "Ações",
+                "status": "Status"
             },
             "roles": {
                 "admin": "Administrador",
@@ -857,7 +858,8 @@
                 "suspend": "Suspender",
                 "suspendTitle": "Suspender até segundas ordens",
                 "ban": "Banir",
-                "banTitle": "Banir Definitivamente"
+                "banTitle": "Banir Definitivamente",
+                "delete": "Excluir"
             },
             "status": {
                 "active": "Ativo",
@@ -872,7 +874,9 @@
                 "confirmStatusChange": "Tem certeza que deseja alterar o status deste usuário para: {{status}}?",
                 "statusUpdateSuccess": "Status atualizado para {{status}} com sucesso!",
                 "enterReason": "Motivo (opcional):",
-                "enterUntil": "Suspenso até (Data ISO):"
+                "enterUntil": "Suspenso até (Data ISO):",
+                "confirmDeleteUser": "Tem certeza que deseja excluir o usuário {{name}}? Esta ação é irreversível.",
+                "loading": "Carregando registro de cidadãos..."
             }
         }
     },

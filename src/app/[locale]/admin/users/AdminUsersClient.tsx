@@ -4,14 +4,15 @@ import { useEffect, useState } from 'react';
 import {
     Users, Search, Shield, UserCheck, Clock, Ban,
     MoreHorizontal, Loader2, Camera, Mail,
-    CheckCircle2, XCircle, AlertTriangle
+    CheckCircle2, XCircle, AlertTriangle, Trash2
 } from 'lucide-react';
 import { useAdminUsers } from './hooks/useAdminUsers';
 import { storageService } from '@/lib/storageService';
-import { toast } from 'react-hot-toast';
+import { useTranslations } from 'next-intl';
 
 export default function AdminUsersClient() {
-    const { users, loading, fetchUsers, changeRole, changeStatus } = useAdminUsers();
+    const t = useTranslations('admin.users');
+    const { users, loading, fetchUsers, changeRole, changeStatus, deleteUser } = useAdminUsers();
     const [searchTerm, setSearchTerm] = useState('');
     const [roleFilter, setRoleFilter] = useState('all');
     const [updatingId, setUpdatingId] = useState<string | null>(null);
@@ -21,7 +22,7 @@ export default function AdminUsersClient() {
     }, [fetchUsers]);
 
     const handleRoleChange = async (userId: string, newRole: string) => {
-        if (!window.confirm(`Mudar cargo para ${newRole}?`)) return;
+        if (!window.confirm(t('messages.confirmRoleChange', { role: newRole }))) return;
         setUpdatingId(userId);
         await changeRole(userId, newRole);
         setUpdatingId(null);
@@ -32,16 +33,23 @@ export default function AdminUsersClient() {
         let until = undefined;
 
         if (newStatus !== 'active') {
-            reason = window.prompt('Motivo:') || '';
+            reason = window.prompt(t('messages.enterReason')) || '';
             if (newStatus === 'suspended') {
-                until = window.prompt('Suspenso até (ISO):', new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString()) || '';
+                until = window.prompt(t('messages.enterUntil'), new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString()) || '';
             }
         }
 
-        if (!window.confirm(`Alterar status para ${newStatus}?`)) return;
+        if (!window.confirm(t('messages.confirmStatusChange', { status: newStatus }))) return;
 
         setUpdatingId(userId);
         await changeStatus(userId, newStatus, reason, until);
+        setUpdatingId(null);
+    };
+
+    const handleDeleteUser = async (userId: string, userName: string) => {
+        if (!window.confirm(t('messages.confirmDeleteUser', { name: userName }))) return;
+        setUpdatingId(userId);
+        await deleteUser(userId);
         setUpdatingId(null);
     };
 
@@ -57,26 +65,33 @@ export default function AdminUsersClient() {
     const getRoleBadge = (role: string) => {
         switch (role) {
             case 'admin':
-                return <span className="bg-[#003768] text-white px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest flex items-center gap-1.5 shadow-sm"><Shield className="w-3 h-3" /> System Admin</span>;
+                return <span className="bg-[#003768] dark:bg-blue-900 text-white px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest flex items-center gap-1.5 shadow-sm"><Shield className="w-3 h-3" /> {t('roles.admin')}</span>;
             case 'photographer':
-                return <span className="bg-purple-500/10 text-purple-600 border border-purple-500/20 px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest flex items-center gap-1.5"><Camera className="w-3 h-3" /> Photographer</span>;
+                return <span className="bg-purple-500/10 dark:bg-purple-500/20 text-purple-600 dark:text-purple-400 border border-purple-500/20 dark:border-purple-500/30 px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest flex items-center gap-1.5"><Camera className="w-3 h-3" /> {t('roles.photographer')}</span>;
             default:
-                return <span className="bg-zinc-100 text-zinc-500 px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest flex items-center gap-1.5"><UserCheck className="w-3 h-3" /> Standard User</span>;
+                return <span className="bg-zinc-100 dark:bg-zinc-800 text-zinc-500 dark:text-zinc-400 px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest flex items-center gap-1.5"><UserCheck className="w-3 h-3" /> {t('roles.user')}</span>;
         }
     };
 
     const getStatusBadge = (user: any) => {
-        if (user.status === 'banned') return <span className="text-red-500 font-black text-[9px] uppercase tracking-widest flex items-center gap-1"><Ban className="w-3 h-3" /> Restricted</span>;
-        if (user.status === 'suspended') return <span className="text-amber-500 font-black text-[9px] uppercase tracking-widest flex items-center gap-1"><Clock className="w-3 h-3" /> Suspended</span>;
-        return <span className="text-emerald-500 font-black text-[9px] uppercase tracking-widest flex items-center gap-1"><CheckCircle2 className="w-3 h-3" /> Active</span>;
+        if (user.status === 'banned') return <span className="text-red-500 dark:text-red-400 font-black text-[9px] uppercase tracking-widest flex items-center gap-1"><Ban className="w-3 h-3" /> {t('status.banned')}</span>;
+        if (user.status === 'suspended') return <span className="text-amber-500 dark:text-amber-400 font-black text-[9px] uppercase tracking-widest flex items-center gap-1"><Clock className="w-3 h-3" /> {t('status.suspended')}</span>;
+        return <span className="text-emerald-500 dark:text-emerald-400 font-black text-[9px] uppercase tracking-widest flex items-center gap-1"><CheckCircle2 className="w-3 h-3" /> {t('status.active')}</span>;
+    };
+
+    const filterKeyMap: Record<string, string> = {
+        all: 'all',
+        admin: 'admins',
+        photographer: 'photographers',
+        user: 'users'
     };
 
     return (
         <div className="space-y-8 animate-fade-in pb-20">
             {/* Header */}
             <div>
-                <h1 className="text-4xl font-black text-primary tracking-tight">Citizen Management</h1>
-                <p className="text-secondary mt-1 font-medium italic opacity-60">Audit system permissions and account statuses</p>
+                <h1 className="text-4xl font-black text-primary tracking-tight">{t('title')}</h1>
+                <p className="text-secondary mt-1 font-medium italic opacity-60">{t('subtitle')}</p>
             </div>
 
             {/* Filters */}
@@ -85,7 +100,7 @@ export default function AdminUsersClient() {
                     <Search className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-secondary/30 group-focus-within:text-link transition-colors" />
                     <input
                         type="text"
-                        placeholder="Filter by name, username or email..."
+                        placeholder={t('searchPlaceholder')}
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
                         className="w-full pl-14 pr-6 py-4 bg-app/50 border border-app rounded-2xl text-sm font-bold text-primary placeholder:text-secondary/20 outline-none focus:border-link transition-all"
@@ -98,11 +113,11 @@ export default function AdminUsersClient() {
                             key={role}
                             onClick={() => setRoleFilter(role)}
                             className={`px-6 py-3 rounded-xl font-black text-[10px] uppercase tracking-widest transition-all whitespace-nowrap ${roleFilter === role
-                                    ? 'bg-[#5593C3] text-white shadow-xl shadow-blue-500/20'
-                                    : 'bg-white border border-app text-secondary hover:bg-app'
+                                ? 'bg-[#5593C3] text-white shadow-xl shadow-blue-500/20'
+                                : 'bg-white dark:bg-zinc-800 border border-app text-secondary hover:bg-app'
                                 }`}
                         >
-                            {role}
+                            {t(`filters.${filterKeyMap[role]}`)}
                         </button>
                     ))}
                 </div>
@@ -112,12 +127,12 @@ export default function AdminUsersClient() {
             <div className="bg-surface rounded-[40px] border border-app shadow-xl overflow-hidden">
                 <div className="overflow-x-auto">
                     <table className="w-full text-left border-collapse">
-                        <thead className="bg-[#00376805] text-[#5593C3] text-[10px] font-black uppercase tracking-[0.2em] border-b border-app">
+                        <thead className="bg-[#00376805] dark:bg-blue-900/10 text-[#5593C3] dark:text-blue-400 text-[10px] font-black uppercase tracking-[0.2em] border-b border-app">
                             <tr>
-                                <th className="px-8 py-6">Identity</th>
-                                <th className="px-8 py-6">Privileges</th>
-                                <th className="px-8 py-6">Status</th>
-                                <th className="px-8 py-6 text-right">Administrative</th>
+                                <th className="px-8 py-6">{t('table.user')}</th>
+                                <th className="px-8 py-6">{t('table.role')}</th>
+                                <th className="px-8 py-6">{t('table.status')}</th>
+                                <th className="px-8 py-6 text-right">{t('table.actions')}</th>
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-app">
@@ -126,19 +141,19 @@ export default function AdminUsersClient() {
                                     <td colSpan={4} className="px-8 py-32 text-center">
                                         <div className="flex flex-col items-center gap-4">
                                             <Loader2 className="w-12 h-12 text-link animate-spin" />
-                                            <span className="text-secondary/40 font-black uppercase tracking-widest text-[10px]">Retrieving Citizens Registry...</span>
+                                            <span className="text-secondary/40 font-black uppercase tracking-widest text-[10px]">{t('messages.loading')}</span>
                                         </div>
                                     </td>
                                 </tr>
                             ) : filtered.length === 0 ? (
                                 <tr>
                                     <td colSpan={4} className="px-8 py-32 text-center text-secondary/30 italic font-medium">
-                                        No matches found for your current filters.
+                                        {t('filters.noResults')}
                                     </td>
                                 </tr>
                             ) : (
                                 filtered.map((user) => (
-                                    <tr key={user.id} className="group hover:bg-[#00376802] transition-colors">
+                                    <tr key={user.id} className="group hover:bg-[#00376802] dark:hover:bg-white/5 transition-colors">
                                         <td className="px-8 py-6">
                                             <div className="flex items-center gap-5">
                                                 <div className="relative">
@@ -146,18 +161,18 @@ export default function AdminUsersClient() {
                                                         <img
                                                             src={storageService.getFileUrl(user.avatar_url)}
                                                             alt=""
-                                                            className="w-14 h-14 rounded-[20px] object-cover ring-4 ring-white shadow-lg"
+                                                            className="w-14 h-14 rounded-[20px] object-cover ring-4 ring-white dark:ring-zinc-800 shadow-lg"
                                                         />
                                                     ) : (
                                                         <div className="w-14 h-14 rounded-[20px] bg-app border border-app flex items-center justify-center text-secondary/20 shadow-inner">
                                                             <Users className="w-7 h-7" />
                                                         </div>
                                                     )}
-                                                    {user.status === 'active' && <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-emerald-500 rounded-full border-4 border-white shadow-sm" />}
+                                                    {user.status === 'active' && <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-emerald-500 rounded-full border-4 border-white dark:border-zinc-900 shadow-sm" />}
                                                 </div>
                                                 <div className="space-y-0.5">
                                                     <p className="font-black text-primary group-hover:text-link transition-colors text-lg tracking-tight leading-tight">
-                                                        {user.full_name || 'Anonymous User'}
+                                                        {user.full_name || t('unnamed')}
                                                     </p>
                                                     <div className="flex items-center gap-3">
                                                         <span className="text-[11px] font-mono font-black text-secondary/40">@{user.username || 'unknown'}</span>
@@ -189,16 +204,32 @@ export default function AdminUsersClient() {
                                                         {user.role !== 'admin' && (
                                                             <button
                                                                 onClick={() => handleRoleChange(user.id, 'admin')}
-                                                                className="px-4 py-2 bg-[#0037680a] hover:bg-[#003768] text-[#003768] hover:text-white rounded-xl text-[9px] font-black uppercase tracking-widest transition-all shadow-sm"
+                                                                className="px-4 py-2 bg-[#0037680a] hover:bg-[#003768] dark:bg-blue-500/10 dark:hover:bg-blue-600 text-[#003768] dark:text-blue-400 hover:text-white rounded-xl text-[9px] font-black uppercase tracking-widest transition-all shadow-sm"
                                                             >
-                                                                Make Admin
+                                                                {t('actions.makeAdmin')}
+                                                            </button>
+                                                        )}
+                                                        {user.role === 'user' && (
+                                                            <button
+                                                                onClick={() => handleRoleChange(user.id, 'photographer')}
+                                                                className="px-4 py-2 bg-purple-500/10 hover:bg-purple-500 text-purple-600 hover:text-white dark:text-purple-400 rounded-xl text-[9px] font-black uppercase tracking-widest transition-all shadow-sm"
+                                                            >
+                                                                {t('actions.makePhotographer')}
+                                                            </button>
+                                                        )}
+                                                        {user.role === 'photographer' && (
+                                                            <button
+                                                                onClick={() => handleRoleChange(user.id, 'user')}
+                                                                className="px-4 py-2 bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-zinc-500 dark:text-zinc-400 hover:text-zinc-700 rounded-xl text-[9px] font-black uppercase tracking-widest transition-all shadow-sm"
+                                                            >
+                                                                {t('actions.removePhotographer')}
                                                             </button>
                                                         )}
                                                         {user.status === 'active' ? (
                                                             <button
                                                                 onClick={() => handleStatusChange(user.id, 'banned')}
                                                                 className="p-3 text-secondary/30 hover:text-red-500 hover:bg-red-500/10 rounded-2xl transition-all"
-                                                                title="Ban Account"
+                                                                title={t('actions.ban')}
                                                             >
                                                                 <Ban className="w-4 h-4" />
                                                             </button>
@@ -207,9 +238,16 @@ export default function AdminUsersClient() {
                                                                 onClick={() => handleStatusChange(user.id, 'active')}
                                                                 className="px-4 py-2 bg-emerald-500/10 hover:bg-emerald-500 text-emerald-500 hover:text-white rounded-xl text-[9px] font-black uppercase tracking-widest transition-all"
                                                             >
-                                                                Restore
+                                                                {t('actions.reactivate')}
                                                             </button>
                                                         )}
+                                                        <button
+                                                            onClick={() => handleDeleteUser(user.id, user.full_name || t('unnamed'))}
+                                                            className="p-3 text-secondary/30 hover:text-red-500 hover:bg-red-500/10 rounded-2xl transition-all"
+                                                            title={t('actions.delete')}
+                                                        >
+                                                            <Trash2 className="w-4 h-4" />
+                                                        </button>
                                                         <button className="p-3 text-secondary/30 hover:text-link hover:bg-link/10 rounded-2xl transition-all">
                                                             <MoreHorizontal className="w-4 h-4" />
                                                         </button>
