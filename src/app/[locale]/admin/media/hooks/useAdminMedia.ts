@@ -48,11 +48,35 @@ export function useAdminMedia() {
         }
     };
 
+    const deleteBulkMedia = async (items: Array<{ id: string; url: string }>) => {
+        const count = items.length;
+        if (count === 0) return false;
+
+        if (!window.confirm(`Excluir ${count} ${count === 1 ? 'item' : 'itens'} permanentemente?`)) {
+            return false;
+        }
+
+        try {
+            // Delete in parallel for better performance
+            await Promise.all(
+                items.map(item => mediaService.deleteMediaItem(item.id, item.url))
+            );
+            toast.success(`${count} ${count === 1 ? 'item excluído' : 'itens excluídos'}`);
+            fetchMedia();
+            return true;
+        } catch (error) {
+            console.error(error);
+            toast.error('Erro ao excluir mídia');
+            return false;
+        }
+    };
+
     return {
         media,
         loading,
         fetchMedia,
         uploadMedia,
-        deleteMedia
+        deleteMedia,
+        deleteBulkMedia
     };
 }

@@ -76,6 +76,14 @@ export const communityService = {
     },
 
     async updatePost(id: string, post: Partial<CommunityPost>, tags: string[] = []) {
+        // 1. Get old post data to compare images
+        const { data: oldPost } = await supabase
+            .from(DB_TABLE)
+            .select('cover_image_url, content, content_ja, content_en')
+            .eq('id', id)
+            .single();
+
+        // 2. Update the post
         const { data, error } = await supabase
             .from(DB_TABLE)
             .update({ ...post, updated_at: new Date().toISOString() })
@@ -95,16 +103,47 @@ export const communityService = {
             await supabase.from('community_post_tags').insert(tagInserts);
         }
 
+        // 3. Clean up removed images (async, don't wait)
+        if (oldPost) {
+            const newPost = {
+                cover_image_url: post.cover_image_url,
+                content: post.content,
+                content_ja: post.content_ja,
+                content_en: post.content_en
+            };
+
+            const { mediaCleanupService } = await import('./mediaCleanupService');
+            mediaCleanupService.cleanupRemovedImages(oldPost, newPost).catch(err =>
+                console.error('Error cleaning up removed images:', err)
+            );
+        }
+
         return data;
     },
 
     async deletePost(id: string) {
+        // 1. Get post data to extract images
+        const { data: post } = await supabase
+            .from(DB_TABLE)
+            .select('cover_image_url, content, content_ja, content_en')
+            .eq('id', id)
+            .single();
+
+        // 2. Delete the post from database
         const { error } = await supabase
             .from(DB_TABLE)
             .delete()
             .eq('id', id);
 
         if (error) throw error;
+
+        // 3. Clean up associated images (async, don't wait)
+        if (post) {
+            const { mediaCleanupService } = await import('./mediaCleanupService');
+            mediaCleanupService.cleanupPostImages(post).catch(err =>
+                console.error('Error cleaning up community post images:', err)
+            );
+        }
     },
 
     async getCategories() {

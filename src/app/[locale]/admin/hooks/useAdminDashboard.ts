@@ -54,9 +54,8 @@ export function useAdminDashboard(): UseAdminDashboardResult {
     const [lists, setLists] = useState<DashboardListItems | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
-    const supabase = createClient();
 
-    const getDashboardKPIs = async (): Promise<DashboardKPIs> => {
+    const getDashboardKPIs = async (supabase: ReturnType<typeof createClient>): Promise<DashboardKPIs> => {
         const now = new Date();
         const sevenDaysAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000).toISOString();
         const today = new Date().toISOString().split('T')[0];
@@ -142,7 +141,7 @@ export function useAdminDashboard(): UseAdminDashboardResult {
         };
     };
 
-    const getDashboardCharts = async (): Promise<DailyActivity[]> => {
+    const getDashboardCharts = async (supabase: ReturnType<typeof createClient>): Promise<DailyActivity[]> => {
         const now = new Date();
         const fourteenDaysAgo = new Date(now.getTime() - 14 * 24 * 60 * 60 * 1000).toISOString();
 
@@ -194,7 +193,7 @@ export function useAdminDashboard(): UseAdminDashboardResult {
         return Object.values(activityMap).sort((a, b) => a.date.localeCompare(b.date));
     };
 
-    const getDashboardLists = async (): Promise<DashboardListItems> => {
+    const getDashboardLists = async (supabase: ReturnType<typeof createClient>): Promise<DashboardListItems> => {
         const today = new Date().toISOString();
 
         // Fetch all lists with error handling
@@ -326,13 +325,14 @@ export function useAdminDashboard(): UseAdminDashboardResult {
     };
 
     const fetchData = useCallback(async () => {
+        const supabase = createClient();
         setLoading(true);
         setError(null);
         try {
             const [kpisData, chartsData, listsData] = await Promise.all([
-                getDashboardKPIs(),
-                getDashboardCharts(),
-                getDashboardLists()
+                getDashboardKPIs(supabase),
+                getDashboardCharts(supabase),
+                getDashboardLists(supabase)
             ]);
 
             setKpis(kpisData);
@@ -344,7 +344,8 @@ export function useAdminDashboard(): UseAdminDashboardResult {
         } finally {
             setLoading(false);
         }
-    }, [supabase]);
+    }, []);
+
 
     useEffect(() => {
         fetchData();

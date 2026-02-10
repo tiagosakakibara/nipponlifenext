@@ -174,6 +174,13 @@ export function useAdminPosts() {
 
     const updatePost = async (id: string, updated: Partial<AdminPost>): Promise<boolean> => {
         try {
+            // 1. Get old post data to compare images
+            const { data: oldPost } = await supabase
+                .from('posts')
+                .select('cover_image_url, content, content_ja, content_en, content_md, content_ja_md, content_en_md')
+                .eq('id', id)
+                .single();
+
             const { data: catData } = await supabase
                 .from('categories')
                 .select('id')
@@ -216,6 +223,24 @@ export function useAdminPosts() {
 
             if (error) throw error;
 
+            // 2. Clean up removed images (async, don't wait)
+            if (oldPost) {
+                const newPost = {
+                    cover_image_url: updated.coverImageUrl,
+                    content: updated.content,
+                    content_ja: updated.content_ja,
+                    content_en: updated.content_en,
+                    content_md: updated.content_md,
+                    content_ja_md: updated.content_ja_md,
+                    content_en_md: updated.content_en_md
+                };
+
+                const { mediaCleanupService } = await import('@/lib/mediaCleanupService');
+                mediaCleanupService.cleanupRemovedImages(oldPost, newPost).catch(err =>
+                    console.error('Error cleaning up removed images:', err)
+                );
+            }
+
             await fetchPosts();
             return true;
         } catch (error: any) {
@@ -229,12 +254,28 @@ export function useAdminPosts() {
         if (!confirm('Tem certeza que deseja excluir este post?')) return;
 
         try {
+            // 1. Get post data to extract images
+            const { data: post } = await supabase
+                .from('posts')
+                .select('cover_image_url, content, content_ja, content_en, content_md, content_ja_md, content_en_md')
+                .eq('id', id)
+                .single();
+
+            // 2. Delete the post from database
             const { error } = await supabase
                 .from('posts')
                 .delete()
                 .eq('id', id);
 
             if (error) throw error;
+
+            // 3. Clean up associated images (async, don't wait)
+            if (post) {
+                const { mediaCleanupService } = await import('@/lib/mediaCleanupService');
+                mediaCleanupService.cleanupPostImages(post).catch(err =>
+                    console.error('Error cleaning up post images:', err)
+                );
+            }
 
             toast.success('Post excluído com sucesso');
             await fetchPosts();

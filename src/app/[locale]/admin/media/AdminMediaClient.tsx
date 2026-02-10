@@ -11,10 +11,12 @@ import { useAdminMedia } from './hooks/useAdminMedia';
 import { toast } from 'react-hot-toast';
 
 export default function AdminMediaClient() {
-    const { media, loading, fetchMedia, uploadMedia, deleteMedia } = useAdminMedia();
+    const { media, loading, fetchMedia, uploadMedia, deleteMedia, deleteBulkMedia } = useAdminMedia();
     const [searchTerm, setSearchTerm] = useState('');
     const [uploading, setUploading] = useState(false);
     const [filterType, setFilterType] = useState('all');
+    const [selectionMode, setSelectionMode] = useState(false);
+    const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
     const fileInputRef = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
@@ -54,6 +56,44 @@ export default function AdminMediaClient() {
         return matchesSearch && matchesType;
     });
 
+    const toggleSelection = (id: string) => {
+        const newSelected = new Set(selectedIds);
+        if (newSelected.has(id)) {
+            newSelected.delete(id);
+        } else {
+            newSelected.add(id);
+        }
+        setSelectedIds(newSelected);
+    };
+
+    const selectAll = () => {
+        const allIds = new Set(filtered.map(item => item.id));
+        setSelectedIds(allIds);
+    };
+
+    const clearSelection = () => {
+        setSelectedIds(new Set());
+    };
+
+    const handleBulkDelete = async () => {
+        const itemsToDelete = media
+            .filter(item => selectedIds.has(item.id))
+            .map(item => ({ id: item.id, url: item.url }));
+
+        const success = await deleteBulkMedia(itemsToDelete);
+        if (success) {
+            clearSelection();
+            setSelectionMode(false);
+        }
+    };
+
+    const toggleSelectionMode = () => {
+        if (selectionMode) {
+            clearSelection();
+        }
+        setSelectionMode(!selectionMode);
+    };
+
     return (
         <div className="space-y-8 animate-fade-in pb-20">
             {/* Header */}
@@ -64,6 +104,25 @@ export default function AdminMediaClient() {
                 </div>
 
                 <div className="flex items-center gap-3">
+                    <button
+                        onClick={toggleSelectionMode}
+                        className={`flex items-center gap-2 px-8 py-3.5 rounded-2xl font-black text-sm transition-all hover:scale-[1.02] active:scale-[0.98] ${selectionMode
+                                ? 'bg-red-500 hover:bg-red-600 text-white shadow-xl shadow-red-500/20'
+                                : 'bg-surface border-2 border-app hover:border-link text-primary'
+                            }`}
+                    >
+                        {selectionMode ? (
+                            <>
+                                <X className="w-5 h-5" />
+                                CANCEL
+                            </>
+                        ) : (
+                            <>
+                                <CheckCircle2 className="w-5 h-5" />
+                                SELECT
+                            </>
+                        )}
+                    </button>
                     <input
                         type="file"
                         ref={fileInputRef}
@@ -155,47 +214,109 @@ export default function AdminMediaClient() {
                                 </div>
                             )}
 
-                            {/* Overlays */}
-                            <div className="absolute inset-0 bg-gradient-to-t from-primary/90 via-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300 flex flex-col justify-end p-5">
-                                <div className="space-y-3 translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
-                                    <div className="space-y-0.5">
-                                        <p className="text-white text-[10px] font-black truncate uppercase tracking-widest">{item.name}</p>
-                                        <p className="text-white/50 text-[9px] font-bold uppercase tracking-tight">{formatSize(item.size)}</p>
-                                    </div>
-                                    <div className="flex gap-2">
-                                        <button
-                                            onClick={() => copyToClipboard(item.url)}
-                                            className="flex-1 bg-white/10 hover:bg-white text-white hover:text-primary backdrop-blur-md p-2.5 rounded-xl transition-all flex items-center justify-center"
-                                            title="Copy Link"
-                                        >
-                                            <Copy className="w-4 h-4" />
-                                        </button>
-                                        <a
-                                            href={item.url}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            className="flex-1 bg-link hover:bg-[#467ba5] text-white p-2.5 rounded-xl transition-all flex items-center justify-center shadow-lg shadow-link/20"
-                                            title="View Original"
-                                        >
-                                            <ExternalLink className="w-4 h-4" />
-                                        </a>
-                                        <button
-                                            onClick={() => deleteMedia(item.id, item.url)}
-                                            className="flex-1 bg-red-500/20 hover:bg-red-500 text-white backdrop-blur-md p-2.5 rounded-xl transition-all flex items-center justify-center"
-                                            title="Delete"
-                                        >
-                                            <Trash2 className="w-4 h-4" />
-                                        </button>
+                            {/* Selection Checkbox */}
+                            {selectionMode && (
+                                <div
+                                    onClick={() => toggleSelection(item.id)}
+                                    className="absolute top-3 left-3 z-10 cursor-pointer"
+                                >
+                                    <div
+                                        className={`w-7 h-7 rounded-full border-2 flex items-center justify-center transition-all hover:scale-110 ${selectedIds.has(item.id)
+                                                ? 'bg-link border-link shadow-lg shadow-link/30'
+                                                : 'bg-white/90 border-white/50 backdrop-blur-md'
+                                            }`}
+                                    >
+                                        {selectedIds.has(item.id) && (
+                                            <CheckCircle2 className="w-5 h-5 text-white" />
+                                        )}
                                     </div>
                                 </div>
-                            </div>
+                            )}
+
+                            {/* Overlays */}
+                            {!selectionMode && (
+                                <div className="absolute inset-0 bg-gradient-to-t from-primary/90 via-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300 flex flex-col justify-end p-5">
+                                    <div className="space-y-3 translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                                        <div className="space-y-0.5">
+                                            <p className="text-white text-[10px] font-black truncate uppercase tracking-widest">{item.name}</p>
+                                            <p className="text-white/50 text-[9px] font-bold uppercase tracking-tight">{formatSize(item.size)}</p>
+                                        </div>
+                                        <div className="flex gap-2">
+                                            <button
+                                                onClick={() => copyToClipboard(item.url)}
+                                                className="flex-1 bg-white/10 hover:bg-white text-white hover:text-primary backdrop-blur-md p-2.5 rounded-xl transition-all flex items-center justify-center"
+                                                title="Copy Link"
+                                            >
+                                                <Copy className="w-4 h-4" />
+                                            </button>
+                                            <a
+                                                href={item.url}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="flex-1 bg-link hover:bg-[#467ba5] text-white p-2.5 rounded-xl transition-all flex items-center justify-center shadow-lg shadow-link/20"
+                                                title="View Original"
+                                            >
+                                                <ExternalLink className="w-4 h-4" />
+                                            </a>
+                                            <button
+                                                onClick={() => deleteMedia(item.id, item.url)}
+                                                className="flex-1 bg-red-500/20 hover:bg-red-500 text-white backdrop-blur-md p-2.5 rounded-xl transition-all flex items-center justify-center"
+                                                title="Delete"
+                                            >
+                                                <Trash2 className="w-4 h-4" />
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
 
                             {/* Type Indicator */}
-                            <div className="absolute top-4 left-4 bg-black/30 backdrop-blur-md rounded-lg p-1.5 border border-white/10 opacity-60 group-hover:opacity-0 transition-opacity">
-                                {item.type.startsWith('image/') ? <ImageIcon className="w-3.5 h-3.5 text-white" /> : <Film className="w-3.5 h-3.5 text-white" />}
-                            </div>
+                            {!selectionMode && (
+                                <div className="absolute top-4 left-4 bg-black/30 backdrop-blur-md rounded-lg p-1.5 border border-white/10 opacity-60 group-hover:opacity-0 transition-opacity">
+                                    {item.type.startsWith('image/') ? <ImageIcon className="w-3.5 h-3.5 text-white" /> : <Film className="w-3.5 h-3.5 text-white" />}
+                                </div>
+                            )}
                         </div>
                     ))}
+                </div>
+            )}
+
+            {/* Bulk Action Bar */}
+            {selectionMode && selectedIds.size > 0 && (
+                <div className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 animate-slide-up">
+                    <div className="bg-surface border border-app shadow-2xl rounded-3xl p-6 flex items-center gap-6 max-w-2xl backdrop-blur-xl">
+                        {/* Counter Badge */}
+                        <div className="bg-link/10 border border-link/20 rounded-2xl px-4 py-2">
+                            <span className="text-link font-black text-sm">
+                                {selectedIds.size} selected
+                            </span>
+                        </div>
+
+                        {/* Actions */}
+                        <div className="flex items-center gap-3">
+                            <button
+                                onClick={selectAll}
+                                className="px-6 py-2.5 bg-app hover:bg-app/80 text-primary rounded-xl font-bold text-xs uppercase tracking-wider transition-all"
+                            >
+                                Select All
+                            </button>
+                            <button
+                                onClick={clearSelection}
+                                className="px-6 py-2.5 bg-app hover:bg-app/80 text-primary rounded-xl font-bold text-xs uppercase tracking-wider transition-all"
+                            >
+                                Clear
+                            </button>
+                        </div>
+
+                        {/* Delete Button */}
+                        <button
+                            onClick={handleBulkDelete}
+                            className="flex items-center gap-2 bg-red-500 hover:bg-red-600 text-white px-8 py-3 rounded-2xl font-black text-sm shadow-xl shadow-red-500/20 transition-all hover:scale-[1.02] active:scale-[0.98]"
+                        >
+                            <Trash2 className="w-4 h-4" />
+                            Delete Selected
+                        </button>
+                    </div>
                 </div>
             )}
         </div>
