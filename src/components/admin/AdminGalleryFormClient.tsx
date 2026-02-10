@@ -173,36 +173,24 @@ export default function AdminGalleryFormClient({ albumId }: AdminGalleryFormClie
         let successCount = 0;
 
         try {
-            // Get current user for RLS
-            const { data: { user } } = await supabase.auth.getUser();
-            if (!user) throw new Error('User not authenticated');
-
             for (const file of files) {
-                // Upload to Storage
-                const publicUrl = await storageService.uploadFile(file, 'gallery');
+                // Use API route to upload and save to database (bypasses RLS)
+                const formData = new FormData();
+                formData.append('file', file);
+                formData.append('albumId', albumId);
 
-                // Record in DB
-                const { data: photoData, error } = await supabase
-                    .from('gallery_photos')
-                    .insert({
-                        album_id: albumId,
-                        user_id: user.id, // REQUIRED for RLS
-                        image_url: publicUrl,
-                        title: file.name.split('.')[0], // Default title
-                        status: 'published'
-                    })
-                    .select() // Ensure we select needed fields
-                    .single(); // Should fetch single created row
+                const response = await fetch('/api/gallery/upload', {
+                    method: 'POST',
+                    body: formData
+                });
 
-                if (error) {
-                    console.error('DB Insert Error:', error);
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    console.error('Upload error:', errorData.error);
                     continue;
                 }
 
-                if (!photoData) {
-                    console.error('No data returned from insert');
-                    continue;
-                }
+                const photoData = await response.json();
 
                 // Update local state
                 setPhotos(prev => [{

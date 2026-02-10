@@ -67,30 +67,23 @@ export const MediaUploader: React.FC<MediaUploaderProps> = ({
             setIsUploading(true);
             setError(null);
 
-            // Use unified storage service
-            const publicUrl = await storageService.uploadFile(file, folderPrefix || 'media');
+            // Use API route to upload and save to database (bypasses RLS)
+            const formData = new FormData();
+            formData.append('file', file);
+            formData.append('folder', folderPrefix || 'media');
 
+            const response = await fetch('/api/media/upload', {
+                method: 'POST',
+                body: formData
+            });
 
-            // 3. Save metadata to public.media table
-            const { data: { user } } = await supabase.auth.getUser();
-
-            const { error: dbError } = await supabase
-                .from('media')
-                .insert({
-                    bucket: 'media',
-                    path: publicUrl, // or relative path if preferred
-                    public_url: publicUrl,
-                    mime_type: file.type,
-                    size_bytes: file.size,
-                    created_by: user?.id
-                });
-
-            if (dbError) {
-                console.error('Error saving to media table:', dbError);
-                // We continue anyway as the upload was successful and we have the URL
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.error || 'Failed to upload file');
             }
 
-            onChange(publicUrl);
+            const data = await response.json();
+            onChange(data.url);
         } catch (err: any) {
             console.error('Upload error:', err);
             setError(err.message || 'Error uploading file');
