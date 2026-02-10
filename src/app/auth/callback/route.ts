@@ -151,31 +151,27 @@ export async function GET(request: Request) {
                                 }
 
                                 if (bestMatch && highestScore >= 8) {
-                                    await supabase
-                                        .from('profiles')
-                                        .update({
-                                            role: bestMatch.role,
-                                            full_name: bestMatch.full_name,
-                                            username: bestMatch.username + '_oauth',
-                                            avatar_url: bestMatch.avatar_url || currentProfile.avatar_url,
-                                        })
-                                        .eq('id', currentUser.id);
-
                                     const contentTables = ['posts', 'gallery_albums', 'businesses', 'calendar_events', 'jobs'];
-                                    for (const table of contentTables) {
-                                        await supabase
-                                            .from(table)
-                                            .update({ created_by: currentUser.id })
-                                            .eq('created_by', bestMatch.id);
-                                    }
-
                                     const communityTables = ['community_questions', 'community_answers', 'community_post_comments', 'community_posts', 'guides'];
-                                    for (const table of communityTables) {
-                                        await supabase
-                                            .from(table)
-                                            .update({ author_id: currentUser.id })
-                                            .eq('author_id', bestMatch.id);
-                                    }
+
+                                    // Executar todas as atualizações em paralelo
+                                    await Promise.all([
+                                        supabase
+                                            .from('profiles')
+                                            .update({
+                                                role: bestMatch.role,
+                                                full_name: bestMatch.full_name,
+                                                username: bestMatch.username + '_oauth',
+                                                avatar_url: bestMatch.avatar_url || currentProfile.avatar_url,
+                                            })
+                                            .eq('id', currentUser.id),
+                                        ...contentTables.map(table =>
+                                            supabase.from(table).update({ created_by: currentUser.id }).eq('created_by', bestMatch.id)
+                                        ),
+                                        ...communityTables.map(table =>
+                                            supabase.from(table).update({ author_id: currentUser.id }).eq('author_id', bestMatch.id)
+                                        ),
+                                    ]);
                                 }
                             }
                         }

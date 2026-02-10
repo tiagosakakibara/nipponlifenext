@@ -169,12 +169,15 @@ export const businessService = {
             .single();
 
         if (existing) {
+            // Deletar imagens antigas em paralelo se estiverem sendo substituídas
+            const deletions: Promise<unknown>[] = [];
             if (data.logo_url && existing.logo_url && data.logo_url !== existing.logo_url) {
-                await storageService.deleteFile(existing.logo_url);
+                deletions.push(storageService.deleteFile(existing.logo_url));
             }
             if (data.cover_image_url && existing.cover_image_url && data.cover_image_url !== existing.cover_image_url) {
-                await storageService.deleteFile(existing.cover_image_url);
+                deletions.push(storageService.deleteFile(existing.cover_image_url));
             }
+            if (deletions.length > 0) await Promise.all(deletions);
         }
 
         const { slug, ...updateData } = data;

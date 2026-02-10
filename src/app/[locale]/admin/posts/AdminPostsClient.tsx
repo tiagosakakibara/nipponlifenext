@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import Image from 'next/image';
 import { Link, useRouter } from '@/i18n/routing';
 import { useAdminPosts } from './hooks/useAdminPosts';
@@ -18,12 +18,12 @@ export default function AdminPostsClient() {
         fetchPosts();
     }, [fetchPosts]);
 
-    const filteredPosts = posts.filter(p => {
+    const filteredPosts = useMemo(() => posts.filter(p => {
         const matchesStatus = filterStatus === 'all' || p.status === filterStatus;
         const matchesSearch = p.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
             p.slug.toLowerCase().includes(searchTerm.toLowerCase());
         return matchesStatus && matchesSearch;
-    });
+    }), [posts, filterStatus, searchTerm]);
 
     const handleDelete = async (id: string, title: string) => {
         await deletePost(id);

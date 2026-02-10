@@ -2,6 +2,8 @@ import { getTranslations } from 'next-intl/server';
 import { createClient } from '@/utils/supabase/server';
 import { NewsList } from './NewsList';
 
+export const revalidate = 300; // ISR: Revalida a cada 5 minutos
+
 export async function generateMetadata({ params: { locale } }: { params: { locale: string } }) {
     const t = await getTranslations({ locale });
     return {
@@ -19,20 +21,25 @@ export default async function NoticiasPage({ params, searchParams }: Props) {
     const supabase = await createClient();
     const { tag } = await searchParams;
 
-    // 1. Fetch News Posts
+    // 1. Fetch News Posts — seleciona apenas campos necessários para listagem
+    // (exclui content/content_md que são corpos completos e pesados)
     const { data: posts } = await supabase
         .from('posts')
         .select(`
-            *,
+            id, slug, title, title_en, title_ja,
+            excerpt, excerpt_en, excerpt_ja,
+            cover_image_url, created_at, published_at,
+            view_count, tags,
             categories (id, name, slug)
         `)
         .eq('status', 'published')
-        .order('created_at', { ascending: false });
+        .order('created_at', { ascending: false })
+        .limit(200);
 
     // 2. Fetch Categories for the filter bar
     const { data: categories } = await supabase
         .from('categories')
-        .select('*')
+        .select('id, name, slug, sort_order')
         .order('sort_order', { ascending: true });
 
     return (

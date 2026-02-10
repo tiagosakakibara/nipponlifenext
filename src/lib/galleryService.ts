@@ -170,15 +170,15 @@ export const galleryService = {
             .select('id, image_url')
             .eq('album_id', id);
 
-        // 2. Delete each photo (files and records)
+        // 2. Delete all photos in parallel (era N+1 sequential, agora paralelo)
         if (photos && photos.length > 0) {
-            for (const photo of photos) {
-                try {
-                    await this.deletePhoto(photo.id);
-                } catch (err) {
-                    console.error('Error deleting photo during album deletion:', err);
-                }
-            }
+            await Promise.all(
+                photos.map(photo =>
+                    this.deletePhoto(photo.id).catch(err =>
+                        console.error('Error deleting photo during album deletion:', err)
+                    )
+                )
+            );
         }
 
         // 3. Delete the album record

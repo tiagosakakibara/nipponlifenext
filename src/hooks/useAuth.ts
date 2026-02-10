@@ -16,7 +16,7 @@ export function useAuth() {
                 if (user) {
                     const { data } = await supabase
                         .from('profiles')
-                        .select('*')
+                        .select('id, username, full_name, avatar_url, role, status, bio')
                         .eq('id', user.id)
                         .single();
                     setProfile(data);
@@ -35,7 +35,7 @@ export function useAuth() {
             if (session?.user) {
                 const { data } = await supabase
                     .from('profiles')
-                    .select('*')
+                    .select('id, username, full_name, avatar_url, role, status, bio')
                     .eq('id', session.user.id)
                     .single();
                 setProfile(data);

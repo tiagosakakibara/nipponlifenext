@@ -18,6 +18,8 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     };
 }
 
+export const revalidate = 300; // ISR: Revalidate every 5 minutes
+
 export default async function BusinessPage({ params, searchParams }: Props) {
     const { locale } = await params;
     const { search, category, city } = await searchParams;

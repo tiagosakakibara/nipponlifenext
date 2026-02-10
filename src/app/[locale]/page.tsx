@@ -20,7 +20,7 @@ import { Camera } from 'lucide-react';
 import { GalleryAlbumWithStats } from '@/types/gallery';
 import { generateSEOMetadata } from '@/lib/metadata';
 
-export const revalidate = 60; // ISR: Revalidate every 60 seconds
+export const revalidate = 300; // ISR: Revalidate every 5 minutes
 
 export async function generateMetadata({
     params,

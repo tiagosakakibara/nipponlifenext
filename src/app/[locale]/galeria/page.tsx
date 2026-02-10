@@ -1,31 +1,23 @@
-'use client';
-
-import { useEffect, useState } from 'react';
-import { useTranslations } from 'next-intl';
-import { galleryService } from '@/lib/galleryService';
-import { GalleryAlbumWithStats } from '@/types/gallery';
+import { getTranslations } from 'next-intl/server';
+import { createClient } from '@/utils/supabase/server';
 import { Camera } from 'lucide-react';
 import { GalleryAlbumCard } from '@/components/cards/GalleryAlbumCard';
+import { GalleryAlbumWithStats } from '@/types/gallery';
 
-export default function GaleriaPage() {
-    const t = useTranslations();
-    const [albums, setAlbums] = useState<GalleryAlbumWithStats[]>([]);
-    const [loading, setLoading] = useState(true);
+// Convertido para Server Component para habilitar ISR e eliminar fetch client-side
+export const revalidate = 300; // Revalida a cada 5 minutos
 
-    useEffect(() => {
-        const loadAlbums = async () => {
-            try {
-                const data = await galleryService.getAlbums();
-                // Show only public albums
-                setAlbums(data.filter(a => a.is_public));
-            } catch (error) {
-                console.error("Failed to load gallery albums:", error);
-            } finally {
-                setLoading(false);
-            }
-        };
-        loadAlbums();
-    }, []);
+export default async function GaleriaPage() {
+    const t = await getTranslations();
+    const supabase = await createClient();
+
+    const { data: albums } = await supabase
+        .from('gallery_album_stats')
+        .select('*')
+        .eq('is_public', true)
+        .order('created_at', { ascending: false });
+
+    const publicAlbums = (albums ?? []) as GalleryAlbumWithStats[];
 
     return (
         <main className="min-h-screen bg-app transition-colors duration-300">
@@ -47,19 +39,13 @@ export default function GaleriaPage() {
 
             {/* Albums Grid */}
             <div className="max-w-[1400px] mx-auto pb-32 px-6">
-                {loading ? (
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                        {[...Array(3)].map((_, i) => (
-                            <div key={i} className="h-[400px] bg-surface/50 animate-pulse rounded-2xl border border-app" />
-                        ))}
-                    </div>
-                ) : albums.length === 0 ? (
+                {publicAlbums.length === 0 ? (
                     <div className="text-center py-20">
                         <p className="text-muted">Nenhuma galeria disponível no momento.</p>
                     </div>
                 ) : (
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                        {albums.map((album) => (
+                        {publicAlbums.map((album) => (
                             <GalleryAlbumCard key={album.id} album={album} isGrid />
                         ))}
                     </div>

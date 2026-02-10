@@ -8,6 +8,8 @@ import { CommunityReel, fetchActiveReels } from '@/lib/reelsService';
 import { getTranslatedField } from '@/lib/getTranslatedField';
 import { CommunityPost } from '@/types/community';
 
+export const revalidate = 60; // ISR: comunidade é dinâmica, cache de 1 minuto
+
 type Props = {
     params: Promise<{ locale: string }>;
     searchParams: Promise<{ category?: string; q?: string }>;
