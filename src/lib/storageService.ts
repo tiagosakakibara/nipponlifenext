@@ -127,8 +127,23 @@ export const storageService = {
             return cleanPath;
         }
 
-        // Use Supabase URL structure or fallback to site URL if needed.
-        // On server: use env var. On client: result depends on isProduction check or fallback.
+        // Handle Supabase relative paths (e.g., 'guides/filename.jpg', 'posts/...')
+        // If it doesn't look like a local asset and we have a Supabase URL, use it.
+        const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+        if (supabaseUrl && !cleanPath.includes('localhost')) {
+            // Default bucket is 'media' for most things, but check if it's 'gallery'
+            const bucket = cleanPath.includes('/gallery/') ? 'gallery' : 'media';
+
+            // If the path already includes the bucket name at the start (e.g. '/media/guides/...')
+            if (cleanPath.startsWith('/media/') || cleanPath.startsWith('/gallery/')) {
+                return `${supabaseUrl}/storage/v1/object/public${cleanPath}`;
+            }
+
+            // Otherwise prepend bucket
+            return `${supabaseUrl}/storage/v1/object/public/${bucket}${cleanPath}`;
+        }
+
+        // Use site URL for truly local relative paths
         const baseUrl = typeof window === 'undefined'
             ? (process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000')
             : (this.isProduction() ? '' : 'http://localhost:3000');

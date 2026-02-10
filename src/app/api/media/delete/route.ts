@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/utils/supabase/server'
-import { createClient as createServiceClient } from '@supabase/supabase-js'
 
 export async function DELETE(request: NextRequest) {
     try {
@@ -52,19 +51,8 @@ export async function DELETE(request: NextRequest) {
             // Continue anyway to delete from DB
         }
 
-        // 4. Delete from DB using service role to bypass RLS
-        const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
-        const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY
-
-        if (!serviceRoleKey || !supabaseUrl) {
-            return NextResponse.json({ error: 'Server configuration error' }, { status: 500 })
-        }
-
-        const adminClient = createServiceClient(supabaseUrl, serviceRoleKey, {
-            auth: { autoRefreshToken: false, persistSession: false }
-        })
-
-        const { error: dbError } = await adminClient
+        // 4. Delete from DB
+        const { error: dbError } = await supabase
             .from('media')
             .delete()
             .eq('id', id)

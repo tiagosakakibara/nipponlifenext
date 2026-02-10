@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Image from 'next/image';
 import { Sparkles, TrendingUp, Flame, ArrowUpRight, Zap, Globe } from 'lucide-react';
 import { useRouter } from '@/i18n/routing';
 import { useTranslations, useLocale } from 'next-intl';
@@ -97,10 +98,13 @@ export function HeroSection({ featuredNews, stats }: HeroSectionProps) {
                     >
                         {/* Background Image with Transition */}
                         <div key={activeItem.id} className="absolute inset-0 transition-opacity duration-1000 ease-in-out">
-                            <img
+                            <Image
                                 src={storageService.getFileUrl(activeItem.cover_image_url || activeItem.image)}
                                 alt={activeTitle}
-                                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-[2000ms] ease-out animate-fadeIn animate-kenBurns"
+                                fill
+                                className="object-cover group-hover:scale-105 transition-transform duration-[2000ms] ease-out animate-fadeIn animate-kenBurns"
+                                sizes="(max-width: 1024px) 100vw, 66vw"
+                                priority
                             />
                         </div>
 

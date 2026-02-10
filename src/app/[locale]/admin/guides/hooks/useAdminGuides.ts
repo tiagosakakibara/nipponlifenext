@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useCallback } from 'react';
-import { createClient } from '@/utils/supabase/client';
+import { supabase } from '@/lib/supabaseClient';
 import { toast } from 'react-hot-toast';
 
 export interface AdminGuide {
@@ -39,7 +39,7 @@ export function useAdminGuides() {
     const [categories, setCategories] = useState<AdminGuideCategory[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
-    const supabase = createClient();
+    // const supabase = createClient(); // Removed to use stable singleton
 
     const fetchCategories = useCallback(async () => {
         const { data, error } = await supabase
@@ -107,20 +107,22 @@ export function useAdminGuides() {
         } finally {
             setLoading(false);
         }
-    }, [supabase, fetchCategories]);
+    }, [fetchCategories]);
 
-    const addGuide = async (guide: Partial<AdminGuide>): Promise<boolean> => {
+    const addGuide = useCallback(async (guide: Partial<AdminGuide>): Promise<boolean> => {
         try {
             // Find category id by slug
-            const { data: catData } = await supabase
-                .from('guides_categories')
-                .select('id')
-                .eq('slug', guide.categoryKey)
-                .single();
+            let categoryId: string | null = null;
+            if (guide.categoryKey && guide.categoryKey !== 'uncategorized') {
+                const { data: catData } = await supabase
+                    .from('guides_categories')
+                    .select('id')
+                    .eq('slug', guide.categoryKey)
+                    .single();
 
-            if (!catData) {
-                toast.error('Categoria inválida');
-                return false;
+                if (catData) {
+                    categoryId = catData.id;
+                }
             }
 
             const { data: { user } } = await supabase.auth.getUser();
@@ -130,13 +132,13 @@ export function useAdminGuides() {
                 .insert([{
                     title: guide.title,
                     slug: guide.slug,
-                    category_id: catData.id,
+                    category_id: categoryId,
                     excerpt: guide.excerpt,
                     content: guide.content,
                     cover_image_url: guide.coverImageUrl,
                     status: guide.status,
                     reading_time_minutes: guide.readingTimeMinutes,
-                    // created_by: user?.id, // Assuming guides table has created_by
+                    author_id: user?.id,
                     title_ja: guide.title_ja,
                     title_en: guide.title_en,
                     excerpt_ja: guide.excerpt_ja,
@@ -154,25 +156,27 @@ export function useAdminGuides() {
             toast.error('Erro ao criar guia: ' + error.message);
             return false;
         }
-    };
+    }, [supabase, fetchGuides]);
 
-    const updateGuide = async (id: string, updated: Partial<AdminGuide>): Promise<boolean> => {
+    const updateGuide = useCallback(async (id: string, updated: Partial<AdminGuide>): Promise<boolean> => {
         try {
-            const { data: catData } = await supabase
-                .from('guides_categories')
-                .select('id')
-                .eq('slug', updated.categoryKey)
-                .single();
+            let categoryId: string | null = null;
+            if (updated.categoryKey && updated.categoryKey !== 'uncategorized') {
+                const { data: catData } = await supabase
+                    .from('guides_categories')
+                    .select('id')
+                    .eq('slug', updated.categoryKey)
+                    .single();
 
-            if (!catData) {
-                toast.error('Categoria inválida');
-                return false;
+                if (catData) {
+                    categoryId = catData.id;
+                }
             }
 
             const updates: any = {
                 title: updated.title,
                 slug: updated.slug,
-                category_id: catData.id,
+                category_id: categoryId,
                 excerpt: updated.excerpt,
                 content: updated.content,
                 cover_image_url: updated.coverImageUrl,
@@ -198,12 +202,12 @@ export function useAdminGuides() {
             return true;
         } catch (error: any) {
             console.error('Error updating guide:', error);
-            toast.error('Erro ao atualizar guia');
+            toast.error('Erro ao atualizar guia: ' + error.message);
             return false;
         }
-    };
+    }, [supabase, fetchGuides]);
 
-    const deleteGuide = async (id: string) => {
+    const deleteGuide = useCallback(async (id: string) => {
         if (!confirm('Tem certeza que deseja excluir este guia?')) return;
 
         try {
@@ -220,10 +224,10 @@ export function useAdminGuides() {
             console.error('Error deleting guide:', error);
             toast.error('Erro ao excluir guia');
         }
-    };
+    }, [supabase, fetchGuides]);
 
     // Fetch Single Guide
-    const getGuide = async (id: string): Promise<AdminGuide | null> => {
+    const getGuide = useCallback(async (id: string): Promise<AdminGuide | null> => {
         try {
             const { data, error } = await supabase
                 .from('guides')
@@ -260,7 +264,7 @@ export function useAdminGuides() {
             console.error(e);
             return null;
         }
-    };
+    }, [supabase]);
 
     return {
         guides,

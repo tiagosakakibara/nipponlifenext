@@ -107,8 +107,8 @@ export default function AdminMediaClient() {
                     <button
                         onClick={toggleSelectionMode}
                         className={`flex items-center gap-2 px-8 py-3.5 rounded-2xl font-black text-sm transition-all hover:scale-[1.02] active:scale-[0.98] ${selectionMode
-                                ? 'bg-red-500 hover:bg-red-600 text-white shadow-xl shadow-red-500/20'
-                                : 'bg-surface border-2 border-app hover:border-link text-primary'
+                            ? 'bg-red-500 hover:bg-red-600 text-white shadow-xl shadow-red-500/20'
+                            : 'bg-surface border-2 border-app hover:border-link text-primary'
                             }`}
                     >
                         {selectionMode ? (
@@ -206,6 +206,7 @@ export default function AdminMediaClient() {
                                         fill
                                         className="object-cover grayscale-[0.3] group-hover:grayscale-0 transition-all duration-500"
                                         sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 20vw"
+                                        unoptimized
                                     />
                                 </div>
                             ) : (
@@ -222,8 +223,8 @@ export default function AdminMediaClient() {
                                 >
                                     <div
                                         className={`w-7 h-7 rounded-full border-2 flex items-center justify-center transition-all hover:scale-110 ${selectedIds.has(item.id)
-                                                ? 'bg-link border-link shadow-lg shadow-link/30'
-                                                : 'bg-white/90 border-white/50 backdrop-blur-md'
+                                            ? 'bg-link border-link shadow-lg shadow-link/30'
+                                            : 'bg-white/90 border-white/50 backdrop-blur-md'
                                             }`}
                                     >
                                         {selectedIds.has(item.id) && (

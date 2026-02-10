@@ -1,6 +1,7 @@
 "use client";
 
 import { useTranslations } from 'next-intl';
+import Image from 'next/image';
 import { Camera, Plus, Eye, Trash2, Edit2, Image as ImageIcon, Loader2 } from 'lucide-react';
 import { Link } from '@/i18n/routing';
 import { useState, useEffect } from 'react';
@@ -205,10 +206,12 @@ export default function AdminGalleryPage() {
                             {/* Cover Image */}
                             <div className="relative h-48 bg-gray-900 overflow-hidden">
                                 {album.cover_image_url ? (
-                                    <img
+                                    <Image
                                         src={storageService.getFileUrl(album.cover_image_url)}
                                         alt={album.title}
-                                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                                        fill
+                                        className="object-cover group-hover:scale-110 transition-transform duration-300"
+                                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                                     />
                                 ) : (
                                     <div className="w-full h-full flex items-center justify-center">
@@ -236,8 +239,8 @@ export default function AdminGalleryPage() {
                                         {album.view_count || 0}
                                     </div>
                                     <div className={`px-2 py-0.5 rounded-full font-bold ${album.status === 'published'
-                                            ? 'bg-emerald-500/10 text-emerald-500'
-                                            : 'bg-secondary/10 text-secondary'
+                                        ? 'bg-emerald-500/10 text-emerald-500'
+                                        : 'bg-secondary/10 text-secondary'
                                         }`}>
                                         {album.status === 'published' ? 'Publicado' : 'Rascunho'}
                                     </div>

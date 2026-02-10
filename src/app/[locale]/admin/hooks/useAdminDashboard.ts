@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { createClient } from '@/utils/supabase/client';
 
 export interface DashboardKPIs {
@@ -54,6 +54,7 @@ export function useAdminDashboard(): UseAdminDashboardResult {
     const [lists, setLists] = useState<DashboardListItems | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
+    const isFetching = useRef(false);
 
     const getDashboardKPIs = async (supabase: ReturnType<typeof createClient>): Promise<DashboardKPIs> => {
         const now = new Date();
@@ -325,15 +326,25 @@ export function useAdminDashboard(): UseAdminDashboardResult {
     };
 
     const fetchData = useCallback(async () => {
+        if (isFetching.current) return;
+
         const supabase = createClient();
+        isFetching.current = true;
         setLoading(true);
         setError(null);
         try {
-            const [kpisData, chartsData, listsData] = await Promise.all([
+            const fetchPromise = Promise.all([
                 getDashboardKPIs(supabase),
                 getDashboardCharts(supabase),
                 getDashboardLists(supabase)
             ]);
+
+            // Add a 15-second timeout to prevent infinite loading state
+            const timeoutPromise = new Promise((_, reject) =>
+                setTimeout(() => reject(new Error('Timeout ao carregar dados')), 15000)
+            );
+
+            const [kpisData, chartsData, listsData] = await Promise.race([fetchPromise, timeoutPromise]) as [DashboardKPIs, DailyActivity[], DashboardListItems];
 
             setKpis(kpisData);
             setCharts(chartsData);
@@ -343,6 +354,7 @@ export function useAdminDashboard(): UseAdminDashboardResult {
             setError('Falha ao carregar dados do dashboard.');
         } finally {
             setLoading(false);
+            isFetching.current = false;
         }
     }, []);
 

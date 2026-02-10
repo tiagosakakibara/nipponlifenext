@@ -31,6 +31,8 @@ export default function AdminDashboardPage() {
     const t = useTranslations();
     const router = useRouter();
     const currentLocale = useLocale();
+    const [lastUpdate, setLastUpdate] = useState<string>('');
+
     // Map next-intl locale (pt/en/ja) to browser locale format (pt-BR/en-US/ja-JP)
     const localeMap: Record<string, string> = {
         'pt': 'pt-BR',
@@ -38,6 +40,10 @@ export default function AdminDashboardPage() {
         'ja': 'ja-JP'
     };
     const locale = localeMap[currentLocale] || 'pt-BR';
+
+    useEffect(() => {
+        setLastUpdate(new Date().toLocaleTimeString(locale));
+    }, [locale]);
 
     if (loading) {
         return (
@@ -132,7 +138,7 @@ export default function AdminDashboardPage() {
                     <h1 className="text-3xl font-black text-primary tracking-tight">{t('admin.dashboard')}</h1>
                     <div className="flex items-center gap-2 text-secondary text-sm mt-1">
                         <Clock className="w-4 h-4 text-link" />
-                        <span>{t('admin.lastUpdateLabel')}: {new Date().toLocaleTimeString(locale)}</span>
+                        <span>{t('admin.lastUpdateLabel')}: {lastUpdate || '--:--:--'}</span>
                     </div>
                 </div>
                 <div className="flex items-center gap-2 bg-surface px-4 py-2 rounded-xl border border-app shadow-sm">

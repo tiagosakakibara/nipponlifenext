@@ -259,14 +259,14 @@ export default function AdminGuideEditClient() {
                                 <div className="grid grid-cols-2 gap-2 bg-[#0037680a] p-1 rounded-lg border border-app">
                                     <button
                                         type="button"
-                                        onClick={() => setFormData({ ...formData, status: 'draft' })}
+                                        onClick={() => setFormData(prev => prev ? ({ ...prev, status: 'draft' }) : null)}
                                         className={`py-1.5 text-[10px] font-black rounded-md transition-all ${formData.status === 'draft' ? 'bg-white text-primary shadow-lg' : 'text-secondary hover:text-primary'}`}
                                     >
                                         DRAFT
                                     </button>
                                     <button
                                         type="button"
-                                        onClick={() => setFormData({ ...formData, status: 'published' })}
+                                        onClick={() => setFormData(prev => prev ? ({ ...prev, status: 'published' }) : null)}
                                         className={`py-1.5 text-[10px] font-black rounded-md transition-all ${formData.status === 'published' ? 'bg-[#5593C3] text-white shadow-lg' : 'text-secondary hover:text-primary'}`}
                                     >
                                         PUBLISHED
@@ -278,7 +278,7 @@ export default function AdminGuideEditClient() {
                                 <label className="text-[10px] font-extrabold text-secondary uppercase block">Categoria</label>
                                 <select
                                     value={formData.categoryKey}
-                                    onChange={e => setFormData({ ...formData, categoryKey: e.target.value })}
+                                    onChange={e => setFormData(prev => prev ? ({ ...prev, categoryKey: e.target.value }) : null)}
                                     className={`w-full bg-app border rounded-lg px-4 py-2 text-xs ${validationErrors.category ? 'border-red-500' : 'border-app'}`}
                                 >
                                     <option value="">Selecione Categoria</option>
@@ -298,7 +298,7 @@ export default function AdminGuideEditClient() {
                                     type="number"
                                     min="1"
                                     value={formData.readingTimeMinutes}
-                                    onChange={e => setFormData({ ...formData, readingTimeMinutes: parseInt(e.target.value) || 0 })}
+                                    onChange={e => setFormData(prev => prev ? ({ ...prev, readingTimeMinutes: parseInt(e.target.value) || 0 }) : null)}
                                     className="w-full bg-app border border-app rounded-lg px-4 py-2 text-xs"
                                 />
                             </div>
@@ -309,7 +309,10 @@ export default function AdminGuideEditClient() {
                         <h3 className="font-bold text-sm">Imagem de Capa</h3>
                         <MediaUploader
                             value={formData.coverImageUrl || ''}
-                            onChange={(url) => setFormData({ ...formData, coverImageUrl: url || '' })}
+                            onChange={(url) => {
+                                console.log('Image uploaded/changed:', url);
+                                setFormData(prev => prev ? ({ ...prev, coverImageUrl: url || '' }) : null);
+                            }}
                             folderPrefix="guides"
                             noContainer
                         />

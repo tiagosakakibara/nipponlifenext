@@ -1,6 +1,7 @@
 'use client';
 
 import { useRouter } from '@/i18n/routing';
+import Image from 'next/image';
 import { useTranslations, useLocale } from 'next-intl';
 import { Eye } from 'lucide-react';
 import { getTranslatedField, normalizeCategorySlug } from '@/lib/getTranslatedField';
@@ -44,10 +45,12 @@ export function CommunityCard({ item, featured }: CommunityCardProps) {
         >
             <div className="relative h-[350px] w-full rounded-3xl overflow-hidden hover-lift shadow-lg hover:shadow-accent/20 transition-all duration-500 border border-white/10">
                 {/* Full Background Image */}
-                <img
+                <Image
                     src={storageService.getFileUrl(item.image)}
                     alt={getTranslatedField(item, 'title', locale)}
-                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                    fill
+                    className="object-cover transition-transform duration-700 group-hover:scale-110"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 />
 
                 {/* Gradient Overlay - Darker at bottom for text readability */}

@@ -2,6 +2,7 @@
 "use client";
 
 import { useEffect, useState } from 'react';
+import Image from 'next/image';
 import {
     Plus, Search, Trash2, Loader2,
     Video, ExternalLink, RefreshCw, X, Play, Save
@@ -162,7 +163,7 @@ export default function AdminReelsClient() {
                                             <div className="flex items-center gap-5">
                                                 <div className="relative w-24 h-40 bg-black rounded-lg overflow-hidden shadow-md flex-shrink-0">
                                                     {reel.thumbnail_url ? (
-                                                        <img src={reel.thumbnail_url} className="w-full h-full object-cover opacity-80" alt="" />
+                                                        <Image src={reel.thumbnail_url} fill className="object-cover opacity-80" alt="" sizes="96px" />
                                                     ) : (
                                                         <div className="w-full h-full flex items-center justify-center text-zinc-500">
                                                             <Video className="w-8 h-8" />
@@ -245,7 +246,9 @@ export default function AdminReelsClient() {
 
                             {previewData?.isValid && (
                                 <div className="bg-zinc-50 dark:bg-white/5 rounded-2xl p-4 border border-zinc-100 dark:border-white/10 flex gap-4">
-                                    <img src={previewData.thumbnailUrl} className="w-20 h-20 object-cover rounded-lg bg-black/10" />
+                                    <div className="relative w-20 h-20 flex-shrink-0">
+                                        <Image src={previewData.thumbnailUrl} fill className="object-cover rounded-lg bg-black/10" alt="Preview" sizes="80px" />
+                                    </div>
                                     <div className="space-y-1">
                                         <p className="text-xs font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-wider">Valid {previewData.provider} link</p>
                                         <p className="text-xs text-zinc-400 dark:text-zinc-500">ID: {previewData.youtubeVideoId}</p>

@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/utils/supabase/server'
-import { createClient as createServiceClient } from '@supabase/supabase-js'
 
 export async function POST(request: NextRequest) {
     try {
@@ -57,19 +56,8 @@ export async function POST(request: NextRequest) {
             .from('gallery')
             .getPublicUrl(filePath)
 
-        // 4. Record in DB using service role to bypass RLS
-        const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
-        const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY
-
-        if (!serviceRoleKey || !supabaseUrl) {
-            return NextResponse.json({ error: 'Server configuration error' }, { status: 500 })
-        }
-
-        const adminClient = createServiceClient(supabaseUrl, serviceRoleKey, {
-            auth: { autoRefreshToken: false, persistSession: false }
-        })
-
-        const { data, error: dbError } = await adminClient
+        // 4. Record in DB
+        const { data, error: dbError } = await supabase
             .from('gallery_photos')
             .insert([{
                 album_id: albumId,

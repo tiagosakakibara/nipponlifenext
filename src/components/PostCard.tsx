@@ -1,6 +1,7 @@
 'use client';
 
 import { MoreHorizontal, Heart, MessageCircle, Share2, Eye } from 'lucide-react';
+import Image from 'next/image';
 import { useRouter } from '@/i18n/routing';
 import { useState, useEffect } from 'react';
 import { createClient } from '@/utils/supabase/client';
@@ -95,7 +96,16 @@ export function CommunityCard({ avatar, name, time, category, title, content, im
             {/* Header */}
             <div className="flex items-start justify-between mb-4">
                 <div className="flex items-center gap-3">
-                    <img src={avatar} alt={name} className="w-10 h-10 rounded-full object-cover" />
+                    <div className="relative w-10 h-10 flex-shrink-0">
+                        <Image
+                            src={avatar}
+                            alt={name}
+                            fill
+                            className="rounded-full object-cover"
+                            sizes="40px"
+                            unoptimized
+                        />
+                    </div>
                     <div>
                         <h3 className="font-heading font-bold text-primary text-sm">{name}</h3>
                         <div className="flex items-center gap-1 text-xs text-muted">
@@ -136,8 +146,15 @@ export function CommunityCard({ avatar, name, time, category, title, content, im
                 </div>
 
                 {image && (
-                    <div className="rounded-xl overflow-hidden mt-4 aspect-video">
-                        <img src={storageService.getFileUrl(image)} alt="Post content" className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" />
+                    <div className="rounded-xl overflow-hidden mt-4 aspect-video relative">
+                        <Image
+                            src={storageService.getFileUrl(image)}
+                            alt="Post content"
+                            fill
+                            className="object-cover hover:scale-105 transition-transform duration-500"
+                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                            unoptimized
+                        />
                     </div>
                 )}
             </div>

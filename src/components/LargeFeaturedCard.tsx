@@ -1,6 +1,7 @@
 'use client';
 
 import { useRouter } from '@/i18n/routing';
+import Image from 'next/image';
 import { useTranslations, useLocale } from 'next-intl';
 import { Calendar } from 'lucide-react';
 import { getTranslatedField, normalizeCategorySlug } from '@/lib/getTranslatedField';
@@ -59,10 +60,13 @@ export function LargeFeaturedCard({ item }: LargeFeaturedCardProps) {
             className="group relative h-[500px] rounded-3xl overflow-hidden cursor-pointer shadow-2xl hover:shadow-accent/20 transition-all duration-500 bg-surface border border-app"
         >
             {/* Background Image */}
-            <img
+            <Image
                 src={storageService.getFileUrl(item.image)}
                 alt={title}
-                className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                fill
+                priority
+                className="object-cover group-hover:scale-110 transition-transform duration-700"
+                sizes="(max-width: 768px) 100vw, 100vw"
             />
 
             {/* Gradient Overlay */}

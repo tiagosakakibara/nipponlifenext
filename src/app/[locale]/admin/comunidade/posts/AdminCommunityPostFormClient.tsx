@@ -27,7 +27,7 @@ export default function AdminCommunityPostFormClient({ id, initialData }: Props)
     const [showJapanese, setShowJapanese] = useState(false);
     const [showEnglish, setShowEnglish] = useState(false);
 
-    const fileInputRef = useRef<HTMLInputElement>(null);
+
     const [coverImage, setCoverImage] = useState<string | null>(initialData?.cover_image_url || null);
 
     const { register, handleSubmit, setValue, watch, formState: { errors } } = useForm({
@@ -52,14 +52,28 @@ export default function AdminCommunityPostFormClient({ id, initialData }: Props)
         fetchCats();
     }, []);
 
-    const onSubmit = async (data: any) => {
+    const onSubmit = async (formData: any) => {
         setLoading(true);
         try {
-            const payload = {
-                ...data,
+            // Filter only valid database columns to avoid Supabase errors with joined fields
+            const payload: any = {
+                title: formData.title,
+                slug: formData.slug,
+                excerpt: formData.excerpt,
+                content: formData.content,
+                status: formData.status,
+                category_id: formData.category_id === '' ? null : formData.category_id,
                 cover_image_url: coverImage,
+                title_ja: formData.title_ja,
+                content_ja: formData.content_ja,
+                title_en: formData.title_en,
+                content_en: formData.content_en,
+                excerpt_ja: formData.excerpt_ja,
+                excerpt_en: formData.excerpt_en,
                 updated_at: new Date().toISOString()
             };
+
+            console.log('🚀 Saving Community Post with payload:', payload);
 
             if (id) {
                 await communityService.updatePost(id, payload);
@@ -69,30 +83,16 @@ export default function AdminCommunityPostFormClient({ id, initialData }: Props)
                 toast.success('Post criado');
             }
             router.push('/admin/comunidade/posts');
-        } catch (error) {
-            console.error(error);
-            toast.error('Erro ao salvar post');
+        } catch (error: any) {
+            console.error('❌ Error saving post:', error);
+            const message = error.message || error.details || 'Erro desconhecido';
+            toast.error(`Erro ao salvar: ${message}`);
         } finally {
             setLoading(false);
         }
     };
 
-    const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-        const file = e.target.files?.[0];
-        if (!file) return;
 
-        setUploading(true);
-        try {
-            const url = await storageService.uploadFile(file, 'community');
-            setCoverImage(url);
-            toast.success('Imagem enviada');
-        } catch (error) {
-            console.error(error);
-            toast.error('Erro no upload');
-        } finally {
-            setUploading(false);
-        }
-    };
 
     return (
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-8 animate-fade-in pb-20">
@@ -119,8 +119,8 @@ export default function AdminCommunityPostFormClient({ id, initialData }: Props)
                     </button>
                     <button
                         type="submit"
-                        disabled={loading}
-                        className="flex items-center gap-2 bg-[#D70F24] hover:bg-[#b50d1f] text-white px-10 py-3.5 rounded-2xl font-black text-sm shadow-xl shadow-red-500/10 transition-all hover:scale-[1.02] active:scale-[0.98]"
+                        disabled={loading || uploading}
+                        className="flex items-center gap-2 bg-[#D70F24] hover:bg-[#b50d1f] text-white px-10 py-3.5 rounded-2xl font-black text-sm shadow-xl shadow-red-500/10 transition-all hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                         {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : <Save className="w-5 h-5" />}
                         {id ? 'UPDATE FEED' : 'LAUNCH POST'}
@@ -244,12 +244,12 @@ export default function AdminCommunityPostFormClient({ id, initialData }: Props)
                                 <label className="text-[10px] font-black text-zinc-400 uppercase tracking-widest px-1">Lifecycle Stage</label>
                                 <select
                                     {...register('status')}
-                                    className="w-full p-4 bg-zinc-50 dark:bg-white/5 border border-zinc-100 dark:border-white/10 rounded-2xl text-sm font-black text-[#1a1a1a] dark:text-white outline-none focus:bg-white dark:focus:bg-white/10"
+                                    className="w-full p-4 bg-zinc-50 dark:bg-zinc-900 border border-zinc-100 dark:border-white/10 rounded-2xl text-sm font-black text-[#1a1a1a] dark:text-white outline-none focus:bg-white dark:focus:bg-zinc-800 transition-all appearance-none cursor-pointer"
                                 >
-                                    <option value="draft">Internal Draft</option>
-                                    <option value="published">Live on Feed</option>
-                                    <option value="scheduled">Scheduled Launch</option>
-                                    <option value="archived">System Archive</option>
+                                    <option value="draft" className="bg-white dark:bg-zinc-900 text-[#1a1a1a] dark:text-white">Internal Draft</option>
+                                    <option value="published" className="bg-white dark:bg-zinc-900 text-[#1a1a1a] dark:text-white">Live on Feed</option>
+                                    <option value="scheduled" className="bg-white dark:bg-zinc-900 text-[#1a1a1a] dark:text-white">Scheduled Launch</option>
+                                    <option value="archived" className="bg-white dark:bg-zinc-900 text-[#1a1a1a] dark:text-white">System Archive</option>
                                 </select>
                             </div>
 
@@ -257,11 +257,11 @@ export default function AdminCommunityPostFormClient({ id, initialData }: Props)
                                 <label className="text-[10px] font-black text-zinc-400 uppercase tracking-widest px-1">Community Logic</label>
                                 <select
                                     {...register('category_id', { required: true })}
-                                    className="w-full p-4 bg-zinc-50 dark:bg-white/5 border border-zinc-100 dark:border-white/10 rounded-2xl text-sm font-black text-[#1a1a1a] dark:text-white outline-none focus:bg-white dark:focus:bg-white/10"
+                                    className="w-full p-4 bg-zinc-50 dark:bg-zinc-900 border border-zinc-100 dark:border-white/10 rounded-2xl text-sm font-black text-[#1a1a1a] dark:text-white outline-none focus:bg-white dark:focus:bg-zinc-800 transition-all appearance-none cursor-pointer"
                                 >
-                                    <option value="">Choose Taxonomy...</option>
+                                    <option value="" className="bg-white dark:bg-zinc-900 text-[#1a1a1a] dark:text-white">Choose Taxonomy...</option>
                                     {categories.map(c => (
-                                        <option key={c.id} value={c.id}>{c.name}</option>
+                                        <option key={c.id} value={c.id} className="bg-white dark:bg-zinc-900 text-[#1a1a1a] dark:text-white">{c.name}</option>
                                     ))}
                                 </select>
                             </div>
@@ -285,9 +285,10 @@ export default function AdminCommunityPostFormClient({ id, initialData }: Props)
                             <MediaUploader
                                 value={coverImage}
                                 onChange={(url: string | null) => {
-                                    console.log('🔄 [Parent] MediaUploader onChange called with:', url);
-                                    setCoverImage(url);
+                                    console.log('🔄 [Parent] MediaUploader onChange:', url);
+                                    setCoverImage(prev => url);
                                 }}
+                                onUploading={setUploading}
                                 folderPrefix="community"
                                 noContainer
                             />

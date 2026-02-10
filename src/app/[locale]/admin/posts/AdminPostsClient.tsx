@@ -114,6 +114,7 @@ export default function AdminPostsClient() {
                                                         fill
                                                         className="rounded-lg object-cover border border-app shadow-sm"
                                                         sizes="48px"
+                                                        unoptimized
                                                     />
                                                 </div>
                                             ) : (

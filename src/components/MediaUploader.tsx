@@ -14,6 +14,7 @@ interface MediaUploaderProps {
     allowedTypes?: ('image' | 'video')[];
     className?: string;
     noContainer?: boolean;
+    onUploading?: (uploading: boolean) => void;
 }
 
 export const MediaUploader: React.FC<MediaUploaderProps> = ({
@@ -23,7 +24,8 @@ export const MediaUploader: React.FC<MediaUploaderProps> = ({
     label = "Featured Image",
     allowedTypes = ['image'],
     className = "",
-    noContainer = false
+    noContainer = false,
+    onUploading
 }) => {
     const [isUploading, setIsUploading] = useState(false);
     const [error, setError] = useState<string | null>(null);
@@ -65,6 +67,7 @@ export const MediaUploader: React.FC<MediaUploaderProps> = ({
         try {
 
             setIsUploading(true);
+            onUploading?.(true);
             setError(null);
 
             // Use API route to upload and save to database (bypasses RLS)
@@ -89,6 +92,7 @@ export const MediaUploader: React.FC<MediaUploaderProps> = ({
             setError(err.message || 'Error uploading file');
         } finally {
             setIsUploading(false);
+            onUploading?.(false);
             if (fileInputRef.current) fileInputRef.current.value = '';
         }
     };
