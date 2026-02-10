@@ -5,6 +5,7 @@ import { createClient } from '@/utils/supabase/client';
 import { useRouter } from '@/i18n/routing';
 import { useAuth } from '@/hooks/useAuth';
 import { useTheme } from 'next-themes';
+import { useLocale } from 'next-intl';
 import { LanguageSwitcher } from '@/components/LanguageSwitcher';
 import { useEffect, useState } from 'react';
 
@@ -15,6 +16,7 @@ interface TopbarProps {
 export function Topbar({ onToggleSidebar }: TopbarProps) {
     const router = useRouter();
     const supabase = createClient();
+    const locale = useLocale();
 
     const { user, profile } = useAuth();
     const { theme, setTheme, resolvedTheme } = useTheme();
@@ -26,7 +28,7 @@ export function Topbar({ onToggleSidebar }: TopbarProps) {
 
     const handleLogout = async () => {
         await supabase.auth.signOut();
-        router.push('/admin/login');
+        window.location.href = `/${locale}/admin/login`;
     };
 
     const toggleTheme = () => {

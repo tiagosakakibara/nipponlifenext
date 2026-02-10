@@ -5,13 +5,15 @@ import { useRouter } from 'next/navigation';
 import { User, LogOut, Settings, LayoutDashboard, Camera } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 import { createClient } from '@/utils/supabase/client';
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
 
 export function UserMenu() {
     const { user, profile } = useAuth();
     const router = useRouter();
     const t = useTranslations();
+    const locale = useLocale();
     const [isOpen, setIsOpen] = useState(false);
+    const [loggingOut, setLoggingOut] = useState(false);
     const menuRef = useRef<HTMLDivElement>(null);
     const supabase = createClient();
 
@@ -30,10 +32,13 @@ export function UserMenu() {
     }, [isOpen]);
 
     const handleLogout = async () => {
-        await supabase.auth.signOut();
+        if (loggingOut) return;
+        setLoggingOut(true);
         setIsOpen(false);
-        router.refresh();
-        router.push('/');
+        await supabase.auth.signOut();
+        // Full page reload ensures all session state (cookies, router cache,
+        // in-memory auth listeners) is completely cleared before the next render.
+        window.location.href = `/${locale}`;
     };
 
     const handleNavigate = (path: string) => {
@@ -132,11 +137,12 @@ export function UserMenu() {
 
                         <button
                             onClick={handleLogout}
-                            className="w-full px-4 py-3 text-left text-[15px] text-[#D70F24] hover:bg-[#D70F24]/5 rounded-xl transition-all flex items-center justify-between group"
+                            disabled={loggingOut}
+                            className="w-full px-4 py-3 text-left text-[15px] text-[#D70F24] hover:bg-[#D70F24]/5 disabled:opacity-50 disabled:cursor-not-allowed rounded-xl transition-all flex items-center justify-between group"
                         >
                             <div className="flex items-center gap-3">
                                 <LogOut className="w-4.5 h-4.5" />
-                                <span>{t('auth.logout')}</span>
+                                <span>{loggingOut ? '...' : t('auth.logout')}</span>
                             </div>
                         </button>
                     </div>
