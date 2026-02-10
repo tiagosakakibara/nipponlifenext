@@ -59,6 +59,35 @@
                 "emailTaken": "このメールアドレスは既に登録されています。",
                 "unexpected": "予期しないエラーが発生しました。もう一度お試しください。"
             }
+        },
+        "linkAccount": {
+            "pageTitle": "アカウント連携",
+            "pageDescription": "GoogleアカウントをNipponLifeアカウントと連携します。",
+            "title": "既存のアカウントが見つかりました",
+            "subtitle": "同じメールアドレスの別のアカウントが見つかりました",
+            "description": "{email} でGoogleログインしましたが、同じメールアドレスのアカウントがすでに存在します。アカウントを連携しますか？",
+            "passwordLabel": "パスワードで確認",
+            "passwordHint": "{email} アカウントのパスワードを入力して本人確認を行ってください",
+            "benefits": [
+                "投稿履歴やコンテンツが引き継がれます",
+                "今後はGoogleでログインできるようになります",
+                "プロフィール情報が保持されます"
+            ],
+            "mergeButton": "アカウントを連携する",
+            "merging": "連携中...",
+            "orSeparator": "または",
+            "skipButton": "連携せずに続ける",
+            "skipNote": "連携しない場合、Googleアカウントとメールアカウントはそれぞれ別のアカウントとして残ります。",
+            "successTitle": "アカウントの連携が完了しました！",
+            "successSubtitle": "アカウントが統合されました。今後はGoogleでログインしてください。リダイレクト中...",
+            "errors": {
+                "fillPassword": "パスワードを入力してください。",
+                "wrongPassword": "パスワードが正しくありません。もう一度お試しください。",
+                "sessionExpired": "セッションが期限切れです。再度ログインしてください。",
+                "sessionMismatch": "セッションエラー。再度ログインしてください。",
+                "serverError": "サーバー設定エラーが発生しました。",
+                "mergeFailed": "アカウントを連携できませんでした。もう一度お試しください。"
+            }
         }
     },
     "common": {

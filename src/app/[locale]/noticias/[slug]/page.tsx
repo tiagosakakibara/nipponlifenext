@@ -169,8 +169,8 @@ export default async function NewsArticlePage({ params }: Props) {
                 </div>
             </div>
 
-            <main className="max-w-7xl mx-auto px-6 py-16">
-                <div className="grid grid-cols-1 lg:grid-cols-[1fr_20rem] xl:grid-cols-[auto_minmax(0,1fr)_20rem] gap-8 lg:gap-16 items-start">
+            <main className="max-w-7xl mx-auto px-4 md:px-6 py-8 md:py-16">
+                <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_20rem] xl:grid-cols-[auto_minmax(0,1fr)_20rem] gap-8 lg:gap-10 xl:gap-16 items-start">
                     {/* Left Sidebar - Social Share */}
                     <div className="hidden xl:flex sticky top-32 h-fit">
                         <ShareActions
@@ -181,30 +181,34 @@ export default async function NewsArticlePage({ params }: Props) {
                     </div>
 
                     {/* Main Content */}
-                    <article className="max-w-3xl min-w-0 w-full">
+                    <article className="max-w-3xl min-w-0 w-full overflow-x-hidden">
                         {/* Article Text */}
                         {contentMd ? (
-                            <div className="prose dark:prose-invert prose-lg max-w-none 
+                            <div className="prose dark:prose-invert prose-lg max-w-none overflow-x-hidden
                                          prose-headings:font-display prose-headings:font-bold prose-headings:tracking-tight prose-headings:text-primary
                                          prose-p:text-secondary prose-p:leading-[1.8] prose-p:mb-8
                                          prose-strong:text-primary prose-strong:font-bold
-                                         prose-img:rounded-3xl prose-img:shadow-2xl prose-img:my-12
-                                         prose-a:text-accent prose-a:no-underline hover:prose-a:underline
-                                         prose-li:text-secondary">
+                                         prose-img:rounded-3xl prose-img:shadow-2xl prose-img:my-12 prose-img:w-full prose-img:max-w-full prose-img:h-auto
+                                         prose-a:text-accent prose-a:no-underline hover:prose-a:underline prose-a:break-words
+                                         prose-li:text-secondary
+                                         [&_table]:w-full [&_table]:overflow-x-auto [&_table]:block
+                                         [&_pre]:overflow-x-auto [&_pre]:whitespace-pre-wrap [&_pre]:break-words">
                                 <ReactMarkdown remarkPlugins={[remarkGfm]}>{contentMd}</ReactMarkdown>
                             </div>
                         ) : (
                             <div
-                                className="prose dark:prose-invert prose-lg max-w-none 
+                                className="prose dark:prose-invert prose-lg max-w-none overflow-x-hidden
                                          prose-headings:font-display prose-headings:font-bold prose-headings:tracking-tight prose-headings:text-primary
                                          prose-p:text-secondary prose-p:leading-[1.8] prose-p:mb-8
                                          prose-strong:text-primary prose-strong:font-bold
                                          prose-blockquote:border-l-4 prose-blockquote:border-[var(--nl-accent)] prose-blockquote:bg-surface prose-blockquote:px-8 prose-blockquote:py-1 prose-blockquote:rounded-r-2xl prose-blockquote:italic prose-blockquote:my-12
-                                         prose-img:rounded-3xl prose-img:shadow-2xl prose-img:my-12
-                                         prose-a:text-accent prose-a:no-underline hover:prose-a:underline
+                                         prose-img:rounded-3xl prose-img:shadow-2xl prose-img:my-12 prose-img:w-full prose-img:max-w-full prose-img:h-auto
+                                         prose-a:text-accent prose-a:no-underline hover:prose-a:underline prose-a:break-words
                                          prose-ul:my-6 prose-ul:space-y-3
                                          prose-ol:my-6 prose-ol:space-y-3
                                          prose-li:text-secondary prose-li:leading-relaxed
+                                         [&_table]:w-full [&_table]:overflow-x-auto [&_table]:block
+                                         [&_pre]:overflow-x-auto [&_pre]:whitespace-pre-wrap [&_pre]:break-words
                                          article-content"
                                 dangerouslySetInnerHTML={{ __html: content }}
                             />
@@ -256,7 +260,7 @@ export default async function NewsArticlePage({ params }: Props) {
                     </article>
 
                     {/* Right Sidebar */}
-                    <aside className="w-full space-y-12">
+                    <aside className="w-full space-y-12 lg:sticky lg:top-8">
                         {/* Trending Section */}
                         <div>
                             <div className="flex items-center gap-2 mb-6">

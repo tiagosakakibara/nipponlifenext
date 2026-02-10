@@ -60,6 +60,35 @@
                 "unexpected": "Erro inesperado. Tente novamente."
             }
         },
+        "linkAccount": {
+            "pageTitle": "Unificar Conta",
+            "pageDescription": "Conecte sua conta Google com sua conta existente.",
+            "title": "Conta existente detectada",
+            "subtitle": "Encontramos outra conta com o mesmo e-mail",
+            "description": "Você fez login com o Google usando {email}, mas já existe uma conta cadastrada com esse e-mail. Deseja unificar as duas contas?",
+            "passwordLabel": "Confirmar com senha",
+            "passwordHint": "Digite a senha da sua conta {email} para confirmar que é você",
+            "benefits": [
+                "Seu histórico e conteúdos serão transferidos",
+                "Você poderá fazer login com o Google futuramente",
+                "Seus dados de perfil serão preservados"
+            ],
+            "mergeButton": "Unificar contas",
+            "merging": "Unificando...",
+            "orSeparator": "ou",
+            "skipButton": "Continuar sem unificar",
+            "skipNote": "Se não unificar, sua conta do Google ficará separada da conta com e-mail e senha.",
+            "successTitle": "Contas unificadas com sucesso!",
+            "successSubtitle": "Suas contas foram unificadas. A partir de agora, use o Google para fazer login. Redirecionando...",
+            "errors": {
+                "fillPassword": "Digite a senha para continuar.",
+                "wrongPassword": "Senha incorreta. Tente novamente.",
+                "sessionExpired": "Sessão expirada. Faça login novamente.",
+                "sessionMismatch": "Erro de sessão. Faça login novamente.",
+                "serverError": "Erro de configuração do servidor.",
+                "mergeFailed": "Não foi possível unificar as contas. Tente novamente."
+            }
+        },
         "profile": {
             "title": "Meu Perfil",
             "metaDescription": "Gerencie seu perfil e configurações de conta.",

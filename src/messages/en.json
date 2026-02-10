@@ -59,6 +59,35 @@
                 "emailTaken": "This email is already registered.",
                 "unexpected": "Unexpected error. Please try again."
             }
+        },
+        "linkAccount": {
+            "pageTitle": "Link Account",
+            "pageDescription": "Connect your Google account with your existing account.",
+            "title": "Existing account detected",
+            "subtitle": "We found another account with the same email",
+            "description": "You signed in with Google using {email}, but an account with that email already exists. Would you like to link both accounts?",
+            "passwordLabel": "Confirm with password",
+            "passwordHint": "Enter the password for your {email} account to confirm it's you",
+            "benefits": [
+                "Your history and content will be transferred",
+                "You'll be able to sign in with Google going forward",
+                "Your profile data will be preserved"
+            ],
+            "mergeButton": "Link accounts",
+            "merging": "Linking...",
+            "orSeparator": "or",
+            "skipButton": "Continue without linking",
+            "skipNote": "If you don't link, your Google account will remain separate from your email/password account.",
+            "successTitle": "Accounts linked successfully!",
+            "successSubtitle": "Your accounts have been merged. From now on, use Google to sign in. Redirecting...",
+            "errors": {
+                "fillPassword": "Enter your password to continue.",
+                "wrongPassword": "Incorrect password. Please try again.",
+                "sessionExpired": "Session expired. Please sign in again.",
+                "sessionMismatch": "Session error. Please sign in again.",
+                "serverError": "Server configuration error.",
+                "mergeFailed": "Could not link accounts. Please try again."
+            }
         }
     },
     "common": {
