@@ -4,14 +4,13 @@ import { useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { useTranslations, useLocale } from 'next-intl';
 import { Link } from '@/i18n/routing'; // Use localized Link
-import { createClient } from '@/utils/supabase/client';
+import { supabase } from '@/lib/supabaseClient';
 import { Mail, Lock, Loader2, AlertCircle } from 'lucide-react';
 
 export function LoginPageClient() {
     const t = useTranslations();
     const locale = useLocale();
     const searchParams = useSearchParams();
-    const supabase = createClient();
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -49,15 +48,16 @@ export function LoginPageClient() {
                 } else {
                     setError(authError.message);
                 }
+                setLoading(false);
                 return;
             }
 
-            // Full page navigation garante cookies frescos e re-inicialização limpa do AuthContext
+            // Login success: keep spinner active during navigation so the user
+            // sees clear feedback. The component will unmount on arrival.
             window.location.href = nextUrl;
         } catch (err) {
             console.error('[Login] Unexpected error:', err);
             setError(t('auth.loginPage.errors.unexpected'));
-        } finally {
             setLoading(false);
         }
     };
