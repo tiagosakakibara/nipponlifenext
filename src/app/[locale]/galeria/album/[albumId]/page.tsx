@@ -158,7 +158,7 @@ export default function AlbumViewPage() {
                     {t('gallery.albumHeader')}
                 </div>
 
-                <h1 className="font-serif text-5xl md:text-7xl lg:text-8xl font-bold text-primary mb-3 md:mb-6 tracking-tight leading-tight">
+                <h1 className="font-serif text-3xl md:text-5xl lg:text-6xl font-bold text-primary mb-3 md:mb-6 tracking-tight leading-tight">
                     {getTranslatedField('title')}
                 </h1>
 

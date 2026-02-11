@@ -29,7 +29,7 @@ export default async function GaleriaPage() {
                         {t('gallery.label')}
                     </span>
                 </div>
-                <h1 className="font-serif text-5xl md:text-7xl font-bold text-primary mb-6 tracking-tight">
+                <h1 className="font-serif text-3xl md:text-5xl font-bold text-primary mb-6 tracking-tight">
                     {t('gallery.title')}
                 </h1>
                 <p className="font-sans text-xs md:text-sm font-bold uppercase tracking-[0.2em] text-muted max-w-xl mx-auto leading-relaxed">
