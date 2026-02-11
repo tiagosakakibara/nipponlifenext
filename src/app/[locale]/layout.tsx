@@ -8,6 +8,7 @@ import { ThemeProvider } from '@/components/ThemeProvider';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import { Toaster } from 'react-hot-toast';
+import { AuthProvider } from '@/contexts/AuthContext';
 import { generateSEOMetadata } from '@/lib/metadata';
 import '@/app/globals.css';
 
@@ -85,19 +86,21 @@ export default async function LocaleLayout({
                 className={`${dmSans.variable} ${montserrat.variable} ${shippori.variable} ${outfit.variable} antialiased font-sans bg-app text-primary`}
             >
                 <NextIntlClientProvider messages={messages}>
-                    <ThemeProvider
-                        attribute="class"
-                        defaultTheme="system"
-                        enableSystem
-                        disableTransitionOnChange
-                    >
-                        <Header />
-                        <main className="min-h-screen">
-                            {children}
-                        </main>
-                        <Footer />
-                        <Toaster position="bottom-right" />
-                    </ThemeProvider>
+                    <AuthProvider>
+                        <ThemeProvider
+                            attribute="class"
+                            defaultTheme="system"
+                            enableSystem
+                            disableTransitionOnChange
+                        >
+                            <Header />
+                            <main className="min-h-screen">
+                                {children}
+                            </main>
+                            <Footer />
+                            <Toaster position="bottom-right" />
+                        </ThemeProvider>
+                    </AuthProvider>
                 </NextIntlClientProvider>
             </body>
         </html>

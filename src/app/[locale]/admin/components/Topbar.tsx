@@ -1,7 +1,7 @@
 "use client";
 
 import { User, LogOut, Menu, Home, Sun, Moon } from 'lucide-react';
-import { createClient } from '@/utils/supabase/client';
+import { supabase } from '@/lib/supabaseClient';
 import { useRouter } from '@/i18n/routing';
 import { useAuth } from '@/hooks/useAuth';
 import { useTheme } from 'next-themes';
@@ -15,7 +15,6 @@ interface TopbarProps {
 
 export function Topbar({ onToggleSidebar }: TopbarProps) {
     const router = useRouter();
-    const supabase = createClient();
     const locale = useLocale();
 
     const { user, profile } = useAuth();

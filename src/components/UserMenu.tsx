@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { User, LogOut, Settings, LayoutDashboard, Camera } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
-import { createClient } from '@/utils/supabase/client';
+import { supabase } from '@/lib/supabaseClient';
 import { useTranslations, useLocale } from 'next-intl';
 
 export function UserMenu() {
@@ -15,7 +15,6 @@ export function UserMenu() {
     const [isOpen, setIsOpen] = useState(false);
     const [loggingOut, setLoggingOut] = useState(false);
     const menuRef = useRef<HTMLDivElement>(null);
-    const supabase = createClient();
 
     // Close on click outside
     useEffect(() => {
