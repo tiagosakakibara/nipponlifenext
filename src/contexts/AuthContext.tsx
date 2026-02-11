@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import React, { createContext, useContext, useState, useEffect, useRef, ReactNode } from 'react';
 import { User } from '@supabase/supabase-js';
 import { supabase } from '@/lib/supabaseClient';
 
@@ -65,9 +65,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         loading: true
     });
 
+    // Evita condição de corrida: onAuthStateChange é a única fonte de verdade
+    const handledRef = useRef(false);
+
     const getProfile = async (currentUser: User): Promise<AuthProfile> => {
         try {
-            const { data, error } = await supabase
+            const { data } = await supabase
                 .from('profiles')
                 .select('id, username, full_name, avatar_url, role, status, bio')
                 .eq('id', currentUser.id)
@@ -80,40 +83,43 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         }
     };
 
-    const initializeAuth = async () => {
-        try {
-            const { data: { session } } = await supabase.auth.getSession();
-            const currentUser = session?.user ?? null;
-
-            if (currentUser) {
-                const profile = await getProfile(currentUser);
-                setAuthState({ user: currentUser, profile, loading: false });
-            } else {
-                setAuthState({ user: null, profile: null, loading: false });
-            }
-        } catch (err) {
-            console.error('Auth initialization error:', err);
-            setAuthState(prev => ({ ...prev, loading: false }));
-        }
-    };
-
     useEffect(() => {
-        initializeAuth();
-
+        // onAuthStateChange dispara INITIAL_SESSION imediatamente se há sessão válida,
+        // eliminando a necessidade de getSession() (que não valida com servidor).
+        // getUser() é chamado internamente pelo Supabase SSR ao processar INITIAL_SESSION.
         const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
             const currentUser = session?.user ?? null;
 
-            if (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED' || event === 'USER_UPDATED') {
+            if (
+                event === 'INITIAL_SESSION' ||
+                event === 'SIGNED_IN' ||
+                event === 'TOKEN_REFRESHED' ||
+                event === 'USER_UPDATED'
+            ) {
+                handledRef.current = true;
                 if (currentUser) {
                     const profile = await getProfile(currentUser);
                     setAuthState({ user: currentUser, profile, loading: false });
+                } else {
+                    setAuthState({ user: null, profile: null, loading: false });
                 }
             } else if (event === 'SIGNED_OUT') {
+                handledRef.current = true;
                 setAuthState({ user: null, profile: null, loading: false });
             }
         });
 
-        return () => subscription.unsubscribe();
+        // Fallback: se o listener não disparar em 3s (rede lenta), encerra loading
+        const timeout = setTimeout(() => {
+            if (!handledRef.current) {
+                setAuthState(prev => ({ ...prev, loading: false }));
+            }
+        }, 3000);
+
+        return () => {
+            subscription.unsubscribe();
+            clearTimeout(timeout);
+        };
     }, []);
 
     const value = {

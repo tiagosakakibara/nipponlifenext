@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { Link } from '@/i18n/routing'; // Use localized Link
 import { createClient } from '@/utils/supabase/client';
@@ -9,7 +9,6 @@ import { Mail, Lock, Loader2, AlertCircle } from 'lucide-react';
 
 export function LoginPageClient() {
     const t = useTranslations();
-    const router = useRouter();
     const searchParams = useSearchParams();
     const supabase = createClient();
 
@@ -52,9 +51,8 @@ export function LoginPageClient() {
                 return;
             }
 
-            // Success
-            router.push(nextUrl);
-            router.refresh(); // Ensure server components update with new session
+            // Full page navigation garante cookies frescos e re-inicialização limpa do AuthContext
+            window.location.href = nextUrl;
         } catch (err) {
             console.error('[Login] Unexpected error:', err);
             setError(t('auth.loginPage.errors.unexpected'));
