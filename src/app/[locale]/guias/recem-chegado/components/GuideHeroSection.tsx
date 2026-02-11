@@ -95,29 +95,29 @@ export default function GuideHeroSection({ locale }: GuideHeroSectionProps) {
             <div className="max-w-7xl mx-auto px-4">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
                     <div className="order-2 lg:order-1">
-                        <div className="flex items-center gap-3 mb-4">
-                            <span className="inline-block px-3 py-1 rounded-full bg-gray-100 dark:bg-surface border border-gray-200 dark:border-app text-gray-600 dark:text-muted text-xs font-medium uppercase tracking-wider">
+                        <div className="flex items-center gap-3 mb-6">
+                            <span className="inline-block px-3 py-1 rounded-full bg-zinc-100 dark:bg-zinc-800/50 border border-zinc-200 dark:border-white/10 text-secondary text-[10px] font-black uppercase tracking-widest">
                                 {t('guides.hero.badge')}
                             </span>
                             {viewCount > 0 && (
-                                <span className="text-xs text-gray-600 dark:text-muted">
+                                <span className="text-[10px] text-muted font-bold uppercase tracking-tight">
                                     {viewCount.toLocaleString(locale)} {t('guides.views')}
                                 </span>
                             )}
                         </div>
 
-                        <h1 className="font-heading text-3xl md:text-4xl lg:text-5xl font-bold text-[#003768] dark:text-white leading-tight mb-4">
+                        <h1 className="font-heading text-3xl md:text-4xl lg:text-5xl font-bold text-primary leading-tight mb-6">
                             {t('guides.hero.title')}{' '}
                             <span className="text-accent">{t('guides.hero.titleHighlight')}</span>
                         </h1>
 
-                        <p className="text-gray-700 dark:text-gray-300 text-base md:text-lg leading-relaxed mb-8 max-w-lg">
+                        <p className="text-secondary text-base md:text-lg leading-relaxed mb-8 max-w-lg font-medium">
                             {t('guides.hero.description')}
                         </p>
 
                         <Link
                             href="/comunidade/duvidas"
-                            className="btn-primary inline-flex items-center gap-2 group bg-accent hover:bg-red-700 text-white font-bold py-3 px-8 rounded-xl transition-all"
+                            className="btn-primary inline-flex items-center gap-2 group bg-accent hover:bg-red-700 text-white font-bold py-3 px-8 rounded-xl transition-all shadow-lg shadow-red-500/20"
                         >
                             {t('guides.hero.cta')}
                             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -195,6 +195,6 @@ export default function GuideHeroSection({ locale }: GuideHeroSectionProps) {
                     </div>
                 </div>
             </div>
-        </section>
+        </section >
     );
 }

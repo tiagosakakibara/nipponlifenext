@@ -88,9 +88,9 @@
   --nl-bg: #FFFFFF;
   --nl-surface: rgba(0, 55, 104, 0.015);
   --nl-border: #EAEAEA;
-  --nl-text: #003768;
-  --nl-text-2: rgba(0, 55, 104, 0.72);
-  --nl-text-3: rgba(0, 55, 104, 0.55);
+  --nl-text: #002B52;
+  --nl-text-2: rgba(0, 43, 82, 0.85);
+  --nl-text-3: rgba(0, 43, 82, 0.75);
   --nl-link: #5593C3;
   --nl-accent: #D70F24;
 
@@ -103,9 +103,9 @@
   --nl-bg: #0B1020;
   --nl-surface: rgba(255, 255, 255, 0.08);
   --nl-border: rgba(255, 255, 255, 0.12);
-  --nl-text: rgba(255, 255, 255, 0.92);
-  --nl-text-2: rgba(255, 255, 255, 0.72);
-  --nl-text-3: rgba(255, 255, 255, 0.55);
+  --nl-text: rgba(255, 255, 255, 0.95);
+  --nl-text-2: rgba(255, 255, 255, 0.85);
+  --nl-text-3: rgba(255, 255, 255, 0.70);
   --nl-link: #5593C3;
   --nl-accent: #D70F24;
 
