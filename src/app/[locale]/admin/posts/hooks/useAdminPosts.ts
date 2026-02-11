@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect, useMemo } from 'react';
 import { createClient } from '@/utils/supabase/client';
 import { toast } from 'react-hot-toast';
 
@@ -44,7 +44,7 @@ export function useAdminPosts() {
     const [categories, setCategories] = useState<AdminCategory[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
-    const supabase = createClient();
+    const supabase = useMemo(() => createClient(), []);
 
     const fetchCategories = useCallback(async () => {
         const { data, error } = await supabase
@@ -66,6 +66,14 @@ export function useAdminPosts() {
         setCategories(mapped);
         return mapped;
     }, [supabase]);
+
+    useEffect(() => {
+        const init = async () => {
+            await fetchCategories();
+            setLoading(false);
+        };
+        init();
+    }, [fetchCategories]);
 
     const fetchPosts = useCallback(async () => {
         setLoading(true);
