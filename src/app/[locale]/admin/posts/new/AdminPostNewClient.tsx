@@ -246,7 +246,6 @@ export default function AdminPostNewClient() {
                                         content={formData.content_ja || ''}
                                         onChange={(html: string) => setFormData({ ...formData, content_ja: html })}
                                         placeholder="コンテンツをここに入力..."
-                                        className="h-[300px]"
                                     />
                                 </div>
                             )}
@@ -277,7 +276,6 @@ export default function AdminPostNewClient() {
                                         content={formData.content_en || ''}
                                         onChange={(html: string) => setFormData({ ...formData, content_en: html })}
                                         placeholder="Enter English content here..."
-                                        className="h-[300px]"
                                     />
                                 </div>
                             )}

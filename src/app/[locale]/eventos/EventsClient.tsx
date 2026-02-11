@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState, useMemo } from 'react';
+import { useEffect, useState, useMemo, useRef } from 'react';
 import { Search, Calendar as CalendarIcon, Loader2, ChevronDown, LayoutGrid, Filter, CalendarDays, ChevronLeft } from 'lucide-react';
 import { useTranslations, useLocale } from 'next-intl';
 import { eventService } from '@/lib/eventService';
@@ -9,22 +9,13 @@ import { EventTileCard } from './components/EventTileCard';
 import { useRouter, useSearchParams } from 'next/navigation';
 import dynamic from 'next/dynamic';
 
-declare global {
-    interface Window {
-        Temporal: any;
-    }
-}
+import 'temporal-polyfill/global';
 
 // Schedule-X needs to be client-side only
 const ScheduleXCalendar = dynamic(
     () => import('@schedule-x/react').then(mod => mod.ScheduleXCalendar),
     { ssr: false }
 );
-
-// Polyfill for Temporal if not available
-if (typeof window !== 'undefined' && !window.Temporal) {
-    require('temporal-polyfill/global');
-}
 
 import {
     createViewMonthGrid,
@@ -43,10 +34,10 @@ export default function EventsClient() {
     const router = useRouter();
     const searchParams = useSearchParams();
 
-    // Japan Time Helper
-    // @ts-ignore
-    const nowJapan = typeof window !== 'undefined' ? (window.Temporal ? Temporal.Now.zonedDateTimeISO('Asia/Tokyo') : { year: new Date().getFullYear(), month: new Date().getMonth() + 1, day: new Date().getDate() }) : { year: new Date().getFullYear(), month: new Date().getMonth() + 1, day: new Date().getDate() };
-    const japanCurrentYear = nowJapan.year;
+    // Japan Time Helper (Temporal is now globally available via temporal-polyfill/global)
+    const japanCurrentYear = typeof window !== 'undefined'
+        ? Temporal.Now.zonedDateTimeISO('Asia/Tokyo').year
+        : new Date().getFullYear();
 
     // State
     const [events, setEvents] = useState<Event[]>([]);
@@ -73,8 +64,10 @@ export default function EventsClient() {
         return () => clearTimeout(timer);
     }, [search]);
 
-    // Data Fetching
+    const lastRequestRef = useRef<number>(0);
+
     const fetchEvents = async (reset = false) => {
+        const requestId = ++lastRequestRef.current;
         try {
             if (reset) {
                 setLoading(true);
@@ -92,6 +85,9 @@ export default function EventsClient() {
                 offset: currentOffset
             });
 
+            // Only update if this is still the latest request
+            if (requestId !== lastRequestRef.current) return;
+
             if (reset) {
                 setEvents((response.events || []).filter(Boolean));
             } else {
@@ -105,8 +101,10 @@ export default function EventsClient() {
         } catch (error) {
             console.error('Failed to fetch events:', error);
         } finally {
-            setLoading(false);
-            setLoadingMore(false);
+            if (requestId === lastRequestRef.current) {
+                setLoading(false);
+                setLoadingMore(false);
+            }
         }
     };
 
@@ -139,16 +137,8 @@ export default function EventsClient() {
                             const date = new Date(dateStr);
                             if (isNaN(date.getTime())) return null;
 
-                            // Transform to JST (UTC+9)
-                            const jstDate = new Date(date.getTime() + 9 * 60 * 60 * 1000);
-
-                            const yr = jstDate.getUTCFullYear();
-                            const mo = String(jstDate.getUTCMonth() + 1).padStart(2, '0');
-                            const dy = String(jstDate.getUTCDate()).padStart(2, '0');
-                            const hr = String(jstDate.getUTCHours()).padStart(2, '0');
-                            const mn = String(jstDate.getUTCMinutes()).padStart(2, '0');
-
-                            return `${yr}-${mo}-${dy} ${hr}:${mn}`;
+                            const instant = Temporal.Instant.fromEpochMilliseconds(date.getTime());
+                            return instant.toZonedDateTimeISO('Asia/Tokyo');
                         } catch (e) {
                             console.error('Error formatting date:', dateStr, e);
                             return null;
@@ -170,7 +160,7 @@ export default function EventsClient() {
                     // Fallback if formatting failed
                     if (!end) end = start;
 
-                    console.log('Formatted Event:', { id: event.id, title: event.title, start, end });
+                    // console.log('Formatted Event:', { id: event.id, title: event.title, start, end });
 
                     return {
                         id: event.id,
@@ -196,32 +186,65 @@ export default function EventsClient() {
         return 'ja-JP';
     }, [locale]);
 
-    const calendarApp = useCalendarApp({
-        views: [createViewMonthGrid(), createViewMonthAgenda(), createViewWeek(), createViewDay()],
-        events: formattedEvents as any,
+    const calendarConfig = useMemo(() => ({
+        views: [createViewMonthGrid(), createViewMonthAgenda(), createViewWeek(), createViewDay()] as [any, ...any[]],
+        events: formattedEvents as any[],
         plugins: [calendarEventsService],
         defaultView: 'month-grid',
         locale: calendarLocale,
         callbacks: {
-            onEventClick: (calendarEvent) => {
-                const originalEvent = (calendarEvent as any)._original;
+            onEventClick: (calendarEvent: any) => {
+                const originalEvent = calendarEvent._original;
                 if (originalEvent) {
                     router.push(originalEvent.slug ? `/eventos/${originalEvent.slug}` : `/eventos/id/${originalEvent.id}`);
                 }
             }
         }
-    });
+    }), [formattedEvents, calendarLocale, calendarEventsService, router]);
 
-    // Update calendar events
+    const calendarApp = useCalendarApp(calendarConfig);
+
+    // Synchronize calendar navigation with filters
     useEffect(() => {
-        if (viewMode === 'calendar' && formattedEvents.length > 0) {
+        if (calendarApp && selectedYear) {
             try {
-                calendarEventsService.set(formattedEvents as any);
+                // If no month selected, use current month if it's the selected year, or Jan 1st
+                const effectiveMonth = selectedMonth
+                    ? String(selectedMonth).padStart(2, '0')
+                    : (selectedYear === japanCurrentYear
+                        ? String(new Date().getUTCMonth() + 1).padStart(2, '0')
+                        : '01');
+
+                const dateStr = `${selectedYear}-${effectiveMonth}-01`;
+
+                // In Schedule-X v4+ (React), the apps signals are exposed on the app instance
+                const appInstance = calendarApp as any;
+                if (appInstance.date) {
+                    appInstance.date.value = dateStr;
+                } else if (appInstance.$app && appInstance.$app.calendarState && appInstance.$app.calendarState.date) {
+                    appInstance.$app.calendarState.date.value = dateStr;
+                }
+            } catch (err) {
+                console.error('Failed to navigate calendar:', err);
+            }
+        }
+    }, [selectedYear, selectedMonth, calendarApp, japanCurrentYear]);
+
+    // Update calendar events when they change
+    useEffect(() => {
+        if (formattedEvents.length > 0 && calendarEventsService) {
+            try {
+                // Schedule-X v3+ is strict about event formats. 
+                // Ensuring we only pass valid, non-null events.
+                const validEvents = formattedEvents.filter(e => e && e.start && e.end);
+                if (validEvents.length > 0) {
+                    calendarEventsService.set(validEvents as any[]);
+                }
             } catch (error) {
                 console.error('Failed to update calendar events:', error);
             }
         }
-    }, [formattedEvents, viewMode, calendarEventsService]);
+    }, [formattedEvents, calendarEventsService]);
 
     // Grouping Logic for list view
     const groupedEvents = useMemo(() => {
@@ -288,7 +311,9 @@ export default function EventsClient() {
                             {t('title')} <span className="text-[#D70F24]">{t('titleHighlight')}</span>
                         </h1>
                         <p className="text-base text-secondary font-medium max-w-lg">
-                            {t('noEventsDescription').split('.')[0]}.
+                            {events.length > 0
+                                ? "Confira os principais eventos e encontros da nossa comunidade no Japão."
+                                : t('noEventsDescription')}
                         </p>
                     </div>
                 </div>
@@ -454,15 +479,16 @@ export default function EventsClient() {
                                 box-shadow: 0 2px 4px rgba(215, 15, 36, 0.2);
                             }
 
-                            /* Highlight days that have events */
-                            .sx__month-grid-day:has(.sx__event) {
-                                background-color: rgba(215, 15, 36, 0.04) !important;
+                            /* Highlight apenas o dia onde o evento COMEÇA (sem overflow-left) */
+                            .sx__month-grid-day:has(.sx__month-grid-event:not(.sx__month-grid-event--overflow-left)) {
+                                background-color: rgba(215, 15, 36, 0.08) !important;
+                                transition: background-color 0.3s ease;
                             }
-                            
-                            .sx__month-grid-day:has(.sx__event) .sx__month-grid-day__header-day-number {
+
+                            .sx__month-grid-day:has(.sx__month-grid-event:not(.sx__month-grid-event--overflow-left)) .sx__month-grid-day__header-day-number {
                                 color: #D70F24 !important;
                                 font-weight: 900 !important;
-                                transform: scale(1.1);
+                                transform: scale(1.2);
                                 display: inline-block;
                             }
 

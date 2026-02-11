@@ -200,7 +200,6 @@ export default function AdminGuideEditClient() {
                                     <QuillEditor
                                         content={formData.content_ja || ''}
                                         onChange={(html: string) => setFormData(prev => prev ? ({ ...prev, content_ja: html }) : null)}
-                                        className="h-[300px]"
                                     />
                                 </div>
                             )}
@@ -237,7 +236,6 @@ export default function AdminGuideEditClient() {
                                     <QuillEditor
                                         content={formData.content_en || ''}
                                         onChange={(html: string) => setFormData(prev => prev ? ({ ...prev, content_en: html }) : null)}
-                                        className="h-[300px]"
                                     />
                                 </div>
                             )}

@@ -80,7 +80,7 @@ export function QuillEditor({
     };
 
     return (
-        <div className={`quill-editor-wrapper ${className} relative border border-app rounded-xl overflow-hidden bg-surface transition-all focus-within:border-link/30`}>
+        <div className={`quill-editor-wrapper ${className} relative border border-app rounded-xl overflow-hidden bg-surface transition-all focus-within:border-link/30 ${isHtmlMode ? 'html-active' : ''}`}>
             {/* HTML Mode Toggle Button */}
             <div className="absolute top-3 right-3 z-10">
                 <button
@@ -97,17 +97,7 @@ export function QuillEditor({
                 </button>
             </div>
 
-            {isHtmlMode ? (
-                /* HTML Source Editor */
-                <textarea
-                    value={htmlContent}
-                    onChange={handleHtmlChange}
-                    placeholder={placeholder}
-                    className="w-full min-h-[400px] p-6 font-mono text-sm bg-app text-primary outline-none resize-y"
-                    spellCheck={false}
-                />
-            ) : (
-                /* WYSIWYG Editor */
+            <div className="nl-quill-editor-container">
                 <ReactQuill
                     theme="snow"
                     value={content}
@@ -117,7 +107,17 @@ export function QuillEditor({
                     placeholder={placeholder}
                     className="nl-quill-editor"
                 />
-            )}
+
+                {isHtmlMode && (
+                    <textarea
+                        value={htmlContent}
+                        onChange={handleHtmlChange}
+                        placeholder={placeholder}
+                        className="w-full min-h-[600px] p-6 font-mono text-sm bg-app text-primary outline-none resize-y border-t border-app"
+                        spellCheck={false}
+                    />
+                )}
+            </div>
 
             <style>{`
                 .nl-quill-editor .ql-toolbar {
@@ -125,18 +125,27 @@ export function QuillEditor({
                     border: none;
                     border-bottom: 1px solid var(--nl-border);
                     padding: 12px;
-                    padding-right: 100px;
+                    padding-right: 110px;
                 }
                 
+                .html-active .ql-toolbar {
+                    opacity: 0.5;
+                    pointer-events: none;
+                }
+
+                .html-active .ql-container {
+                    display: none !important;
+                }
+
                 .nl-quill-editor .ql-container {
                     border: none;
                     font-family: inherit;
                     font-size: 15px;
-                    min-height: 400px;
+                    min-height: 500px;
                 }
                 
                 .nl-quill-editor .ql-editor {
-                    min-height: 400px;
+                    min-height: 500px;
                     padding: 24px;
                     color: var(--nl-text);
                     line-height: 1.6;
