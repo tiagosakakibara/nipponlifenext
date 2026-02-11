@@ -2,13 +2,14 @@
 
 import { useState } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
 import { Link } from '@/i18n/routing'; // Use localized Link
 import { createClient } from '@/utils/supabase/client';
 import { Mail, Lock, Loader2, AlertCircle } from 'lucide-react';
 
 export function LoginPageClient() {
     const t = useTranslations();
+    const locale = useLocale();
     const searchParams = useSearchParams();
     const supabase = createClient();
 
@@ -17,8 +18,8 @@ export function LoginPageClient() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
-    // Get return URL from query params, default to home or community dashboard
-    const nextUrl = searchParams.get('next') || '/comunidade';
+    // Get return URL from query params, default to community dashboard with locale prefix
+    const nextUrl = searchParams.get('next') || `/${locale}/comunidade`;
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();

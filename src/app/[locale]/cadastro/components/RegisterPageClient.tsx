@@ -1,15 +1,15 @@
 "use client";
 
 import { useState } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
-import { useTranslations } from 'next-intl';
+import { useSearchParams } from 'next/navigation';
+import { useTranslations, useLocale } from 'next-intl';
 import { Link } from '@/i18n/routing';
 import { createClient } from '@/utils/supabase/client';
 import { Mail, Lock, Loader2, AlertCircle, CheckCircle } from 'lucide-react';
 
 export function RegisterPageClient() {
     const t = useTranslations();
-    const router = useRouter();
+    const locale = useLocale();
     const searchParams = useSearchParams();
     const supabase = createClient();
 
@@ -20,7 +20,7 @@ export function RegisterPageClient() {
     const [error, setError] = useState<string | null>(null);
     const [success, setSuccess] = useState(false);
 
-    const nextUrl = searchParams.get('next') || '/comunidade';
+    const nextUrl = searchParams.get('next') || `/${locale}/comunidade`;
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -60,10 +60,9 @@ export function RegisterPageClient() {
 
             setSuccess(true);
 
-            // Auto-redirect after 2 seconds
+            // Full page navigation após 2 segundos garante cookies frescos e re-inicialização limpa do AuthContext
             setTimeout(() => {
-                router.push(nextUrl);
-                router.refresh();
+                window.location.href = nextUrl;
             }, 2000);
 
         } catch (err) {
