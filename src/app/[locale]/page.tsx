@@ -5,7 +5,7 @@ import { Link } from '@/i18n/routing';
 import { Carousel } from '@/components/Carousel';
 import { BusinessCard } from '@/components/BusinessCard';
 import { HeroSection } from '@/components/HeroSection';
-import { Building2, Users } from 'lucide-react';
+import { Building2, Users, Camera, ArrowRight } from 'lucide-react';
 import { Business } from '@/types/business';
 
 import { CommunityCard, CommunityItem } from '@/components/CommunityCard';
@@ -16,7 +16,7 @@ import { FeaturedHighlights } from '@/components/FeaturedHighlights';
 import { FeaturedItem } from '@/components/LargeFeaturedCard';
 import { GalleryAlbumCard } from '@/components/GalleryAlbumCard';
 import { ReelsRow } from '@/components/ReelsRow';
-import { Camera } from 'lucide-react';
+
 import { GalleryAlbumWithStats } from '@/types/gallery';
 import { generateSEOMetadata } from '@/lib/metadata';
 
@@ -213,14 +213,14 @@ export default async function HomePage() {
                 {/* Gallery Section */}
                 <section id="galeria" className="py-2 scroll-mt-24 max-w-container mx-auto px-6">
                     <div className="flex items-center justify-between mb-6">
-                        <div className="flex items-center gap-3 cursor-pointer group">
+                        <Link href="/galeria" className="flex items-center gap-3 cursor-pointer group">
                             <div className="w-10 h-10 rounded-xl bg-[var(--nl-surface)] border border-[var(--nl-border)] flex items-center justify-center text-[var(--nl-accent)] shadow-sm group-hover:scale-110 group-hover:bg-[var(--nl-accent)] group-hover:text-white transition-all duration-300">
                                 <Camera className="w-5 h-5" />
                             </div>
-                            <h2 className="text-xl font-bold text-[var(--nl-primary)] mb-0 group-hover:text-[var(--nl-accent)] transition-colors">
+                            <h2 className="section-title mb-0 group-hover:text-[var(--nl-accent)] transition-colors">
                                 {t('home.sections.gallery')}
                             </h2>
-                        </div>
+                        </Link>
                     </div>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">

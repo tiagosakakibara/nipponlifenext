@@ -1122,6 +1122,7 @@
         "tag": "Gallery",
         "title": "NipponLife Gallery",
         "subtitle": "A curated collection of moments captured by the NipponLife community.",
+        "viewDetails": "View full album",
         "back": "Back to Gallery",
         "noAlbums": "No galleries available at the moment.",
         "loading": "Loading exhibition...",
