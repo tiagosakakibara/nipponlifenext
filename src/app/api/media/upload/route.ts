@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/utils/supabase/server'
+import sharp from 'sharp'
 
 export async function POST(request: NextRequest) {
     try {
@@ -30,17 +31,41 @@ export async function POST(request: NextRequest) {
             return NextResponse.json({ error: 'No file provided' }, { status: 400 })
         }
 
-        // 3. Upload to storage
-        const fileExt = file.name.split('.').pop()
-        const fileName = `${Math.random().toString(36).substring(2)}_${Date.now()}.${fileExt}`
+        // 3. Process and Upload
+        let fileBuffer = Buffer.from(await file.arrayBuffer())
+        let mimeType = file.type
+        let fileName = file.name
+        let fileExt = fileName.split('.').pop()?.toLowerCase() || ''
+
+        // Convert to WebP if it's an image and NOT a logo
+        const isImage = file.type.startsWith('image/')
+        const isLogo = folder.includes('logo') || folder === 'logos'
+        const isSvgorGif = mimeType === 'image/svg+xml' || mimeType === 'image/gif'
+
+        if (isImage && !isLogo && !isSvgorGif) {
+            console.log('🖼️ Converting image to WebP:', fileName)
+            fileBuffer = await sharp(fileBuffer)
+                .webp({ quality: 80 })
+                .toBuffer()
+
+            // Adjust metadata for the new format
+            mimeType = 'image/webp'
+            fileExt = 'webp'
+            const baseName = fileName.replace(/\.[^/.]+$/, "")
+            fileName = `${baseName}_${Date.now()}.webp`
+        } else {
+            // Standard randomization for non-converted files
+            const random = Math.random().toString(36).substring(2)
+            fileName = `${random}_${Date.now()}.${fileExt}`
+        }
+
         const filePath = `${folder}/${fileName}`
         const bucket = folder === 'gallery' ? 'gallery' : 'media'
 
-        const fileBuffer = await file.arrayBuffer()
         const { error: uploadError } = await supabase.storage
             .from(bucket)
-            .upload(filePath, fileBuffer, {
-                contentType: file.type,
+            .upload(filePath, fileBuffer as any, {
+                contentType: mimeType,
                 upsert: false
             })
 
@@ -60,8 +85,8 @@ export async function POST(request: NextRequest) {
                 bucket: bucket,
                 path: filePath,
                 public_url: publicUrl,
-                mime_type: file.type,
-                size_bytes: file.size,
+                mime_type: mimeType,
+                size_bytes: fileBuffer.length,
                 created_by: user.id
             }])
             .select()
@@ -78,8 +103,8 @@ export async function POST(request: NextRequest) {
             id: data.id,
             url: publicUrl,
             name: fileName,
-            type: file.type,
-            size: file.size,
+            type: mimeType,
+            size: fileBuffer.length,
             createdAt: data.created_at
         })
 

@@ -27,7 +27,7 @@ export function Topbar({ onToggleSidebar }: TopbarProps) {
 
     const handleLogout = async () => {
         await supabase.auth.signOut();
-        window.location.href = `/${locale}/admin/login`;
+        window.location.href = `/${locale}/login`;
     };
 
     const toggleTheme = () => {
@@ -88,7 +88,7 @@ export function Topbar({ onToggleSidebar }: TopbarProps) {
                 </div>
 
                 <div
-                    onClick={() => router.push('/admin/profile')}
+                    onClick={() => router.push('/perfil')}
                     className="flex items-center gap-2 md:gap-3 cursor-pointer group pl-2"
                 >
                     <div className="text-right hidden sm:block">

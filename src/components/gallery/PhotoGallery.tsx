@@ -27,9 +27,15 @@ export function PhotoGallery({ photos, galleryId = 'main-gallery' }: PhotoGaller
             gallery: '#' + galleryId,
             children: 'a.pswp-link',
             pswpModule: () => import('photoswipe'),
-            showHideAnimationType: 'fade',
-            bgOpacity: 0.95,
-            padding: { top: 20, bottom: 20, left: 20, right: 20 },
+            showHideAnimationType: 'zoom',
+            bgOpacity: 1, // Full black background
+            padding: { top: 0, bottom: 0, left: 0, right: 0 }, // No forced margins
+            // Use all available space
+            initialZoomLevel: 'fit',
+            secondaryZoomLevel: 1.5,
+            maxZoomLevel: 4,
+            imageClickAction: 'zoom',
+            thumbSelector: 'a.pswp-link img', // Better zoom animation target
         });
 
         lightbox.init();
@@ -58,8 +64,8 @@ export function PhotoGallery({ photos, galleryId = 'main-gallery' }: PhotoGaller
                     <a
                         key={photo.id}
                         href={photo.image_url}
-                        data-pswp-width={photo.width || 1200}
-                        data-pswp-height={photo.height || 800}
+                        data-pswp-width={photo.width && photo.width > 0 ? photo.width : 1600}
+                        data-pswp-height={photo.height && photo.height > 0 ? photo.height : 1200}
                         target="_blank"
                         rel="noreferrer"
                         className="pswp-link block no-underline group"
