@@ -28,14 +28,23 @@ export function PhotoGallery({ photos, galleryId = 'main-gallery' }: PhotoGaller
             children: 'a.pswp-link',
             pswpModule: () => import('photoswipe'),
             showHideAnimationType: 'zoom',
-            bgOpacity: 1, // Full black background
-            padding: { top: 0, bottom: 0, left: 0, right: 0 }, // No forced margins
-            // Use all available space
+            bgOpacity: 1,
+            padding: { top: 0, bottom: 0, left: 0, right: 0 },
+
+            // Critical settings for better image sizing
             initialZoomLevel: 'fit',
             secondaryZoomLevel: 1.5,
-            maxZoomLevel: 4,
+            maxZoomLevel: 3,
+
             imageClickAction: 'zoom',
-            thumbSelector: 'a.pswp-link img', // Better zoom animation target
+            thumbSelector: 'a.pswp-link img',
+
+            // Prevent PhotoSwipe from shrinking images on small desktop windows
+            allowPanToNext: true,
+            wheelToZoom: true,
+
+            // Ensure UI doesn't overlap too much
+            spacing: 0,
         });
 
         lightbox.init();
