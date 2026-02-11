@@ -233,21 +233,3 @@
     max-width: 1000px;
   }
 }
-
-/* PhotoSwipe Overrides to maximize image size */
-.pswp__img {
-  max-height: 100vh !important;
-  height: auto !important;
-  width: auto !important;
-  object-fit: contain !important;
-}
-
-.pswp__content {
-  padding: 0 !important;
-}
-
-.pswp__zoom-wrap {
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-}

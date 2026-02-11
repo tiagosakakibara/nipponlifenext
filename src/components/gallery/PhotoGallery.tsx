@@ -28,23 +28,17 @@ export function PhotoGallery({ photos, galleryId = 'main-gallery' }: PhotoGaller
             children: 'a.pswp-link',
             pswpModule: () => import('photoswipe'),
             showHideAnimationType: 'zoom',
-            bgOpacity: 1,
-            padding: { top: 0, bottom: 0, left: 0, right: 0 },
+            bgOpacity: 0.9, // Premium translucent feel
+            padding: { top: 30, bottom: 30, left: 20, right: 20 }, // Standard padding for safer UI
 
-            // Critical settings for better image sizing
+            // Re-enable standard responsive behavior
             initialZoomLevel: 'fit',
             secondaryZoomLevel: 1.5,
-            maxZoomLevel: 3,
+            maxZoomLevel: 2,
 
             imageClickAction: 'zoom',
+            doubleTapAction: 'zoom',
             thumbSelector: 'a.pswp-link img',
-
-            // Prevent PhotoSwipe from shrinking images on small desktop windows
-            allowPanToNext: true,
-            wheelToZoom: true,
-
-            // Ensure UI doesn't overlap too much
-            spacing: 0,
         });
 
         lightbox.init();
