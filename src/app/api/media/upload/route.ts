@@ -44,9 +44,9 @@ export async function POST(request: NextRequest) {
 
         if (isImage && !isLogo && !isSvgorGif) {
             console.log('🖼️ Converting image to WebP:', fileName)
-            fileBuffer = await sharp(fileBuffer)
+            fileBuffer = await sharp(fileBuffer as any)
                 .webp({ quality: 80 })
-                .toBuffer()
+                .toBuffer() as any
 
             // Adjust metadata for the new format
             mimeType = 'image/webp'
