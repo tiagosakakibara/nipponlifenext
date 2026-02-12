@@ -29,6 +29,12 @@ export async function updateSession(request: NextRequest) {
                     )
                 },
             },
+            cookieOptions: {
+                domain: process.env.NODE_ENV === 'production' ? '.nippon-life.com' : undefined,
+                path: '/',
+                sameSite: 'lax',
+                secure: process.env.NODE_ENV === 'production',
+            }
         }
     )
 
