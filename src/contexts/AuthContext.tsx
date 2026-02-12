@@ -86,7 +86,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     useEffect(() => {
         // onAuthStateChange dispara INITIAL_SESSION imediatamente se há sessão válida,
         // eliminando a necessidade de getSession() (que não valida com servidor).
-        // getUser() é chamado internamente pelo Supabase SSR ao processar INITIAL_SESSION.
         const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
             const currentUser = session?.user ?? null;
 
@@ -109,12 +108,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             }
         });
 
-        // Fallback: se o listener não disparar em 3s (rede lenta), encerra loading
+        // Fallback: se o listener não disparar em 6s (compensando latência Japão-Vercel), encerra loading
         const timeout = setTimeout(() => {
             if (!handledRef.current) {
                 setAuthState(prev => ({ ...prev, loading: false }));
             }
-        }, 3000);
+        }, 6000);
 
         return () => {
             subscription.unsubscribe();

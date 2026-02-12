@@ -35,15 +35,19 @@ export async function updateSession(request: NextRequest) {
     // Refresh session if expired - required for Server Components
     // Wrapped in try/catch: on Vercel Edge runtime, network errors from getUser()
     // must NOT cause the session cookies to be wiped (which would log the user out).
-    let user = null
     try {
-        const { data } = await supabase.auth.getUser()
-        user = data.user
-    } catch {
-        // Network / Edge timeout - keep existing cookies intact by returning a
-        // fresh response so no accidental Set-Cookie clear headers are included.
-        supabaseResponse = NextResponse.next({ request })
-    }
+        // Attempt to get user. If this fails or times out, we catch the error 
+        // to prevent the middleware from returning a clean (logged-out) response.
+        const { data: { user } } = await supabase.auth.getUser()
 
-    return { supabaseResponse, user }
+        // If we have a user, it means the session is valid or successfully refreshed.
+        // The setAll/getAll above already handled updating the supabaseResponse object.
+        return { supabaseResponse, user }
+    } catch (error) {
+        console.error('[Middleware] Auth refresh error:', error)
+        // Network / Edge timeout - return a basic response that keeps existing 
+        // request cookies. This avoids accidental logout during network hiccups.
+        const fallbackResponse = NextResponse.next({ request })
+        return { supabaseResponse: fallbackResponse, user: null }
+    }
 }
