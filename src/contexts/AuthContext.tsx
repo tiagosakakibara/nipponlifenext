@@ -84,40 +84,49 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     };
 
     useEffect(() => {
-        // onAuthStateChange dispara INITIAL_SESSION imediatamente se há sessão válida,
-        // eliminando a necessidade de getSession() (que não valida com servidor).
+        let mounted = true;
+
+        async function initializeAuth() {
+            try {
+                // 1. Tenta pegar a sessão atual imediatamente
+                const { data: { session } } = await supabase.auth.getSession();
+
+                if (mounted && session?.user) {
+                    const profile = await getProfile(session.user);
+                    setAuthState({ user: session.user, profile, loading: false });
+                } else if (mounted) {
+                    // Se não tiver sessão, paramos o loading
+                    setAuthState(prev => ({ ...prev, loading: false }));
+                }
+            } catch (error) {
+                console.error('Error initializing auth:', error);
+                if (mounted) setAuthState(prev => ({ ...prev, loading: false }));
+            }
+        }
+
+        initializeAuth();
+
+        // 2. Escuta mudanças futuras (login, logout, refresh token)
         const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
             const currentUser = session?.user ?? null;
 
-            if (
-                event === 'INITIAL_SESSION' ||
-                event === 'SIGNED_IN' ||
-                event === 'TOKEN_REFRESHED' ||
-                event === 'USER_UPDATED'
-            ) {
-                handledRef.current = true;
+            // Ignoramos INITIAL_SESSION pois já tratamos acima com getSession()
+            // Isso evita condições de corrida/duplicidade
+            if (event === 'INITIAL_SESSION') return;
+
+            if (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED' || event === 'USER_UPDATED') {
                 if (currentUser) {
                     const profile = await getProfile(currentUser);
                     setAuthState({ user: currentUser, profile, loading: false });
-                } else {
-                    setAuthState({ user: null, profile: null, loading: false });
                 }
             } else if (event === 'SIGNED_OUT') {
-                handledRef.current = true;
                 setAuthState({ user: null, profile: null, loading: false });
             }
         });
 
-        // Fallback: se o listener não disparar em 6s (compensando latência Japão-Vercel), encerra loading
-        const timeout = setTimeout(() => {
-            if (!handledRef.current) {
-                setAuthState(prev => ({ ...prev, loading: false }));
-            }
-        }, 6000);
-
         return () => {
+            mounted = false;
             subscription.unsubscribe();
-            clearTimeout(timeout);
         };
     }, []);
 
