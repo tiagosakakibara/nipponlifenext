@@ -133,56 +133,56 @@ export default function AdminDashboardPage() {
     return (
         <div className="space-y-8 animate-fade-in">
             {/* Header */}
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 sm:gap-6">
                 <div>
-                    <h1 className="text-3xl font-black text-primary tracking-tight">{t('admin.dashboard')}</h1>
-                    <div className="flex items-center gap-2 text-secondary text-sm mt-1">
-                        <Clock className="w-4 h-4 text-link" />
+                    <h1 className="text-2xl md:text-3xl font-black text-primary tracking-tight">{t('admin.dashboard')}</h1>
+                    <div className="flex items-center gap-2 text-secondary text-[10px] md:text-sm mt-1">
+                        <Clock className="w-3 h-3 md:w-4 md:h-4 text-link" />
                         <span>{t('admin.lastUpdateLabel')}: {lastUpdate || '--:--:--'}</span>
                     </div>
                 </div>
-                <div className="flex items-center gap-2 bg-surface px-4 py-2 rounded-xl border border-app shadow-sm">
-                    <TrendingUp className="w-5 h-5 text-emerald-500" />
-                    <span className="text-[10px] font-black uppercase tracking-widest text-primary">Performance: Normal</span>
+                <div className="flex items-center gap-2 bg-surface px-3 py-1.5 md:px-4 md:py-2 rounded-xl border border-app shadow-sm self-start sm:self-auto">
+                    <TrendingUp className="w-4 h-4 md:w-5 md:h-5 text-emerald-500" />
+                    <span className="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-primary">Performance: Normal</span>
                 </div>
             </div>
 
             {/* KPIs Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
                 {stats.map((stat, index) => (
                     <Link
                         key={index}
                         href={stat.path}
-                        className="bg-surface p-6 rounded-2xl border border-app shadow-sm flex items-start justify-between hover:shadow-2xl hover:shadow-link/10 transition-all hover:-translate-y-1 group relative overflow-hidden"
+                        className="bg-surface p-4 md:p-6 rounded-2xl border border-app shadow-sm flex items-center justify-between hover:shadow-2xl hover:shadow-link/10 transition-all hover:-translate-y-1 group relative overflow-hidden"
                     >
                         <div className="relative z-10">
-                            <p className="text-secondary text-[10px] font-black uppercase tracking-[0.2em] mb-2 group-hover:text-link transition-colors">{stat.label}</p>
-                            <h3 className="text-4xl font-black text-primary leading-none tracking-tighter">{stat.value}</h3>
+                            <p className="text-secondary text-[9px] md:text-[10px] font-black uppercase tracking-[0.15em] md:tracking-[0.2em] mb-1 md:mb-2 group-hover:text-link transition-colors">{stat.label}</p>
+                            <h3 className="text-3xl md:text-4xl font-black text-primary leading-none tracking-tighter">{stat.value}</h3>
                             {stat.subValue && (
-                                <div className="inline-flex items-center gap-1 mt-3 px-2 py-0.5 bg-emerald-500/10 rounded-full border border-emerald-500/10">
-                                    <ArrowUpRight className="w-3 h-3 text-emerald-500" />
-                                    <span className="text-[10px] font-extrabold text-emerald-500">{stat.subValue}</span>
+                                <div className="inline-flex items-center gap-1 mt-2 md:mt-3 px-2 py-0.5 bg-emerald-500/10 rounded-full border border-emerald-500/10">
+                                    <ArrowUpRight className="w-2.5 h-2.5 md:w-3 md:h-3 text-emerald-500" />
+                                    <span className="text-[9px] md:text-[10px] font-extrabold text-emerald-500">{stat.subValue}</span>
                                 </div>
                             )}
                         </div>
-                        <div className={`p-4 rounded-xl ${stat.bg} group-hover:scale-110 transition-transform shadow-inner`}>
-                            <stat.icon className={`w-8 h-8 ${stat.color}`} />
+                        <div className={`p-3 md:p-4 rounded-xl ${stat.bg} group-hover:scale-110 transition-transform shadow-inner`}>
+                            <stat.icon className={`w-6 h-6 md:w-8 md:h-8 ${stat.color}`} />
                         </div>
                         {/* Abstract Background Decoration */}
-                        <div className={`absolute -right-4 -bottom-4 w-24 h-24 rounded-full ${stat.bg} opacity-5 blur-2xl group-hover:opacity-10 transition-opacity`} />
+                        <div className={`absolute -right-4 -bottom-4 w-16 md:w-24 h-16 md:h-24 rounded-full ${stat.bg} opacity-5 blur-2xl group-hover:opacity-10 transition-opacity`} />
                     </Link>
                 ))}
             </div>
 
             {/* View Counts Table */}
             <div className="bg-surface p-6 rounded-2xl border border-app shadow-sm">
-                <div className="flex items-center gap-3 mb-6">
-                    <div className="p-2 bg-link/10 rounded-lg">
-                        <Eye className="w-5 h-5 text-link" />
+                <div className="flex items-center gap-2 md:gap-3 mb-4 md:mb-6">
+                    <div className="p-1.5 md:p-2 bg-link/10 rounded-lg">
+                        <Eye className="w-4 h-4 md:w-5 md:h-5 text-link" />
                     </div>
                     <div>
-                        <h3 className="text-sm font-black text-primary uppercase tracking-widest">Controle de Visualizações (Real)</h3>
-                        <p className="text-[10px] text-secondary font-bold uppercase tracking-widest mt-0.5">Métricas de engajamento por setor</p>
+                        <h3 className="text-xs md:text-sm font-black text-primary uppercase tracking-widest">Controle de Visualizações (Real)</h3>
+                        <p className="text-[8px] md:text-[10px] text-secondary font-bold uppercase tracking-widest mt-0.5">Métricas de engajamento</p>
                     </div>
                 </div>
 
@@ -200,120 +200,105 @@ export default function AdminDashboardPage() {
                                 onClick={() => router.push('/admin/posts')}
                                 className="group hover:bg-app/80 transition-all cursor-pointer"
                             >
-                                <td className="py-4">
-                                    <div className="flex items-center gap-3">
-                                        <div className="w-2 h-2 rounded-full bg-[#5593C3]" />
-                                        <span className="text-xs font-bold text-primary uppercase group-hover:text-link transition-colors">Notícias (Archives)</span>
+                                <td className="py-3 md:py-4">
+                                    <div className="flex items-center gap-2 md:gap-3">
+                                        <div className="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-[#5593C3]" />
+                                        <span className="text-[10px] md:text-xs font-bold text-primary uppercase group-hover:text-link transition-colors">Notícias</span>
                                     </div>
                                 </td>
-                                <td className="py-4 text-right font-black text-primary tabular-nums group-hover:scale-105 transition-transform">{kpis.views.news.toLocaleString()}</td>
-                                <td className="py-4 text-right">
-                                    <span className="text-[9px] font-black text-emerald-500 uppercase bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/10">Ativo</span>
+                                <td className="py-3 md:py-4 text-right font-black text-primary text-xs md:text-sm tabular-nums group-hover:scale-105 transition-transform">{kpis.views.news.toLocaleString()}</td>
+                                <td className="py-3 md:py-4 text-right">
+                                    <span className="text-[8px] md:text-[9px] font-black text-emerald-500 uppercase bg-emerald-500/10 px-1.5 py-0.5 rounded-full border border-emerald-500/10">Ativo</span>
                                 </td>
                             </tr>
                             <tr
                                 onClick={() => router.push('/admin/comunidade/posts')}
                                 className="group hover:bg-app/80 transition-all cursor-pointer"
                             >
-                                <td className="py-4">
-                                    <div className="flex items-center gap-3">
-                                        <div className="w-2 h-2 rounded-full bg-pink-500" />
-                                        <span className="text-xs font-bold text-primary uppercase group-hover:text-link transition-colors">Blog da Comunidade</span>
+                                <td className="py-3 md:py-4">
+                                    <div className="flex items-center gap-2 md:gap-3">
+                                        <div className="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-pink-500" />
+                                        <span className="text-[10px] md:text-xs font-bold text-primary uppercase group-hover:text-link transition-colors">Blog</span>
                                     </div>
                                 </td>
-                                <td className="py-4 text-right font-black text-primary tabular-nums group-hover:scale-105 transition-transform">{kpis.views.community.toLocaleString()}</td>
-                                <td className="py-4 text-right text-[9px] font-black text-emerald-500 uppercase">
-                                    <span className="bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/10">Ativo</span>
+                                <td className="py-3 md:py-4 text-right font-black text-primary text-xs md:text-sm tabular-nums group-hover:scale-105 transition-transform">{kpis.views.community.toLocaleString()}</td>
+                                <td className="py-3 md:py-4 text-right">
+                                    <span className="text-[8px] md:text-[9px] font-black text-emerald-500 uppercase bg-emerald-500/10 px-1.5 py-0.5 rounded-full border border-emerald-500/10">Ativo</span>
                                 </td>
                             </tr>
                             <tr
                                 onClick={() => router.push('/admin/comunidade/posts')}
                                 className="group hover:bg-app/80 transition-all cursor-pointer"
                             >
-                                <td className="py-4">
-                                    <div className="flex items-center gap-3">
-                                        <div className="w-2 h-2 rounded-full bg-pink-400" />
-                                        <span className="text-xs font-bold text-primary uppercase group-hover:text-link transition-colors">Dúvidas (Hub)</span>
+                                <td className="py-3 md:py-4">
+                                    <div className="flex items-center gap-2 md:gap-3">
+                                        <div className="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-pink-400" />
+                                        <span className="text-[10px] md:text-xs font-bold text-primary uppercase group-hover:text-link transition-colors">Dúvidas</span>
                                     </div>
                                 </td>
-                                <td className="py-4 text-right font-black text-primary tabular-nums group-hover:scale-105 transition-transform">{kpis.views.questions.toLocaleString()}</td>
-                                <td className="py-4 text-right text-[9px] font-black text-emerald-500 uppercase">
-                                    <span className="bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/10">Ativo</span>
+                                <td className="py-3 md:py-4 text-right font-black text-primary text-xs md:text-sm tabular-nums group-hover:scale-105 transition-transform">{kpis.views.questions.toLocaleString()}</td>
+                                <td className="py-3 md:py-4 text-right text-[8px] md:text-[9px] font-black text-emerald-500 uppercase">
+                                    <span className="bg-emerald-500/10 px-1.5 py-0.5 rounded-full border border-emerald-500/10">Ativo</span>
                                 </td>
                             </tr>
                             <tr
                                 onClick={() => router.push('/admin/jobs')}
                                 className="group hover:bg-app/80 transition-all cursor-pointer"
                             >
-                                <td className="py-4">
-                                    <div className="flex items-center gap-3">
-                                        <div className="w-2 h-2 rounded-full bg-emerald-500" />
-                                        <span className="text-xs font-bold text-primary uppercase group-hover:text-link transition-colors">Vagas de Emprego</span>
+                                <td className="py-3 md:py-4">
+                                    <div className="flex items-center gap-2 md:gap-3">
+                                        <div className="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-emerald-500" />
+                                        <span className="text-[10px] md:text-xs font-bold text-primary uppercase group-hover:text-link transition-colors">Vagas</span>
                                     </div>
                                 </td>
-                                <td className="py-4 text-right font-black text-primary tabular-nums group-hover:scale-105 transition-transform">{kpis.views.jobs.toLocaleString()}</td>
-                                <td className="py-4 text-right text-[9px] font-black text-emerald-500 uppercase">
-                                    <span className="bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/10">Ativo</span>
+                                <td className="py-3 md:py-4 text-right font-black text-primary text-xs md:text-sm tabular-nums group-hover:scale-105 transition-transform">{kpis.views.jobs.toLocaleString()}</td>
+                                <td className="py-3 md:py-4 text-right text-[8px] md:text-[9px] font-black text-emerald-500 uppercase">
+                                    <span className="bg-emerald-500/10 px-1.5 py-0.5 rounded-full border border-emerald-500/10">Ativo</span>
                                 </td>
                             </tr>
                             <tr
                                 onClick={() => router.push('/admin/events')}
                                 className="group hover:bg-app/80 transition-all cursor-pointer"
                             >
-                                <td className="py-4">
-                                    <div className="flex items-center gap-3">
-                                        <div className="w-2 h-2 rounded-full bg-amber-500" />
-                                        <span className="text-xs font-bold text-primary uppercase group-hover:text-link transition-colors">Eventos Culturais</span>
+                                <td className="py-3 md:py-4">
+                                    <div className="flex items-center gap-2 md:gap-3">
+                                        <div className="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-amber-500" />
+                                        <span className="text-[10px] md:text-xs font-bold text-primary uppercase group-hover:text-link transition-colors">Eventos</span>
                                     </div>
                                 </td>
-                                <td className="py-4 text-right font-black text-primary tabular-nums group-hover:scale-105 transition-transform">{kpis.views.events.toLocaleString()}</td>
-                                <td className="py-4 text-right text-[9px] font-black text-emerald-500 uppercase">
-                                    <span className="bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/10">Ativo</span>
+                                <td className="py-3 md:py-4 text-right font-black text-primary text-xs md:text-sm tabular-nums group-hover:scale-105 transition-transform">{kpis.views.events.toLocaleString()}</td>
+                                <td className="py-3 md:py-4 text-right text-[8px] md:text-[9px] font-black text-emerald-500 uppercase">
+                                    <span className="bg-emerald-500/10 px-1.5 py-0.5 rounded-full border border-emerald-500/10">Ativo</span>
                                 </td>
                             </tr>
                             <tr
                                 onClick={() => router.push('/admin/business')}
                                 className="group hover:bg-app/80 transition-all cursor-pointer"
                             >
-                                <td className="py-4">
-                                    <div className="flex items-center gap-3">
-                                        <div className="w-2 h-2 rounded-full bg-indigo-500" />
-                                        <span className="text-xs font-bold text-primary uppercase group-hover:text-link transition-colors">Guia de Negócios</span>
+                                <td className="py-3 md:py-4">
+                                    <div className="flex items-center gap-2 md:gap-3">
+                                        <div className="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-indigo-500" />
+                                        <span className="text-[10px] md:text-xs font-bold text-primary uppercase group-hover:text-link transition-colors">Negócios</span>
                                     </div>
                                 </td>
-                                <td className="py-4 text-right font-black text-primary tabular-nums group-hover:scale-105 transition-transform">{kpis.views.business.toLocaleString()}</td>
-                                <td className="py-4 text-right text-[9px] font-black text-emerald-500 uppercase">
-                                    <span className="bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/10">Ativo</span>
-                                </td>
-                            </tr>
-                            <tr
-                                onClick={() => router.push('/admin/gallery')}
-                                className="group hover:bg-app/80 transition-all cursor-pointer"
-                            >
-                                <td className="py-4">
-                                    <div className="flex items-center gap-3">
-                                        <div className="w-2 h-2 rounded-full bg-[#D70F24]" />
-                                        <span className="text-xs font-bold text-primary uppercase group-hover:text-link transition-colors">Galeria de Eventos</span>
-                                    </div>
-                                </td>
-                                <td className="py-4 text-right font-black text-primary tabular-nums group-hover:scale-105 transition-transform">{kpis.views.gallery.toLocaleString()}</td>
-                                <td className="py-4 text-right text-[9px] font-black text-emerald-500 uppercase">
-                                    <span className="bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/10">Ativo</span>
+                                <td className="py-3 md:py-4 text-right font-black text-primary text-xs md:text-sm tabular-nums group-hover:scale-105 transition-transform">{kpis.views.business.toLocaleString()}</td>
+                                <td className="py-3 md:py-4 text-right text-[8px] md:text-[9px] font-black text-emerald-500 uppercase">
+                                    <span className="bg-emerald-500/10 px-1.5 py-0.5 rounded-full border border-emerald-500/10">Ativo</span>
                                 </td>
                             </tr>
                             <tr
                                 onClick={() => router.push('/admin/guides')}
                                 className="group hover:bg-app/80 transition-all cursor-pointer"
                             >
-                                <td className="py-4">
-                                    <div className="flex items-center gap-3">
-                                        <div className="w-2 h-2 rounded-full bg-[#D70F24]" />
-                                        <span className="text-xs font-bold text-primary uppercase group-hover:text-link transition-colors">Guias de Usuário</span>
+                                <td className="py-3 md:py-4">
+                                    <div className="flex items-center gap-2 md:gap-3">
+                                        <div className="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-[#D70F24]" />
+                                        <span className="text-[10px] md:text-xs font-bold text-primary uppercase group-hover:text-link transition-colors">Guias</span>
                                     </div>
                                 </td>
-                                <td className="py-4 text-right font-black text-primary tabular-nums group-hover:scale-105 transition-transform">{kpis.views.guides.toLocaleString()}</td>
-                                <td className="py-4 text-right text-[9px] font-black text-emerald-500 uppercase">
-                                    <span className="bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/10">Ativo</span>
+                                <td className="py-3 md:py-4 text-right font-black text-primary text-xs md:text-sm tabular-nums group-hover:scale-105 transition-transform">{kpis.views.guides.toLocaleString()}</td>
+                                <td className="py-3 md:py-4 text-right text-[8px] md:text-[9px] font-black text-emerald-500 uppercase">
+                                    <span className="bg-emerald-500/10 px-1.5 py-0.5 rounded-full border border-emerald-500/10">Ativo</span>
                                 </td>
                             </tr>
                         </tbody>

@@ -48,14 +48,14 @@ export function Topbar({ onToggleSidebar }: TopbarProps) {
                 >
                     <Menu className="w-6 h-6" />
                 </button>
-                <div className="flex items-center gap-2">
-                    <span className="text-sm font-bold text-primary tracking-tight">Admin</span>
-                    <span className="text-[10px] px-1.5 py-0.5 rounded bg-[var(--nl-accent)]/10 text-[var(--nl-accent)] font-bold uppercase hidden xs:block">Panel</span>
+                <div className="flex items-center gap-1 md:gap-2">
+                    <span className="text-xs md:text-sm font-bold text-primary tracking-tight">Admin</span>
+                    <span className="text-[9px] px-1 py-0.5 rounded bg-[var(--nl-accent)]/10 text-[var(--nl-accent)] font-bold uppercase hidden sm:block">Panel</span>
                 </div>
             </div>
 
-            <div className="flex items-center gap-2 md:gap-4">
-                <div className="flex items-center gap-2 pr-2 md:pr-4 border-r border-app/60">
+            <div className="flex items-center gap-1.5 md:gap-4">
+                <div className="flex items-center gap-1.5 md:gap-2 pr-1.5 md:pr-4 border-r border-app/60">
                     {/* Home Button */}
                     <button
                         onClick={() => router.push('/')}
@@ -89,7 +89,7 @@ export function Topbar({ onToggleSidebar }: TopbarProps) {
 
                 <div
                     onClick={() => router.push('/perfil')}
-                    className="flex items-center gap-2 md:gap-3 cursor-pointer group pl-2"
+                    className="flex items-center gap-1.5 md:gap-3 cursor-pointer group pl-1.5"
                 >
                     <div className="text-right hidden sm:block">
                         <p className="text-xs font-bold text-primary leading-tight hover:text-[var(--nl-accent)] transition-colors">
@@ -97,7 +97,7 @@ export function Topbar({ onToggleSidebar }: TopbarProps) {
                         </p>
                         <p className="text-[10px] text-muted font-medium uppercase tracking-tighter">Administrator</p>
                     </div>
-                    <div className="w-9 h-9 rounded-xl overflow-hidden bg-[var(--nl-accent)]/10 flex items-center justify-center border border-[var(--nl-accent)]/20 group-hover:bg-[var(--nl-accent)]/20 transition-all shadow-sm">
+                    <div className="w-8 h-8 md:w-9 md:h-9 rounded-xl overflow-hidden bg-[var(--nl-accent)]/10 flex items-center justify-center border border-[var(--nl-accent)]/20 group-hover:bg-[var(--nl-accent)]/20 transition-all shadow-sm">
                         {profile?.avatar_url ? (
                             <img
                                 src={profile.avatar_url}
@@ -105,7 +105,7 @@ export function Topbar({ onToggleSidebar }: TopbarProps) {
                                 className="w-full h-full object-cover"
                             />
                         ) : (
-                            <User className="w-4 h-4 text-[var(--nl-accent)]" />
+                            <User className="w-3.5 h-3.5 md:w-4 md:h-4 text-[var(--nl-accent)]" />
                         )}
                     </div>
                 </div>

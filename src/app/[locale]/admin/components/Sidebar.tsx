@@ -50,11 +50,11 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
 
     return (
         <aside className={`
-            fixed inset-y-0 left-0 z-50 w-64 bg-surface border-r border-app text-primary flex flex-col min-h-screen transition-all duration-300 transform
+            fixed inset-y-0 left-0 z-50 w-72 bg-app border-r border-app text-primary flex flex-col min-h-screen transition-all duration-300 transform
             lg:relative lg:translate-x-0
             ${isOpen ? 'translate-x-0' : '-translate-x-full shadow-2xl lg:shadow-none'}
         `}>
-            <div className="h-20 flex items-center justify-between px-6 border-b border-app">
+            <div className="h-16 lg:h-20 flex items-center justify-between px-6 border-b border-app">
                 <div className="flex items-center gap-3">
                     <img src="/images/logo.svg" alt="NipponLife" className="h-8 w-auto" />
                 </div>

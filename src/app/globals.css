@@ -32,6 +32,9 @@
   --font-serif: var(--font-shippori), ui-serif, serif;
   --font-display: var(--font-outfit), system-ui, sans-serif;
 
+  /* Breakpoints */
+  --breakpoint-xs: 480px;
+
   /* Custom Animations */
   @keyframes fadeIn {
     from {

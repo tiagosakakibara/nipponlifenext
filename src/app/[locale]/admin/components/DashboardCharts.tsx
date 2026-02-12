@@ -31,7 +31,7 @@ export function ActivityChart({ data }: DashboardChartsProps) {
     const cursorFill = isDark ? 'rgba(255, 255, 255, 0.05)' : '#F3F4F6';
 
     return (
-        <div className="bg-surface p-4 sm:p-6 rounded-xl shadow-sm border border-app min-h-[380px] sm:min-h-[450px]">
+        <div className="bg-surface p-4 sm:p-6 rounded-xl shadow-sm border border-app min-h-[300px] sm:min-h-[450px]">
             <h3 className="text-lg font-bold text-primary mb-6 font-heading">{t('admin.activity14Days')}</h3>
             <div className="w-full h-64 sm:h-80">
                 <ResponsiveContainer width="100%" height="100%">
