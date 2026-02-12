@@ -9,14 +9,15 @@ export async function GET() {
         .from('site_settings')
         .select('value')
         .eq('key', 'newcomer_guide_views')
-        .single();
+        .maybeSingle();
 
     if (error) {
-        return NextResponse.json({ error: error.message }, { status: 500 });
+        console.error('Error fetching newcomer_guide_views:', error.message);
+        return NextResponse.json({ views: 0 });
     }
 
     // Return the value directly (assuming it's a number stored as JSONB)
-    return NextResponse.json({ views: data.value });
+    return NextResponse.json({ views: data?.value ?? 0 });
 }
 
 export async function POST() {
@@ -31,23 +32,20 @@ export async function POST() {
         // Fetch current value first to increment it
         // Note: In high concurrency, this is not atomic. 
         // Ideally we would use an RPC function like 'increment_setting(key)' but for now this suffices.
-        const { data: currentData, error: fetchError } = await supabaseService
+        const { data: currentData } = await supabaseService
             .from('site_settings')
             .select('value')
             .eq('key', 'newcomer_guide_views')
-            .single();
+            .maybeSingle();
 
-        if (fetchError) throw fetchError;
-
-        const currentViews = Number(currentData.value) || 0;
+        const currentViews = Number(currentData?.value) || 0;
         const newViews = currentViews + 1;
 
-        const { error: updateError } = await supabaseService
+        const { error: upsertError } = await supabaseService
             .from('site_settings')
-            .update({ value: newViews })
-            .eq('key', 'newcomer_guide_views');
+            .upsert({ key: 'newcomer_guide_views', value: newViews }, { onConflict: 'key' });
 
-        if (updateError) throw updateError;
+        if (upsertError) throw upsertError;
 
         return NextResponse.json({ views: newViews });
     } catch (error: any) {

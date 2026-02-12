@@ -71,11 +71,14 @@ export default function GuideCategoryGrid({ locale }: GuideCategoryGridProps) {
         href: string;
     }>>([]);
     const [loading, setLoading] = useState(true);
-    const supabase = createClient();
 
     useEffect(() => {
+        const supabase = createClient();
+
+        // Safety: resolve skeleton after 8s even if query hangs
+        const timeout = setTimeout(() => setLoading(false), 8000);
+
         const fetchCategories = async () => {
-            setLoading(true);
             try {
                 const { data, error } = await supabase
                     .from('guides_categories')
@@ -83,9 +86,9 @@ export default function GuideCategoryGrid({ locale }: GuideCategoryGridProps) {
                     .eq('is_active', true)
                     .order('sort_order');
 
-                if (error || !data || data.length === 0) {
+                if (error) {
                     console.error('Error fetching categories:', error);
-                } else {
+                } else if (data && data.length > 0) {
                     setCategories(data.map((cat: any) => {
                         let title = cat.name;
                         if (locale === 'en' && cat.name_en) title = cat.name_en;
@@ -107,11 +110,13 @@ export default function GuideCategoryGrid({ locale }: GuideCategoryGridProps) {
             } catch (err) {
                 console.error('Error fetching categories:', err);
             } finally {
+                clearTimeout(timeout);
                 setLoading(false);
             }
         };
 
         fetchCategories();
+        return () => clearTimeout(timeout);
     }, [locale]);
 
     return (
