@@ -29,6 +29,12 @@ export async function updateSession(request: NextRequest) {
                     )
                 },
             },
+            cookieOptions: {
+                name: 'sb-auth-token',
+                path: '/',
+                sameSite: 'lax', // Chrome requires explicit strict/lax for SameSite
+                secure: process.env.NODE_ENV === 'production',
+            },
         }
     )
 
