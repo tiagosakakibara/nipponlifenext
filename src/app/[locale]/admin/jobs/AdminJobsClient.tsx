@@ -34,7 +34,7 @@ export default function AdminJobsClient() {
             {/* Header */}
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
                 <div>
-                    <h1 className="text-4xl font-black text-primary tracking-tight">Job Board</h1>
+                    <h1 className="text-2xl md:text-4xl font-black text-primary tracking-tight">Job Board</h1>
                     <p className="text-secondary mt-1 font-medium italic opacity-60">Manage career opportunities and listings</p>
                 </div>
                 <Link
@@ -145,7 +145,7 @@ export default function AdminJobsClient() {
                                             </span>
                                         </td>
                                         <td className="px-6 py-4 text-right">
-                                            <div className="flex items-center justify-end gap-1 opacity-0 group-hover:opacity-100 transition-all translate-x-4 group-hover:translate-x-0">
+                                            <div className="flex items-center justify-end gap-1 opacity-100 md:opacity-0 translate-x-0 md:translate-x-4 md:group-hover:opacity-100 md:group-hover:translate-x-0 transition-all">
                                                 <Link
                                                     href={`/admin/jobs/${job.id}`}
                                                     className="p-2.5 text-secondary hover:text-link hover:bg-link/10 rounded-xl transition-all"

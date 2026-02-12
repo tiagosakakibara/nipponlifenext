@@ -58,7 +58,7 @@ export default function AdminCategoriesClient() {
         <div className="space-y-8 animate-fade-in">
             {/* Header */}
             <div>
-                <h1 className="text-4xl font-black text-primary tracking-tight">Content Taxonomies</h1>
+                <h1 className="text-2xl md:text-4xl font-black text-primary tracking-tight">Content Taxonomies</h1>
                 <p className="text-secondary mt-1 font-medium italic opacity-60">Manage categories for news and articles</p>
             </div>
 
@@ -183,7 +183,7 @@ export default function AdminCategoriesClient() {
                                                     </span>
                                                 </td>
                                                 <td className="px-6 py-4 text-right">
-                                                    <div className="flex items-center justify-end gap-1 opacity-0 group-hover:opacity-100 transition-all translate-x-4 group-hover:translate-x-0">
+                                                    <div className="flex items-center justify-end gap-1 opacity-100 md:opacity-0 translate-x-0 md:translate-x-4 md:group-hover:opacity-100 md:group-hover:translate-x-0 transition-all">
                                                         <button
                                                             onClick={() => handleEdit(cat)}
                                                             className="p-3 text-secondary hover:text-link hover:bg-link/10 rounded-xl transition-all"

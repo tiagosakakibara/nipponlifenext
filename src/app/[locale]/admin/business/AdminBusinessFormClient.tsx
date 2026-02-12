@@ -82,7 +82,7 @@ export default function AdminBusinessFormClient({ id, initialData }: Props) {
                         <ArrowLeft className="w-5 h-5 text-secondary group-hover:-translate-x-1 transition-transform" />
                     </button>
                     <div>
-                        <h1 className="text-4xl font-black text-primary tracking-tight">
+                        <h1 className="text-2xl md:text-4xl font-black text-primary tracking-tight">
                             {isEditing ? 'Edit Business' : 'New Listing'}
                         </h1>
                         <p className="text-secondary mt-1 font-medium italic opacity-60">Directory details and contact information</p>
@@ -94,7 +94,7 @@ export default function AdminBusinessFormClient({ id, initialData }: Props) {
                         type="submit"
                         form="business-form"
                         disabled={loading}
-                        className="flex items-center gap-2 bg-[#5593C3] hover:bg-[#467ba5] text-white px-10 py-3.5 rounded-2xl font-black text-sm shadow-xl shadow-blue-500/10 transition-all hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50"
+                        className="flex items-center justify-center gap-2 bg-[#5593C3] hover:bg-[#467ba5] text-white w-full md:w-auto px-6 md:px-10 py-3.5 rounded-2xl font-black text-sm shadow-xl shadow-blue-500/10 transition-all hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50"
                     >
                         {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : <Save className="w-5 h-5" />}
                         {isEditing ? 'UPDATE BUSINESS' : 'CREATE LISTING'}
@@ -186,7 +186,7 @@ export default function AdminBusinessFormClient({ id, initialData }: Props) {
                 <div className="lg:col-span-8 order-2 lg:order-1 space-y-8">
 
                     {/* Basic Info */}
-                    <div className="bg-surface rounded-3xl border border-app p-8 shadow-sm space-y-6">
+                    <div className="bg-surface rounded-3xl border border-app p-4 md:p-8 shadow-sm space-y-6">
                         <div className="flex items-center gap-3 text-primary mb-2">
                             <Info className="w-5 h-5 text-link" />
                             <h3 className="font-black text-lg tracking-tight">Business Profile</h3>
@@ -258,7 +258,7 @@ export default function AdminBusinessFormClient({ id, initialData }: Props) {
                     {/* Location & Contact */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                         {/* Location */}
-                        <div className="bg-surface rounded-3xl border border-app p-8 shadow-sm space-y-6">
+                        <div className="bg-surface rounded-3xl border border-app p-4 md:p-8 shadow-sm space-y-6">
                             <div className="flex items-center gap-3 text-primary mb-2">
                                 <MapPin className="w-5 h-5 text-link" />
                                 <h3 className="font-black text-lg tracking-tight">Location</h3>
@@ -287,7 +287,7 @@ export default function AdminBusinessFormClient({ id, initialData }: Props) {
                         </div>
 
                         {/* Contact */}
-                        <div className="bg-surface rounded-3xl border border-app p-8 shadow-sm space-y-6">
+                        <div className="bg-surface rounded-3xl border border-app p-4 md:p-8 shadow-sm space-y-6">
                             <div className="flex items-center gap-3 text-primary mb-2">
                                 <Phone className="w-5 h-5 text-link" />
                                 <h3 className="font-black text-lg tracking-tight">Contact</h3>
@@ -315,7 +315,7 @@ export default function AdminBusinessFormClient({ id, initialData }: Props) {
                     </div>
 
                     {/* Gallery & Presentation */}
-                    <div className="bg-surface rounded-3xl border border-app p-8 shadow-sm space-y-6">
+                    <div className="bg-surface rounded-3xl border border-app p-4 md:p-8 shadow-sm space-y-6">
                         <div className="flex items-center gap-3 text-primary mb-2">
                             <Plus className="w-5 h-5 text-link" />
                             <h3 className="font-black text-lg tracking-tight">Gallery & Assets</h3>
@@ -437,7 +437,7 @@ export default function AdminBusinessFormClient({ id, initialData }: Props) {
                                 {showJapanese ? <ChevronDown className="w-4 h-4 text-link" /> : <ChevronRight className="w-4 h-4 text-secondary/40" />}
                             </button>
                             {showJapanese && (
-                                <div className="p-8 pt-2 space-y-6 bg-app/20 animate-fade-in">
+                                <div className="p-4 md:p-8 pt-2 space-y-6 bg-app/20 animate-fade-in">
                                     <div className="space-y-4">
                                         <div>
                                             <label className="text-[10px] font-extrabold text-secondary/60 uppercase block tracking-widest mb-1.5">Business Name (JP)</label>
@@ -469,7 +469,7 @@ export default function AdminBusinessFormClient({ id, initialData }: Props) {
                                 {showEnglish ? <ChevronDown className="w-4 h-4 text-link" /> : <ChevronRight className="w-4 h-4 text-secondary/40" />}
                             </button>
                             {showEnglish && (
-                                <div className="p-8 pt-2 space-y-6 bg-app/20 animate-fade-in">
+                                <div className="p-4 md:p-8 pt-2 space-y-6 bg-app/20 animate-fade-in">
                                     <div className="space-y-4">
                                         <div>
                                             <label className="text-[10px] font-extrabold text-secondary/60 uppercase block tracking-widest mb-1.5">Business Name (EN)</label>

@@ -127,7 +127,7 @@ export default function AdminJobFormClient({ id, initialData }: Props) {
                         <ArrowLeft className="w-5 h-5 text-secondary group-hover:-translate-x-1 transition-transform" />
                     </button>
                     <div>
-                        <h1 className="text-4xl font-black text-primary tracking-tight">
+                        <h1 className="text-2xl md:text-4xl font-black text-primary tracking-tight">
                             {isEditing ? 'Edit Position' : 'New Career Posting'}
                         </h1>
                         <p className="text-secondary mt-1 font-medium italic opacity-60">Define the opportunity and company requirements</p>
@@ -139,7 +139,7 @@ export default function AdminJobFormClient({ id, initialData }: Props) {
                         type="submit"
                         form="job-form"
                         disabled={loading}
-                        className="flex items-center gap-2 bg-[#5593C3] hover:bg-[#467ba5] text-white px-10 py-3.5 rounded-2xl font-black text-sm shadow-xl shadow-blue-500/10 transition-all hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50"
+                        className="flex items-center justify-center gap-2 bg-[#5593C3] hover:bg-[#467ba5] text-white w-full md:w-auto px-6 md:px-10 py-3.5 rounded-2xl font-black text-sm shadow-xl shadow-blue-500/10 transition-all hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50"
                     >
                         {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : <Save className="w-5 h-5" />}
                         {isEditing ? 'UPDATE POSTING' : 'CREATE OPPORTUNITY'}
@@ -249,7 +249,7 @@ export default function AdminJobFormClient({ id, initialData }: Props) {
                 <div className="lg:col-span-8 order-2 lg:order-1 space-y-8">
 
                     {/* Basic Info */}
-                    <div className="bg-surface rounded-3xl border border-app p-8 shadow-sm space-y-8">
+                    <div className="bg-surface rounded-3xl border border-app p-4 md:p-8 shadow-sm space-y-8">
                         <div className="flex items-center gap-3 text-primary">
                             <Briefcase className="w-5 h-5 text-link" />
                             <h3 className="font-black text-lg tracking-tight">Job Definition</h3>
@@ -311,7 +311,7 @@ export default function AdminJobFormClient({ id, initialData }: Props) {
                     </div>
 
                     {/* Compensation */}
-                    <div className="bg-surface rounded-3xl border border-app p-8 shadow-sm space-y-6">
+                    <div className="bg-surface rounded-3xl border border-app p-4 md:p-8 shadow-sm space-y-6">
                         <div className="flex items-center gap-3 text-primary">
                             <DollarSign className="w-5 h-5 text-link" />
                             <h3 className="font-black text-lg tracking-tight">Compensation & Salary</h3>
@@ -352,7 +352,7 @@ export default function AdminJobFormClient({ id, initialData }: Props) {
                     {/* Requirements & Benefits (Dynamic Lists) */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                         {/* Requirements */}
-                        <div className="bg-surface rounded-3xl border border-app p-8 shadow-sm space-y-6">
+                        <div className="bg-surface rounded-3xl border border-app p-4 md:p-8 shadow-sm space-y-6">
                             <div className="flex items-center gap-3 text-primary mb-2">
                                 <CheckCircle2 className="w-5 h-5 text-link" />
                                 <h3 className="font-black text-lg tracking-tight">Requirements</h3>
@@ -414,7 +414,7 @@ export default function AdminJobFormClient({ id, initialData }: Props) {
                         </div>
 
                         {/* Benefits */}
-                        <div className="bg-surface rounded-3xl border border-app p-8 shadow-sm space-y-6">
+                        <div className="bg-surface rounded-3xl border border-app p-4 md:p-8 shadow-sm space-y-6">
                             <div className="flex items-center gap-3 text-primary mb-2">
                                 <Gift className="w-5 h-5 text-link" />
                                 <h3 className="font-black text-lg tracking-tight">Perks & Benefits</h3>
@@ -489,7 +489,7 @@ export default function AdminJobFormClient({ id, initialData }: Props) {
                     </div>
 
                     {/* Full Description */}
-                    <div className="bg-surface rounded-3xl border border-app p-8 shadow-sm space-y-6">
+                    <div className="bg-surface rounded-3xl border border-app p-4 md:p-8 shadow-sm space-y-6">
                         <div className="flex items-center gap-3 text-primary mb-2">
                             <Info className="w-5 h-5 text-link" />
                             <h3 className="font-black text-lg tracking-tight">Narrative & Bio</h3>
@@ -522,7 +522,7 @@ export default function AdminJobFormClient({ id, initialData }: Props) {
                                 {showJapanese ? <ChevronDown className="w-4 h-4 text-link" /> : <ChevronRight className="w-4 h-4 text-secondary/40" />}
                             </button>
                             {showJapanese && (
-                                <div className="p-8 pt-2 space-y-6 bg-app/20 animate-fade-in">
+                                <div className="p-4 md:p-8 pt-2 space-y-6 bg-app/20 animate-fade-in">
                                     <div className="space-y-4">
                                         <div>
                                             <label className="text-[10px] font-extrabold text-secondary/60 uppercase block tracking-widest mb-1.5">Employment Title (JP)</label>
@@ -550,7 +550,7 @@ export default function AdminJobFormClient({ id, initialData }: Props) {
                                 {showEnglish ? <ChevronDown className="w-4 h-4 text-link" /> : <ChevronRight className="w-4 h-4 text-secondary/40" />}
                             </button>
                             {showEnglish && (
-                                <div className="p-8 pt-2 space-y-6 bg-app/20 animate-fade-in">
+                                <div className="p-4 md:p-8 pt-2 space-y-6 bg-app/20 animate-fade-in">
                                     <div className="space-y-4">
                                         <div>
                                             <label className="text-[10px] font-extrabold text-secondary/60 uppercase block tracking-widest mb-1.5">Employment Title (EN)</label>
