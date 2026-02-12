@@ -62,14 +62,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }>({
         user: null,
         profile: null,
-        loading: true // Keeping true to prevent flash of content before auth check
+        loading: true
     });
-
-    const [mounted, setMounted] = useState(false);
-
-    useEffect(() => {
-        setMounted(true);
-    }, []);
 
     // Evita condição de corrida: onAuthStateChange é a única fonte de verdade
     const handledRef = useRef(false);
@@ -140,11 +134,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             }
         }
     };
-
-    // Prevent hydration mismatch by not rendering until mounted
-    if (!mounted) {
-        return null;
-    }
 
     return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
