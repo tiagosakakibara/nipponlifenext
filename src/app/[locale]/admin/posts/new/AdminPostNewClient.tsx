@@ -61,7 +61,7 @@ export default function AdminPostNewClient() {
             status: 'draft',
             createdAt: new Date().toISOString(),
             updatedAt: new Date().toISOString()
-        });
+        }, true);
         setIsSaving(false);
         if (success) {
             toast.success('Rascunho criado com sucesso!');
@@ -110,7 +110,7 @@ export default function AdminPostNewClient() {
             createdAt: new Date().toISOString(),
             updatedAt: new Date().toISOString(),
             publishedAt: formData.status === 'published' ? new Date().toISOString() : undefined
-        });
+        }, true);
         setIsSaving(false);
         if (success) {
             toast.success('Post publicado!');

@@ -127,7 +127,7 @@ export function useAdminPosts() {
         }
     }, [supabase, fetchCategories]);
 
-    const addPost = async (post: Partial<AdminPost>): Promise<boolean> => {
+    const addPost = async (post: Partial<AdminPost>, skipRefresh = false): Promise<boolean> => {
         try {
             // Find category id by slut
             const { data: catData } = await supabase
@@ -171,7 +171,9 @@ export function useAdminPosts() {
 
             if (error) throw error;
 
-            await fetchPosts();
+            if (!skipRefresh) {
+                await fetchPosts();
+            }
             return true;
         } catch (error: any) {
             console.error('Error adding post:', error);
@@ -180,7 +182,7 @@ export function useAdminPosts() {
         }
     };
 
-    const updatePost = async (id: string, updated: Partial<AdminPost>): Promise<boolean> => {
+    const updatePost = async (id: string, updated: Partial<AdminPost>, skipRefresh = false): Promise<boolean> => {
         try {
             // 1. Get old post data to compare images
             const { data: oldPost } = await supabase
@@ -249,7 +251,9 @@ export function useAdminPosts() {
                 );
             }
 
-            await fetchPosts();
+            if (!skipRefresh) {
+                await fetchPosts();
+            }
             return true;
         } catch (error: any) {
             console.error('Error updating post:', error);

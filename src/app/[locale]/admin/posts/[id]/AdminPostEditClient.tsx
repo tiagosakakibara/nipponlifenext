@@ -54,7 +54,7 @@ export default function AdminPostEditClient() {
             ...formData,
             status: 'draft',
             updatedAt: new Date().toISOString()
-        });
+        }, true);
         setIsSaving(false);
         if (success) {
             setLastSaved(new Date());
@@ -94,7 +94,7 @@ export default function AdminPostEditClient() {
         const success = await updatePost(id, {
             ...formData,
             updatedAt: new Date().toISOString()
-        });
+        }, true);
         setIsSaving(false);
         if (success) {
             toast.success('Post atualizado!');
