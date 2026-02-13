@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from 'react';
-import { useRouter } from '@/i18n/routing';
+import { useRouter, Link } from '@/i18n/routing';
 import { useForm, useFieldArray } from 'react-hook-form';
 import { toast } from 'react-hot-toast';
 import {
@@ -16,14 +16,14 @@ import { MediaUploader } from '@/components/MediaUploader';
 import { useTranslations } from 'next-intl';
 
 const BENEFIT_ICONS = [
-    { value: 'shield', icon: Shield, label: 'Insurance' },
-    { value: 'bus', icon: Bus, label: 'Transportation' },
-    { value: 'home', icon: Laptop, label: 'Housing' }, // No Home icon in my imports above, using Laptop for now or add Home
-    { value: 'gift', icon: Gift, label: 'Bonus' },
-    { value: 'utensils', icon: Utensils, label: 'Meals' },
-    { value: 'clock', icon: Clock, label: 'Schedule' },
-    { value: 'calendar', icon: Calendar, label: 'Vacation' },
-    { value: 'heart', icon: Heart, label: 'Health' },
+    { value: 'shield', icon: Shield, i18nKey: 'insurance' },
+    { value: 'bus', icon: Bus, i18nKey: 'transportation' },
+    { value: 'home', icon: Laptop, i18nKey: 'home' },
+    { value: 'gift', icon: Gift, i18nKey: 'gift' },
+    { value: 'utensils', icon: Utensils, i18nKey: 'utensils' },
+    { value: 'clock', icon: Clock, i18nKey: 'clock' },
+    { value: 'calendar', icon: Calendar, i18nKey: 'calendar' },
+    { value: 'heart', icon: Heart, i18nKey: 'heart' },
 ];
 
 interface Props {
@@ -33,6 +33,8 @@ interface Props {
 
 export default function AdminJobFormClient({ id, initialData }: Props) {
     const router = useRouter();
+    const t = useTranslations('admin.jobs.form');
+    const tb = useTranslations('admin.jobs.benefits');
     const isEditing = !!id;
     const [loading, setLoading] = useState(false);
     const [showJapanese, setShowJapanese] = useState(false);
@@ -54,7 +56,9 @@ export default function AdminJobFormClient({ id, initialData }: Props) {
             status: initialData.status || 'draft',
             featured: initialData.featured || false,
             pay_unit: initialData.db_fields?.pay_unit || 'hour',
-            application_mode: initialData.db_fields?.application_mode || 'internal_form'
+            application_mode: initialData.db_fields?.application_mode || 'internal_form',
+            expires_at: initialData.expires_at || '',
+            position_order: initialData.position_order || 0
         } : {
             status: 'draft',
             featured: false,
@@ -91,7 +95,7 @@ export default function AdminJobFormClient({ id, initialData }: Props) {
                 await jobsService.createJob(data);
                 toast.success('Vaga criada com sucesso!');
             }
-            router.push('/admin/jobs');
+            router.push({ pathname: '/admin/jobs' });
         } catch (error) {
             console.error('Error saving job:', error);
             toast.error('Erro ao salvar vaga.');
@@ -120,17 +124,17 @@ export default function AdminJobFormClient({ id, initialData }: Props) {
             {/* Header */}
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
                 <div className="flex items-center gap-4">
-                    <button
-                        onClick={() => router.push('/admin/jobs')}
-                        className="p-3 bg-white border border-app rounded-2xl hover:bg-app transition-all shadow-sm group"
+                    <Link
+                        href="/admin/jobs"
+                        className="p-3 bg-white border border-app rounded-2xl hover:bg-app transition-all shadow-sm group inline-flex items-center justify-center"
                     >
                         <ArrowLeft className="w-5 h-5 text-secondary group-hover:-translate-x-1 transition-transform" />
-                    </button>
+                    </Link>
                     <div>
                         <h1 className="text-2xl md:text-4xl font-black text-primary tracking-tight">
-                            {isEditing ? 'Edit Position' : 'New Career Posting'}
+                            {isEditing ? t('editPosition') : t('newCareerPosting')}
                         </h1>
-                        <p className="text-secondary mt-1 font-medium italic opacity-60">Define the opportunity and company requirements</p>
+                        <p className="text-secondary mt-1 font-medium italic opacity-60">{t('defineOpportunity')}</p>
                     </div>
                 </div>
 
@@ -142,7 +146,7 @@ export default function AdminJobFormClient({ id, initialData }: Props) {
                         className="flex items-center justify-center gap-2 bg-[#5593C3] hover:bg-[#467ba5] text-white w-full md:w-auto px-6 md:px-10 py-3.5 rounded-2xl font-black text-sm shadow-xl shadow-blue-500/10 transition-all hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50"
                     >
                         {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : <Save className="w-5 h-5" />}
-                        {isEditing ? 'UPDATE POSTING' : 'CREATE OPPORTUNITY'}
+                        {isEditing ? t('updatePosting') : t('createOpportunity')}
                     </button>
                 </div>
             </div>
@@ -155,30 +159,49 @@ export default function AdminJobFormClient({ id, initialData }: Props) {
                     <div className="bg-surface rounded-3xl border border-app p-6 shadow-sm space-y-6">
                         <div className="flex items-center gap-3 text-primary">
                             <Send className="w-4 h-4 text-link" />
-                            <h3 className="font-bold text-sm tracking-tight uppercase">Publication</h3>
+                            <h3 className="font-bold text-sm tracking-tight uppercase">{t('publication')}</h3>
                         </div>
 
                         <div className="space-y-4">
                             <div className="space-y-2">
-                                <label className="text-[10px] font-extrabold text-secondary uppercase block tracking-widest">Listing Status</label>
+                                <label className="text-[10px] font-extrabold text-secondary uppercase block tracking-widest">{t('listingStatus')}</label>
                                 <div className="grid grid-cols-2 gap-2 bg-[#0037680a] p-1.5 rounded-2xl border border-app">
                                     <button
                                         type="button"
                                         onClick={() => setValue('status', 'draft')}
                                         className={`py-2 text-[10px] font-black rounded-xl transition-all ${watchedForm.status === 'draft' ? 'bg-white text-primary shadow-md border border-app/50' : 'text-secondary hover:text-primary'}`}
                                     >
-                                        DRAFT
+                                        {t('draft')}
                                     </button>
                                     <button
                                         type="button"
                                         onClick={() => setValue('status', 'published')}
                                         className={`py-2 text-[10px] font-black rounded-xl transition-all ${watchedForm.status === 'published' ? 'bg-[#5593C3] text-white shadow-md' : 'text-secondary hover:text-primary'}`}
                                     >
-                                        PUBLISHED
+                                        {t('published')}
                                     </button>
                                 </div>
                             </div>
 
+                            <div className="grid grid-cols-2 gap-4">
+                                <div className="space-y-2">
+                                    <label className="text-[10px] font-extrabold text-secondary uppercase block tracking-widest">{t('expiresAt')}</label>
+                                    <input
+                                        type="date"
+                                        {...register('expires_at')}
+                                        className="w-full p-3 bg-app border border-app rounded-xl text-xs font-bold focus:bg-white transition-all outline-none"
+                                    />
+                                </div>
+                                <div className="space-y-2">
+                                    <label className="text-[10px] font-extrabold text-secondary uppercase block tracking-widest">{t('sortOrder')}</label>
+                                    <input
+                                        type="number"
+                                        {...register('position_order')}
+                                        placeholder="0"
+                                        className="w-full p-3 bg-app border border-app rounded-xl text-xs font-bold focus:bg-white transition-all outline-none"
+                                    />
+                                </div>
+                            </div>
                             <div
                                 onClick={() => setValue('featured', !watchedForm.featured)}
                                 className={`p-4 rounded-2xl border transition-all cursor-pointer flex items-center justify-between group ${watchedForm.featured ? 'bg-amber-500/10 border-amber-500/30' : 'bg-app border-app'}`}
@@ -187,7 +210,7 @@ export default function AdminJobFormClient({ id, initialData }: Props) {
                                     <div className={`p-2 rounded-lg transition-colors ${watchedForm.featured ? 'bg-amber-500 text-white' : 'bg-white text-secondary'}`}>
                                         <Star className={`w-4 h-4 ${watchedForm.featured ? 'fill-current' : ''}`} />
                                     </div>
-                                    <span className={`text-xs font-bold uppercase ${watchedForm.featured ? 'text-amber-700' : 'text-secondary'}`}>Highlight Star Opportunity</span>
+                                    <span className={`text-xs font-bold uppercase ${watchedForm.featured ? 'text-amber-700' : 'text-secondary'}`}>{t('highlightStar')}</span>
                                 </div>
                                 <div className={`w-10 h-5 rounded-full relative transition-all border ${watchedForm.featured ? 'bg-amber-500 border-amber-600' : 'bg-white border-app'}`}>
                                     <div className={`absolute top-0.5 w-3.5 h-3.5 bg-white rounded-full transition-all shadow-sm ${watchedForm.featured ? 'left-[22px]' : 'left-0.5'}`} />
@@ -200,12 +223,12 @@ export default function AdminJobFormClient({ id, initialData }: Props) {
                     <div className="bg-surface rounded-3xl border border-app p-6 shadow-sm space-y-6">
                         <div className="flex items-center gap-3 text-primary">
                             <ImageIcon className="w-4 h-4 text-link" />
-                            <h3 className="font-bold text-sm tracking-tight uppercase">Company Assets</h3>
+                            <h3 className="font-bold text-sm tracking-tight uppercase">{t('companyAssets')}</h3>
                         </div>
 
                         <div className="space-y-6">
                             <div>
-                                <label className="text-[10px] font-extrabold text-secondary uppercase block tracking-widest mb-3">Company Logo / Job Banner</label>
+                                <label className="text-[10px] font-extrabold text-secondary uppercase block tracking-widest mb-3">{t('companyLogoBanner')}</label>
                                 <MediaUploader
                                     value={watchedForm.cover_image_url}
                                     onChange={(url) => setValue('cover_image_url', url)}
@@ -220,7 +243,7 @@ export default function AdminJobFormClient({ id, initialData }: Props) {
                     <div className="bg-surface rounded-3xl border border-app p-6 shadow-sm space-y-4">
                         <div className="flex items-center gap-3 text-primary">
                             <Tag className="w-4 h-4 text-link" />
-                            <h3 className="font-bold text-sm tracking-tight uppercase">Labels & SEO</h3>
+                            <h3 className="font-bold text-sm tracking-tight uppercase">{t('labelsSeo')}</h3>
                         </div>
 
                         <div className="space-y-3">
@@ -228,7 +251,7 @@ export default function AdminJobFormClient({ id, initialData }: Props) {
                                 value={tagInput}
                                 onChange={(e) => setTagInput(e.target.value)}
                                 onKeyDown={handleAddTag}
-                                placeholder="Add skill tags... (Press Enter)"
+                                placeholder={t('addSkillTags')}
                                 className="w-full p-3 bg-app border border-app rounded-xl text-xs font-bold focus:bg-white transition-all outline-none"
                             />
                             <div className="flex flex-wrap gap-1.5">
@@ -252,13 +275,13 @@ export default function AdminJobFormClient({ id, initialData }: Props) {
                     <div className="bg-surface rounded-3xl border border-app p-4 md:p-8 shadow-sm space-y-8">
                         <div className="flex items-center gap-3 text-primary">
                             <Briefcase className="w-5 h-5 text-link" />
-                            <h3 className="font-black text-lg tracking-tight">Job Definition</h3>
+                            <h3 className="font-black text-lg tracking-tight">{t('jobDefinition')}</h3>
                         </div>
 
                         <div className="space-y-6">
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div className="md:col-span-2">
-                                    <label className="text-[10px] font-extrabold text-secondary uppercase block tracking-widest mb-1.5">Employment Title *</label>
+                                    <label className="text-[10px] font-extrabold text-secondary uppercase block tracking-widest mb-1.5">{t('employmentTitle')}</label>
                                     <input
                                         {...register('title', { required: true })}
                                         placeholder="e.g. Senior Backend Developer"
@@ -267,7 +290,7 @@ export default function AdminJobFormClient({ id, initialData }: Props) {
                                 </div>
 
                                 <div>
-                                    <label className="text-[10px] font-extrabold text-secondary uppercase block tracking-widest mb-1.5">Company Entity *</label>
+                                    <label className="text-[10px] font-extrabold text-secondary uppercase block tracking-widest mb-1.5">{t('companyEntity')}</label>
                                     <input
                                         {...register('company_name', { required: true })}
                                         placeholder="e.g. TechCorp Japan"
@@ -276,7 +299,7 @@ export default function AdminJobFormClient({ id, initialData }: Props) {
                                 </div>
 
                                 <div>
-                                    <label className="text-[10px] font-extrabold text-secondary uppercase block tracking-widest mb-1.5">Employment Type</label>
+                                    <label className="text-[10px] font-extrabold text-secondary uppercase block tracking-widest mb-1.5">{t('employmentType')}</label>
                                     <select
                                         {...register('job_type')}
                                         className="w-full p-4 bg-app border border-app rounded-2xl text-sm font-bold text-primary focus:bg-white transition-all outline-none appearance-none"
@@ -291,7 +314,7 @@ export default function AdminJobFormClient({ id, initialData }: Props) {
 
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div>
-                                    <label className="text-[10px] font-extrabold text-secondary uppercase block tracking-widest mb-1.5">Prefecture (Japan)</label>
+                                    <label className="text-[10px] font-extrabold text-secondary uppercase block tracking-widest mb-1.5">{t('prefecture')}</label>
                                     <input
                                         {...register('prefecture')}
                                         placeholder="e.g. Aichi"
@@ -299,7 +322,7 @@ export default function AdminJobFormClient({ id, initialData }: Props) {
                                     />
                                 </div>
                                 <div>
-                                    <label className="text-[10px] font-extrabold text-secondary uppercase block tracking-widest mb-1.5">City</label>
+                                    <label className="text-[10px] font-extrabold text-secondary uppercase block tracking-widest mb-1.5">{t('city')}</label>
                                     <input
                                         {...register('city')}
                                         placeholder="e.g. Toyota-shi"
@@ -314,12 +337,12 @@ export default function AdminJobFormClient({ id, initialData }: Props) {
                     <div className="bg-surface rounded-3xl border border-app p-4 md:p-8 shadow-sm space-y-6">
                         <div className="flex items-center gap-3 text-primary">
                             <DollarSign className="w-5 h-5 text-link" />
-                            <h3 className="font-black text-lg tracking-tight">Compensation & Salary</h3>
+                            <h3 className="font-black text-lg tracking-tight">{t('compensation')}</h3>
                         </div>
 
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                             <div className="md:col-span-2">
-                                <label className="text-[10px] font-extrabold text-secondary uppercase block tracking-widest mb-1.5">Public Salary Label</label>
+                                <label className="text-[10px] font-extrabold text-secondary uppercase block tracking-widest mb-1.5">{t('publicSalaryLabel')}</label>
                                 <input
                                     {...register('salary_text')}
                                     placeholder="e.g. ¥1,200 ~ ¥1,500/hr"
@@ -327,22 +350,22 @@ export default function AdminJobFormClient({ id, initialData }: Props) {
                                 />
                             </div>
                             <div>
-                                <label className="text-[10px] font-extrabold text-secondary uppercase block tracking-widest mb-1.5">Rate Unit</label>
+                                <label className="text-[10px] font-extrabold text-secondary uppercase block tracking-widest mb-1.5">{t('rateUnit')}</label>
                                 <select
                                     {...register('pay_unit')}
                                     className="w-full p-4 bg-app border border-app rounded-2xl text-sm font-bold text-primary focus:bg-white transition-all outline-none appearance-none"
                                 >
-                                    <option value="hour">Per Hour</option>
-                                    <option value="day">Per Day</option>
-                                    <option value="month">Per Month</option>
+                                    <option value="hour">{t('perHour')}</option>
+                                    <option value="day">{t('perDay')}</option>
+                                    <option value="month">{t('perMonth')}</option>
                                 </select>
                             </div>
                             <div className="md:col-span-3">
-                                <label className="text-[10px] font-extrabold text-secondary uppercase block tracking-widest mb-1.5">Bonus & Extras Text</label>
+                                <label className="text-[10px] font-extrabold text-secondary uppercase block tracking-widest mb-1.5">{t('bonusExtras')}</label>
                                 <textarea
                                     {...register('bonus_text')}
                                     rows={2}
-                                    placeholder="Commuting allowance, yearly bonuses, housing support..."
+                                    placeholder={t('bonusExtrasPlaceholder')}
                                     className="w-full p-4 bg-app border border-app rounded-2xl text-sm font-medium text-primary focus:bg-white transition-all outline-none resize-none"
                                 />
                             </div>
@@ -355,7 +378,7 @@ export default function AdminJobFormClient({ id, initialData }: Props) {
                         <div className="bg-surface rounded-3xl border border-app p-4 md:p-8 shadow-sm space-y-6">
                             <div className="flex items-center gap-3 text-primary mb-2">
                                 <CheckCircle2 className="w-5 h-5 text-link" />
-                                <h3 className="font-black text-lg tracking-tight">Requirements</h3>
+                                <h3 className="font-black text-lg tracking-tight">{t('requirements')}</h3>
                             </div>
 
                             <div className="space-y-4">
@@ -392,7 +415,7 @@ export default function AdminJobFormClient({ id, initialData }: Props) {
                                                 }
                                             }
                                         }}
-                                        placeholder="Add requirement..."
+                                        placeholder={t('addRequirement')}
                                         className="w-full p-3 bg-app border border-app rounded-xl text-xs font-bold focus:bg-white transition-all outline-none shadow-inner"
                                     />
                                     <button
@@ -417,7 +440,7 @@ export default function AdminJobFormClient({ id, initialData }: Props) {
                         <div className="bg-surface rounded-3xl border border-app p-4 md:p-8 shadow-sm space-y-6">
                             <div className="flex items-center gap-3 text-primary mb-2">
                                 <Gift className="w-5 h-5 text-link" />
-                                <h3 className="font-black text-lg tracking-tight">Perks & Benefits</h3>
+                                <h3 className="font-black text-lg tracking-tight">{t('perksBenefits')}</h3>
                             </div>
 
                             <div className="space-y-4">
@@ -450,11 +473,11 @@ export default function AdminJobFormClient({ id, initialData }: Props) {
                                 <div className="flex flex-col gap-2">
                                     <div className="flex gap-2">
                                         <select id="ben-icon" className="p-3 bg-app border border-app rounded-xl text-xs font-bold focus:bg-white transition-all outline-none appearance-none">
-                                            {BENEFIT_ICONS.map(i => <option key={i.value} value={i.value}>{i.label}</option>)}
+                                            {BENEFIT_ICONS.map(i => <option key={i.value} value={i.value}>{tb(i.i18nKey)}</option>)}
                                         </select>
                                         <input
                                             id="ben-label"
-                                            placeholder="Label (e.g. Free Meals)"
+                                            placeholder={t('benefitLabel')}
                                             onKeyDown={(e) => {
                                                 if (e.key === 'Enter') {
                                                     e.preventDefault();
@@ -492,12 +515,12 @@ export default function AdminJobFormClient({ id, initialData }: Props) {
                     <div className="bg-surface rounded-3xl border border-app p-4 md:p-8 shadow-sm space-y-6">
                         <div className="flex items-center gap-3 text-primary mb-2">
                             <Info className="w-5 h-5 text-link" />
-                            <h3 className="font-black text-lg tracking-tight">Narrative & Bio</h3>
+                            <h3 className="font-black text-lg tracking-tight">{t('narrativeBio')}</h3>
                         </div>
                         <textarea
                             {...register('description')}
                             rows={8}
-                            placeholder="Full detailed description of the job, daily tasks, and about the company..."
+                            placeholder={t('narrativePlaceholder')}
                             className="w-full p-8 bg-app border border-app rounded-3xl text-sm font-medium text-primary focus:bg-white transition-all outline-none resize-none shadow-inner leading-relaxed"
                         />
                     </div>
@@ -506,7 +529,7 @@ export default function AdminJobFormClient({ id, initialData }: Props) {
                     <div className="bg-surface rounded-3xl border border-app overflow-hidden shadow-sm">
                         <div className="p-4 border-b border-app bg-[#0037680a] flex items-center gap-3">
                             <Globe className="w-5 h-5 text-link" />
-                            <h3 className="text-sm font-black text-primary uppercase tracking-tight">Multilingual Information</h3>
+                            <h3 className="text-sm font-black text-primary uppercase tracking-tight">{t('multilingualInfo')}</h3>
                         </div>
 
                         <div className="border-b border-app">
@@ -517,7 +540,7 @@ export default function AdminJobFormClient({ id, initialData }: Props) {
                             >
                                 <span className="flex items-center gap-4 font-bold text-secondary text-sm group-hover:text-primary transition-colors">
                                     <span className="w-7 h-7 rounded-lg flex items-center justify-center bg-white border border-app text-[10px] font-black shadow-sm group-hover:shadow-md transition-shadow">JP</span>
-                                    Japanese (日本語)
+                                    {t('japanese')}
                                 </span>
                                 {showJapanese ? <ChevronDown className="w-4 h-4 text-link" /> : <ChevronRight className="w-4 h-4 text-secondary/40" />}
                             </button>
@@ -525,11 +548,11 @@ export default function AdminJobFormClient({ id, initialData }: Props) {
                                 <div className="p-4 md:p-8 pt-2 space-y-6 bg-app/20 animate-fade-in">
                                     <div className="space-y-4">
                                         <div>
-                                            <label className="text-[10px] font-extrabold text-secondary/60 uppercase block tracking-widest mb-1.5">Employment Title (JP)</label>
+                                            <label className="text-[10px] font-extrabold text-secondary/60 uppercase block tracking-widest mb-1.5">{t('employmentTitleJp')}</label>
                                             <input {...register('title_ja')} className="w-full p-4 bg-white border border-app rounded-2xl text-primary font-bold shadow-sm" />
                                         </div>
                                         <div>
-                                            <label className="text-[10px] font-extrabold text-secondary/60 uppercase block tracking-widest mb-1.5">Narrative (JP)</label>
+                                            <label className="text-[10px] font-extrabold text-secondary/60 uppercase block tracking-widest mb-1.5">{t('narrativeJp')}</label>
                                             <textarea {...register('description_ja')} rows={4} className="w-full p-4 bg-white border border-app rounded-3xl text-sm shadow-sm" />
                                         </div>
                                     </div>
@@ -545,7 +568,7 @@ export default function AdminJobFormClient({ id, initialData }: Props) {
                             >
                                 <span className="flex items-center gap-4 font-bold text-secondary text-sm group-hover:text-primary transition-colors">
                                     <span className="w-7 h-7 rounded-lg flex items-center justify-center bg-white border border-app text-[10px] font-black shadow-sm group-hover:shadow-md transition-shadow">EN</span>
-                                    English
+                                    {t('english')}
                                 </span>
                                 {showEnglish ? <ChevronDown className="w-4 h-4 text-link" /> : <ChevronRight className="w-4 h-4 text-secondary/40" />}
                             </button>
@@ -553,11 +576,11 @@ export default function AdminJobFormClient({ id, initialData }: Props) {
                                 <div className="p-4 md:p-8 pt-2 space-y-6 bg-app/20 animate-fade-in">
                                     <div className="space-y-4">
                                         <div>
-                                            <label className="text-[10px] font-extrabold text-secondary/60 uppercase block tracking-widest mb-1.5">Employment Title (EN)</label>
+                                            <label className="text-[10px] font-extrabold text-secondary/60 uppercase block tracking-widest mb-1.5">{t('employmentTitleEn')}</label>
                                             <input {...register('title_en')} className="w-full p-4 bg-white border border-app rounded-2xl text-primary font-bold shadow-sm" />
                                         </div>
                                         <div>
-                                            <label className="text-[10px] font-extrabold text-secondary/60 uppercase block tracking-widest mb-1.5">Narrative (EN)</label>
+                                            <label className="text-[10px] font-extrabold text-secondary/60 uppercase block tracking-widest mb-1.5">{t('narrativeEn')}</label>
                                             <textarea {...register('description_en')} rows={4} className="w-full p-4 bg-white border border-app rounded-3xl text-sm shadow-sm" />
                                         </div>
                                     </div>

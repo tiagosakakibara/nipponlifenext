@@ -1,15 +1,34 @@
 "use client";
 
 import { useState } from 'react';
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
 import { Link } from '@/i18n/routing';
 import { MapPin, Briefcase, Eye, ChevronRight, ChevronLeft, Calendar, Share2, Building, Clock } from 'lucide-react';
 import { Job } from '@/types/job';
 import { ApplyForm } from '../components/ApplyForm';
+import { JobComments } from '../components/JobComments';
 
 export default function JobDetailsClient({ job }: { job: Job }) {
     const t = useTranslations('jobs');
+    const locale = useLocale();
     const [showApplyForm, setShowApplyForm] = useState(false);
+
+    // Localized fields
+    // Localized fields with fallback to default language if translation is missing or empty
+    const title = (locale === 'ja' ? job.title_ja : locale === 'en' ? job.title_en : undefined) || job.title;
+
+    const descriptionRaw = locale === 'ja' ? job.description_ja : locale === 'en' ? job.description_en : undefined;
+    const description = (descriptionRaw && descriptionRaw.length > 0) ? descriptionRaw : job.description;
+
+    const requirementsRaw = locale === 'ja' ? job.requirements_ja : locale === 'en' ? job.requirements_en : undefined;
+    const requirements = (requirementsRaw && requirementsRaw.length > 0) ? requirementsRaw : job.requirements;
+
+    const benefitsRaw = locale === 'ja' ? job.benefits_ja : locale === 'en' ? job.benefits_en : undefined;
+    const benefits = (benefitsRaw && benefitsRaw.length > 0) ? benefitsRaw : job.benefits;
+
+    const salary = (locale === 'ja' ? job.salary_ja : locale === 'en' ? job.salary_en : undefined) || job.salary;
+    const bonus = (locale === 'ja' ? job.bonus_ja : locale === 'en' ? job.bonus_en : undefined) || job.bonus;
+    const location = (locale === 'ja' ? job.location_ja : locale === 'en' ? job.location_en : undefined) || job.location;
 
     const shareUrl = typeof window !== 'undefined' ? window.location.href : '';
 
@@ -67,7 +86,7 @@ export default function JobDetailsClient({ job }: { job: Job }) {
                         </div>
 
                         <h1 className="text-3xl md:text-5xl font-black text-primary tracking-tight leading-tight mb-4">
-                            {job.title}
+                            {title}
                         </h1>
                         <div className="flex items-center gap-4 text-secondary md:text-xl font-bold">
                             <Building className="w-5 h-5 text-muted" />
@@ -100,7 +119,7 @@ export default function JobDetailsClient({ job }: { job: Job }) {
                                     </div>
                                     <div>
                                         <p className="text-[10px] font-black text-zinc-400 dark:text-zinc-500 uppercase tracking-widest">Location</p>
-                                        <p className="text-xs font-bold text-primary">{job.location}</p>
+                                        <p className="text-xs font-bold text-primary">{location}</p>
                                     </div>
                                 </div>
 
@@ -150,19 +169,19 @@ export default function JobDetailsClient({ job }: { job: Job }) {
                         </div>
 
                         {/* Salary & Bonus if available */}
-                        {(job.salary || job.bonus) && (
-                            <div className="bg-[#1a1a1a] dark:bg-black rounded-3xl p-8 text-white relative overflow-hidden">
+                        {(salary || bonus) && (
+                            <div className="bg-gradient-to-br from-zinc-700 to-zinc-800 dark:from-zinc-800 dark:to-zinc-900 rounded-3xl p-8 text-white relative overflow-hidden border border-zinc-600/50 shadow-lg">
                                 <div className="relative z-10 space-y-6">
-                                    {job.salary && (
+                                    {salary && (
                                         <div>
-                                            <p className="text-[10px] font-black text-white/40 uppercase tracking-widest mb-1">Salary</p>
-                                            <p className="text-xl font-bold">{job.salary}</p>
+                                            <p className="text-[10px] font-black text-white/60 uppercase tracking-widest mb-1">{t('salary')}</p>
+                                            <p className="text-xl font-bold">{salary}</p>
                                         </div>
                                     )}
-                                    {job.bonus && (
+                                    {bonus && (
                                         <div>
-                                            <p className="text-[10px] font-black text-white/40 uppercase tracking-widest mb-1">Bonus</p>
-                                            <p className="text-lg font-bold text-emerald-400">{job.bonus}</p>
+                                            <p className="text-[10px] font-black text-white/60 uppercase tracking-widest mb-1">{t('modal.bonus') || 'Bonus'}</p>
+                                            <p className="text-lg font-bold text-emerald-400">{bonus}</p>
                                         </div>
                                     )}
                                 </div>
@@ -176,7 +195,7 @@ export default function JobDetailsClient({ job }: { job: Job }) {
                         {showApplyForm ? (
                             <div className="bg-surface rounded-[32px] border border-app p-8 md:p-12 animate-slide-up shadow-xl">
                                 <ApplyForm
-                                    jobTitle={job.title}
+                                    jobTitle={title}
                                     onClose={() => setShowApplyForm(false)}
                                 />
                             </div>
@@ -191,7 +210,7 @@ export default function JobDetailsClient({ job }: { job: Job }) {
                                         </h3>
                                     </div>
                                     <div className="space-y-4 text-base md:text-lg text-secondary font-medium leading-relaxed">
-                                        {job.description?.map((p, i) => <p key={i}>{p}</p>)}
+                                        {description?.map((p, i) => <p key={i}>{p}</p>)}
                                     </div>
                                 </section>
 
@@ -204,7 +223,7 @@ export default function JobDetailsClient({ job }: { job: Job }) {
                                         </h3>
                                     </div>
                                     <div className="grid grid-cols-1 gap-4">
-                                        {job.requirements?.map((req, i) => (
+                                        {requirements?.map((req, i) => (
                                             <div key={i} className="p-6 bg-surface flex items-start gap-4 rounded-3xl border border-app hover:border-red-500/30 transition-colors group">
                                                 <div className="w-6 h-6 rounded-full bg-red-50 dark:bg-red-900/20 text-red-500 flex-shrink-0 flex items-center justify-center mt-0.5 group-hover:bg-red-500 group-hover:text-white transition-colors">
                                                     <ChevronRight className="w-4 h-4" />
@@ -216,7 +235,7 @@ export default function JobDetailsClient({ job }: { job: Job }) {
                                 </section>
 
                                 {/* Benefits */}
-                                {job.benefits && job.benefits.length > 0 && (
+                                {benefits && benefits.length > 0 && (
                                     <section>
                                         <div className="flex items-center gap-3 mb-6 px-4">
                                             <div className="w-1.5 h-6 bg-emerald-500 rounded-full" />
@@ -225,7 +244,7 @@ export default function JobDetailsClient({ job }: { job: Job }) {
                                             </h3>
                                         </div>
                                         <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
-                                            {job.benefits.map((benefit: any, i) => (
+                                            {benefits.map((benefit: any, i) => (
                                                 <div key={i} className="p-6 bg-surface border border-app rounded-3xl text-center space-y-4 hover:border-emerald-500/30 transition-colors group">
                                                     <div className="mx-auto w-10 h-10 rounded-xl bg-emerald-50 dark:bg-emerald-900/20 text-emerald-500 flex items-center justify-center group-hover:bg-emerald-500 group-hover:text-white transition-colors">
                                                         <CheckCircleIcon className="w-5 h-5" />
@@ -236,6 +255,11 @@ export default function JobDetailsClient({ job }: { job: Job }) {
                                         </div>
                                     </section>
                                 )}
+
+                                {/* Comments Section */}
+                                <section className="pt-8 border-t border-app">
+                                    <JobComments jobId={job.id} />
+                                </section>
                             </div>
                         )}
                     </div>

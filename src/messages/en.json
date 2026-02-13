@@ -916,6 +916,7 @@
         }
     },
     "jobs": {
+        "back": "Back",
         "title": "Job Opportunities",
         "subtitle": "Find work opportunities in Japan",
         "applyNow": "Apply Now",
@@ -959,6 +960,7 @@
             "jobDescription": "Job Description",
             "requirements": "Requirements",
             "benefits": "Benefits",
+            "bonus": "Bonus",
             "privacyNotice": "By submitting, you agree to our privacy terms.",
             "cancel": "Cancel",
             "submitApplication": "Submit Application",
@@ -1000,6 +1002,16 @@
             "partTime": "Part-time",
             "automotive": "Automotive",
             "fullTime": "Full-time"
+        },
+        "comments": {
+            "title": "Comments",
+            "loginToComment": "Log in to comment on this job.",
+            "placeholder": "Write your comment about this job...",
+            "submit": "Submit",
+            "submitting": "Submitting...",
+            "success": "Comment submitted!",
+            "error": "Error submitting comment",
+            "empty": "No comments yet. Be the first!"
         }
     },
     "eventsCalendar": {

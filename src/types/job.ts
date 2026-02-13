@@ -21,6 +21,8 @@ export interface Job {
     logo?: string;
     slug?: string;
     status: JobStatus;
+    expires_at?: string;
+    position_order?: number;
 
     // Technical fields
     created_at?: string;
@@ -91,3 +93,16 @@ export const JOB_TYPES = [
     { value: 'contract', label: 'Contrato' },
     { value: 'temporary', label: 'Temporário' },
 ];
+
+export interface JobComment {
+    id: string;
+    job_id: string;
+    author_id: string;
+    content: string;
+    created_at: string;
+    author: {
+        full_name?: string;
+        username?: string;
+        avatar_url?: string;
+    };
+}

@@ -863,6 +863,7 @@
         }
     },
     "jobs": {
+        "back": "戻る",
         "title": "求人情報",
         "subtitle": "日本での仕事の機会を見つける",
         "applyNow": "応募する",
@@ -906,6 +907,7 @@
             "jobDescription": "仕事内容",
             "requirements": "応募条件",
             "benefits": "福利厚生",
+            "bonus": "ボーナス",
             "privacyNotice": "送信することで、プライバシー規約に同意したものとみなされます。",
             "cancel": "キャンセル",
             "submitApplication": "応募する",
@@ -947,6 +949,16 @@
             "partTime": "パートタイム",
             "automotive": "自動車",
             "fullTime": "正社員"
+        },
+        "comments": {
+            "title": "コメント",
+            "loginToComment": "コメントするにはログインしてください。",
+            "placeholder": "この求人についてコメントを書く...",
+            "submit": "送信",
+            "submitting": "送信中...",
+            "success": "コメントを送信しました！",
+            "error": "コメントの送信エラー",
+            "empty": "まだコメントはありません。最初のコメントを投稿しましょう！"
         }
     },
     "eventsCalendar": {
