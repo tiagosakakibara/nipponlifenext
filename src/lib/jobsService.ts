@@ -105,31 +105,41 @@ export const jobsService = {
     // --- Helpers ---
 
     mapDbToJob(j: any): Job {
-        return {
-            id: j.id,
-            title: j.title,
-            company: j.company_name,
-            location: j.prefecture ? `${j.prefecture}, ${j.city || ''}` : j.location,
-            description: j.description ? j.description.split('\n') : [],
-            requirements: j.requirements || [],
-            benefits: Array.isArray(j.benefits) ? j.benefits : [],
-            salary: j.salary_text || (j.pay_rate_yen ? `¥${j.pay_rate_yen.toLocaleString()}/${j.pay_unit}` : j.pay_text),
-            bonus: j.bonus_text,
-            tags: j.tags || [],
-            type: (j.job_type?.toLowerCase() as any) || 'full-time',
-            featured: j.featured,
-            logo: j.cover_image_url,
-            slug: j.slug,
-            status: j.status,
-            // Original Db fields for form
-            db_fields: j
-        };
+        return mapDbToJob(j);
     },
 
     mapJobToDb(job: any) {
-        // This is a simplified mapping, might need more detail for exact db schema
-        const db: any = { ...job };
-        // Handle field name differences if necessary
-        return db;
+        return mapJobToDb(job);
     }
 };
+
+// --- Standalone Helpers ---
+
+export function mapDbToJob(j: any): Job {
+    return {
+        id: j.id,
+        title: j.title,
+        company: j.company_name,
+        location: j.prefecture ? `${j.prefecture}, ${j.city || ''}` : j.location,
+        description: j.description ? j.description.split('\n') : [],
+        requirements: j.requirements || [],
+        benefits: Array.isArray(j.benefits) ? j.benefits : [],
+        salary: j.salary_text || (j.pay_rate_yen ? `¥${j.pay_rate_yen.toLocaleString()}/${j.pay_unit}` : j.pay_text),
+        bonus: j.bonus_text,
+        tags: j.tags || [],
+        type: (j.job_type?.toLowerCase() as any) || 'full-time',
+        featured: j.featured,
+        logo: j.cover_image_url,
+        slug: j.slug,
+        status: j.status,
+        // Original Db fields for form
+        db_fields: j
+    };
+}
+
+export function mapJobToDb(job: any) {
+    // This is a simplified mapping, might need more detail for exact db schema
+    const db: any = { ...job };
+    // Handle field name differences if necessary
+    return db;
+}

@@ -1,22 +1,19 @@
 "use client";
 
 import { useState, useMemo, useEffect } from 'react';
-import { useSearchParams } from 'next/navigation';
+
 import { useTranslations } from 'next-intl';
-import { Search, Filter, ChevronLeft, ChevronRight, Loader2, MapPin, Briefcase, Eye, ArrowRight, X } from 'lucide-react';
+import { Search, Filter, ChevronLeft, ChevronRight, Loader2, MapPin, Briefcase, Eye } from 'lucide-react';
 import { jobsService } from '@/lib/jobsService';
 import { Link } from '@/i18n/routing';
 import type { Job } from '@/types/job';
-import { ApplyForm } from './components/ApplyForm';
 
-const ITEMS_PER_PAGE = 6;
+const ITEMS_PER_PAGE = 12;
 
 export default function JobsClient() {
     const t = useTranslations('jobs');
     const ct = useTranslations('common');
-    const searchParams = useSearchParams();
-    const [selectedJob, setSelectedJob] = useState<Job | null>(null);
-    const [showApplyForm, setShowApplyForm] = useState(false);
+
     const [searchQuery, setSearchQuery] = useState('');
     const [selectedLocation, setSelectedLocation] = useState('all');
     const [selectedType, setSelectedType] = useState('all');
@@ -41,14 +38,6 @@ export default function JobsClient() {
         fetchJobs();
     }, []);
 
-    // Handle initial job selection from URL
-    useEffect(() => {
-        const jobId = searchParams.get('selectedJobId');
-        if (!loading && jobs.length > 0 && jobId) {
-            const job = jobs.find(j => j.id === jobId);
-            if (job) setSelectedJob(job);
-        }
-    }, [loading, jobs, searchParams]);
 
     const regions = [
         { key: 'all', label: t('regions.allRegions') },
@@ -205,15 +194,15 @@ export default function JobsClient() {
                     </div>
                 ) : paginatedJobs.length > 0 ? (
                     <>
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                             {paginatedJobs.map((job) => (
-                                <article
+                                <Link
                                     key={job.id}
-                                    onClick={() => { setSelectedJob(job); setShowApplyForm(false); }}
-                                    className="group relative bg-surface border border-app rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 cursor-pointer flex flex-col h-full"
+                                    href={`/jobs/${job.id}`}
+                                    className="group relative bg-surface border border-app rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 cursor-pointer flex flex-col h-full"
                                 >
                                     {/* Image Section */}
-                                    <div className="relative h-56 w-full overflow-hidden bg-muted/30">
+                                    <div className="relative h-40 w-full overflow-hidden bg-muted/30">
                                         {job.logo ? (
                                             <img
                                                 src={job.logo}
@@ -222,37 +211,37 @@ export default function JobsClient() {
                                             />
                                         ) : (
                                             <div className="w-full h-full flex items-center justify-center bg-app text-muted">
-                                                <Briefcase className="w-12 h-12 opacity-50" />
+                                                <Briefcase className="w-10 h-10 opacity-50" />
                                             </div>
                                         )}
 
                                         <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-black/10" />
 
                                         {/* Badges */}
-                                        <div className="absolute top-4 left-4 flex flex-wrap gap-2 pr-4">
+                                        <div className="absolute top-3 left-3 flex flex-wrap gap-2 pr-4">
                                             {/* Premium Badge - Only if featured */}
                                             {job.featured && (
-                                                <span className="px-3 py-1 bg-[#D70F24] text-white text-[10px] font-black uppercase tracking-widest rounded-lg shadow-md border border-white/10">
+                                                <span className="px-2 py-0.5 bg-[#D70F24] text-white text-[9px] font-black uppercase tracking-widest rounded-md shadow-md border border-white/10">
                                                     Premium
                                                 </span>
                                             )}
 
                                             {/* Type Badge */}
-                                            <span className="px-3 py-1 bg-black/70 backdrop-blur-md text-white text-[10px] font-black uppercase tracking-widest rounded-lg border border-white/10 shadow-sm">
+                                            <span className="px-2 py-0.5 bg-black/70 backdrop-blur-md text-white text-[9px] font-black uppercase tracking-widest rounded-md border border-white/10 shadow-sm">
                                                 {jobTypes.find(t => t.value === job.type)?.label || job.type}
                                             </span>
                                         </div>
                                     </div>
 
                                     {/* Content Section */}
-                                    <div className="p-6 flex flex-col flex-1">
+                                    <div className="p-4 flex flex-col flex-1">
                                         {/* Company Name */}
-                                        <h3 className="text-xl font-black text-primary mb-2 line-clamp-1 group-hover:text-[#D70F24] transition-colors tracking-tight">
+                                        <h3 className="text-lg font-black text-primary mb-1 line-clamp-1 group-hover:text-[#D70F24] transition-colors tracking-tight">
                                             {job.company}
                                         </h3>
 
                                         {/* Job Title / Description Excerpt */}
-                                        <p className="text-sm font-medium text-secondary mb-6 line-clamp-2 flex-1">
+                                        <p className="text-xs font-medium text-secondary mb-3 line-clamp-2 flex-1">
                                             {job.title}
                                             {job.description && job.description.length > 0 && (
                                                 <span className="font-normal opacity-80"> — {job.description[0]}</span>
@@ -260,22 +249,22 @@ export default function JobsClient() {
                                         </p>
 
                                         {/* Location */}
-                                        <div className="pt-4 border-t border-app mt-auto flex items-center gap-2 text-xs font-bold text-muted uppercase tracking-wider">
-                                            <MapPin className="w-3.5 h-3.5" />
+                                        <div className="pt-3 border-t border-app mt-auto flex items-center gap-2 text-[10px] font-bold text-muted uppercase tracking-wider">
+                                            <MapPin className="w-3 h-3" />
                                             <span className="line-clamp-1">{job.location}</span>
                                         </div>
                                     </div>
-                                </article>
+                                </Link>
                             ))}
                         </div>
 
                         {/* Pagination */}
                         {totalPages > 1 && (
-                            <div className="flex items-center justify-center gap-2 mt-16">
+                            <div className="flex items-center justify-center gap-2 mt-12">
                                 <button
                                     onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
                                     disabled={currentPage === 1}
-                                    className="p-4 rounded-2xl bg-surface border border-app text-zinc-400 hover:text-primary disabled:opacity-30 transition-all font-black text-xs"
+                                    className="p-3 rounded-2xl bg-surface border border-app text-zinc-400 hover:text-primary disabled:opacity-30 transition-all font-black text-xs"
                                 >
                                     {ct('previous')}
                                 </button>
@@ -283,9 +272,9 @@ export default function JobsClient() {
                                     <button
                                         key={i}
                                         onClick={() => setCurrentPage(i + 1)}
-                                        className={`w-12 h-12 rounded-2xl font-black text-xs transition-all ${currentPage === i + 1
+                                        className={`w-10 h-10 rounded-2xl font-black text-xs transition-all ${currentPage === i + 1
                                             ? 'bg-red-500 text-white shadow-xl shadow-red-500/20'
-                                            : 'bg-surface border border-app text-zinc-400 hover:text-primary'
+                                            : 'bg-app border border-app text-zinc-400 hover:text-primary'
                                             }`}
                                     >
                                         {i + 1}
@@ -294,7 +283,7 @@ export default function JobsClient() {
                                 <button
                                     onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
                                     disabled={currentPage === totalPages}
-                                    className="p-4 rounded-2xl bg-surface border border-app text-zinc-400 hover:text-primary disabled:opacity-30 transition-all font-black text-xs"
+                                    className="p-3 rounded-2xl bg-surface border border-app text-zinc-400 hover:text-primary disabled:opacity-30 transition-all font-black text-xs"
                                 >
                                     {ct('next')}
                                 </button>
@@ -312,133 +301,7 @@ export default function JobsClient() {
                 )}
             </main>
 
-            {/* Premium Job Details Modal */}
-            {/* Premium Job Details Modal */}
-            {selectedJob && (
-                <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 sm:p-12">
-                    <div
-                        className="absolute inset-0 bg-[#1a1a1a]/80 backdrop-blur-md animate-fade-in"
-                        onClick={() => setSelectedJob(null)}
-                    />
-                    <div className="relative w-full max-w-4xl bg-app rounded-[48px] shadow-2xl overflow-hidden flex flex-col md:flex-row h-auto max-h-[90vh] animate-slide-up border border-app">
-                        <button
-                            onClick={() => setSelectedJob(null)}
-                            className="absolute top-8 right-8 z-[110] w-12 h-12 rounded-2xl bg-surface border border-app flex items-center justify-center shadow-lg hover:rotate-90 transition-all duration-500 text-primary"
-                        >
-                            <X className="w-6 h-6" />
-                        </button>
 
-                        {/* Modal Lead Section */}
-                        <div className="w-full md:w-[38%] bg-surface p-6 md:p-10 flex flex-col border-r border-app max-h-[50vh] md:max-h-none overflow-y-auto md:overflow-visible shrink-0">
-                            <div className="space-y-6 md:space-y-8 flex-1">
-                                {selectedJob.logo && (
-                                    <img src={selectedJob.logo} className="w-24 h-24 rounded-3xl object-contain bg-surface border border-app p-4 shadow-xl shadow-black/5" alt={selectedJob.company} />
-                                )}
-                                <div>
-                                    <div className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-red-50 dark:bg-red-500/20 text-red-600 dark:text-red-400 rounded-full text-[10px] font-black uppercase tracking-widest mb-4">
-                                        {selectedJob.type}
-                                    </div>
-                                    <h2 className="text-2xl md:text-4xl font-black text-primary tracking-tight leading-tight">
-                                        {selectedJob.title}
-                                    </h2>
-                                    <p className="text-xl font-bold text-secondary mt-2 uppercase tracking-wide">{selectedJob.company}</p>
-                                </div>
-                                <div className="space-y-4">
-                                    <div className="flex items-center gap-3">
-                                        <div className="w-10 h-10 rounded-xl bg-surface shadow-sm flex items-center justify-center text-red-500 border border-app">
-                                            <MapPin className="w-5 h-5" />
-                                        </div>
-                                        <div>
-                                            <p className="text-[10px] font-black text-zinc-400 dark:text-zinc-500 uppercase tracking-widest">Office Location</p>
-                                            <p className="text-sm font-black text-primary">{selectedJob.location}</p>
-                                        </div>
-                                    </div>
-                                    <div className="flex items-center gap-3">
-                                        <div className="w-10 h-10 rounded-xl bg-surface shadow-sm flex items-center justify-center text-emerald-500 border border-app">
-                                            <Eye className="w-5 h-5" />
-                                        </div>
-                                        <div>
-                                            <p className="text-[10px] font-black text-zinc-400 dark:text-zinc-500 uppercase tracking-widest">Global Visibility</p>
-                                            <p className="text-sm font-black text-primary">{selectedJob.db_fields?.view_count || 0} Views</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className="mt-6 md:mt-12">
-                                {!showApplyForm ? (
-                                    <button
-                                        onClick={() => setShowApplyForm(true)}
-                                        className="w-full bg-[#D70F24] hover:bg-[#b50d1f] text-white py-5 rounded-3xl font-black text-sm shadow-2xl shadow-red-500/20 transition-all hover:scale-[1.02] active:scale-[0.98]"
-                                    >
-                                        {t('applyButton')}
-                                    </button>
-                                ) : (
-                                    <button
-                                        onClick={() => setShowApplyForm(false)}
-                                        className="w-full bg-surface text-primary border border-app py-5 rounded-3xl font-black text-sm transition-all hover:bg-zinc-100 dark:hover:bg-white/10"
-                                    >
-                                        {ct('back')}
-                                    </button>
-                                )}
-                            </div>
-                        </div>
-
-                        {/* Modal Content Section */}
-                        <div className="flex-1 p-6 md:p-10 overflow-y-auto bg-app">
-                            {showApplyForm ? (
-                                <ApplyForm
-                                    jobTitle={selectedJob.title}
-                                    onClose={() => { setSelectedJob(null); setShowApplyForm(false); }}
-                                />
-                            ) : (
-                                <div className="space-y-12">
-                                    <section className="space-y-6">
-                                        <div className="flex items-center gap-3">
-                                            <div className="w-1.5 h-6 bg-red-500 rounded-full" />
-                                            <h3 className="text-xl font-heading font-bold text-primary tracking-tight uppercase">{t('modal.jobDescription')}</h3>
-                                        </div>
-                                        <div className="space-y-4 text-lg text-secondary font-medium leading-relaxed">
-                                            {selectedJob.description?.map((p, i) => <p key={i}>{p}</p>)}
-                                        </div>
-                                    </section>
-
-                                    <section className="space-y-6">
-                                        <div className="flex items-center gap-3">
-                                            <div className="w-1.5 h-6 bg-[#D70F24] rounded-full" />
-                                            <h3 className="text-xl font-heading font-bold text-primary tracking-tight uppercase">{t('modal.requirements')}</h3>
-                                        </div>
-                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                            {selectedJob.requirements?.map((req, i) => (
-                                                <div key={i} className="p-4 bg-surface flex items-start gap-3 rounded-2xl border border-app">
-                                                    <div className="w-5 h-5 rounded-full bg-emerald-500 text-white flex-shrink-0 flex items-center justify-center mt-0.5">
-                                                        <ChevronRight className="w-3 h-3" />
-                                                    </div>
-                                                    <span className="text-sm font-bold text-primary leading-tight">{req}</span>
-                                                </div>
-                                            ))}
-                                        </div>
-                                    </section>
-
-                                    <section className="space-y-6">
-                                        <div className="flex items-center gap-3">
-                                            <div className="w-1.5 h-6 bg-emerald-500 rounded-full" />
-                                            <h3 className="text-xl font-heading font-bold text-primary tracking-tight uppercase">{t('modal.benefits')}</h3>
-                                        </div>
-                                        <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-                                            {selectedJob.benefits?.map((benefit: any, i) => (
-                                                <div key={i} className="p-6 bg-surface border border-app rounded-3xl text-center space-y-2 hover:border-emerald-200 dark:hover:border-emerald-800 transition-colors">
-                                                    <p className="text-xs font-bold text-primary uppercase tracking-wider">{benefit.label}</p>
-                                                </div>
-                                            ))}
-                                        </div>
-                                    </section>
-                                </div>
-                            )}
-                        </div>
-                    </div>
-                </div>
-            )}
         </div>
     );
 }
