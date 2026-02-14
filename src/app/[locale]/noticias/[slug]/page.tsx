@@ -184,29 +184,35 @@ export default async function NewsArticlePage({ params }: Props) {
                     <article className="w-full min-w-0">
                         {/* Article Text */}
                         {contentMd ? (
-                            <div className="prose dark:prose-invert prose-lg max-w-none w-full break-words hyphens-none text-justify
-                                         prose-headings:font-display prose-headings:font-bold prose-headings:tracking-tight prose-headings:text-primary prose-headings:text-left
-                                         prose-p:text-secondary prose-p:leading-[1.8] prose-p:mb-8
-                                         prose-strong:text-primary prose-strong:font-bold
-                                         prose-img:rounded-3xl prose-img:shadow-2xl prose-img:my-12 prose-img:w-full prose-img:max-w-full prose-img:h-auto
-                                         prose-a:text-accent prose-a:no-underline hover:prose-a:underline prose-a:break-words
-                                         prose-li:text-secondary
+                            <div
+                                className="max-w-none w-full wrap-break-word hyphens-none
+                                         [&_h1]:font-display [&_h1]:font-bold [&_h1]:tracking-tight [&_h1]:text-primary
+                                         [&_h2]:font-display [&_h2]:font-bold [&_h2]:tracking-tight [&_h2]:text-primary
+                                         [&_h3]:font-display [&_h3]:font-bold [&_h3]:tracking-tight [&_h3]:text-primary
+                                         [&_p]:text-secondary [&_p]:leading-[1.8] [&_p]:mb-8
+                                         [&_strong]:text-primary [&_strong]:font-bold
+                                         [&_img]:rounded-3xl [&_img]:shadow-2xl [&_img]:my-12 [&_img]:w-full [&_img]:max-w-full [&_img]:h-auto
+                                         [&_a]:text-accent [&_a]:no-underline hover:[&_a]:underline
+                                         [&_li]:text-secondary
                                          [&_table]:w-full [&_table]:overflow-x-auto [&_table]:block
-                                         [&_pre]:overflow-x-auto [&_pre]:whitespace-pre-wrap [&_pre]:break-words">
+                                         [&_pre]:overflow-x-auto [&_pre]:whitespace-pre-wrap [&_pre]:break-words"
+                            >
                                 <ReactMarkdown remarkPlugins={[remarkGfm]}>{contentMd}</ReactMarkdown>
                             </div>
                         ) : (
                             <div
-                                className="prose dark:prose-invert prose-lg max-w-none w-full break-words hyphens-none text-justify
-                                         prose-headings:font-display prose-headings:font-bold prose-headings:tracking-tight prose-headings:text-primary prose-headings:text-left
-                                         prose-p:text-secondary prose-p:leading-[1.8] prose-p:mb-8
-                                         prose-strong:text-primary prose-strong:font-bold
-                                         prose-blockquote:border-l-4 prose-blockquote:border-[var(--nl-accent)] prose-blockquote:bg-surface prose-blockquote:px-8 prose-blockquote:py-1 prose-blockquote:rounded-r-2xl prose-blockquote:italic prose-blockquote:my-12
-                                         prose-img:rounded-3xl prose-img:shadow-2xl prose-img:my-12 prose-img:w-full prose-img:max-w-full prose-img:h-auto
-                                         prose-a:text-accent prose-a:no-underline hover:prose-a:underline prose-a:break-words
-                                         prose-ul:my-6 prose-ul:space-y-3
-                                         prose-ol:my-6 prose-ol:space-y-3
-                                         prose-li:text-secondary prose-li:leading-relaxed
+                                className="max-w-none w-full wrap-break-word hyphens-none
+                                         [&_h1]:font-display [&_h1]:font-bold [&_h1]:tracking-tight [&_h1]:text-primary
+                                         [&_h2]:font-display [&_h2]:font-bold [&_h2]:tracking-tight [&_h2]:text-primary
+                                         [&_h3]:font-display [&_h3]:font-bold [&_h3]:tracking-tight [&_h3]:text-primary
+                                         [&_p]:text-secondary [&_p]:leading-[1.8] [&_p]:mb-8
+                                         [&_strong]:text-primary [&_strong]:font-bold
+                                         [&_blockquote]:border-l-4 [&_blockquote]:border-[var(--nl-accent)] [&_blockquote]:bg-surface [&_blockquote]:px-8 [&_blockquote]:py-1 [&_blockquote]:rounded-r-2xl [&_blockquote]:italic [&_blockquote]:my-12
+                                         [&_img]:rounded-3xl [&_img]:shadow-2xl [&_img]:my-12 [&_img]:w-full [&_img]:max-w-full [&_img]:h-auto
+                                         [&_a]:text-accent [&_a]:no-underline hover:[&_a]:underline
+                                         [&_ul]:my-6 [&_ul]:space-y-3
+                                         [&_ol]:my-6 [&_ol]:space-y-3
+                                         [&_li]:text-secondary [&_li]:leading-relaxed
                                          [&_table]:w-full [&_table]:overflow-x-auto [&_table]:block
                                          [&_pre]:overflow-x-auto [&_pre]:whitespace-pre-wrap [&_pre]:break-words
                                          article-content"
