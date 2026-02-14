@@ -182,7 +182,7 @@ export default async function HomePage() {
                     sectionId="negocios"
                     icon={<Building2 className="w-5 h-5" />}
                     titleLink="/business"
-                    containerClass="!px-6"
+                    containerClass="!px-6 !scroll-pl-6"
                 >
                     {businesses && businesses.length > 0 ? (
                         businesses.map((business: Business) => (
@@ -199,7 +199,7 @@ export default async function HomePage() {
                     sectionId="comunidades"
                     icon={<Users className="w-5 h-5" />}
                     titleLink="/comunidade"
-                    containerClass="!px-6"
+                    containerClass="!px-6 !scroll-pl-6"
                 >
                     {communities.map((item) => (
                         <CommunityCard key={item.id} item={item} />
