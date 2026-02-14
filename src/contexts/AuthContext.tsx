@@ -1,6 +1,5 @@
 "use client";
-
-import React, { createContext, useContext, useState, useEffect, useRef, ReactNode } from 'react';
+import React, { createContext, useContext, useState, useEffect, useCallback, useRef, ReactNode } from 'react';
 import { User } from '@supabase/supabase-js';
 import { supabase } from '@/lib/supabaseClient';
 
@@ -33,10 +32,8 @@ const ADMIN_EMAILS = (process.env.NEXT_PUBLIC_ADMIN_EMAILS ?? '')
 function applyAdminOverride(profile: any, user: User | undefined | null): any {
     const userEmail = user?.email;
     if (!userEmail) return profile;
-
     const metadata = user?.user_metadata;
     const isSpecialAdmin = ADMIN_EMAILS.includes(userEmail.toLowerCase());
-
     if (!profile) {
         return {
             id: user.id,
@@ -47,7 +44,6 @@ function applyAdminOverride(profile: any, user: User | undefined | null): any {
             status: 'active'
         };
     }
-
     if (isSpecialAdmin) {
         return { ...profile, role: 'admin' };
     }
@@ -65,62 +61,66 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         loading: true
     });
 
-    // Evita condição de corrida: onAuthStateChange é a única fonte de verdade
-    const handledRef = useRef(false);
+    // FIX 1: Ref para cancelar requisições de perfil desatualizadas.
+    // Cada busca recebe um ID; se um ID mais novo chegar antes de terminar,
+    // o resultado antigo é descartado.
+    const fetchIdRef = useRef(0);
 
-    const getProfile = async (currentUser: User): Promise<AuthProfile> => {
+    // FIX 2: useCallback para estabilizar a referência de getProfile
+    const getProfile = useCallback(async (currentUser: User): Promise<AuthProfile> => {
         try {
             const { data } = await supabase
                 .from('profiles')
                 .select('id, username, full_name, avatar_url, role, status, bio')
                 .eq('id', currentUser.id)
                 .single();
-
             return applyAdminOverride(data, currentUser);
         } catch (err) {
             console.error('Error fetching profile:', err);
             return applyAdminOverride(null, currentUser);
         }
-    };
+    }, []);
 
     useEffect(() => {
         let mounted = true;
 
-        async function initializeAuth() {
-            try {
-                // 1. Tenta pegar a sessão atual imediatamente
-                const { data: { session } } = await supabase.auth.getSession();
-
-                if (mounted && session?.user) {
-                    const profile = await getProfile(session.user);
-                    setAuthState({ user: session.user, profile, loading: false });
-                } else if (mounted) {
-                    // Se não tiver sessão, paramos o loading
-                    setAuthState(prev => ({ ...prev, loading: false }));
-                }
-            } catch (error) {
-                console.error('Error initializing auth:', error);
-                if (mounted) setAuthState(prev => ({ ...prev, loading: false }));
-            }
-        }
-
-        initializeAuth();
-
-        // 2. Escuta mudanças futuras (login, logout, refresh token)
+        // FIX 3: Única fonte de verdade — apenas onAuthStateChange controla o estado.
+        // Removemos o getSession() manual que competia com o listener e causava
+        // a condição de corrida que derrubava o login ao recarregar a página.
         const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
+            if (!mounted) return;
+
             const currentUser = session?.user ?? null;
 
-            // Ignoramos INITIAL_SESSION pois já tratamos acima com getSession()
-            // Isso evita condições de corrida/duplicidade
-            if (event === 'INITIAL_SESSION') return;
+            if (event === 'SIGNED_OUT') {
+                setAuthState({ user: null, profile: null, loading: false });
+                return;
+            }
 
-            if (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED' || event === 'USER_UPDATED') {
-                if (currentUser) {
-                    const profile = await getProfile(currentUser);
+            // INITIAL_SESSION cobre o caso de recarregar a página com sessão ativa.
+            // SIGNED_IN cobre novo login.
+            // TOKEN_REFRESHED e USER_UPDATED cobrem renovação/atualização.
+            if (
+                event === 'INITIAL_SESSION' ||
+                event === 'SIGNED_IN' ||
+                event === 'TOKEN_REFRESHED' ||
+                event === 'USER_UPDATED'
+            ) {
+                if (!currentUser) {
+                    // INITIAL_SESSION sem usuário = não há sessão
+                    setAuthState({ user: null, profile: null, loading: false });
+                    return;
+                }
+
+                // FIX 4: Cancela resultados de buscas anteriores que ainda estão
+                // em voo. Incrementa o ID antes de buscar e só aplica o resultado
+                // se o ID ainda for o mais recente quando a busca terminar.
+                const fetchId = ++fetchIdRef.current;
+                const profile = await getProfile(currentUser);
+
+                if (mounted && fetchId === fetchIdRef.current) {
                     setAuthState({ user: currentUser, profile, loading: false });
                 }
-            } else if (event === 'SIGNED_OUT') {
-                setAuthState({ user: null, profile: null, loading: false });
             }
         });
 
@@ -128,7 +128,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             mounted = false;
             subscription.unsubscribe();
         };
-    }, []);
+    }, [getProfile]);
 
     const value = {
         user: authState.user,
@@ -138,8 +138,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         isPhotographer: authState.profile?.role === 'photographer' || authState.profile?.role === 'admin',
         refreshProfile: async () => {
             if (authState.user) {
+                const fetchId = ++fetchIdRef.current;
                 const profile = await getProfile(authState.user);
-                setAuthState(prev => ({ ...prev, profile }));
+                // Aplica só se não houve outra busca mais recente enquanto isso
+                if (fetchId === fetchIdRef.current) {
+                    setAuthState(prev => ({ ...prev, profile }));
+                }
             }
         }
     };
