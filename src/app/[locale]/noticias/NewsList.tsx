@@ -85,7 +85,7 @@ export function NewsList({ initialPosts, categories, initialTag }: NewsListProps
             )}
 
             {/* Filter & Search Bar */}
-            <div className="mb-12 sticky top-24 z-30 py-4 bg-surface/90 backdrop-blur-xl rounded-[2.5rem] px-6 border border-app shadow-lg">
+            <div className="hidden md:block mb-12 sticky top-24 z-30 py-4 bg-surface/90 backdrop-blur-xl rounded-[2.5rem] px-6 border border-app shadow-lg">
                 <div className="flex flex-col gap-6">
                     {/* Categories Row */}
                     <div className="flex items-center gap-3 overflow-x-auto w-full pb-2 scrollbar-hide">
