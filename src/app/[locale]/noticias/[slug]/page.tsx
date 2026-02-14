@@ -87,12 +87,16 @@ export default async function NewsArticlePage({ params }: Props) {
     const rawContent = getTranslatedField(post, 'content', locale);
     const contentMd = getTranslatedField(post, 'content_md', locale);
 
-    // Clean AI content reference markers from HTML
+    // Clean AI content reference markers and fix non-breaking spaces from HTML
     const cleanContentReferences = (html: string): string => {
         if (!html) return '';
         let cleaned = html.replace(/:contentReference\[oaicite:\d+\]\{index=\d+\}/g, '');
         cleaned = cleaned.replace(/<strong>\s*:contentReference\[oaicite:\d+\]\{index=\d+\}\s*<\/strong>/g, '');
         cleaned = cleaned.replace(/contentReference\[.*?\]\{.*?\}/g, '');
+        // Replace &nbsp; with regular spaces so text can wrap naturally
+        cleaned = cleaned.replace(/&nbsp;/g, ' ');
+        // Also replace the Unicode non-breaking space character (U+00A0)
+        cleaned = cleaned.replace(/\u00A0/g, ' ');
         return cleaned;
     };
 
@@ -185,7 +189,7 @@ export default async function NewsArticlePage({ params }: Props) {
                         {/* Article Text */}
                         {contentMd ? (
                             <div
-                                className="max-w-none w-full wrap-break-word hyphens-none
+                                className="max-w-none w-full hyphens-none
                                          [&_h1]:font-display [&_h1]:font-bold [&_h1]:tracking-tight [&_h1]:text-primary
                                          [&_h2]:font-display [&_h2]:font-bold [&_h2]:tracking-tight [&_h2]:text-primary
                                          [&_h3]:font-display [&_h3]:font-bold [&_h3]:tracking-tight [&_h3]:text-primary
@@ -201,7 +205,7 @@ export default async function NewsArticlePage({ params }: Props) {
                             </div>
                         ) : (
                             <div
-                                className="max-w-none w-full wrap-break-word hyphens-none
+                                className="max-w-none w-full hyphens-none
                                          [&_h1]:font-display [&_h1]:font-bold [&_h1]:tracking-tight [&_h1]:text-primary
                                          [&_h2]:font-display [&_h2]:font-bold [&_h2]:tracking-tight [&_h2]:text-primary
                                          [&_h3]:font-display [&_h3]:font-bold [&_h3]:tracking-tight [&_h3]:text-primary
