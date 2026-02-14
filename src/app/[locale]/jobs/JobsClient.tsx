@@ -17,7 +17,6 @@ export default function JobsClient() {
     const [searchQuery, setSearchQuery] = useState('');
     const [selectedLocation, setSelectedLocation] = useState('all');
     const [selectedType, setSelectedType] = useState('all');
-    const [activeChip, setActiveChip] = useState('all');
     const [currentPage, setCurrentPage] = useState(1);
     const [jobs, setJobs] = useState<Job[]>([]);
     const [loading, setLoading] = useState(true);
@@ -58,12 +57,7 @@ export default function JobsClient() {
         { value: 'temporary', label: t('types.temporary') },
     ];
 
-    const chips = [
-        { key: 'all', label: t('filters.all') },
-        { key: 'accommodation', label: t('filters.withAccommodation') },
-        { key: 'beginner', label: t('filters.beginnerOk') },
-        { key: 'n4', label: t('filters.n4Plus') },
-    ];
+
 
     const filteredJobs = useMemo(() => {
         return jobs.filter((job) => {
@@ -81,17 +75,9 @@ export default function JobsClient() {
 
             if (selectedType !== 'all' && job.type !== selectedType) return false;
 
-            if (activeChip !== 'all') {
-                const chipLabel = chips.find(c => c.key === activeChip)?.label.toLowerCase();
-                if (chipLabel) {
-                    const hasTag = job.tags.some(tag => tag.toLowerCase().includes(chipLabel));
-                    if (!hasTag) return false;
-                }
-            }
-
             return true;
         });
-    }, [jobs, searchQuery, selectedLocation, selectedType, activeChip]);
+    }, [jobs, searchQuery, selectedLocation, selectedType]);
 
     const totalPages = Math.ceil(filteredJobs.length / ITEMS_PER_PAGE);
     const paginatedJobs = filteredJobs.slice(
@@ -121,9 +107,9 @@ export default function JobsClient() {
             </section>
 
             {/* Sticky Search & Filter Bar */}
-            <section className="sticky top-20 z-30 bg-surface/80 backdrop-blur-xl border-b border-app shadow-sm transition-all duration-300">
-                <div className="container mx-auto px-6 py-4 space-y-4">
-                    <div className="flex flex-col lg:flex-row items-center gap-4">
+            <section className="md:sticky md:top-20 z-30 bg-surface/80 backdrop-blur-xl border-b border-app shadow-sm transition-all duration-300">
+                <div className="container mx-auto px-6 py-2 space-y-2">
+                    <div className="flex flex-col lg:flex-row items-center gap-2">
                         {/* Search */}
                         <div className="relative flex-1 group w-full">
                             <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-400 dark:text-zinc-500 group-focus-within:text-[#D70F24] transition-colors" />
@@ -132,7 +118,7 @@ export default function JobsClient() {
                                 value={searchQuery}
                                 onChange={(e) => { setSearchQuery(e.target.value); setCurrentPage(1); }}
                                 placeholder={t('searchPlaceholder')}
-                                className="w-full pl-11 pr-6 py-3.5 bg-app/50 border border-app rounded-2xl text-xs font-bold text-primary placeholder:text-zinc-400 dark:placeholder:text-zinc-600 focus:bg-surface focus:border-[#D70F24] transition-all outline-none"
+                                className="w-full pl-11 pr-6 py-2 bg-app/50 border border-app rounded-xl text-xs font-bold text-primary placeholder:text-zinc-400 dark:placeholder:text-zinc-600 focus:bg-surface focus:border-[#D70F24] transition-all outline-none"
                             />
                         </div>
 
@@ -141,7 +127,7 @@ export default function JobsClient() {
                             <select
                                 value={selectedLocation}
                                 onChange={(e) => { setSelectedLocation(e.target.value); setCurrentPage(1); }}
-                                className="w-full px-5 py-3.5 bg-app/50 border border-app rounded-2xl text-xs font-bold text-primary appearance-none focus:bg-surface focus:border-[#D70F24] transition-all outline-none"
+                                className="w-full px-5 py-2 bg-app/50 border border-app rounded-xl text-xs font-bold text-primary appearance-none focus:bg-surface focus:border-[#D70F24] transition-all outline-none"
                             >
                                 {regions.map(r => <option key={r.key} value={r.key}>{r.label}</option>)}
                             </select>
@@ -153,28 +139,12 @@ export default function JobsClient() {
                             <select
                                 value={selectedType}
                                 onChange={(e) => { setSelectedType(e.target.value); setCurrentPage(1); }}
-                                className="w-full px-5 py-3.5 bg-app/50 border border-app rounded-2xl text-xs font-bold text-primary appearance-none focus:bg-surface focus:border-[#D70F24] transition-all outline-none"
+                                className="w-full px-5 py-2 bg-app/50 border border-app rounded-xl text-xs font-bold text-primary appearance-none focus:bg-surface focus:border-[#D70F24] transition-all outline-none"
                             >
                                 {jobTypes.map(t => <option key={t.value} value={t.value}>{t.label}</option>)}
                             </select>
                             <Filter className="absolute right-4 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-zinc-400 pointer-events-none" />
                         </div>
-                    </div>
-
-                    {/* Chips */}
-                    <div className="flex items-center gap-2 overflow-x-auto pb-2 lg:pb-0 scrollbar-hide">
-                        {chips.map(chip => (
-                            <button
-                                key={chip.key}
-                                onClick={() => { setActiveChip(chip.key); setCurrentPage(1); }}
-                                className={`px-5 py-2 rounded-xl text-[10px] font-bold uppercase tracking-widest transition-all whitespace-nowrap ${activeChip === chip.key
-                                    ? 'bg-[#D70F24] text-white shadow-lg shadow-red-500/20'
-                                    : 'bg-app text-muted hover:bg-zinc-200 dark:hover:bg-zinc-800'
-                                    }`}
-                            >
-                                {chip.label}
-                            </button>
-                        ))}
                     </div>
                 </div>
             </section>

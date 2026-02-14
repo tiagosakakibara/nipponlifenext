@@ -184,8 +184,8 @@ export default async function NewsArticlePage({ params }: Props) {
                     <article className="w-full min-w-0">
                         {/* Article Text */}
                         {contentMd ? (
-                            <div className="prose dark:prose-invert prose-lg max-w-none w-full break-words
-                                         prose-headings:font-display prose-headings:font-bold prose-headings:tracking-tight prose-headings:text-primary
+                            <div className="prose dark:prose-invert prose-lg max-w-none w-full break-words hyphens-none text-justify
+                                         prose-headings:font-display prose-headings:font-bold prose-headings:tracking-tight prose-headings:text-primary prose-headings:text-left
                                          prose-p:text-secondary prose-p:leading-[1.8] prose-p:mb-8
                                          prose-strong:text-primary prose-strong:font-bold
                                          prose-img:rounded-3xl prose-img:shadow-2xl prose-img:my-12 prose-img:w-full prose-img:max-w-full prose-img:h-auto
@@ -197,8 +197,8 @@ export default async function NewsArticlePage({ params }: Props) {
                             </div>
                         ) : (
                             <div
-                                className="prose dark:prose-invert prose-lg max-w-none w-full break-words
-                                         prose-headings:font-display prose-headings:font-bold prose-headings:tracking-tight prose-headings:text-primary
+                                className="prose dark:prose-invert prose-lg max-w-none w-full break-words hyphens-none text-justify
+                                         prose-headings:font-display prose-headings:font-bold prose-headings:tracking-tight prose-headings:text-primary prose-headings:text-left
                                          prose-p:text-secondary prose-p:leading-[1.8] prose-p:mb-8
                                          prose-strong:text-primary prose-strong:font-bold
                                          prose-blockquote:border-l-4 prose-blockquote:border-[var(--nl-accent)] prose-blockquote:bg-surface prose-blockquote:px-8 prose-blockquote:py-1 prose-blockquote:rounded-r-2xl prose-blockquote:italic prose-blockquote:my-12
