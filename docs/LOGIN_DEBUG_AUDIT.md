@@ -54,7 +54,7 @@
 - Removes partial key logging (security improvement)
 - Only logs project host in development
 
-### 5. Updated `src/pages/auth/LoginPage.tsx`
+### 5. Updated `src/app/[locale]/login/components/LoginPageClient.tsx`
 - Better error handling for "Email logins are disabled"
 - Shows dev-only diagnostic hints
 - Includes SupabaseDiagnostics widget on login page

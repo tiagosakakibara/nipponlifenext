@@ -181,3 +181,92 @@ O bloco de legacy linking foi removido completamente. O account linking legítim
 2. **Persistência**: Após login, pressionar Ctrl+R → deve permanecer logado com o perfil correto
 3. **Re-login após logout**: Fazer logout → Ctrl+R → tentar login → não deve travar em "Entrando..."
 4. **Login Google (novo usuário)**: Criar conta nova via Google → não deve sobrescrever perfil com dados de outro usuário
+
+---
+
+## Bug 5 — `createClient` (localStorage) dessincroniza com o middleware SSR
+
+**Data:** 2026-02-15
+
+### Arquivo
+`src/lib/supabaseClient.ts`
+
+### O que estava errado
+```ts
+// PROBLEMÁTICO — usa localStorage, não sincroniza com o middleware
+import { createClient } from '@supabase/supabase-js'
+export const supabase = createClient(supabaseUrl, supabaseAnonKey)
+```
+
+O `@supabase/supabase-js` persiste a sessão em **localStorage**. O middleware (`utils/supabase/middleware.ts`) usa `createServerClient` do `@supabase/ssr`, que persiste em **cookies HTTP**. Os dois mecanismos não se comunicam: o middleware chamava `getUser()`, não encontrava sessão nos cookies, retornava `null` — sessão "sumia" a cada reload.
+
+### Correção aplicada
+```ts
+// CORRETO — cookie-based, sincronizado com o middleware SSR
+import { createBrowserClient } from '@supabase/ssr'
+export const supabase = createBrowserClient(supabaseUrl, supabaseAnonKey)
+```
+
+**Regra:** Em Next.js App Router com middleware Supabase SSR, o client-side DEVE usar `createBrowserClient` do `@supabase/ssr`. Nunca usar `createClient` do `@supabase/supabase-js` no client.
+
+---
+
+## Bug 6 — `async` no callback `onAuthStateChange` causa deadlock no SDK
+
+**Data:** 2026-02-15
+
+### Arquivo
+`src/contexts/AuthContext.tsx`
+
+### O que estava errado
+```ts
+// PROBLEMÁTICO — async direto trava o SDK
+supabase.auth.onAuthStateChange(async (event, session) => {
+    const profile = await getProfile(currentUser); // ← SDK aguarda isso terminar
+    setAuthState({ user: currentUser, profile, loading: false });
+});
+```
+
+O SDK Supabase aguarda o callback terminar antes de resolver a sessão internamente. Como o callback fazia `await` de `getProfile()` — que usa o mesmo cliente Supabase para query no banco — o SDK entrava em deadlock: esperava o callback, que esperava o SDK. Resultado: `INITIAL_SESSION` disparava com `user: null` mesmo com sessão válida → reload derrubava o login.
+
+### Correção aplicada
+```ts
+// CORRETO — callback síncrono, trabalho assíncrono fora do ciclo do SDK
+supabase.auth.onAuthStateChange((event, session) => {
+    const currentUser = session?.user ?? null;
+
+    if (!currentUser) {
+        setAuthState({ user: null, profile: null, loading: false });
+        return;
+    }
+
+    const fetchId = ++fetchIdRef.current;
+
+    // Seta user imediatamente — UI não fica presa em loading
+    setAuthState({ user: currentUser, profile: null, loading: true });
+
+    // Despacha fora do callback para liberar o SDK
+    setTimeout(() => {
+        getProfile(currentUser).then((profile) => {
+            if (mounted && fetchId === fetchIdRef.current) {
+                setAuthState({ user: currentUser, profile, loading: false });
+            }
+        });
+    }, 0);
+});
+```
+
+**Regra:** O callback do `onAuthStateChange` NUNCA deve ser `async`. Todo trabalho assíncrono deve ser despachado via `setTimeout(fn, 0)` para liberar o ciclo interno do SDK.
+
+---
+
+## Resumo Atualizado das Correções
+
+| Bug | Arquivo | Correção |
+|-----|---------|---------|
+| `getSession()` sem validação servidor | `AuthContext.tsx` | Removido `initializeAuth()`, usar apenas `onAuthStateChange` com `INITIAL_SESSION` |
+| Condição de corrida na inicialização | `AuthContext.tsx` | `fetchIdRef` + único fluxo de init |
+| `router.push` + `router.refresh()` em conflito | `LoginPageClient.tsx` | `window.location.href` para full page reload |
+| Legacy account linking sobrescrevia perfis | `auth/callback/route.ts` | Bloco heurístico removido |
+| `createClient` (localStorage) vs middleware (cookies) | `supabaseClient.ts` | Trocado para `createBrowserClient` do `@supabase/ssr` |
+| `async` no callback `onAuthStateChange` | `AuthContext.tsx` | Callback síncrono + `setTimeout(fn, 0)` para trabalho assíncrono |

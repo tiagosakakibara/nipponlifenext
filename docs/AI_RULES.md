@@ -2,9 +2,12 @@
 
 ## Stack
 
-- React + Vite
+- Next.js 16 (App Router)
+- React 19
 - TypeScript
-- Tailwind CSS
+- Tailwind CSS v4
+- Supabase (Auth + Database + Storage)
+- next-intl (i18n: pt, en, ja)
 - Deployed on Vercel
 
 ## General Rules

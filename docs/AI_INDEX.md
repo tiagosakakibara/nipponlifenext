@@ -91,9 +91,28 @@ All files listed here must obey the global rules defined in `AI_RULES.md`.
 
 ## Authentication & Debugging
 
+### AUTH_ARCHITECTURE.md
+
+**Scope:** Arquitetura de autenticação (referência portável)
+**Purpose:**
+
+- Referência canônica do stack de auth: Supabase SSR + Next.js App Router
+- Código canônico pronto para copiar em novos projetos (supabaseClient, middleware, AuthContext, callback route)
+- Regras de ouro: o que FAZER e o que NÃO FAZER, com justificativa dos bugs reais
+- Guia passo a passo para adicionar novos providers OAuth (Google, GitHub, etc.)
+- Checklist de verificação pós-implementação
+
+**When to use:**
+
+- Antes de implementar autenticação em qualquer projeto novo Next.js + Supabase
+- Ao depurar problemas de sessão, loop de login ou deslogamento no reload
+- Como referência para entender como cookies, middleware e AuthContext se conectam
+
+---
+
 ### LOGIN_DEBUG_AUDIT.md
 
-**Scope:** Authentication troubleshooting  
+**Scope:** Authentication troubleshooting
 **Purpose:**
 
 - Documents known login/auth issues

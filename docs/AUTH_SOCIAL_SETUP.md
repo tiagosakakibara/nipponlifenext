@@ -14,7 +14,7 @@ Este guia descreve como configurar a autenticação social com Google no Supabas
    - Vá em **Authentication** > **URL Configuration**.
    - Em **Site URL**, coloque a URL de produção (ex: `https://nippon-life.com`).
    - Em **Redirect URLs**, adicione:
-     - `http://localhost:5173/auth/callback` (Desenvolvimento)
+     - `http://localhost:3000/auth/callback` (Desenvolvimento — porta padrão do Next.js)
      - `https://nippon-life.com/auth/callback` (Produção)
 
 ## 2. Configuração do Google Cloud Platform
@@ -40,7 +40,7 @@ Nenhuma variável de ambiente adicional é necessária no frontend (`.env`), poi
 ## Troubleshooting
 
 - **Erro "Redirect URL mismatch" ou "redirect_uri_mismatch"**:
-  - Verifique se `http://localhost:5173/auth/callback` está EXATAMENTE assim na lista de Redirect URLs do Supabase.
+  - Verifique se `http://localhost:3000/auth/callback` está EXATAMENTE assim na lista de Redirect URLs do Supabase.
   - Verifique se a URL de callback do Supabase está correta no console do Google.
 
 - **Login social não retorna para a página certa**:
