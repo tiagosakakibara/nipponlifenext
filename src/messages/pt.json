@@ -986,7 +986,8 @@
             "albumDescriptionPlaceholder": "Descreva este álbum...",
             "photoRemoved": "Foto removida",
             "deletePhotoError": "Erro ao excluir foto",
-            "saveAlbumFirst": "Salve o álbum antes de adicionar fotos."
+            "saveAlbumFirst": "Salve o álbum antes de adicionar fotos.",
+            "clickToSave": "Clique para salvar e liberar uploads"
         }
     },
     "jobs": {

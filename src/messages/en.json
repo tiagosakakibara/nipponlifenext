@@ -899,6 +899,7 @@
             "noPhotosYet": "No photos added yet.",
             "dragDropOrClick": "Drop photos here or use the add button.",
             "saveFirst": "Save the album first to start adding photos.",
+            "clickToSave": "Click to save and enable uploads",
             "setCover": "Set Cover",
             "currentCover": "Current Cover",
             "deletePhoto": "Delete",

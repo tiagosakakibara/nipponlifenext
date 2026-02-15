@@ -197,67 +197,64 @@ export default function AdminGalleryPage() {
                     </Link>
                 </div>
             ) : (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-4">
                     {albums.map((album) => (
                         <div
                             key={album.id}
-                            className="bg-surface rounded-2xl border border-app shadow-sm overflow-hidden group hover:shadow-2xl hover:shadow-link/10 transition-all"
+                            className="bg-surface rounded-xl border border-app shadow-sm overflow-hidden group hover:shadow-lg transition-all flex flex-col"
                         >
                             {/* Cover Image */}
-                            <div className="relative h-48 bg-gray-900 overflow-hidden">
+                            <div className="relative aspect-[4/3] bg-gray-900 overflow-hidden">
                                 {album.cover_image_url ? (
                                     <Image
                                         src={storageService.getFileUrl(album.cover_image_url)}
                                         alt={album.title}
                                         fill
-                                        className="object-cover group-hover:scale-110 transition-transform duration-300"
-                                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                                        className="object-cover group-hover:scale-105 transition-transform duration-300"
+                                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 25vw, 20vw"
                                     />
                                 ) : (
                                     <div className="w-full h-full flex items-center justify-center">
-                                        <ImageIcon className="w-16 h-16 text-gray-700" />
+                                        <ImageIcon className="w-8 h-8 text-gray-700" />
                                     </div>
                                 )}
-                                <div className="absolute top-2 right-2 bg-black/70 backdrop-blur-sm px-3 py-1 rounded-full text-white text-xs font-bold">
+                                <div className="absolute top-2 right-2 bg-black/60 backdrop-blur-sm px-2 py-0.5 rounded-md text-white text-[10px] font-bold shadow-sm">
                                     {album.photo_count || 0} fotos
                                 </div>
                             </div>
 
                             {/* Content */}
-                            <div className="p-6">
-                                <h3 className="text-lg font-bold text-primary mb-2 line-clamp-1">
+                            <div className="p-3 flex flex-col flex-1">
+                                <h3 className="text-sm font-bold text-primary mb-1 line-clamp-1 leading-tight" title={album.title}>
                                     {album.title}
                                 </h3>
-                                {album.description && (
-                                    <p className="text-sm text-secondary mb-4 line-clamp-2">
-                                        {album.description}
-                                    </p>
-                                )}
-                                <div className="flex items-center gap-4 text-xs text-secondary mb-4">
-                                    <div className="flex items-center gap-1">
-                                        <Eye className="w-4 h-4" />
+
+                                <div className="flex items-center gap-2 text-[10px] text-secondary mb-3 mt-auto">
+                                    <div className="flex items-center gap-1 bg-app px-1.5 py-0.5 rounded-md">
+                                        <Eye className="w-3 h-3" />
                                         {album.view_count || 0}
                                     </div>
-                                    <div className={`px-2 py-0.5 rounded-full font-bold ${album.status === 'published'
-                                        ? 'bg-emerald-500/10 text-emerald-500'
-                                        : 'bg-secondary/10 text-secondary'
+                                    <div className={`px-1.5 py-0.5 rounded-md font-bold uppercase tracking-wider ${album.status === 'published'
+                                        ? 'bg-emerald-500/10 text-emerald-600'
+                                        : 'bg-zinc-500/10 text-zinc-500'
                                         }`}>
-                                        {album.status === 'published' ? 'Publicado' : 'Rascunho'}
+                                        {album.status === 'published' ? 'PUB' : 'RASC'}
                                     </div>
                                 </div>
 
                                 {/* Actions */}
-                                <div className="flex gap-2">
+                                <div className="flex gap-2 border-t border-app pt-3 mt-auto">
                                     <Link
                                         href={`/admin/gallery/${album.id}`}
-                                        className="flex-1 flex items-center justify-center gap-2 bg-link/10 hover:bg-link/20 text-link px-4 py-2 rounded-xl font-bold transition-colors"
+                                        className="flex-1 flex items-center justify-center gap-1.5 bg-app hover:bg-app/80 text-primary hover:text-link text-xs py-1.5 rounded-lg font-bold transition-colors"
                                     >
-                                        <Edit2 className="w-4 h-4" />
+                                        <Edit2 className="w-3 h-3" />
                                         Editar
                                     </Link>
                                     <button
                                         onClick={() => handleDelete(album.id)}
-                                        className="flex items-center justify-center gap-2 bg-red-500/10 hover:bg-red-500/20 text-red-500 px-4 py-2 rounded-xl font-bold transition-colors"
+                                        className="flex items-center justify-center p-1.5 text-secondary hover:text-red-500 hover:bg-red-500/10 rounded-lg transition-colors"
+                                        title="Excluir"
                                     >
                                         <Trash2 className="w-4 h-4" />
                                     </button>

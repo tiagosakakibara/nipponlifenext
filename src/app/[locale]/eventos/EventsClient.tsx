@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState, useMemo, useRef } from 'react';
+import Image from 'next/image';
 import { Search, Calendar as CalendarIcon, Loader2, ChevronDown, LayoutGrid, Filter, CalendarDays, ChevronLeft } from 'lucide-react';
 import { useTranslations, useLocale } from 'next-intl';
 import { eventService } from '@/lib/eventService';
@@ -532,10 +533,96 @@ export default function EventsClient() {
                                     <div className="h-px w-full bg-gradient-to-r from-zinc-200 dark:from-zinc-800 to-transparent" />
                                 </div>
 
-                                <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-                                    {monthEvents.map(event => (
-                                        <EventTileCard key={event.id} event={event} />
-                                    ))}
+                                <div className="overflow-hidden bg-surface border border-app rounded-2xl shadow-sm">
+                                    <table className="w-full text-left border-collapse">
+                                        <thead className="bg-[#00376805] text-[#5593C3] text-[10px] font-black uppercase tracking-[0.2em] border-b border-app hidden md:table-header-group">
+                                            <tr>
+                                                <th className="px-6 py-5 whitespace-nowrap">Event Showcase</th>
+                                                <th className="px-6 py-5 whitespace-nowrap">Schedule</th>
+                                                <th className="px-6 py-5 whitespace-nowrap">Location</th>
+                                                <th className="px-6 py-5 whitespace-nowrap text-right">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody className="divide-y divide-app">
+                                            {monthEvents.map((event) => {
+                                                const startDate = new Date(event.starts_at);
+                                                const dateStr = startDate.toLocaleDateString(locale === 'ja' ? 'ja-JP' : locale === 'en' ? 'en-US' : 'pt-BR', {
+                                                    day: '2-digit',
+                                                    month: 'long',
+                                                    year: 'numeric'
+                                                });
+                                                const timeStr = startDate.toLocaleTimeString(locale === 'ja' ? 'ja-JP' : locale === 'en' ? 'en-US' : 'pt-BR', {
+                                                    hour: '2-digit',
+                                                    minute: '2-digit'
+                                                });
+
+                                                const eventLink = event.slug ? `/eventos/${event.slug}` : `/eventos/id/${event.id}`;
+
+                                                return (
+                                                    <tr
+                                                        key={event.id}
+                                                        onClick={() => router.push(eventLink)}
+                                                        className="group hover:bg-[#00376805] cursor-pointer transition-colors flex flex-col md:table-row relative"
+                                                    >
+                                                        <td className="px-6 py-4 align-middle">
+                                                            <div className="flex items-center gap-4">
+                                                                <div className="relative w-16 h-16 md:w-14 md:h-14 flex-shrink-0 rounded-xl overflow-hidden bg-gray-100 border border-app shadow-sm group-hover:scale-105 transition-transform duration-300">
+                                                                    {event.cover_image_url ? (
+                                                                        <Image // eslint-disable-line
+                                                                            src={event.cover_image_url}
+                                                                            alt={event.title}
+                                                                            fill
+                                                                            className="object-cover"
+                                                                            sizes="56px"
+                                                                        />
+                                                                    ) : (
+                                                                        <div className="w-full h-full flex items-center justify-center text-secondary/20 bg-app">
+                                                                            <CalendarDays className="w-6 h-6" />
+                                                                        </div>
+                                                                    )}
+                                                                </div>
+                                                                <div className="flex flex-col justify-center min-w-0">
+                                                                    <span className="font-bold text-primary text-base md:text-sm line-clamp-2 md:line-clamp-1 group-hover:text-[#5593C3] transition-colors leading-tight mb-1">
+                                                                        {event.title}
+                                                                    </span>
+                                                                    <span className="text-[10px] text-secondary/50 uppercase tracking-widest line-clamp-1 font-mono">
+                                                                        {event.slug || event.id}
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td className="px-6 py-2 md:py-4 align-middle pl-[88px] md:pl-6 -mt-2 md:mt-0">
+                                                            <div className="flex flex-row md:flex-col gap-3 md:gap-1 items-center md:items-start text-sm md:text-xs">
+                                                                <div className="flex items-center gap-2 font-bold text-primary/80">
+                                                                    <CalendarIcon className="w-3.5 h-3.5 text-[#5593C3]" />
+                                                                    {dateStr}
+                                                                </div>
+                                                                <div className="flex items-center gap-2 font-black text-secondary/50 uppercase tracking-widest text-[10px]">
+                                                                    <div className="w-3.5 h-3.5 flex items-center justify-center">
+                                                                        <div className="w-1.5 h-1.5 rounded-full bg-secondary/30" />
+                                                                    </div>
+                                                                    {timeStr}
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td className="px-6 py-2 md:py-4 align-middle pl-[88px] md:pl-6 mb-4 md:mb-0">
+                                                            <div className="flex items-center gap-2 text-xs font-bold text-secondary uppercase tracking-tight">
+                                                                <div className="w-3.5 h-3.5 flex items-center justify-center text-[#5593C3]">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-3.5 h-3.5"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" /><circle cx="12" cy="10" r="3" /></svg>
+                                                                </div>
+                                                                <span className="truncate max-w-[200px]">{event.location || 'Local TBD'}</span>
+                                                            </div>
+                                                        </td>
+                                                        <td className="px-6 py-4 align-middle text-right hidden md:table-cell">
+                                                            <div className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-app group-hover:bg-[#5593C3] text-secondary group-hover:text-white transition-all -ml-2 group-hover:ml-0 opacity-0 group-hover:opacity-100 transform translate-x-2 group-hover:translate-x-0">
+                                                                <ChevronLeft className="w-4 h-4 rotate-180" />
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                );
+                                            })}
+                                        </tbody>
+                                    </table>
                                 </div>
                             </section>
                         ))}

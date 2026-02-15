@@ -92,101 +92,101 @@ export default function AdminEventsClient() {
                 </div>
 
                 <div className="overflow-x-auto">
-                    <table className="w-full text-sm text-left border-collapse">
-                        <thead className="bg-[#00376805] text-[#5593C3] text-[10px] font-black uppercase tracking-[0.2em] border-b border-app">
+                    <table className="w-full text-left border-collapse">
+                        <thead className="bg-surface text-secondary/60 text-[10px] font-bold uppercase tracking-wider border-b border-app">
                             <tr>
-                                <th className="px-6 py-5 whitespace-nowrap">Event Showcase</th>
-                                <th className="px-6 py-5 whitespace-nowrap">Schedule</th>
-                                <th className="px-6 py-5 whitespace-nowrap">Location</th>
-                                <th className="px-6 py-5 whitespace-nowrap text-center">Status</th>
-                                <th className="px-6 py-5 whitespace-nowrap text-right">Actions</th>
+                                <th className="px-6 py-4 whitespace-nowrap font-medium">Event Showcase</th>
+                                <th className="px-6 py-4 whitespace-nowrap font-medium">Schedule</th>
+                                <th className="px-6 py-4 whitespace-nowrap font-medium">Location</th>
+                                <th className="px-6 py-4 whitespace-nowrap font-medium">Status</th>
+                                <th className="px-6 py-4 whitespace-nowrap text-right font-medium">Actions</th>
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-app">
                             {loading ? (
                                 <tr>
-                                    <td colSpan={5} className="px-6 py-20 text-center">
-                                        <div className="flex flex-col items-center gap-3">
-                                            <Loader2 className="w-8 h-8 text-link animate-spin" />
-                                            <span className="text-secondary/50 font-bold uppercase tracking-widest text-[10px]">Processing calendar...</span>
+                                    <td colSpan={5} className="px-6 py-12 text-center">
+                                        <div className="flex flex-col items-center gap-2">
+                                            <Loader2 className="w-6 h-6 text-link animate-spin" />
+                                            <span className="text-secondary/50 text-xs">Loading...</span>
                                         </div>
                                     </td>
                                 </tr>
                             ) : events.length === 0 ? (
                                 <tr>
-                                    <td colSpan={5} className="px-6 py-20 text-center text-secondary/40 italic">
-                                        No upcoming events found.
+                                    <td colSpan={5} className="px-6 py-12 text-center text-secondary/40 text-sm">
+                                        No events found.
                                     </td>
                                 </tr>
                             ) : (
                                 events.map((event) => (
-                                    <tr key={event.id} className="hover:bg-[#00376805] group transition-colors">
-                                        <td className="px-6 py-4">
+                                    <tr key={event.id} className="group hover:bg-app/30 transition-colors">
+                                        <td className="px-6 py-4 align-middle">
                                             <div className="flex items-center gap-4">
-                                                <div className="relative w-14 h-14 flex-shrink-0">
+                                                <div className="relative w-12 h-12 flex-shrink-0 rounded-lg overflow-hidden bg-gray-100 border border-app">
                                                     {event.cover_image_url ? (
-                                                        <div className="relative w-full h-full rounded-xl overflow-hidden border border-app shadow-sm">
-                                                            <Image
-                                                                src={event.cover_image_url}
-                                                                alt={event.title}
-                                                                fill
-                                                                className="object-cover"
-                                                                sizes="56px"
-                                                            />
-                                                        </div>
+                                                        <Image
+                                                            src={event.cover_image_url}
+                                                            alt={event.title}
+                                                            fill
+                                                            className="object-cover"
+                                                            sizes="48px"
+                                                        />
                                                     ) : (
-                                                        <div className="w-full h-full rounded-xl bg-app flex items-center justify-center text-secondary/20">
-                                                            <Calendar className="w-6 h-6" />
+                                                        <div className="w-full h-full flex items-center justify-center text-secondary/20">
+                                                            <Calendar className="w-5 h-5" />
                                                         </div>
                                                     )}
                                                 </div>
-                                                <div className="flex flex-col max-w-[200px] md:max-w-xs">
-                                                    <span className="font-bold text-primary group-hover:text-link transition-colors truncate text-base">
+                                                <div className="flex flex-col justify-center">
+                                                    <span className="font-bold text-primary text-sm line-clamp-1 group-hover:text-link transition-colors">
                                                         {event.title}
                                                     </span>
-                                                    <span className="text-[10px] text-secondary/40 font-mono tracking-tighter uppercase">
+                                                    <span className="text-[10px] text-secondary/50 uppercase tracking-widest line-clamp-1">
                                                         {event.slug}
                                                     </span>
                                                 </div>
                                             </div>
                                         </td>
-                                        <td className="px-6 py-4">
-                                            <div className="flex flex-col gap-1">
+                                        <td className="px-6 py-4 align-middle">
+                                            <div className="flex flex-col gap-1 justify-center">
                                                 <div className="flex items-center gap-2 text-xs font-bold text-primary/80">
                                                     <Calendar className="w-3.5 h-3.5 text-link" />
                                                     {formatDate(event.starts_at)}
                                                 </div>
-                                                <div className="flex items-center gap-2 text-[10px] font-black text-secondary/50 uppercase tracking-widest">
-                                                    <Clock className="w-3.5 h-3.5" />
+                                                <div className="flex items-center gap-2 text-[10px] font-bold text-primary/60">
+                                                    <Clock className="w-3.5 h-3.5 text-secondary/40" />
                                                     {formatTime(event.starts_at)}
                                                 </div>
                                             </div>
                                         </td>
-                                        <td className="px-6 py-4">
-                                            <div className="flex items-center gap-1.5 text-[10px] font-black uppercase tracking-widest text-secondary">
-                                                <MapPin className="w-3.5 h-3.5 text-link" />
-                                                <span className="max-w-[150px] truncate">{event.location}</span>
+                                        <td className="px-6 py-4 align-middle">
+                                            <div className="flex items-center gap-2 text-xs font-bold text-secondary uppercase tracking-tight">
+                                                <MapPin className="w-3.5 h-3.5 text-link flex-shrink-0" />
+                                                <span className="truncate max-w-[180px]">{event.location}</span>
                                             </div>
                                         </td>
-                                        <td className="px-6 py-4 text-center">
-                                            <span className={`inline-flex items-center px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest border transition-all ${event.status === 'published'
-                                                ? 'bg-emerald-500/10 text-emerald-600 border-emerald-500/20'
-                                                : 'bg-amber-500/10 text-amber-600 border-amber-500/20'
+                                        <td className="px-6 py-4 align-middle">
+                                            <span className={`inline-flex items-center px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider ${event.status === 'published'
+                                                ? 'bg-emerald-500/10 text-emerald-600 border border-emerald-500/20'
+                                                : 'bg-zinc-500/10 text-zinc-500 border border-zinc-500/20'
                                                 }`}>
                                                 {event.status || 'published'}
                                             </span>
                                         </td>
-                                        <td className="px-6 py-4 text-right">
-                                            <div className="flex items-center justify-end gap-1 opacity-100 md:opacity-0 translate-x-0 md:translate-x-4 md:group-hover:opacity-100 md:group-hover:translate-x-0 transition-all">
+                                        <td className="px-6 py-4 align-middle text-right">
+                                            <div className="flex items-center justify-end gap-2 opacity-100 transition-all">
                                                 <Link
                                                     href={`/admin/events/${event.id}`}
-                                                    className="p-2.5 text-secondary hover:text-link hover:bg-link/10 rounded-xl transition-all"
+                                                    className="p-2 text-secondary hover:text-link hover:bg-link/10 rounded-lg transition-all"
+                                                    title="Edit"
                                                 >
                                                     <Edit className="w-4 h-4" />
                                                 </Link>
                                                 <button
                                                     onClick={() => deleteEvent(event.id)}
-                                                    className="p-2.5 text-secondary hover:text-accent hover:bg-accent/10 rounded-xl transition-all"
+                                                    className="p-2 text-secondary hover:text-red-500 hover:bg-red-500/10 rounded-lg transition-all"
+                                                    title="Delete"
                                                 >
                                                     <Trash2 className="w-4 h-4" />
                                                 </button>

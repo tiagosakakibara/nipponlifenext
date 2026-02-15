@@ -382,15 +382,26 @@ export default function AdminGalleryFormClient({ albumId }: AdminGalleryFormClie
                                     type="file"
                                     multiple
                                     accept="image/*"
-                                    hidden
+                                    className="hidden"
                                     ref={fileInputRef}
                                     onChange={handlePhotoUpload}
                                     disabled={!albumId || uploading}
                                 />
                                 <button
-                                    onClick={() => fileInputRef.current?.click()}
-                                    disabled={!albumId || uploading}
-                                    className={`flex items-center gap-2 bg-app hover:bg-app/80 text-primary px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-widest cursor-pointer transition-all border border-app ${(!albumId || uploading) ? 'opacity-50 cursor-not-allowed' : ''}`}
+                                    type="button"
+                                    onClick={() => {
+                                        if (!albumId) {
+                                            toast.loading('Salvando álbum para habilitar uploads...', { duration: 2000 });
+                                            handleSave();
+                                            return;
+                                        }
+                                        if (fileInputRef.current) {
+                                            fileInputRef.current.value = '';
+                                            fileInputRef.current.click();
+                                        }
+                                    }}
+                                    disabled={uploading}
+                                    className={`flex items-center gap-2 bg-app hover:bg-app/80 text-primary px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-widest cursor-pointer transition-all border border-app ${uploading ? 'opacity-50 cursor-not-allowed' : ''}`}
                                 >
                                     {uploading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Plus className="w-4 h-4" />}
                                     {uploading ? t('uploading') : t('addPhotos')}
@@ -399,14 +410,26 @@ export default function AdminGalleryFormClient({ albumId }: AdminGalleryFormClie
                         </div>
 
                         {!albumId ? (
-                            <div className="h-64 flex flex-col items-center justify-center text-center p-8 border-2 border-dashed border-app rounded-2xl bg-app/20">
-                                <Save className="w-12 h-12 text-secondary/20 mb-4" />
-                                <p className="text-secondary font-medium">{t('saveFirst')}</p>
+                            <div
+                                onClick={handleSave}
+                                className="h-64 flex flex-col items-center justify-center text-center p-8 border-2 border-dashed border-app rounded-2xl bg-app/20 cursor-pointer hover:bg-app/40 transition-colors group"
+                            >
+                                <Save className="w-12 h-12 text-secondary/20 mb-4 group-hover:text-primary transition-colors" />
+                                <p className="text-secondary font-medium group-hover:text-primary transition-colors">{t('saveFirst')}</p>
+                                <p className="text-secondary/50 text-xs mt-2 uppercase tracking-wide font-bold group-hover:text-primary/70">{t('clickToSave')}</p>
                             </div>
                         ) : photos.length === 0 ? (
-                            <div className="h-64 flex flex-col items-center justify-center text-center p-8 border-2 border-dashed border-app rounded-2xl bg-app/20">
-                                <ImageIcon className="w-12 h-12 text-secondary/20 mb-4" />
-                                <p className="text-secondary font-medium">{t('noPhotosYet')}</p>
+                            <div
+                                onClick={() => {
+                                    if (fileInputRef.current) {
+                                        fileInputRef.current.value = '';
+                                        fileInputRef.current.click();
+                                    }
+                                }}
+                                className="h-64 flex flex-col items-center justify-center text-center p-8 border-2 border-dashed border-app rounded-2xl bg-app/20 cursor-pointer hover:bg-app/40 transition-colors group"
+                            >
+                                <ImageIcon className="w-12 h-12 text-secondary/20 mb-4 group-hover:text-primary transition-colors" />
+                                <p className="text-secondary font-medium group-hover:text-primary transition-colors">{t('noPhotosYet')}</p>
                                 <p className="text-secondary/50 text-sm mt-1">{t('dragDropOrClick')}</p>
                             </div>
                         ) : (
