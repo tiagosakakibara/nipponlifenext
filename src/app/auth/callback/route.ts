@@ -121,6 +121,18 @@ export async function GET(request: Request) {
         }
     }
 
-    // return the user to an error page with instructions
-    return NextResponse.redirect(`${origin}/login?error=AuthCodeError`);
+    // Sem ?code= na URL: pode ser Implicit Flow (token no fragmento #access_token).
+    // Fragmentos (#) nunca chegam ao servidor, então não há como trocar código aqui.
+    // Redirecionar para `next` deixa o browser client (@supabase/ssr) processar
+    // o token do fragmento automaticamente e estabelecer a sessão.
+    // Se `next` for inválido, vai para a home com locale padrão.
+    const safeNext = (next && next.startsWith('/')) ? next : '/pt/comunidade';
+    const forwardedHostFallback = request.headers.get('x-forwarded-host');
+    const isLocalFallback = origin.includes('localhost');
+    const baseFallback = isLocalFallback
+        ? origin
+        : forwardedHostFallback
+            ? `https://${forwardedHostFallback}`
+            : origin;
+    return NextResponse.redirect(`${baseFallback}${safeNext}`);
 }

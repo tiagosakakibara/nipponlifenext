@@ -84,10 +84,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     useEffect(() => {
         let mounted = true;
 
-        // FIX 3: Única fonte de verdade — apenas onAuthStateChange controla o estado.
-        // Removemos o getSession() manual que competia com o listener e causava
-        // a condição de corrida que derrubava o login ao recarregar a página.
-        const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
+        // IMPORTANTE: o callback do onAuthStateChange NÃO pode ser async diretamente,
+        // pois isso causa deadlock no cliente Supabase (o SDK aguarda o callback
+        // terminar antes de resolver a sessão, mas o callback aguarda o SDK — ciclo).
+        // Solução: capturar evento/sessão de forma síncrona e despachar o trabalho
+        // assíncrono fora do callback via setTimeout(fn, 0).
+        const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
             if (!mounted) return;
 
             const currentUser = session?.user ?? null;
@@ -97,9 +99,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
                 return;
             }
 
-            // INITIAL_SESSION cobre o caso de recarregar a página com sessão ativa.
-            // SIGNED_IN cobre novo login.
-            // TOKEN_REFRESHED e USER_UPDATED cobrem renovação/atualização.
             if (
                 event === 'INITIAL_SESSION' ||
                 event === 'SIGNED_IN' ||
@@ -107,20 +106,26 @@ export function AuthProvider({ children }: { children: ReactNode }) {
                 event === 'USER_UPDATED'
             ) {
                 if (!currentUser) {
-                    // INITIAL_SESSION sem usuário = não há sessão
                     setAuthState({ user: null, profile: null, loading: false });
                     return;
                 }
 
-                // FIX 4: Cancela resultados de buscas anteriores que ainda estão
-                // em voo. Incrementa o ID antes de buscar e só aplica o resultado
-                // se o ID ainda for o mais recente quando a busca terminar.
+                // Despacha o fetch do perfil fora do callback do SDK para evitar deadlock.
+                // O user já é definido imediatamente; o profile chega quando o fetch termina.
                 const fetchId = ++fetchIdRef.current;
-                const profile = await getProfile(currentUser);
 
-                if (mounted && fetchId === fetchIdRef.current) {
-                    setAuthState({ user: currentUser, profile, loading: false });
-                }
+                // Seta o user imediatamente para que a UI não fique esperando o perfil
+                // (evita o loop de redirect durante o loading).
+                setAuthState({ user: currentUser, profile: null, loading: true });
+
+                setTimeout(() => {
+                    if (!mounted) return;
+                    getProfile(currentUser).then((profile) => {
+                        if (mounted && fetchId === fetchIdRef.current) {
+                            setAuthState({ user: currentUser, profile, loading: false });
+                        }
+                    });
+                }, 0);
             }
         });
 
