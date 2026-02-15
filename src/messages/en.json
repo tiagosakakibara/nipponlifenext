@@ -1296,6 +1296,14 @@
             "avgSalary": {
                 "title": "National Average Salary",
                 "delta": "annual"
+            },
+            "growth": {
+                "title": "Growth (2023-2024)",
+                "delta": "growth"
+            },
+            "naturalization": {
+                "title": "Japanese Citizenship (2023)",
+                "delta": "naturalizations"
             }
         },
         "topNationalities": {
@@ -1335,7 +1343,8 @@
             "title": "Foreign Visitors (Tourism)",
             "description": "Top countries by number of short-term visitors to Japan",
             "source_label": "Source",
-            "source_value": "Tourism & Immigration statistics"
+            "source_value": "Tourism & Immigration statistics",
+            "noRecords": "No tourism records yet."
         },
         "expenses": {
             "title": "Monthly Expense Distribution",
@@ -1343,11 +1352,15 @@
             "estTotal": "Est. Total",
             "rent": "Rent",
             "food": "Food",
-            "transport": "Transport"
+            "transport": "Transport",
+            "entries": "entries",
+            "monthly": "Monthly",
+            "hourly": "Hourly"
         },
         "notes": {
             "title": "Community Insights",
-            "subtitle": "Experiences and observations shared by foreigners in Japan"
+            "subtitle": "Experiences and observations shared by foreigners in Japan",
+            "communityNotes": "Community Notes"
         },
         "cta": {
             "title": "Contribute real information",
@@ -1371,7 +1384,17 @@
         "United States": "United States",
         "Taiwan": "Taiwan",
         "Thailand": "Thailand",
-        "Peru": "Peru"
+        "Peru": "Peru",
+        "Hong Kong": "Hong Kong",
+        "Singapore": "Singapore",
+        "Malaysia": "Malaysia",
+        "Australia": "Australia",
+        "Canada": "Canada",
+        "United Kingdom": "United Kingdom",
+        "Germany": "Germany",
+        "France": "France",
+        "Italy": "Italy",
+        "Spain": "Spain"
     },
     "seo": {
         "siteTitle": "NipponLife - Japanese Culture Portal",

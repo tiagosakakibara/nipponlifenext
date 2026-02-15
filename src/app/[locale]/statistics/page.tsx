@@ -153,6 +153,38 @@ export default function StatisticsPage() {
         );
     }
 
+
+    const getCountryKey = (name: string) => {
+        // Map database values to translation keys
+        if (name.includes('Coreia')) return 'South Korea';
+        if (name.includes('South Korea')) return 'South Korea';
+        if (name === 'Vietnã') return 'Vietnam';
+        if (name === 'Brasil') return 'Brazil';
+        if (name === 'Estados Unidos') return 'United States';
+        if (name === 'Filipinas') return 'Philippines';
+        if (name === 'China') return 'China';
+        if (name === 'Indonesia') return 'Indonesia';
+        if (name === 'Nepal') return 'Nepal';
+        if (name === 'Myanmar') return 'Myanmar';
+        if (name === 'Taiwan') return 'Taiwan';
+        if (name === 'Thailand') return 'Thailand';
+        if (name === 'Peru') return 'Peru';
+        if (name.includes('Hong Kong')) return 'Hong Kong';
+        if (name.includes('Singapore') || name.includes('Singapura')) return 'Singapore';
+        if (name.includes('Malaysia') || name.includes('Malásia')) return 'Malaysia';
+        if (name.includes('Australia') || name.includes('Austrália')) return 'Australia';
+        if (name.includes('Canada') || name.includes('Canadá')) return 'Canada';
+        if (name.includes('United Kingdom') || name.includes('Reino Unido')) return 'United Kingdom';
+        if (name.includes('Germany') || name.includes('Alemanha')) return 'Germany';
+        if (name.includes('France') || name.includes('França')) return 'France';
+        if (name.includes('Italy') || name.includes('Itália')) return 'Italy';
+        if (name.includes('Spain') || name.includes('Espanha')) return 'Spain';
+
+        // Exact match fallback (checks if key exists in countries list from json potentially)
+        // If not found, returns original name
+        return name;
+    }
+
     const { snapshot, kpis, topNationalities, salaryComparison, tourism, prefectureDensity } = data;
 
     const getIconForKey = (key: string) => {
@@ -181,10 +213,8 @@ export default function StatisticsPage() {
                 <h1 className="text-4xl md:text-5xl lg:text-6xl font-black text-primary mb-6 tracking-tight leading-tight">
                     {t('statistics.hero.title')}
                 </h1>
-                <p className="text-lg md:text-xl text-secondary max-w-3xl mx-auto leading-relaxed">
-                    {t('statistics.hero.subtitle')}
-                </p>
             </section>
+
 
             <div className="max-w-7xl mx-auto px-4 md:px-6 space-y-8">
                 {/* 2. KPIs */}
@@ -196,11 +226,16 @@ export default function StatisticsPage() {
                                 {getIconForKey(kpi.key)}
                             </div>
                             <p className="text-sm font-semibold text-muted uppercase tracking-wide mb-2">
-                                {kpi.key === 'total_foreigners' ? t('statistics.kpis.totalForeigners.title') :
-                                    kpi.key === 'nationalities' ? t('statistics.kpis.nationalities.title') :
-                                        kpi.key === 'avg_salary_national' ? t('statistics.kpis.avgSalary.title') :
-                                            // Fallback if key is already translated or custom
-                                            kpi.key}
+                                {(() => {
+                                    const key = kpi.key?.toUpperCase() || '';
+                                    if (key === 'TOTAL_FOREIGNERS' || key === 'ESTRANGEIROS RESIDENTES') return t('statistics.kpis.totalForeigners.title');
+                                    if (key === 'NATIONALITIES') return t('statistics.kpis.nationalities.title');
+                                    if (key === 'AVG_SALARY_NATIONAL') return t('statistics.kpis.avgSalary.title');
+                                    if (key.includes('AUMENTO') || key.includes('GROWTH')) return t('statistics.kpis.growth.title');
+                                    if (key.includes('CIDADANIA') || key.includes('CITIZENSHIP')) return t('statistics.kpis.naturalization.title');
+
+                                    return kpi.key;
+                                })()}
                             </p>
                             <h3 className="text-4xl font-black text-primary mb-3">
                                 {kpi.display_prefix}{kpi.value_numeric.toLocaleString()}
@@ -229,24 +264,29 @@ export default function StatisticsPage() {
                         </div>
 
                         <div className="space-y-6 flex-1">
-                            {topNationalities.map((item, index) => (
-                                <div key={item.id || index} className="group">
-                                    <div className="flex justify-between items-end mb-2">
-                                        <span className="text-sm font-bold text-primary flex items-center gap-2">
-                                            {getCountryFlag(item.nationality_label)} {item.nationality_label}
-                                        </span>
-                                        <span className="text-sm font-medium text-muted">
-                                            {item.value_numeric.toLocaleString()}
-                                        </span>
+                            {topNationalities.map((item, index) => {
+                                const countryKey = getCountryKey(item.nationality_label);
+                                return (
+                                    <div key={item.id || index} className="group">
+                                        <div className="flex justify-between items-end mb-2">
+                                            <span className="text-sm font-bold text-primary flex items-center gap-2">
+                                                {getCountryFlag(item.nationality_label)}
+                                                {/* Translate country name */}
+                                                {t.has(`countries.${countryKey}`) ? t(`countries.${countryKey}`) : item.nationality_label}
+                                            </span>
+                                            <span className="text-sm font-medium text-muted">
+                                                {item.value_numeric.toLocaleString()}
+                                            </span>
+                                        </div>
+                                        <div className="h-4 w-full bg-slate-200/20 dark:bg-white/5 rounded-full overflow-hidden border border-primary/10">
+                                            <div
+                                                className="h-full bg-blue-600/60 group-hover:bg-blue-600/80 rounded-full transition-all duration-1000"
+                                                style={{ width: `${(item.value_numeric / topNationalities[0].value_numeric) * 100}%` }}
+                                            />
+                                        </div>
                                     </div>
-                                    <div className="h-4 w-full bg-slate-200/20 dark:bg-white/5 rounded-full overflow-hidden border border-primary/10">
-                                        <div
-                                            className="h-full bg-blue-600/60 group-hover:bg-blue-600/80 rounded-full transition-all duration-1000"
-                                            style={{ width: `${(item.value_numeric / topNationalities[0].value_numeric) * 100}%` }}
-                                        />
-                                    </div>
-                                </div>
-                            ))}
+                                );
+                            })}
                         </div>
                     </div>
 
@@ -312,14 +352,16 @@ export default function StatisticsPage() {
                             ) : (
                                 <div className="animate-in fade-in slide-in-from-bottom-4 duration-500 w-full h-full overflow-y-auto custom-scrollbar pr-2">
                                     <div className="flex justify-between items-end mb-4 sticky top-0 bg-app pb-2 z-10 border-b border-white/5">
-                                        <h3 className="text-xl font-bold text-primary">Top 10</h3>
+                                        <h3 className="text-xl font-bold text-primary">{t('statistics.salaryComparison.communityTop10')}</h3>
                                     </div>
 
                                     <div className="space-y-3">
                                         {categoryStats.length === 0 ? (
                                             <p className="text-muted text-sm flex flex-col items-center justify-center h-32">
-                                                <span>No contributions</span>
-                                                <Link href="/contribute/cost-of-living" className="text-blue-500 hover:underline mt-2">Contribute</Link>
+                                                <span>{t('statistics.salaryComparison.noContributions')}</span>
+                                                <Link href="/contribute/cost-of-living" className="text-blue-500 hover:underline mt-2">
+                                                    {t('statistics.salaryComparison.contributeData')}
+                                                </Link>
                                             </p>
                                         ) : (
                                             categoryStats.map((stat, idx) => (
@@ -331,18 +373,20 @@ export default function StatisticsPage() {
                                                         <div>
                                                             <p className="font-bold text-sm text-primary">
                                                                 {/* Translating job category if possible, else showing key */}
-                                                                {t(`community.costOfLiving.jobCategories.${stat.job_category}`) || stat.job_category}
+                                                                {t.has(`community.costOfLiving.jobCategories.${stat.job_category}`)
+                                                                    ? t(`community.costOfLiving.jobCategories.${stat.job_category}`)
+                                                                    : stat.job_category}
                                                             </p>
-                                                            <p className="text-[10px] text-muted">{stat.contributions} entries</p>
+                                                            <p className="text-[10px] text-muted">{stat.contributions} {t('statistics.expenses.entries')}</p>
                                                         </div>
                                                     </div>
                                                     <div className="text-right">
                                                         <p className="font-bold text-sm text-primary">¥{stat.avg_monthly_net_income.toLocaleString()}</p>
-                                                        <p className="text-[10px] text-muted">Monthly</p>
+                                                        <p className="text-[10px] text-muted">{t('statistics.expenses.monthly')}</p>
                                                     </div>
                                                     <div className="text-right pl-4 border-l border-app/50 ml-2">
                                                         <p className="font-bold text-sm text-accent">¥{stat.avg_hourly_wage.toLocaleString()}</p>
-                                                        <p className="text-[10px] text-muted">Hourly</p>
+                                                        <p className="text-[10px] text-muted">{t('statistics.expenses.hourly')}</p>
                                                     </div>
                                                 </div>
                                             ))
@@ -351,7 +395,7 @@ export default function StatisticsPage() {
 
                                     <div className="mt-4 pt-4 border-t border-app text-center">
                                         <Link href="/contribute/cost-of-living" className="text-xs font-bold text-blue-500 hover:text-blue-600 uppercase tracking-wider flex items-center justify-center gap-1">
-                                            Contribute <ArrowRight size={12} />
+                                            {t('statistics.salaryComparison.contributeData')} <ArrowRight size={12} />
                                         </Link>
                                     </div>
                                 </div>
@@ -406,11 +450,11 @@ export default function StatisticsPage() {
                                     <div className="flex justify-between items-start mb-6">
                                         <div>
                                             <h3 className="text-lg font-black text-primary">{getPrefectureLabel(stat.prefecture_code, locale as any)}</h3>
-                                            <p className="text-[10px] font-bold text-muted uppercase tracking-tighter">{stat.contributions} entries</p>
+                                            <p className="text-[10px] font-bold text-muted uppercase tracking-tighter">{stat.contributions} {t('statistics.expenses.entries')}</p>
                                         </div>
                                         <div className="text-right">
                                             <p className="text-xl font-black text-accent">¥{stat.avg_monthly_essential_cost.toLocaleString()}</p>
-                                            <p className="text-[10px] font-bold text-muted uppercase tracking-tighter">Total Est.</p>
+                                            <p className="text-[10px] font-bold text-muted uppercase tracking-tighter">{t('statistics.expenses.estTotal')}</p>
                                         </div>
                                     </div>
 
@@ -422,7 +466,7 @@ export default function StatisticsPage() {
                                             </div>
                                             <div className="flex-1">
                                                 <div className="flex justify-between text-[11px] mb-1">
-                                                    <span className="font-bold text-muted uppercase tracking-tighter">Rent</span>
+                                                    <span className="font-bold text-muted uppercase tracking-tighter">{t('statistics.expenses.rent')}</span>
                                                     <span className="font-black text-primary">¥{stat.avg_rent.toLocaleString()}</span>
                                                 </div>
                                                 <div className="h-1.5 w-full bg-surface rounded-full overflow-hidden">
@@ -441,7 +485,7 @@ export default function StatisticsPage() {
                                             </div>
                                             <div className="flex-1">
                                                 <div className="flex justify-between text-[11px] mb-1">
-                                                    <span className="font-bold text-muted uppercase tracking-tighter">Food</span>
+                                                    <span className="font-bold text-muted uppercase tracking-tighter">{t('statistics.expenses.food')}</span>
                                                     <span className="font-black text-primary">¥{stat.avg_food.toLocaleString()}</span>
                                                 </div>
                                                 <div className="h-1.5 w-full bg-surface rounded-full overflow-hidden">
@@ -460,7 +504,7 @@ export default function StatisticsPage() {
                                             </div>
                                             <div className="flex-1">
                                                 <div className="flex justify-between text-[11px] mb-1">
-                                                    <span className="font-bold text-muted uppercase tracking-tighter">Transport</span>
+                                                    <span className="font-bold text-muted uppercase tracking-tighter">{t('statistics.expenses.transport')}</span>
                                                     <span className="font-black text-primary">¥{stat.avg_transport.toLocaleString()}</span>
                                                 </div>
                                                 <div className="h-1.5 w-full bg-surface rounded-full overflow-hidden">
@@ -487,7 +531,7 @@ export default function StatisticsPage() {
                             </div>
                             <div>
                                 <h2 className="text-2xl font-black text-primary uppercase tracking-tight">
-                                    Community Notes
+                                    {t('statistics.notes.title')}
                                 </h2>
                             </div>
                         </div>
@@ -510,7 +554,9 @@ export default function StatisticsPage() {
                                     <div className="mt-8 pt-4 border-t border-app flex items-center justify-between">
                                         <div>
                                             <p className="text-[11px] font-black text-primary uppercase tracking-tighter">
-                                                {t(`community.costOfLiving.jobCategories.${note.job_category}`) || note.job_category}
+                                                {t.has(`community.costOfLiving.jobCategories.${note.job_category}`)
+                                                    ? t(`community.costOfLiving.jobCategories.${note.job_category}`)
+                                                    : note.job_category}
                                             </p>
                                             <p className="text-[10px] text-muted font-bold">
                                                 {getPrefectureLabel(note.prefecture_code, locale as any)}
@@ -548,32 +594,35 @@ export default function StatisticsPage() {
 
                             <div className="space-y-4 flex-1 overflow-y-auto max-h-[500px] pr-2 custom-scrollbar">
                                 {tourism.length === 0 ? (
-                                    <p className="text-muted text-center py-10 italic">No tourism records yet.</p>
+                                    <p className="text-muted text-center py-10 italic">{t('statistics.tourism.noRecords')}</p>
                                 ) : (
-                                    tourism.map((item) => (
-                                        <div key={item.id} className="group flex items-center gap-4">
-                                            <div className="w-8 h-8 flex items-center justify-center rounded-full bg-slate-100 dark:bg-slate-800 text-xs font-bold text-slate-500">
-                                                {item.rank}
-                                            </div>
-                                            <div className="flex-1">
-                                                <div className="flex justify-between items-end mb-1.5">
-                                                    <span className="text-sm font-bold text-primary group-hover:text-blue-500 transition-colors flex items-center gap-2">
-                                                        {getCountryFlag(item.country_name)} \
-                                                        {t(`countries.${item.country_name}`) !== `countries.${item.country_name}` ? t(`countries.${item.country_name}`) : item.country_name}
-                                                    </span>
-                                                    <span className="text-sm font-semibold text-muted">
-                                                        {item.visitor_label || (item.visitor_count > 0 ? (item.visitor_count / 1000).toFixed(0) + 'k' : '')}
-                                                    </span>
+                                    tourism.map((item) => {
+                                        const countryKey = getCountryKey(item.country_name);
+                                        return (
+                                            <div key={item.id} className="group flex items-center gap-4">
+                                                <div className="w-8 h-8 flex items-center justify-center rounded-full bg-slate-100 dark:bg-slate-800 text-xs font-bold text-slate-500">
+                                                    {item.rank}
                                                 </div>
-                                                <div className="h-2 w-full bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
-                                                    <div
-                                                        className="h-full bg-blue-400/60 group-hover:bg-blue-500 rounded-full transition-all duration-700 ease-out"
-                                                        style={{ width: `${(item.visitor_count / (tourism[0]?.visitor_count || 1)) * 100}%` }}
-                                                    />
+                                                <div className="flex-1">
+                                                    <div className="flex justify-between items-end mb-1.5">
+                                                        <span className="text-sm font-bold text-primary group-hover:text-blue-500 transition-colors flex items-center gap-2">
+                                                            {getCountryFlag(item.country_name)} \
+                                                            {t.has(`countries.${countryKey}`) ? t(`countries.${countryKey}`) : item.country_name}
+                                                        </span>
+                                                        <span className="text-sm font-semibold text-muted">
+                                                            {item.visitor_label || (item.visitor_count > 0 ? (item.visitor_count / 1000).toFixed(0) + 'k' : '')}
+                                                        </span>
+                                                    </div>
+                                                    <div className="h-2 w-full bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
+                                                        <div
+                                                            className="h-full bg-blue-400/60 group-hover:bg-blue-500 rounded-full transition-all duration-700 ease-out"
+                                                            style={{ width: `${(item.visitor_count / (tourism[0]?.visitor_count || 1)) * 100}%` }}
+                                                        />
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    ))
+                                        );
+                                    })
                                 )}
                             </div>
                         </div>
@@ -583,4 +632,5 @@ export default function StatisticsPage() {
             </div>
         </main>
     );
+
 }

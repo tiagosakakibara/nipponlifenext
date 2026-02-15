@@ -1243,6 +1243,14 @@
             "avgSalary": {
                 "title": "全国平均給与",
                 "delta": "年次"
+            },
+            "growth": {
+                "title": "増加 (2023-2024)",
+                "delta": "成長"
+            },
+            "naturalization": {
+                "title": "日本国籍取得 (2023)",
+                "delta": "帰化"
             }
         },
         "topNationalities": {
@@ -1282,7 +1290,8 @@
             "title": "訪日外国人観光客",
             "description": "日本への短期訪問者数が多い国トップ10",
             "source_label": "出典",
-            "source_value": "観光・入国統計"
+            "source_value": "観光・入国統計",
+            "noRecords": "観光記録はまだありません。"
         },
         "expenses": {
             "title": "月間支出の分布",
@@ -1290,11 +1299,15 @@
             "estTotal": "推定合計",
             "rent": "家賃",
             "food": "食費",
-            "transport": "交通費"
+            "transport": "交通費",
+            "entries": "エントリー",
+            "monthly": "月額",
+            "hourly": "時給"
         },
         "notes": {
             "title": "コミュニティの声",
-            "subtitle": "日本に住む外国人による経験や観察の共有"
+            "subtitle": "日本に住む外国人による経験や観察の共有",
+            "communityNotes": "コミュニティノート"
         },
         "cta": {
             "title": "リアルな情報を提供する",
@@ -1318,7 +1331,17 @@
         "United States": "米国",
         "Taiwan": "台湾",
         "Thailand": "タイ",
-        "Peru": "ペルー"
+        "Peru": "ペルー",
+        "Hong Kong": "香港",
+        "Singapore": "シンガポール",
+        "Malaysia": "マレーシア",
+        "Australia": "オーストラリア",
+        "Canada": "カナダ",
+        "United Kingdom": "イギリス",
+        "Germany": "ドイツ",
+        "France": "フランス",
+        "Italy": "イタリア",
+        "Spain": "スペイン"
     },
     "seo": {
         "siteTitle": "NipponLife - 日本文化ポータル",

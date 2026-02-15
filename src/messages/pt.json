@@ -870,24 +870,24 @@
                 "employmentTitle": "Título do Cargo *",
                 "companyEntity": "Entidade da Empresa *",
                 "employmentType": "Tipo de Emprego",
-                "prefecture": "Província (Japão)",
-                "city": "Cidade",
+                "prefectureField": "Província (Japão)",
+                "cityField": "Cidade",
                 "compensation": "Compensação e Salário",
                 "publicSalaryLabel": "Rótulo de Salário Público",
                 "rateUnit": "Unidade",
                 "bonusExtras": "Texto de Bônus e Extras",
                 "bonusExtrasPlaceholder": "Auxílio transporte, bônus anual, apoio moradia...",
-                "requirements": "Requisitos",
+                "requirementsField": "Requisitos",
                 "addRequirement": "Adicionar requisito...",
                 "perksBenefits": "Vantagens e Benefícios",
-                "benefitLabel": "Rótulo (ex: Refeições Grátis)",
+                "benefitLabelField": "Rótulo (ex: Refeições Grátis)",
                 "narrativeBio": "Narrativa e Bio",
                 "narrativePlaceholder": "Descrição detalhada da vaga, tarefas diárias e sobre a empresa...",
                 "multilingualInfo": "Informações Multilíngues",
-                "japanese": "Japonês (日本語)",
+                "japaneseSection": "Japonês (日本語)",
                 "employmentTitleJp": "Título do Cargo (JP)",
                 "narrativeJp": "Narrativa (JP)",
-                "english": "Inglês",
+                "englishSection": "Inglês",
                 "employmentTitleEn": "Título do Cargo (EN)",
                 "narrativeEn": "Narrativa (EN)",
                 "perHour": "Por Hora",
@@ -1372,6 +1372,14 @@
             "avgSalary": {
                 "title": "Salário Médio Nacional",
                 "delta": "anual"
+            },
+            "growth": {
+                "title": "Aumento (2023-2024)",
+                "delta": "crescimento"
+            },
+            "naturalization": {
+                "title": "Cidadania Japonesa (2023)",
+                "delta": "naturalizações"
             }
         },
         "topNationalities": {
@@ -1411,7 +1419,8 @@
             "title": "Turistas Estrangeiros no Japão",
             "description": "Top países por número de visitantes de curta duração no Japão",
             "source_label": "Fonte",
-            "source_value": "Estatísticas de Turismo & Imigração"
+            "source_value": "Estatísticas de Turismo & Imigração",
+            "noRecords": "Nenhum registro de turismo ainda."
         },
         "expenses": {
             "title": "Distribuição de Gastos Mensais",
@@ -1419,11 +1428,15 @@
             "estTotal": "Total Est.",
             "rent": "Aluguel",
             "food": "Alimentação",
-            "transport": "Transporte"
+            "transport": "Transporte",
+            "entries": "entradas",
+            "monthly": "Mensal",
+            "hourly": "Por Hora"
         },
         "notes": {
             "title": "Relatos da Comunidade",
-            "subtitle": "Experiências e observações compartilhadas por estrangeiros no Japão"
+            "subtitle": "Experiências e observações compartilhadas por estrangeiros no Japão",
+            "communityNotes": "Notas da Comunidade"
         },
         "cta": {
             "title": "Contribua com informações reais",
@@ -1447,7 +1460,17 @@
         "United States": "Estados Unidos",
         "Taiwan": "Taiwan",
         "Thailand": "Tailândia",
-        "Peru": "Peru"
+        "Peru": "Peru",
+        "Hong Kong": "Hong Kong",
+        "Singapore": "Singapura",
+        "Malaysia": "Malásia",
+        "Australia": "Austrália",
+        "Canada": "Canadá",
+        "United Kingdom": "Reino Unido",
+        "Germany": "Alemanha",
+        "France": "França",
+        "Italy": "Itália",
+        "Spain": "Espanha"
     },
     "seo": {
         "siteTitle": "NipponLife - Portal da Cultura Japonesa",
