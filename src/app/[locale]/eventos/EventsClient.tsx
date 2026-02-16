@@ -133,40 +133,37 @@ export default function EventsClient() {
             .filter(e => e && e.starts_at)
             .map(event => {
                 try {
-                    const formatToJST = (dateStr: string) => {
+                    // Schedule-X v4 requires Temporal.ZonedDateTime objects
+                    const toZonedDateTime = (dateStr: string): Temporal.ZonedDateTime | null => {
                         try {
                             const date = new Date(dateStr);
                             if (isNaN(date.getTime())) return null;
-
-                            const instant = Temporal.Instant.fromEpochMilliseconds(date.getTime());
-                            return instant.toZonedDateTimeISO('Asia/Tokyo');
+                            return Temporal.Instant
+                                .fromEpochMilliseconds(date.getTime())
+                                .toZonedDateTimeISO('Asia/Tokyo');
                         } catch (e) {
                             console.error('Error formatting date:', dateStr, e);
                             return null;
                         }
                     };
 
-                    const start = formatToJST(event.starts_at);
+                    const start = toZonedDateTime(event.starts_at);
                     if (!start) return null;
 
-                    let end = event.ends_at ? formatToJST(event.ends_at) : null;
+                    let end = event.ends_at ? toZonedDateTime(event.ends_at) : null;
 
-                    // If no end date or end equals start, add 1 hour for visibility
-                    // Use epochMilliseconds for reliable value comparison of Temporal objects
-                    if (!end || (end.epochMilliseconds === start.epochMilliseconds)) {
+                    // If no end date or same as start, add 1 hour for calendar visibility
+                    if (!end || end.epochMilliseconds === start.epochMilliseconds) {
                         end = start.add({ hours: 1 });
                     }
 
-                    // Fallback should not happen with logic above, but safety check
-                    if (!end) end = start;
-
                     return {
-                        id: String(event.id), // Force String ID
+                        id: String(event.id),
                         title: event.title,
                         start,
                         end,
                         description: event.description || '',
-                        location: event.description || '', // Mapping description to location as per previous pattern, or fix if needed
+                        location: event.location || '',
                         _original: event
                     };
                 } catch (err) {
@@ -186,7 +183,7 @@ export default function EventsClient() {
 
     const calendarConfig = useMemo(() => ({
         views: [createViewMonthGrid()] as [any, ...any[]],
-        events: formattedEvents as any[],
+        events: [] as any[],
         plugins: [calendarEventsService],
         defaultView: 'month-grid',
         locale: calendarLocale,
@@ -198,7 +195,8 @@ export default function EventsClient() {
                 }
             }
         }
-    }), [formattedEvents, calendarLocale, calendarEventsService, router]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }), [calendarLocale, calendarEventsService, router]);
 
     const calendarApp = useCalendarApp(calendarConfig);
 
@@ -228,22 +226,27 @@ export default function EventsClient() {
         }
     }, [selectedYear, selectedMonth, calendarApp, japanCurrentYear]);
 
-    // Update calendar events when they change
+    // Atualiza os eventos do calendário dinamicamente quando o fetch termina.
+    // useCalendarApp ignora mudanças no config após a montagem inicial,
+    // por isso usamos calendarEventsService.set() como única forma de
+    // injetar eventos após o componente já estar montado.
+    // viewMode é incluído na dependência porque o ScheduleXCalendar é montado
+    // condicionalmente: quando o usuário troca para o modo calendário, precisamos
+    // re-injetar os eventos (já que o calendário foi desmontado/remontado).
     useEffect(() => {
-        if (formattedEvents.length > 0 && calendarEventsService) {
+        if (!calendarEventsService || viewMode !== 'calendar') return;
+        // Atraso mínimo para garantir que o ScheduleXCalendar já montou e
+        // chamou beforeRender nos plugins antes de invocar .set()
+        const timer = setTimeout(() => {
             try {
-                // Schedule-X v3+ is strict about event formats. 
-                // Ensuring we only pass valid, non-null events.
-                const validEvents = formattedEvents.filter(e => e && e.start && e.end);
-                // console.log('Updating Calendar Events:', validEvents.length);
-                if (validEvents.length > 0) {
-                    calendarEventsService.set(validEvents as any[]);
-                }
+                const validEvents = (formattedEvents as any[]).filter(e => e && e.start && e.end);
+                calendarEventsService.set(validEvents);
             } catch (error) {
                 console.error('Failed to update calendar events:', error);
             }
-        }
-    }, [formattedEvents, calendarEventsService]);
+        }, 0);
+        return () => clearTimeout(timer);
+    }, [formattedEvents, calendarEventsService, viewMode]);
 
     // Grouping Logic for list view
     const groupedEvents = useMemo(() => {
@@ -533,7 +536,6 @@ export default function EventsClient() {
                             }
                         `}</style>
                         <ScheduleXCalendar
-                            key={`${events.length}-${events.map(e => e.id).join('').slice(0, 20)}-${viewMode}-${locale}`}
                             calendarApp={calendarApp}
                         />
                     </div>

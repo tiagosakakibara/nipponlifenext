@@ -46,14 +46,14 @@ export default function AdminPostsClient() {
                         <FileText className="w-8 h-8 text-link" />
                         {t('admin.menu.posts')}
                     </h1>
-                    <p className="text-secondary text-sm mt-1">Publique e gerencie artigos, notícias e novidades.</p>
+                    <p className="text-secondary text-sm mt-1">{t('admin.posts.list.subtitle')}</p>
                 </div>
                 <Link
                     href="/admin/posts/new"
                     className="inline-flex items-center gap-2 bg-[#5593C3] hover:opacity-90 text-white px-6 py-3 rounded-xl font-bold text-sm shadow-xl shadow-blue-500/20 transition-all hover:scale-105 active:scale-95"
                 >
                     <Plus className="w-5 h-5" />
-                    Adicionar Novo Post
+                    {t('admin.posts.list.addNew')}
                 </Link>
             </div>
 
@@ -69,7 +69,7 @@ export default function AdminPostsClient() {
                                 : 'text-secondary hover:text-primary'
                                 }`}
                         >
-                            {status === 'all' ? 'Todos' : status === 'published' ? 'Publicados' : 'Rascunhos'}
+                            {status === 'all' ? t('admin.posts.list.filters.all') : status === 'published' ? t('admin.posts.list.filters.published') : t('admin.posts.list.filters.drafts')}
                             <span className="ml-2 opacity-50">
                                 ({status === 'all' ? posts.length : posts.filter(p => p.status === status).length})
                             </span>
@@ -81,7 +81,7 @@ export default function AdminPostsClient() {
                     <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-secondary/50" />
                     <input
                         type="text"
-                        placeholder="Buscar por título ou slug..."
+                        placeholder={t('admin.posts.list.searchPlaceholder')}
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
                         className="w-full bg-app border border-app rounded-xl pl-10 pr-4 py-2 text-xs text-primary outline-none focus:border-link/50 transition-all focus:bg-surface/30"
@@ -95,10 +95,10 @@ export default function AdminPostsClient() {
                     <table className="w-full text-left text-sm border-collapse">
                         <thead>
                             <tr className="bg-[#0037680a] border-b border-app">
-                                <th className="px-6 py-4 text-[10px] font-black text-secondary uppercase tracking-[0.2em]">Conteúdo</th>
-                                <th className="hidden md:table-cell px-6 py-4 text-[10px] font-black text-secondary uppercase tracking-[0.2em]">Categoria</th>
-                                <th className="hidden md:table-cell px-6 py-4 text-[10px] font-black text-secondary uppercase tracking-[0.2em]">Status & Data</th>
-                                <th className="px-6 py-4 text-[10px] font-black text-secondary uppercase tracking-[0.2em] text-right">Ações</th>
+                                <th className="px-6 py-4 text-[10px] font-black text-secondary uppercase tracking-[0.2em]">{t('admin.posts.list.table.content')}</th>
+                                <th className="hidden md:table-cell px-6 py-4 text-[10px] font-black text-secondary uppercase tracking-[0.2em]">{t('admin.posts.list.table.category')}</th>
+                                <th className="hidden md:table-cell px-6 py-4 text-[10px] font-black text-secondary uppercase tracking-[0.2em]">{t('admin.posts.list.table.status')}</th>
+                                <th className="px-6 py-4 text-[10px] font-black text-secondary uppercase tracking-[0.2em] text-right">{t('admin.posts.list.table.actions')}</th>
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-app">
@@ -149,7 +149,7 @@ export default function AdminPostsClient() {
                                                         {post.categoryKey}
                                                     </span>
                                                     <span className={`text-[10px] font-black uppercase tracking-widest ${post.status === 'published' ? 'text-emerald-500' : 'text-amber-500'}`}>
-                                                        {post.status === 'published' ? 'Publicado' : 'Rascunho'}
+                                                        {post.status === 'published' ? t('admin.posts.list.status.published') : t('admin.posts.list.status.draft')}
                                                     </span>
                                                     <span className="text-[10px] text-secondary/60">
                                                         • {new Date(post.updatedAt).toLocaleDateString('pt-BR', { day: '2-digit', month: 'short' })}
@@ -166,7 +166,7 @@ export default function AdminPostsClient() {
                                     <td className="hidden md:table-cell px-6 py-5">
                                         <div className="flex flex-col">
                                             <span className={`text-[10px] font-black uppercase tracking-widest ${post.status === 'published' ? 'text-emerald-500' : 'text-amber-500'}`}>
-                                                {post.status === 'published' ? 'Publicado' : 'Rascunho'}
+                                                {post.status === 'published' ? t('admin.posts.list.status.published') : t('admin.posts.list.status.draft')}
                                             </span>
                                             <span className="text-[11px] text-secondary/60 mt-0.5">
                                                 {new Date(post.updatedAt).toLocaleDateString('pt-BR', { day: '2-digit', month: 'short', year: 'numeric' })}
@@ -178,7 +178,7 @@ export default function AdminPostsClient() {
                                             <Link
                                                 href={`/admin/posts/${post.id}`}
                                                 className="w-9 h-9 flex items-center justify-center rounded-lg bg-link/10 text-link hover:bg-link hover:text-white transition-all"
-                                                title="Editar post"
+                                                title={t('admin.posts.list.table.actions.edit')}
                                             >
                                                 <Edit className="w-4 h-4" />
                                             </Link>
@@ -186,7 +186,7 @@ export default function AdminPostsClient() {
                                                 type="button"
                                                 onClick={() => handleDelete(post.id, post.title)}
                                                 className="w-9 h-9 flex items-center justify-center rounded-lg bg-accent/10 text-accent hover:bg-accent hover:text-white transition-all"
-                                                title="Excluir post"
+                                                title={t('admin.posts.list.table.actions.delete')}
                                             >
                                                 <Trash2 className="w-4 h-4" />
                                             </button>
@@ -203,12 +203,12 @@ export default function AdminPostsClient() {
                         <div className="w-16 h-16 bg-app rounded-full flex items-center justify-center mx-auto border border-app">
                             <Search className="w-8 h-8 text-secondary/20" />
                         </div>
-                        <p className="text-secondary font-medium">Nenhum post encontrado para os filtros selecionados.</p>
+                        <p className="text-secondary font-medium">{t('admin.posts.list.empty.message')}</p>
                         <button
                             onClick={() => { setSearchTerm(''); setFilterStatus('all'); }}
                             className="text-link text-sm font-bold hover:underline"
                         >
-                            Limpar filtros
+                            {t('admin.posts.list.empty.clear')}
                         </button>
                     </div>
                 )}

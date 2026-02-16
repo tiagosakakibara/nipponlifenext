@@ -404,6 +404,76 @@
         "recentPosts": "最近の投稿",
         "noRecentPosts": "最近の投稿はありません。",
         "posts_chart": "投稿",
+        "posts": {
+            "title": "投稿管理",
+            "list": {
+                "subtitle": "記事、ニュース、最新情報を公開および管理します。",
+                "addNew": "新しい投稿を追加",
+                "filters": {
+                    "all": "すべて",
+                    "published": "公開済み",
+                    "drafts": "下書き"
+                },
+                "searchPlaceholder": "タイトルまたはスラッグで検索...",
+                "table": {
+                    "content": "コンテンツ",
+                    "category": "カテゴリー",
+                    "status": "ステータスと日付",
+                    "actions": "操作",
+                    "edit": "投稿を編集",
+                    "delete": "投稿を削除"
+                },
+                "status": {
+                    "published": "公開中",
+                    "draft": "下書き"
+                },
+                "empty": {
+                    "message": "選択したフィルターに一致する投稿は見つかりませんでした。",
+                    "clear": "フィルターをクリア"
+                }
+            },
+            "create": "新しい投稿を作成",
+            "form": {
+                "titlePlaceholder": "ニュースのタイトルを入力...",
+                "permalink": "パーマリンク:",
+                "contentPlaceholder": "ここにニュースの内容を書き始めてください...",
+                "excerptLabel": "抜粋（要約）",
+                "excerptPlaceholder": "ニュースの簡単な要約...",
+                "tagsLabel": "タグ",
+                "addTagPlaceholder": "タグを追加...",
+                "publishingSettings": "公開設定",
+                "statusLabel": "ステータス",
+                "statusDraft": "下書き",
+                "statusPublished": "公開",
+                "categoryLabel": "カテゴリー",
+                "selectCategory": "カテゴリーを選択",
+                "featuredImage": "アイキャッチ画像",
+                "pinToTop": "トップに固定",
+                "publishButton": "投稿を公開",
+                "saveDraftButton": "下書きとして保存",
+                "translationsLabel": "翻訳（オプション）",
+                "japaneseLabel": "日本語",
+                "englishLabel": "英語",
+                "titleJaPlaceholder": "タイトル (JP)",
+                "excerptJaPlaceholder": "サブタイトル/要約 (JP)",
+                "contentJaPlaceholder": "日本語のコンテンツ...",
+                "titleEnPlaceholder": "タイトル (EN)",
+                "excerptEnPlaceholder": "サブタイトル/要約 (EN)",
+                "contentEnPlaceholder": "英語のコンテンツ...",
+                "validation": {
+                    "titleRequired": "タイトルは必須です",
+                    "categoryRequired": "カテゴリーは必須です"
+                },
+                "messages": {
+                    "draftSuccess": "下書きが作成されました！",
+                    "publishSuccess": "投稿が公開されました！",
+                    "tagsGenerated": "{count}個のタグが生成されました！",
+                    "tagsGenerateTitle": "タグを生成",
+                    "fillRequired": "下書きとして保存するには必須項目を入力してください。",
+                    "fixErrors": "公開する前にエラーを修正してください。"
+                }
+            }
+        },
         "jobs_chart": "求人",
         "community_chart": "コミュニティ",
         "totalPosts": "投稿総数",

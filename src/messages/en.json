@@ -416,6 +416,76 @@
         "recentPosts": "Recent Posts",
         "noRecentPosts": "No recent posts.",
         "posts_chart": "Posts",
+        "posts": {
+            "title": "Posts Management",
+            "list": {
+                "subtitle": "Publish and manage articles, news, and updates.",
+                "addNew": "Add New Post",
+                "filters": {
+                    "all": "All",
+                    "published": "Published",
+                    "drafts": "Drafts"
+                },
+                "searchPlaceholder": "Search by title or slug...",
+                "table": {
+                    "content": "Content",
+                    "category": "Category",
+                    "status": "Status & Date",
+                    "actions": "Actions",
+                    "edit": "Edit post",
+                    "delete": "Delete post"
+                },
+                "status": {
+                    "published": "Published",
+                    "draft": "Draft"
+                },
+                "empty": {
+                    "message": "No posts found for the selected filters.",
+                    "clear": "Clear filters"
+                }
+            },
+            "create": "Create New Post",
+            "form": {
+                "titlePlaceholder": "Enter news title...",
+                "permalink": "Permalink:",
+                "contentPlaceholder": "Start writing your news content here...",
+                "excerptLabel": "Excerpt (Summary)",
+                "excerptPlaceholder": "Brief summary of the news...",
+                "tagsLabel": "Tags",
+                "addTagPlaceholder": "Add tag...",
+                "publishingSettings": "Publishing Settings",
+                "statusLabel": "Status",
+                "statusDraft": "DRAFT",
+                "statusPublished": "PUBLISHED",
+                "categoryLabel": "Category",
+                "selectCategory": "Select Category",
+                "featuredImage": "Featured Image",
+                "pinToTop": "Pin to top",
+                "publishButton": "PUBLISH POST",
+                "saveDraftButton": "SAVE AS DRAFT",
+                "translationsLabel": "Translations (Optional)",
+                "japaneseLabel": "Japanese",
+                "englishLabel": "English",
+                "titleJaPlaceholder": "Title (JP)",
+                "excerptJaPlaceholder": "Subtitle/Excerpt (JP)",
+                "contentJaPlaceholder": "Japanese content...",
+                "titleEnPlaceholder": "Title (EN)",
+                "excerptEnPlaceholder": "Subtitle/Excerpt (EN)",
+                "contentEnPlaceholder": "English content...",
+                "validation": {
+                    "titleRequired": "Title is required",
+                    "categoryRequired": "Category is required"
+                },
+                "messages": {
+                    "draftSuccess": "Draft created successfully!",
+                    "publishSuccess": "Post published!",
+                    "tagsGenerated": "{count} tags generated!",
+                    "tagsGenerateTitle": "Generate tags",
+                    "fillRequired": "Fill in required fields to save as draft.",
+                    "fixErrors": "Please fix errors before publishing."
+                }
+            }
+        },
         "jobs_chart": "Jobs",
         "community_chart": "Community",
         "totalPosts": "Total Posts",

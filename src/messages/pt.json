@@ -444,6 +444,76 @@
         "recentPosts": "Posts Recentes",
         "noRecentPosts": "Nenhum post recente.",
         "posts_chart": "Posts",
+        "posts": {
+            "title": "Gerenciamento de Posts",
+            "list": {
+                "subtitle": "Publique e gerencie artigos, notícias e novidades.",
+                "addNew": "Adicionar Novo Post",
+                "filters": {
+                    "all": "Todos",
+                    "published": "Publicados",
+                    "drafts": "Rascunhos"
+                },
+                "searchPlaceholder": "Buscar por título ou slug...",
+                "table": {
+                    "content": "Conteúdo",
+                    "category": "Categoria",
+                    "status": "Status & Data",
+                    "actions": "Ações",
+                    "edit": "Editar post",
+                    "delete": "Excluir post"
+                },
+                "status": {
+                    "published": "Publicado",
+                    "draft": "Rascunho"
+                },
+                "empty": {
+                    "message": "Nenhum post encontrado para os filtros selecionados.",
+                    "clear": "Limpar filtros"
+                }
+            },
+            "create": "Criar Novo Post",
+            "form": {
+                "titlePlaceholder": "Digite o título da notícia...",
+                "permalink": "Link Permanente:",
+                "contentPlaceholder": "Comece a escrever o conteúdo da notícia aqui...",
+                "excerptLabel": "Resumo (Trecho)",
+                "excerptPlaceholder": "Resumo breve da notícia...",
+                "tagsLabel": "Tags",
+                "addTagPlaceholder": "Adicionar tag...",
+                "publishingSettings": "Configurações de Publicação",
+                "statusLabel": "Status",
+                "statusDraft": "RASCUNHO",
+                "statusPublished": "PUBLICADO",
+                "categoryLabel": "Categoria",
+                "selectCategory": "Selecionar Categoria",
+                "featuredImage": "Imagem de Capa",
+                "pinToTop": "Fixar no topo",
+                "publishButton": "PUBLICAR POST",
+                "saveDraftButton": "SALVAR COMO RASCUNHO",
+                "translationsLabel": "Traduções (Opcional)",
+                "japaneseLabel": "Japonês",
+                "englishLabel": "Inglês",
+                "titleJaPlaceholder": "Título (JP)",
+                "excerptJaPlaceholder": "Subtítulo/Resumo (JP)",
+                "contentJaPlaceholder": "Conteúdo em Japonês...",
+                "titleEnPlaceholder": "Título (EN)",
+                "excerptEnPlaceholder": "Subtítulo/Resumo (EN)",
+                "contentEnPlaceholder": "Conteúdo em Inglês...",
+                "validation": {
+                    "titleRequired": "Título é obrigatório",
+                    "categoryRequired": "Categoria é obrigatória"
+                },
+                "messages": {
+                    "draftSuccess": "Rascunho criado com sucesso!",
+                    "publishSuccess": "Post publicado!",
+                    "tagsGenerated": "{count} tags geradas!",
+                    "tagsGenerateTitle": "Gerar tags",
+                    "fillRequired": "Preencha os campos obrigatórios para salvar como rascunho.",
+                    "fixErrors": "Por favor, corrija os erros antes de publicar."
+                }
+            }
+        },
         "jobs_chart": "Vagas",
         "community_chart": "Comunidade",
         "totalPosts": "Total de Posts",
