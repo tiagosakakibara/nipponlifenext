@@ -18,7 +18,6 @@ export function PhotoGallery({ photos, galleryId = 'main-gallery' }: PhotoGaller
     useEffect(() => {
         if (!photos || photos.length === 0) return;
 
-        // Cleanup previous instance if any
         if (lightboxRef.current) {
             lightboxRef.current.destroy();
         }
@@ -37,35 +36,42 @@ export function PhotoGallery({ photos, galleryId = 'main-gallery' }: PhotoGaller
 
             imageClickAction: 'zoom',
             doubleTapAction: 'zoom',
-            thumbSelector: 'img',
         });
 
-        // Auto-detect image dimensions when they are not provided
-        // This prevents the "squeezed" image issue
-        lightbox.addFilter('itemData', (itemData: any) => {
-            // If dimensions are the fallback values (1600x1200), we should detect them
-            if (itemData.w === 1600 && itemData.h === 1200) {
-                // Set initial small size, will be corrected when image loads
-                itemData.w = window.innerWidth;
-                itemData.h = window.innerHeight;
-            }
-            return itemData;
-        });
-
-        // When the content is loaded, update with real dimensions
+        // Override image loading to always detect real dimensions
+        // This prevents stretched/squeezed images when width/height are not in the DB
         lightbox.on('contentLoad', (e: any) => {
             const { content } = e;
+
             if (content.type === 'image') {
-                const img = new Image();
-                img.onload = () => {
-                    content.width = img.naturalWidth;
-                    content.height = img.naturalHeight;
-                    // Force PhotoSwipe to recalculate the layout
-                    if (lightboxRef.current?.pswp) {
-                        lightboxRef.current.pswp.updateSize(true);
-                    }
-                };
-                img.src = content.data.src || content.data.msrc;
+                // Check if dimensions look like our fallback (1600x1200)
+                const isFallback = content.data.w === 1600 && content.data.h === 1200;
+                // Also check if dimensions are 0 or missing
+                const isMissing = !content.data.w || !content.data.h;
+
+                if (isFallback || isMissing) {
+                    // Prevent default loading
+                    e.preventDefault();
+
+                    content.state = 'loading';
+
+                    const img = document.createElement('img');
+                    img.className = 'pswp__img';
+
+                    img.onload = () => {
+                        // Use actual image dimensions
+                        content.width = img.naturalWidth;
+                        content.height = img.naturalHeight;
+                        content.element = img;
+                        content.onLoaded();
+                    };
+
+                    img.onerror = () => {
+                        content.onError();
+                    };
+
+                    img.src = content.data.src;
+                }
             }
         });
 
