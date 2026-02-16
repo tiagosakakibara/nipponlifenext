@@ -225,6 +225,27 @@ export default function AdminGalleryFormClient({ albumId }: AdminGalleryFormClie
     const handleDeletePhoto = async (photoId: string) => {
         if (!confirm(t('confirmDeletePhoto'))) return;
         try {
+            // 1. Find the photo to get its image_url for storage cleanup
+            const photoToDelete = photos.find(p => p.id === photoId);
+
+            // 2. Delete from storage if we have the URL
+            if (photoToDelete?.image_url) {
+                try {
+                    // Extract the storage path from the public URL
+                    // URL format: .../storage/v1/object/public/gallery/gallery/filename.webp
+                    const url = new URL(photoToDelete.image_url);
+                    const pathMatch = url.pathname.match(/\/storage\/v1\/object\/public\/gallery\/(.+)/);
+                    if (pathMatch) {
+                        const storagePath = decodeURIComponent(pathMatch[1]);
+                        await supabase.storage.from('gallery').remove([storagePath]);
+                    }
+                } catch (storageErr) {
+                    console.warn('Failed to delete from storage:', storageErr);
+                    // Continue with DB deletion even if storage cleanup fails
+                }
+            }
+
+            // 3. Delete from database
             const { error } = await supabase
                 .from('gallery_photos')
                 .delete()
@@ -233,13 +254,9 @@ export default function AdminGalleryFormClient({ albumId }: AdminGalleryFormClie
             if (error) throw error;
             setPhotos(prev => prev.filter(p => p.id !== photoId));
 
-
             // If deleting cover, unset cover
             if (album.cover_photo_id === photoId) {
                 setAlbum(prev => ({ ...prev, cover_photo_id: null }));
-                // Update DB immediately for cover consistency? Or wait for save?
-                // Better wait for save or do it now. 
-                // Let's do it now for consistency.
                 await supabase.from('gallery_albums').update({ cover_photo_id: null }).eq('id', albumId!);
             }
 

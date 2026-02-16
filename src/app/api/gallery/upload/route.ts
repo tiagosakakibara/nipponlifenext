@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/utils/supabase/server'
+import sharp from 'sharp'
 
 export async function POST(request: NextRequest) {
     try {
@@ -34,16 +35,37 @@ export async function POST(request: NextRequest) {
             return NextResponse.json({ error: 'Album ID required' }, { status: 400 })
         }
 
-        // 3. Upload to storage
-        const fileExt = file.name.split('.').pop()
+        // 3. Convert image to WebP using sharp
+        const fileBuffer = await file.arrayBuffer()
+        const inputBuffer = Buffer.from(fileBuffer)
+
+        let outputBuffer: Buffer
+        let contentType: string
+        let fileExt: string
+
+        try {
+            // Convert to WebP with quality 80 (good balance between quality and size)
+            outputBuffer = await sharp(inputBuffer)
+                .webp({ quality: 80 })
+                .toBuffer()
+            contentType = 'image/webp'
+            fileExt = 'webp'
+        } catch (conversionError) {
+            console.warn('WebP conversion failed, uploading original:', conversionError)
+            // Fallback: upload original if conversion fails
+            outputBuffer = inputBuffer
+            contentType = file.type
+            fileExt = file.name.split('.').pop() || 'jpg'
+        }
+
+        // 4. Upload to storage
         const fileName = `${Math.random().toString(36).substring(2)}_${Date.now()}.${fileExt}`
         const filePath = `gallery/${fileName}`
 
-        const fileBuffer = await file.arrayBuffer()
         const { error: uploadError } = await supabase.storage
             .from('gallery')
-            .upload(filePath, fileBuffer, {
-                contentType: file.type,
+            .upload(filePath, outputBuffer, {
+                contentType,
                 upsert: false
             })
 
@@ -56,14 +78,15 @@ export async function POST(request: NextRequest) {
             .from('gallery')
             .getPublicUrl(filePath)
 
-        // 4. Record in DB
+        // 5. Record in DB
+        const originalName = file.name.split('.')[0]
         const { data, error: dbError } = await supabase
             .from('gallery_photos')
             .insert([{
                 album_id: albumId,
                 user_id: user.id,
                 image_url: publicUrl,
-                title: file.name.split('.')[0],
+                title: originalName,
                 status: 'published'
             }])
             .select()
