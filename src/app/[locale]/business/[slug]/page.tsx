@@ -265,30 +265,25 @@ export default async function BusinessProfilePage({ params }: Props) {
 
                         {/* Map */}
                         <div className="bg-surface border border-app rounded-3xl overflow-hidden p-1.5 shadow-sm">
-                            <div className="aspect-video bg-gray-800 relative group overflow-hidden rounded-2xl">
-                                <div className="w-full h-full bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center">
-                                    <MapPin className="w-16 h-16 text-nippon-red opacity-20" />
+                            <div className="relative w-full h-56 rounded-2xl overflow-hidden group shadow-lg border border-zinc-100 dark:border-zinc-800">
+                                {/* Background Pattern - Simulates a dark map */}
+                                <div className="absolute inset-0 bg-[#0f172a]">
+                                    <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:32px_32px]"></div>
+                                    <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-blue-900/20 via-[#0f172a]/80 to-[#0f172a]"></div>
                                 </div>
-                                <div className="absolute inset-0 flex items-center justify-center bg-black/20 backdrop-blur-[1px] opacity-0 group-hover:opacity-100 transition-all duration-300">
+
+                                {/* Overlay Button */}
+                                <div className="absolute inset-0 flex items-center justify-center z-10 p-4">
                                     <a
                                         href={b.google_maps_url || `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(`${name}, ${address}, ${city}`)}`}
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="bg-white text-black px-6 py-2.5 rounded-full font-bold text-sm shadow-xl hover:scale-105 transition-transform flex items-center gap-2"
+                                        className="bg-white text-primary px-8 py-3 rounded-full font-bold text-sm shadow-xl hover:scale-105 hover:shadow-2xl hover:bg-zinc-50 transition-all duration-300 flex items-center gap-3 group/btn"
                                     >
-                                        <MapPin className="w-4 h-4 text-nippon-red" />
-                                        {t('business.openGoogleMaps', { defaultMessage: 'Abrir no Maps' })}
+                                        <MapPin className="w-5 h-5 text-[#D70F24] group-hover/btn:animate-bounce" />
+                                        <span>{t('business.openGoogleMaps', { defaultMessage: 'Abrir no Maps' })}</span>
                                     </a>
                                 </div>
-                                {/* Always visible on mobile if needed, but hover works well for desktop. Link wraps usually. */}
-                                <a
-                                    href={b.google_maps_url || `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(`${name}, ${address}, ${city}`)}`}
-                                    className="absolute inset-0 md:hidden"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                >
-                                    <span className="sr-only">Open Maps</span>
-                                </a>
                             </div>
                             <div className="px-5 py-4">
                                 <p className="text-sm font-medium text-primary leading-snug">{address}</p>

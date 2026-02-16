@@ -175,25 +175,36 @@ export default async function EventDetailPage({ params }: EventPageProps) {
                                     <div className="w-1.5 h-6 bg-emerald-500 rounded-full" />
                                     <h3 className="text-xl font-heading font-bold text-primary tracking-tight uppercase">{t('location')}</h3>
                                 </div>
-                                <div className="rounded-[40px] overflow-hidden border border-zinc-100 shadow-xl bg-zinc-50 p-2">
-                                    <div className="bg-white rounded-[32px] p-8 space-y-6">
-                                        <div className="flex items-center gap-4">
-                                            <div className="w-12 h-12 rounded-2xl bg-red-50 flex items-center justify-center text-[#D70F24]">
-                                                <MapPin className="w-6 h-6" />
-                                            </div>
-                                            <div>
-                                                <p className="text-[10px] font-bold text-muted uppercase tracking-widest mb-1">{t('location')}</p>
-                                                <p className="text-lg font-bold text-primary">{locationName}</p>
-                                            </div>
+
+                                <div className="space-y-4">
+                                    {/* Map Card */}
+                                    <div className="relative w-full h-56 rounded-[32px] overflow-hidden group shadow-lg border border-zinc-100 dark:border-zinc-800">
+                                        {/* Background Pattern - Simulates a dark map */}
+                                        <div className="absolute inset-0 bg-[#0f172a]">
+                                            <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:32px_32px]"></div>
+                                            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-blue-900/20 via-[#0f172a]/80 to-[#0f172a]"></div>
                                         </div>
-                                        <a
-                                            href={event.google_maps_url}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            className="block w-full text-center py-4 bg-zinc-100 hover:bg-zinc-200 text-primary font-bold text-xs uppercase tracking-widest rounded-2xl transition-all"
-                                        >
-                                            Abrir no Google Maps
-                                        </a>
+
+                                        {/* Overlay Button */}
+                                        <div className="absolute inset-0 flex items-center justify-center z-10 p-4">
+                                            <a
+                                                href={event.google_maps_url}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="bg-white text-primary px-8 py-4 rounded-full font-bold text-sm shadow-xl hover:scale-105 hover:shadow-2xl hover:bg-zinc-50 transition-all duration-300 flex items-center gap-3 group/btn"
+                                            >
+                                                <MapPin className="w-5 h-5 text-[#D70F24] group-hover/btn:animate-bounce" />
+                                                <span>Abrir no Google Maps</span>
+                                            </a>
+                                        </div>
+                                    </div>
+
+                                    {/* Location Details */}
+                                    <div className="px-2">
+                                        <h4 className="text-xl font-bold text-primary">{locationName}</h4>
+                                        <p className="text-xs font-bold text-secondary/60 uppercase tracking-widest mt-1">
+                                            {locationName} {/* Showing title twice as placeholder for address if needed, or just remove if redundant */}
+                                        </p>
                                     </div>
                                 </div>
                             </section>

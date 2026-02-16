@@ -17,6 +17,7 @@ interface GalleryAlbum {
     description: string;
     status: 'draft' | 'published';
     cover_photo_id?: string | null;
+    custom_author_name?: string | null;
 }
 
 interface GalleryPhoto {
@@ -42,7 +43,8 @@ export default function AdminGalleryFormClient({ albumId }: AdminGalleryFormClie
     const [album, setAlbum] = useState<GalleryAlbum>({
         title: '',
         description: '',
-        status: 'draft'
+        status: 'draft',
+        custom_author_name: ''
     });
     const [photos, setPhotos] = useState<GalleryPhoto[]>([]);
     const [uploading, setUploading] = useState(false);
@@ -67,7 +69,8 @@ export default function AdminGalleryFormClient({ albumId }: AdminGalleryFormClie
                         title: albumData.title,
                         description: albumData.description || '',
                         status: albumData.status,
-                        cover_photo_id: albumData.cover_photo_id
+                        cover_photo_id: albumData.cover_photo_id,
+                        custom_author_name: albumData.custom_author_name
                     });
                 }
 
@@ -123,6 +126,7 @@ export default function AdminGalleryFormClient({ albumId }: AdminGalleryFormClie
                         description: album.description,
                         status: album.status,
                         cover_photo_id: album.cover_photo_id,
+                        custom_author_name: album.custom_author_name,
                         updated_at: new Date().toISOString()
                     })
                     .eq('id', albumId);
@@ -136,7 +140,8 @@ export default function AdminGalleryFormClient({ albumId }: AdminGalleryFormClie
                         title: album.title,
                         description: album.description,
                         status: album.status,
-                        created_by: user.id
+                        created_by: user.id,
+                        custom_author_name: album.custom_author_name
                     })
                     .select()
                     .single();
@@ -365,6 +370,32 @@ export default function AdminGalleryFormClient({ albumId }: AdminGalleryFormClie
                                     <p className="text-xs text-secondary/50 font-medium">{t('selectCoverPlaceholder')}</p>
                                 </div>
                             )}
+                        </div>
+                    </div>
+
+                    {/* Author Info */}
+                    <div className="bg-surface p-6 rounded-[32px] border border-app shadow-sm space-y-4">
+                        <h3 className="text-xs font-black uppercase tracking-widest text-secondary">{t('authorInfo')}</h3>
+                        <div className="space-y-2">
+                            <label className="text-xs font-bold text-secondary">{t('photographerName')}</label>
+                            <input
+                                type="text"
+                                value={album.custom_author_name || ''}
+                                onChange={e => setAlbum(prev => ({ ...prev, custom_author_name: e.target.value }))}
+                                className="w-full bg-app/50 border border-app rounded-xl p-4 text-primary font-bold focus:border-link outline-none transition-colors"
+                                placeholder={t('photographerNamePlaceholder')}
+                            />
+                        </div>
+
+                        <div className="pt-4 border-t border-app">
+                            <button
+                                onClick={handleSave}
+                                disabled={saving}
+                                className="w-full flex items-center justify-center gap-2 bg-primary hover:bg-primary/90 text-white px-6 py-4 rounded-xl font-bold transition-all disabled:opacity-50 shadow-lg shadow-primary/20"
+                            >
+                                {saving ? <Loader2 className="w-5 h-5 animate-spin" /> : <Save className="w-5 h-5" />}
+                                {saving ? t('saving') : t('saveChanges')}
+                            </button>
                         </div>
                     </div>
                 </div>
