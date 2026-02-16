@@ -638,6 +638,8 @@
             "communityPosts": "コミュニティ投稿",
             "communityReels": "コミュニティリール",
             "userGuides": "ユーザーガイド",
+            "users": "ユーザー",
+            "accessRequests": "アクセスリクエスト",
             "business": "ビジネス",
             "jobs": "求人",
             "calendar": "カレンダー",
@@ -646,8 +648,7 @@
             "media": "メディア",
             "footer": "フッターページ",
             "settings": "設定",
-            "goToSite": "サイトへ移動",
-            "users": "登録ユーザー"
+            "goToSite": "サイトへ移動"
         },
         "statistics": {
             "title": "統計管理",
@@ -1416,6 +1417,23 @@
     "seo": {
         "siteTitle": "NipponLife - 日本文化ポータル",
         "siteDescription": "日本に関する完全なポータル：ニュース、求人、イベント、ビジネス、ブラジルコミュニティ。"
+    },
+    "access": {
+        "loading": "読み込み中...",
+        "loginToRequest": "ログインしてリクエスト",
+        "requestAccess": "{type}の投稿許可をリクエスト",
+        "create": "{type}を作成",
+        "pending": "審査中",
+        "rejected": "リクエストが拒否されました",
+        "requesting": "送信中...",
+        "requestError": "リクエストの送信に失敗しました。もう一度お試しください。",
+        "types": {
+            "events": "イベント",
+            "jobs": "求人",
+            "businesses": "ビジネス",
+            "galleries": "ギャラリー",
+            "reels": "リール"
+        }
     },
     "breadcrumb": {
         "home": "ホーム",

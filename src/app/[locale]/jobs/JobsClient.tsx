@@ -7,6 +7,7 @@ import { Search, Filter, ChevronLeft, ChevronRight, Loader2, MapPin, Briefcase, 
 import { jobsService } from '@/lib/jobsService';
 import { Link } from '@/i18n/routing';
 import type { Job } from '@/types/job';
+import RequestAccessButton from '@/components/access/RequestAccessButton';
 
 const ITEMS_PER_PAGE = 12;
 
@@ -102,6 +103,12 @@ export default function JobsClient() {
                         <p className="hidden md:block text-lg text-secondary font-medium max-w-xl mx-auto md:mx-0">
                             {t('subtitle')}
                         </p>
+                        <div className="pt-4">
+                            <RequestAccessButton
+                                accessType="jobs"
+                                createPath="/admin/jobs/new"
+                            />
+                        </div>
                     </div>
                 </div>
             </section>

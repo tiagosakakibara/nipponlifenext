@@ -1,4 +1,4 @@
-import { type NextRequest } from 'next/server'
+import { type NextRequest, NextResponse } from 'next/server'
 import createMiddleware from 'next-intl/middleware'
 import { routing } from './i18n/routing'
 import { updateSession } from './utils/supabase/middleware'
@@ -7,9 +7,41 @@ const intlMiddleware = createMiddleware(routing)
 
 export async function middleware(request: NextRequest) {
     // 1. Run Supabase Session Update (refresh Auth tokens)
-    // updateSession mutates request.cookies and returns supabaseResponse = NextResponse.next({ request })
-    // This ensures refreshed cookies are visible to Server Components via the mutated request
-    const { supabaseResponse } = await updateSession(request)
+    const { supabaseResponse, user, supabase } = await updateSession(request)
+
+    // Security Check: Admin Routes
+    if (request.nextUrl.pathname.match(/^\/(?:[a-z]{2}\/)?admin(?:$|\/)/)) {
+        if (!user) {
+            const url = request.nextUrl.clone()
+            url.pathname = '/login'
+            const resp = NextResponse.redirect(url)
+            // Persist session if it was refreshed
+            supabaseResponse.cookies.getAll().forEach(c => resp.cookies.set(c))
+            return resp
+        }
+
+        const { data: profile } = await supabase
+            .from('profiles')
+            .select('role')
+            .eq('id', user.id)
+            .single()
+
+        if (profile?.role !== 'admin') {
+            // Check for approved content access
+            const { count } = await supabase
+                .from('content_creation_access')
+                .select('id', { count: 'exact', head: true })
+                .eq('user_id', user.id)
+                .eq('status', 'approved')
+
+            if (!count || count === 0) {
+                const resp = NextResponse.redirect(new URL('/', request.url))
+                // Persist session if it was refreshed
+                supabaseResponse.cookies.getAll().forEach(c => resp.cookies.set(c))
+                return resp
+            }
+        }
+    }
 
     // 2. Run i18n Middleware on the (possibly cookie-mutated) request
     const intlResponse = intlMiddleware(request)

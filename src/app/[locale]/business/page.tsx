@@ -3,6 +3,7 @@ import { createClient } from '@/utils/supabase/server';
 import { BusinessDirectory } from './BusinessDirectory';
 import { Business } from '@/types/business';
 import { Filter } from 'lucide-react';
+import BusinessAccessButton from './BusinessAccessButton';
 
 type Props = {
     params: Promise<{ locale: string }>;
@@ -62,6 +63,7 @@ export default async function BusinessPage({ params, searchParams }: Props) {
                         <h1 className="text-3xl md:text-5xl font-heading font-black text-primary tracking-tight leading-[1.1]">
                             {t('business.directoryTitlePart1', { defaultMessage: 'Encontre os' })} <span className="text-[#D70F24]">{t('business.directoryTitleHighlight', { defaultMessage: 'Melhores Serviços' })}</span> {t('business.directoryTitlePart2', { defaultMessage: 'no Japão' })}
                         </h1>
+                        <BusinessAccessButton />
                     </div>
                 </div>
             </section>

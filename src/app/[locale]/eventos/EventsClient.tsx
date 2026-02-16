@@ -9,6 +9,7 @@ import { Event } from '@/types/event';
 import { EventTileCard } from './components/EventTileCard';
 import { useRouter, useSearchParams } from 'next/navigation';
 import dynamic from 'next/dynamic';
+import RequestAccessButton from '@/components/access/RequestAccessButton';
 
 import 'temporal-polyfill/global';
 
@@ -195,7 +196,7 @@ export default function EventsClient() {
                 }
             }
         }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }), [calendarLocale, calendarEventsService, router]);
 
     const calendarApp = useCalendarApp(calendarConfig);
@@ -317,6 +318,12 @@ export default function EventsClient() {
                                 ? "Confira os principais eventos e encontros da nossa comunidade no Japão."
                                 : t('noEventsDescription')}
                         </p>
+                        <div className="pt-4">
+                            <RequestAccessButton
+                                accessType="events"
+                                createPath="/admin/events/new"
+                            />
+                        </div>
                     </div>
                 </div>
             </section>

@@ -3,6 +3,7 @@ import { createClient } from '@/utils/supabase/server';
 import { Camera } from 'lucide-react';
 import { GalleryAlbumCard } from '@/components/cards/GalleryAlbumCard';
 import { GalleryAlbumWithStats } from '@/types/gallery';
+import GalleryAccessButton from './GalleryAccessButton';
 
 // Convertido para Server Component para habilitar ISR e eliminar fetch client-side
 export const revalidate = 300; // Revalida a cada 5 minutos
@@ -35,6 +36,7 @@ export default async function GaleriaPage() {
                 <p className="font-sans text-xs md:text-sm font-bold uppercase tracking-[0.2em] text-muted max-w-xl mx-auto leading-relaxed">
                     {t('gallery.subtitle')}
                 </p>
+                <GalleryAccessButton />
             </div>
 
             {/* Albums Grid */}

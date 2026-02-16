@@ -171,8 +171,8 @@
             "businessGuideBadge": "Guia de Negócios"
         },
         "stats": {
-            "members": "Membros",
-            "businesses": "Negócios",
+            "users": "Usuários",
+            "business": "Negócios",
             "posts": "Publicações",
             "events": "Eventos",
             "jobs": "Vagas"
@@ -678,6 +678,8 @@
             "communityPosts": "Posts da Comunidade",
             "communityReels": "Reels da Comunidade",
             "userGuides": "Guias de Usuários",
+            "users": "Usuários Registrados",
+            "accessRequests": "Solicitações de Acesso",
             "business": "Business",
             "jobs": "Jobs",
             "gallery": "Galeria de Fotos",
@@ -687,8 +689,7 @@
             "media": "Media",
             "footer": "Páginas do Rodapé",
             "settings": "Configurações",
-            "goToSite": "Ir para o Site",
-            "users": "Usuários Registrados"
+            "goToSite": "Ir para o Site"
         },
         "statistics": {
             "title": "Gerenciamento de Estatísticas",
@@ -1550,6 +1551,23 @@
     "seo": {
         "siteTitle": "NipponLife - Portal da Cultura Japonesa",
         "siteDescription": "Seu portal completo sobre o Japão: notícias, empregos, eventos, negócios e comunidade brasileira no Japão."
+    },
+    "access": {
+        "loading": "Carregando...",
+        "loginToRequest": "Entrar para Solicitar",
+        "requestAccess": "Solicitar Permissão para {type}",
+        "create": "Criar {type}",
+        "pending": "Solicitação em Análise",
+        "rejected": "Solicitação Rejeitada",
+        "requesting": "Enviando...",
+        "requestError": "Erro ao enviar solicitação. Tente novamente.",
+        "types": {
+            "events": "Eventos",
+            "jobs": "Vagas",
+            "businesses": "Negócios",
+            "galleries": "Galerias",
+            "reels": "Reels"
+        }
     },
     "breadcrumb": {
         "home": "Início",

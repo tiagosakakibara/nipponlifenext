@@ -2,6 +2,8 @@
 
 import { Link, usePathname } from '@/i18n/routing';
 import { useTranslations } from 'next-intl';
+import { useState, useEffect } from 'react';
+import { createClient } from '../../../../utils/supabase/client';
 import {
     LayoutDashboard,
     FileText,
@@ -18,8 +20,17 @@ import {
     BookOpen,
     BarChart3,
     Camera,
-    Info
+    Info,
+    UserCheck
 } from 'lucide-react';
+
+const ACCESS_MAPPING: Record<string, string> = {
+    '/admin/events': 'events',
+    '/admin/jobs': 'jobs',
+    '/admin/business': 'businesses',
+    '/admin/gallery': 'galleries',
+    '/admin/comunidade/reels': 'reels',
+};
 
 const menuItems = [
     { name: 'Dashboard', key: 'admin.menu.dashboard', path: '/admin', icon: LayoutDashboard },
@@ -28,6 +39,7 @@ const menuItems = [
     { name: 'Reels da Comunidade', key: 'admin.menu.communityReels', path: '/admin/comunidade/reels', icon: Film },
     { name: 'Guias de Usuários', key: 'admin.menu.userGuides', path: '/admin/guides', icon: BookOpen },
     { name: 'Usuários Registrados', key: 'admin.menu.users', path: '/admin/users', icon: Users },
+    { name: 'Solicitações de Acesso', key: 'admin.menu.accessRequests', path: '/admin/requests', icon: UserCheck },
     { name: 'Business', key: 'admin.menu.business', path: '/admin/business', icon: Building2 },
     { name: 'Jobs', key: 'admin.menu.jobs', path: '/admin/jobs', icon: Briefcase },
     { name: 'Calendário', key: 'admin.menu.calendar', path: '/admin/events', icon: Calendar },
@@ -47,6 +59,46 @@ interface SidebarProps {
 export function Sidebar({ isOpen, onClose }: SidebarProps) {
     const t = useTranslations();
     const pathname = usePathname();
+    const [isAdmin, setIsAdmin] = useState(false);
+    const [permissions, setPermissions] = useState<string[]>([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const checkUser = async () => {
+            const supabase = createClient();
+            const { data: { user } } = await supabase.auth.getUser();
+            if (!user) return;
+
+            const { data: profile } = await supabase.from('profiles').select('role').eq('id', user.id).single();
+            if (profile?.role === 'admin') {
+                setIsAdmin(true);
+            } else {
+                const { data: access } = await supabase
+                    .from('content_creation_access')
+                    .select('access_type')
+                    .eq('user_id', user.id)
+                    .eq('status', 'approved');
+                setPermissions(access?.map(a => a.access_type) || []);
+            }
+            setLoading(false);
+        };
+        checkUser();
+    }, []);
+
+    const filteredItems = menuItems.filter(item => {
+        if (loading) return false;
+        if (isAdmin) return true;
+
+        // Always allow Dashboard for landing
+        if (item.path === '/admin') return true;
+
+        const required = ACCESS_MAPPING[item.path];
+        if (required) return permissions.includes(required);
+
+        return false; // Default: Admin only
+    });
+
+    if (loading) return null; // Or skeleton
 
     return (
         <aside className={`
@@ -68,7 +120,7 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
 
             <nav className="flex-1 mt-6 px-4 overflow-y-auto">
                 <ul className="space-y-1 pb-6">
-                    {menuItems.map((item) => {
+                    {filteredItems.map((item) => {
                         // Check active state safely.
                         // Exact match for /admin, startsWith for others
                         const isActive = item.path === '/admin'

@@ -42,12 +42,12 @@ export async function updateSession(request: NextRequest) {
 
         // If we have a user, it means the session is valid or successfully refreshed.
         // The setAll/getAll above already handled updating the supabaseResponse object.
-        return { supabaseResponse, user }
+        return { supabaseResponse, user, supabase }
     } catch (error) {
         console.error('[Middleware] Auth refresh error:', error)
         // Network / Edge timeout - return a basic response that keeps existing 
         // request cookies. This avoids accidental logout during network hiccups.
         const fallbackResponse = NextResponse.next({ request })
-        return { supabaseResponse: fallbackResponse, user: null }
+        return { supabaseResponse: fallbackResponse, user: null, supabase }
     }
 }

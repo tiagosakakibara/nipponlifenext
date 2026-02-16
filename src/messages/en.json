@@ -650,6 +650,8 @@
             "communityPosts": "Community Posts",
             "communityReels": "Community Reels",
             "userGuides": "User Guides",
+            "users": "Registered Users",
+            "accessRequests": "Access Requests",
             "business": "Business",
             "jobs": "Jobs",
             "calendar": "Calendar",
@@ -658,8 +660,7 @@
             "media": "Media",
             "footer": "Footer Pages",
             "settings": "Settings",
-            "goToSite": "Go to Site",
-            "users": "Registered Users"
+            "goToSite": "Go to Site"
         },
         "statistics": {
             "title": "Statistics Management",
@@ -1470,6 +1471,23 @@
     "seo": {
         "siteTitle": "NipponLife - Japanese Culture Portal",
         "siteDescription": "Your complete portal about Japan: news, jobs, events, businesses and Brazilian community in Japan."
+    },
+    "access": {
+        "loading": "Loading...",
+        "loginToRequest": "Login to Request",
+        "requestAccess": "Request Permission for {type}",
+        "create": "Create {type}",
+        "pending": "Request Under Review",
+        "rejected": "Request Rejected",
+        "requesting": "Sending...",
+        "requestError": "Error sending request. Please try again.",
+        "types": {
+            "events": "Events",
+            "jobs": "Jobs",
+            "businesses": "Businesses",
+            "galleries": "Galleries",
+            "reels": "Reels"
+        }
     },
     "breadcrumb": {
         "home": "Home",
