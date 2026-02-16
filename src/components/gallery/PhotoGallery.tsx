@@ -22,56 +22,72 @@ export function PhotoGallery({ photos, galleryId = 'main-gallery' }: PhotoGaller
             lightboxRef.current.destroy();
         }
 
+        const isMobile = window.innerWidth < 768;
+
         const lightbox = new PhotoSwipeLightbox({
             gallery: '#' + galleryId,
             children: 'a.pswp-link',
             pswpModule: () => import('photoswipe'),
             showHideAnimationType: 'zoom',
             bgOpacity: 0.95,
-            padding: { top: 40, bottom: 40, left: 40, right: 40 },
+            padding: isMobile
+                ? { top: 10, bottom: 10, left: 5, right: 5 }
+                : { top: 40, bottom: 40, left: 40, right: 40 },
 
             initialZoomLevel: 'fit',
-            secondaryZoomLevel: 1.5,
-            maxZoomLevel: 3,
+            secondaryZoomLevel: isMobile ? 1.2 : 1.5,
+            maxZoomLevel: isMobile ? 2 : 3,
 
             imageClickAction: 'zoom',
             doubleTapAction: 'zoom',
         });
 
-        // Adjust padding dynamically for mobile before opening
-        lightbox.on('beforeOpen', () => {
-            if (window.innerWidth < 768) {
-                lightbox.options.padding = { top: 20, bottom: 20, left: 10, right: 10 };
-            }
-        });
-
         // Override image loading to always detect real dimensions
-        // This ensures proper sizing on all devices, especially mobile
+        // Critical for iOS Safari where wrong dimensions cause overflow
         lightbox.on('contentLoad', (e: any) => {
             const { content } = e;
 
             if (content.type === 'image') {
-                // Always prevent default loading to detect real dimensions
                 e.preventDefault();
-
                 content.state = 'loading';
 
                 const img = document.createElement('img');
                 img.className = 'pswp__img';
 
                 img.onload = () => {
-                    // Use actual image dimensions
                     content.width = img.naturalWidth;
                     content.height = img.naturalHeight;
                     content.element = img;
                     content.onLoaded();
+
+                    // Force PhotoSwipe to recalculate zoom with correct dimensions
+                    // This is critical for iOS Safari
+                    if (content.slide) {
+                        try {
+                            content.slide.updateContentSize(true);
+                        } catch (_) {
+                            // Fallback: try to trigger a resize
+                            try {
+                                content.slide.resize();
+                            } catch (_) { /* silent */ }
+                        }
+                    }
                 };
 
-                img.onerror = () => {
-                    content.onError();
-                };
-
+                img.onerror = () => content.onError();
                 img.src = content.data.src;
+            }
+        });
+
+        // Force recalculation on resize (iOS Safari address bar changes viewport)
+        lightbox.on('openingAnimationEnd', () => {
+            if (lightbox.pswp) {
+                const pswp = lightbox.pswp;
+                const handleResize = () => pswp.updateSize(true);
+                window.addEventListener('resize', handleResize);
+                pswp.on('close', () => {
+                    window.removeEventListener('resize', handleResize);
+                });
             }
         });
 

@@ -236,11 +236,14 @@
   }
 }
 
-/* PhotoSwipe mobile overrides */
+/* PhotoSwipe mobile overrides - fixes iOS Safari viewport issues */
 @media (max-width: 767px) {
+  .pswp {
+    height: 100dvh !important;
+    height: -webkit-fill-available !important;
+  }
+
   .pswp__img {
     object-fit: contain !important;
-    max-width: 100vw !important;
-    max-height: 100vh !important;
   }
 }
