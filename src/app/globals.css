@@ -235,3 +235,12 @@
     max-width: 1000px;
   }
 }
+
+/* PhotoSwipe mobile overrides */
+@media (max-width: 767px) {
+  .pswp__img {
+    object-fit: contain !important;
+    max-width: 100vw !important;
+    max-height: 100vh !important;
+  }
+}

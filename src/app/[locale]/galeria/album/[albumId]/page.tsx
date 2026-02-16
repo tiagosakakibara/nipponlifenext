@@ -135,7 +135,7 @@ export default function AlbumViewPage() {
     return (
         <main className="min-h-screen bg-app transition-colors duration-300">
             {/* Hero Section */}
-            <div className="pt-12 pb-12 px-6 text-center max-w-5xl mx-auto flex flex-col items-center relative z-20">
+            <div className="pt-4 pb-4 md:pt-12 md:pb-12 px-4 md:px-6 text-center max-w-5xl mx-auto flex flex-col items-center relative z-20">
                 {/* Back Button */}
                 <div className="absolute top-0 left-0 md:left-4 z-50">
                     <button
@@ -144,80 +144,80 @@ export default function AlbumViewPage() {
                             e.stopPropagation();
                             router.push('/galeria');
                         }}
-                        className="group flex items-center gap-3 text-muted hover:text-primary transition-colors"
+                        className="group flex items-center gap-3 text-muted hover:text-primary transition-colors p-2"
                     >
-                        <div className="w-10 h-10 rounded-full bg-surface border border-app flex items-center justify-center group-hover:bg-app transition-all shadow-sm">
-                            <ArrowLeft className="w-5 h-5" />
+                        <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-surface border border-app flex items-center justify-center group-hover:bg-app transition-all shadow-sm">
+                            <ArrowLeft className="w-4 h-4 md:w-5 md:h-5" />
                         </div>
                         <span className="text-xs font-bold uppercase tracking-[0.2em] hidden md:block">{t('gallery.back')}</span>
                     </button>
                 </div>
 
-                <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-accent/10 text-accent text-[10px] font-bold uppercase tracking-[0.2em] border border-accent/20 mb-3 md:mb-6 shadow-sm mt-16 md:mt-0">
-                    <Camera className="w-3.5 h-3.5" />
+                <div className="inline-flex items-center gap-2 px-3 py-1 md:px-4 md:py-1.5 rounded-full bg-accent/10 text-accent text-[9px] md:text-[10px] font-bold uppercase tracking-[0.2em] border border-accent/20 mb-2 md:mb-6 shadow-sm mt-10 md:mt-0">
+                    <Camera className="w-3 h-3 md:w-3.5 md:h-3.5" />
                     {t('gallery.albumHeader')}
                 </div>
 
-                <h1 className="font-serif text-3xl md:text-5xl lg:text-6xl font-bold text-primary mb-3 md:mb-6 tracking-tight leading-tight">
+                <h1 className="font-serif text-2xl md:text-5xl lg:text-6xl font-bold text-primary mb-2 md:mb-6 tracking-tight leading-tight">
                     {getTranslatedField('title')}
                 </h1>
 
                 {getTranslatedField('description') && (
-                    <p className="text-lg md:text-xl text-muted max-w-2xl mx-auto leading-relaxed mb-4 md:mb-6 font-light">
+                    <p className="text-sm md:text-xl text-muted max-w-2xl mx-auto leading-relaxed mb-3 md:mb-6 font-light line-clamp-2 md:line-clamp-none">
                         {getTranslatedField('description')}
                     </p>
                 )}
 
                 {/* Album Meta */}
-                <div className="flex flex-wrap items-center justify-center gap-8 md:gap-20 mb-8 md:mb-12">
+                <div className="grid grid-cols-2 md:flex md:flex-wrap items-center justify-center gap-y-3 gap-x-8 md:gap-20 mb-2 md:mb-12 w-full md:w-auto">
                     {eventDate && (
                         <>
-                            <div className="flex flex-col items-center gap-2">
-                                <span className="text-[10px] font-bold uppercase tracking-widest text-muted/70">{t('common.date', { defaultMessage: 'Data' })}</span>
-                                <div className="flex items-center gap-3 text-primary">
-                                    <Calendar className="w-6 h-6 text-accent" />
-                                    <span className="text-lg font-medium">{eventDate}</span>
+                            <div className="flex flex-col items-center gap-1 md:gap-2">
+                                <span className="text-[9px] md:text-[10px] font-bold uppercase tracking-widest text-muted/70">{t('common.date', { defaultMessage: 'Data' })}</span>
+                                <div className="flex items-center gap-2 md:gap-3 text-primary">
+                                    <Calendar className="w-4 h-4 md:w-6 md:h-6 text-accent" />
+                                    <span className="text-sm md:text-lg font-medium">{eventDate}</span>
                                 </div>
                             </div>
                             <div className="w-px h-12 bg-muted/20 hidden md:block" />
                         </>
                     )}
 
-                    <div className="flex flex-col items-center gap-2">
-                        <span className="text-[10px] font-bold uppercase tracking-widest text-muted/70">{t('gallery.photos')}</span>
-                        <div className="flex items-center gap-3 text-primary">
-                            <Camera className="w-6 h-6 text-accent" />
-                            <span className="text-lg font-medium">{photos.length}</span>
+                    <div className="flex flex-col items-center gap-1 md:gap-2">
+                        <span className="text-[9px] md:text-[10px] font-bold uppercase tracking-widest text-muted/70">{t('gallery.photos')}</span>
+                        <div className="flex items-center gap-2 md:gap-3 text-primary">
+                            <Camera className="w-4 h-4 md:w-6 md:h-6 text-accent" />
+                            <span className="text-sm md:text-lg font-medium">{photos.length}</span>
                         </div>
                     </div>
 
                     <div className="w-px h-12 bg-muted/20 hidden md:block" />
 
-                    <div className="flex flex-col items-center gap-2">
-                        <span className="text-[10px] font-bold uppercase tracking-widest text-muted/70">{t('gallery.views')}</span>
-                        <div className="flex items-center gap-3 text-primary">
-                            <Eye className="w-6 h-6 text-accent" />
-                            <span className="text-lg font-medium">{album.view_count || 0}</span>
+                    <div className="flex flex-col items-center gap-1 md:gap-2">
+                        <span className="text-[9px] md:text-[10px] font-bold uppercase tracking-widest text-muted/70">{t('gallery.views')}</span>
+                        <div className="flex items-center gap-2 md:gap-3 text-primary">
+                            <Eye className="w-4 h-4 md:w-6 md:h-6 text-accent" />
+                            <span className="text-sm md:text-lg font-medium">{album.view_count || 0}</span>
                         </div>
                     </div>
 
                     <div className="w-px h-12 bg-muted/20 hidden md:block" />
 
-                    <div className="flex flex-col items-center gap-2">
-                        <span className="text-[10px] font-bold uppercase tracking-widest text-muted/70">
+                    <div className="flex flex-col items-center gap-1 md:gap-2 col-span-2 md:col-span-auto">
+                        <span className="text-[9px] md:text-[10px] font-bold uppercase tracking-widest text-muted/70">
                             {t('gallery.photographer')}
                         </span>
-                        <div className="flex items-center gap-3 text-primary">
+                        <div className="flex items-center gap-2 md:gap-3 text-primary">
                             {album.creator_avatar ? (
                                 <img
                                     src={album.creator_avatar}
                                     alt={album.creator_name || album.creator_username || 'Creator'}
-                                    className="w-6 h-6 rounded-full object-cover border border-accent/50 shadow-sm"
+                                    className="w-5 h-5 md:w-6 md:h-6 rounded-full object-cover border border-accent/50 shadow-sm"
                                 />
                             ) : (
-                                <User className="w-6 h-6 text-accent" />
+                                <User className="w-4 h-4 md:w-6 md:h-6 text-accent" />
                             )}
-                            <span className="text-lg font-medium">
+                            <span className="text-sm md:text-lg font-medium">
                                 {album.custom_author_name || album.creator_name || album.creator_username || 'NipponLife Member'}
                             </span>
                         </div>

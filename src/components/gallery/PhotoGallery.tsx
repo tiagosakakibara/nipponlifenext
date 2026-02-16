@@ -27,7 +27,7 @@ export function PhotoGallery({ photos, galleryId = 'main-gallery' }: PhotoGaller
             children: 'a.pswp-link',
             pswpModule: () => import('photoswipe'),
             showHideAnimationType: 'zoom',
-            bgOpacity: 0.92,
+            bgOpacity: 0.95,
             padding: { top: 40, bottom: 40, left: 40, right: 40 },
 
             initialZoomLevel: 'fit',
@@ -38,40 +38,40 @@ export function PhotoGallery({ photos, galleryId = 'main-gallery' }: PhotoGaller
             doubleTapAction: 'zoom',
         });
 
+        // Adjust padding dynamically for mobile before opening
+        lightbox.on('beforeOpen', () => {
+            if (window.innerWidth < 768) {
+                lightbox.options.padding = { top: 20, bottom: 20, left: 10, right: 10 };
+            }
+        });
+
         // Override image loading to always detect real dimensions
-        // This prevents stretched/squeezed images when width/height are not in the DB
+        // This ensures proper sizing on all devices, especially mobile
         lightbox.on('contentLoad', (e: any) => {
             const { content } = e;
 
             if (content.type === 'image') {
-                // Check if dimensions look like our fallback (1600x1200)
-                const isFallback = content.data.w === 1600 && content.data.h === 1200;
-                // Also check if dimensions are 0 or missing
-                const isMissing = !content.data.w || !content.data.h;
+                // Always prevent default loading to detect real dimensions
+                e.preventDefault();
 
-                if (isFallback || isMissing) {
-                    // Prevent default loading
-                    e.preventDefault();
+                content.state = 'loading';
 
-                    content.state = 'loading';
+                const img = document.createElement('img');
+                img.className = 'pswp__img';
 
-                    const img = document.createElement('img');
-                    img.className = 'pswp__img';
+                img.onload = () => {
+                    // Use actual image dimensions
+                    content.width = img.naturalWidth;
+                    content.height = img.naturalHeight;
+                    content.element = img;
+                    content.onLoaded();
+                };
 
-                    img.onload = () => {
-                        // Use actual image dimensions
-                        content.width = img.naturalWidth;
-                        content.height = img.naturalHeight;
-                        content.element = img;
-                        content.onLoaded();
-                    };
+                img.onerror = () => {
+                    content.onError();
+                };
 
-                    img.onerror = () => {
-                        content.onError();
-                    };
-
-                    img.src = content.data.src;
-                }
+                img.src = content.data.src;
             }
         });
 
