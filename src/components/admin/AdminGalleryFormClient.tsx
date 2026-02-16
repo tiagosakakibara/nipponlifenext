@@ -154,7 +154,7 @@ export default function AdminGalleryFormClient({ albumId }: AdminGalleryFormClie
                 return;
             }
 
-            // If we are just saving changes in edit mode
+            // Stay on same page after saving (no redirect)
             router.refresh();
         } catch (err) {
             console.error('Error saving album:', err);
@@ -391,7 +391,8 @@ export default function AdminGalleryFormClient({ albumId }: AdminGalleryFormClie
                             <button
                                 onClick={handleSave}
                                 disabled={saving}
-                                className="w-full flex items-center justify-center gap-2 bg-primary hover:bg-primary/90 text-white px-6 py-4 rounded-xl font-bold transition-all disabled:opacity-50 shadow-lg shadow-primary/20"
+                                className="w-full flex items-center justify-center gap-2 px-6 py-4 rounded-xl font-bold text-base transition-all disabled:opacity-50 shadow-lg"
+                                style={{ backgroundColor: '#D70F24', color: '#fff' }}
                             >
                                 {saving ? <Loader2 className="w-5 h-5 animate-spin" /> : <Save className="w-5 h-5" />}
                                 {saving ? t('saving') : t('saveChanges')}
