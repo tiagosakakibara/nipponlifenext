@@ -54,11 +54,21 @@ export function PhotoGallery({ photos, galleryId = 'main-gallery' }: PhotoGaller
                 const img = document.createElement('img');
                 img.className = 'pswp__img';
 
-                img.onload = () => {
-                    content.width = img.naturalWidth;
-                    content.height = img.naturalHeight;
+                let loaded = false;
+                let timeoutId: ReturnType<typeof setTimeout>;
+
+                const onImageReady = () => {
+                    if (loaded) return; // Prevent double-firing (cached images)
+                    loaded = true;
+                    clearTimeout(timeoutId);
+
+                    content.width = img.naturalWidth || content.data.width || 1600;
+                    content.height = img.naturalHeight || content.data.height || 1200;
                     content.element = img;
-                    content.onLoaded();
+
+                    try {
+                        content.onLoaded();
+                    } catch (_) { /* silent - slide may have changed */ }
 
                     // Force PhotoSwipe to recalculate zoom with correct dimensions
                     // This is critical for iOS Safari
@@ -66,7 +76,6 @@ export function PhotoGallery({ photos, galleryId = 'main-gallery' }: PhotoGaller
                         try {
                             content.slide.updateContentSize(true);
                         } catch (_) {
-                            // Fallback: try to trigger a resize
                             try {
                                 content.slide.resize();
                             } catch (_) { /* silent */ }
@@ -74,8 +83,55 @@ export function PhotoGallery({ photos, galleryId = 'main-gallery' }: PhotoGaller
                     }
                 };
 
-                img.onerror = () => content.onError();
+                img.onload = onImageReady;
+
+                img.onerror = () => {
+                    if (loaded) return;
+                    loaded = true;
+                    clearTimeout(timeoutId);
+
+                    // Retry once with cache-busting before giving up
+                    const retryImg = document.createElement('img');
+                    retryImg.className = 'pswp__img';
+                    retryImg.onload = () => {
+                        content.width = retryImg.naturalWidth || content.data.width || 1600;
+                        content.height = retryImg.naturalHeight || content.data.height || 1200;
+                        content.element = retryImg;
+                        try { content.onLoaded(); } catch (_) { /* silent */ }
+                        if (content.slide) {
+                            try { content.slide.updateContentSize(true); } catch (_) {
+                                try { content.slide.resize(); } catch (_) { /* silent */ }
+                            }
+                        }
+                    };
+                    retryImg.onerror = () => {
+                        try { content.onError(); } catch (_) { /* silent */ }
+                    };
+                    const separator = content.data.src.includes('?') ? '&' : '?';
+                    retryImg.src = `${content.data.src}${separator}t=${Date.now()}`;
+                };
+
+                // Timeout fallback: if image doesn't load within 10s,
+                // assign the img element anyway to avoid permanent dark screen
+                timeoutId = setTimeout(() => {
+                    if (!loaded) {
+                        loaded = true;
+                        // Assign element even if not fully loaded — user will see
+                        // partial load rather than black screen
+                        content.width = content.data.width || 1600;
+                        content.height = content.data.height || 1200;
+                        content.element = img;
+                        try { content.onLoaded(); } catch (_) { /* silent */ }
+                    }
+                }, 10000);
+
+                // Set src AFTER all handlers are registered
                 img.src = content.data.src;
+
+                // Handle images already cached by the browser (onload fires synchronously)
+                if (img.complete && img.naturalWidth > 0) {
+                    onImageReady();
+                }
             }
         });
 
