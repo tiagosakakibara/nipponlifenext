@@ -156,10 +156,9 @@ export default async function HomePage() {
     // 7. Fetch Gallery Albums (Published only)
     // We try gallery_album_stats first, fallback to gallery_albums
     const { data: albumsRes } = await supabase
-        .from('gallery_album_stats') // Preferred as it has counts
+        .from('gallery_album_stats')
         .select('*')
         .eq('status', 'published')
-        .eq('is_public', true)
         .order('created_at', { ascending: false })
         .limit(3);
 

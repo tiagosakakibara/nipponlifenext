@@ -127,6 +127,7 @@ export default function AdminGalleryFormClient({ albumId }: AdminGalleryFormClie
                         status: album.status,
                         cover_photo_id: album.cover_photo_id,
                         custom_author_name: album.custom_author_name,
+                        is_public: album.status === 'published',
                         updated_at: new Date().toISOString()
                     })
                     .eq('id', albumId);
@@ -141,7 +142,8 @@ export default function AdminGalleryFormClient({ albumId }: AdminGalleryFormClie
                         description: album.description,
                         status: album.status,
                         created_by: user.id,
-                        custom_author_name: album.custom_author_name
+                        custom_author_name: album.custom_author_name,
+                        is_public: album.status === 'published'
                     })
                     .select()
                     .single();

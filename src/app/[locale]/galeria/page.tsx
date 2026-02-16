@@ -14,7 +14,7 @@ export default async function GaleriaPage() {
     const { data: albums } = await supabase
         .from('gallery_album_stats')
         .select('*')
-        .eq('is_public', true)
+        .eq('status', 'published')
         .order('created_at', { ascending: false });
 
     const publicAlbums = (albums ?? []) as GalleryAlbumWithStats[];
