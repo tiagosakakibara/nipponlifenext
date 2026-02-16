@@ -237,6 +237,14 @@ export default function AdminPostEditClient() {
                                         value={formData.title_ja || ''}
                                         onChange={e => setFormData(prev => prev ? ({ ...prev, title_ja: e.target.value }) : null)}
                                         className="w-full bg-surface border border-app rounded-lg px-4 py-2"
+                                        placeholder="Título (JP)"
+                                    />
+                                    <textarea
+                                        rows={2}
+                                        value={formData.excerpt_ja || ''}
+                                        onChange={e => setFormData(prev => prev ? ({ ...prev, excerpt_ja: e.target.value }) : null)}
+                                        className="w-full bg-surface border border-app rounded-lg px-4 py-2 text-sm outline-none focus:border-link/50"
+                                        placeholder="Subtítulo/Resumo (JP)"
                                     />
                                     <QuillEditor
                                         content={formData.content_ja || ''}
@@ -265,6 +273,14 @@ export default function AdminPostEditClient() {
                                         value={formData.title_en || ''}
                                         onChange={e => setFormData(prev => prev ? ({ ...prev, title_en: e.target.value }) : null)}
                                         className="w-full bg-surface border border-app rounded-lg px-4 py-2"
+                                        placeholder="Título (EN)"
+                                    />
+                                    <textarea
+                                        rows={2}
+                                        value={formData.excerpt_en || ''}
+                                        onChange={e => setFormData(prev => prev ? ({ ...prev, excerpt_en: e.target.value }) : null)}
+                                        className="w-full bg-surface border border-app rounded-lg px-4 py-2 text-sm outline-none focus:border-link/50"
+                                        placeholder="Subtítulo/Resumo (EN)"
                                     />
                                     <QuillEditor
                                         content={formData.content_en || ''}

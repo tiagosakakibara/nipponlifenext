@@ -88,18 +88,18 @@ export default function JobsClient() {
     return (
         <div className="min-h-screen bg-app">
             {/* Hero Section - Premium Design */}
-            <section className="relative h-[230px] pt-20 overflow-hidden bg-surface border-b border-app">
+            <section className="relative py-6 md:h-[230px] md:pt-20 overflow-hidden bg-surface border-b border-app">
                 <div className="absolute top-0 right-0 w-1/3 h-full bg-gradient-to-l from-red-50/50 dark:from-red-900/10 to-transparent pointer-events-none" />
                 <div className="container mx-auto px-6 relative z-10 text-center md:text-left">
                     <div className="max-w-3xl space-y-3">
-                        <div className="inline-flex items-center gap-2 px-3 py-1 bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 rounded-full text-[10px] font-bold uppercase tracking-widest mx-auto md:mx-0">
+                        <div className="hidden md:inline-flex items-center gap-2 px-3 py-1 bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 rounded-full text-[10px] font-bold uppercase tracking-widest mx-auto md:mx-0">
                             <Briefcase className="w-3 h-3" />
                             {t('modal.careerOpportunity')}
                         </div>
                         <h1 className="text-3xl md:text-5xl font-heading font-bold text-primary tracking-tight leading-tight">
                             {t('title')}
                         </h1>
-                        <p className="text-lg text-secondary font-medium max-w-xl mx-auto md:mx-0">
+                        <p className="hidden md:block text-lg text-secondary font-medium max-w-xl mx-auto md:mx-0">
                             {t('subtitle')}
                         </p>
                     </div>

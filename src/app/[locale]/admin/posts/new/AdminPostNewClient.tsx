@@ -239,8 +239,15 @@ export default function AdminPostNewClient() {
                                         type="text"
                                         value={formData.title_ja || ''}
                                         onChange={e => setFormData({ ...formData, title_ja: e.target.value })}
-                                        placeholder="タイトルを入力..."
+                                        placeholder="Título (JP)"
                                         className="w-full bg-surface border border-app rounded-lg px-4 py-2 outline-none focus:border-link/50"
+                                    />
+                                    <textarea
+                                        rows={2}
+                                        value={formData.excerpt_ja || ''}
+                                        onChange={e => setFormData({ ...formData, excerpt_ja: e.target.value })}
+                                        placeholder="Subtítulo/Resumo (JP)"
+                                        className="w-full bg-surface border border-app rounded-lg px-4 py-2 text-sm outline-none focus:border-link/50"
                                     />
                                     <QuillEditor
                                         content={formData.content_ja || ''}
@@ -269,8 +276,15 @@ export default function AdminPostNewClient() {
                                         type="text"
                                         value={formData.title_en || ''}
                                         onChange={e => setFormData({ ...formData, title_en: e.target.value })}
-                                        placeholder="Enter English title..."
+                                        placeholder="Title (EN)"
                                         className="w-full bg-surface border border-app rounded-lg px-4 py-2 outline-none focus:border-link/50"
+                                    />
+                                    <textarea
+                                        rows={2}
+                                        value={formData.excerpt_en || ''}
+                                        onChange={e => setFormData({ ...formData, excerpt_en: e.target.value })}
+                                        placeholder="Excerpt/Subtitle (EN)"
+                                        className="w-full bg-surface border border-app rounded-lg px-4 py-2 text-sm outline-none focus:border-link/50"
                                     />
                                     <QuillEditor
                                         content={formData.content_en || ''}

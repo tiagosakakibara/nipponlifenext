@@ -52,7 +52,7 @@ export default function EventsClient() {
     const [selectedMonth, setSelectedMonth] = useState<number | ''>(searchParams.get('month') ? Number(searchParams.get('month')) : '');
     const [selectedYear, setSelectedYear] = useState<number>(searchParams.get('year') ? Number(searchParams.get('year')) : japanCurrentYear);
     const [page, setPage] = useState(1);
-    const [viewMode, setViewMode] = useState<'calendar' | 'list'>((searchParams.get('view') as 'calendar' | 'list') || 'calendar');
+    const [viewMode, setViewMode] = useState<'calendar' | 'list'>((searchParams.get('view') as 'calendar' | 'list') || 'list');
 
     const calendarEventsService = useMemo(() => createEventsServicePlugin(), []);
     const pageSize = 100;
@@ -115,7 +115,7 @@ export default function EventsClient() {
         if (searchDebounced) params.set('q', searchDebounced);
         if (selectedMonth) params.set('month', selectedMonth.toString());
         if (selectedYear) params.set('year', selectedYear.toString());
-        if (viewMode !== 'calendar') params.set('view', viewMode);
+        if (viewMode !== 'list') params.set('view', viewMode);
 
         const query = params.toString();
         router.push(`/eventos${query ? `?${query}` : ''}`, { scroll: false });
@@ -335,7 +335,7 @@ export default function EventsClient() {
                             />
                         </div>
 
-                        <div className="flex flex-wrap items-center gap-3">
+                        <div className="hidden lg:flex flex-wrap items-center gap-3">
                             <div className="relative">
                                 <select
                                     value={selectedMonth}
