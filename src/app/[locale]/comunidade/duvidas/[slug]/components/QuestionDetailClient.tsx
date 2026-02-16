@@ -14,16 +14,26 @@ import { supabase } from '@/lib/supabaseClient';
 // Simple Breadcrumb Component
 function Breadcrumb({ category }: { category: string }) {
     const t = useTranslations();
-    const CATEGORY_MAP: Record<string, string> = {
-        'Visto e imigração': 'visa',
-        'Saúde e seguros': 'health',
-        'Trabalho': 'work',
-        'Moradia': 'housing',
-        'Documentos e registros': 'documents',
-        'Convivência e cultura': 'culture',
-        'Outros': 'others'
+    const getCategoryKey = (cat: string) => {
+        if (!cat) return 'others';
+        // Handle raw translation keys (e.g., COMMUNITY.CATEGORIES.VISA or community.categories.visa)
+        if (cat.toLowerCase().includes('community.categories.')) {
+            return cat.split('.').pop()?.toLowerCase() || 'others';
+        }
+        // Handle mapped legacy values
+        const MAP: Record<string, string> = {
+            'Visto e imigração': 'visa',
+            'Saúde e seguros': 'health',
+            'Trabalho': 'work',
+            'Moradia': 'housing',
+            'Documentos e registros': 'documents',
+            'Convivência e cultura': 'culture',
+            'Outros': 'others'
+        };
+        return MAP[cat] || cat.toLowerCase();
     };
-    const categoryKey = CATEGORY_MAP[category] || category;
+
+    const categoryKey = getCategoryKey(category);
 
     return (
         <nav className="flex items-center gap-2 text-sm text-muted mb-6 flex-wrap">
@@ -104,16 +114,24 @@ export function QuestionDetailClient({ initialQuestion, initialAnswers }: { init
     const currentQuestion = question || initialQuestion;
     const authorName = (currentQuestion.author as any)?.full_name || (currentQuestion.author as any)?.username || t('community.questions.anonymous', { defaultMessage: 'Anônimo' });
     const avatarUrl = (currentQuestion.author as any)?.avatar_url || `https://api.dicebear.com/7.x/avataaars/svg?seed=${authorName}`;
-    const CATEGORY_MAP: Record<string, string> = {
-        'Visto e imigração': 'visa',
-        'Saúde e seguros': 'health',
-        'Trabalho': 'work',
-        'Moradia': 'housing',
-        'Documentos e registros': 'documents',
-        'Convivência e cultura': 'culture',
-        'Outros': 'others'
+    const getCategoryKey = (cat: string) => {
+        if (!cat) return 'others';
+        // Handle raw translation keys (e.g., COMMUNITY.CATEGORIES.VISA or community.categories.visa)
+        if (cat.toLowerCase().includes('community.categories.')) {
+            return cat.split('.').pop()?.toLowerCase() || 'others';
+        }
+        const MAP: Record<string, string> = {
+            'Visto e imigração': 'visa',
+            'Saúde e seguros': 'health',
+            'Trabalho': 'work',
+            'Moradia': 'housing',
+            'Documentos e registros': 'documents',
+            'Convivência e cultura': 'culture',
+            'Outros': 'others'
+        };
+        return MAP[cat] || cat.toLowerCase();
     };
-    const categoryKey = currentQuestion.category ? (CATEGORY_MAP[currentQuestion.category] || currentQuestion.category) : 'general';
+    const categoryKey = getCategoryKey(currentQuestion.category || '');
     const categoryColor = QUESTION_CATEGORY_COLORS[(currentQuestion.category as keyof typeof QUESTION_CATEGORY_COLORS)] || 'bg-gray-500';
 
     // Sorting answers

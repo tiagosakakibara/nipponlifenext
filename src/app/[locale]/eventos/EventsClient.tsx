@@ -152,24 +152,21 @@ export default function EventsClient() {
                     let end = event.ends_at ? formatToJST(event.ends_at) : null;
 
                     // If no end date or end equals start, add 1 hour for visibility
-                    if (!end || end === start) {
-                        const startDateObj = new Date(event.starts_at);
-                        const endDateObj = new Date(startDateObj.getTime() + 60 * 60 * 1000); // Add 1 hour
-                        end = formatToJST(endDateObj.toISOString());
+                    // Use epochMilliseconds for reliable value comparison of Temporal objects
+                    if (!end || (end.epochMilliseconds === start.epochMilliseconds)) {
+                        end = start.add({ hours: 1 });
                     }
 
-                    // Fallback if formatting failed
+                    // Fallback should not happen with logic above, but safety check
                     if (!end) end = start;
 
-                    // console.log('Formatted Event:', { id: event.id, title: event.title, start, end });
-
                     return {
-                        id: event.id,
+                        id: String(event.id), // Force String ID
                         title: event.title,
                         start,
                         end,
-                        description: event.description,
-                        location: event.location,
+                        description: event.description || '',
+                        location: event.description || '', // Mapping description to location as per previous pattern, or fix if needed
                         _original: event
                     };
                 } catch (err) {
@@ -188,7 +185,7 @@ export default function EventsClient() {
     }, [locale]);
 
     const calendarConfig = useMemo(() => ({
-        views: [createViewMonthGrid(), createViewMonthAgenda(), createViewWeek(), createViewDay()] as [any, ...any[]],
+        views: [createViewMonthGrid()] as [any, ...any[]],
         events: formattedEvents as any[],
         plugins: [calendarEventsService],
         defaultView: 'month-grid',
@@ -238,6 +235,7 @@ export default function EventsClient() {
                 // Schedule-X v3+ is strict about event formats. 
                 // Ensuring we only pass valid, non-null events.
                 const validEvents = formattedEvents.filter(e => e && e.start && e.end);
+                // console.log('Updating Calendar Events:', validEvents.length);
                 if (validEvents.length > 0) {
                     calendarEventsService.set(validEvents as any[]);
                 }
@@ -300,7 +298,7 @@ export default function EventsClient() {
     return (
         <div className="min-h-screen bg-app">
             {/* Hero Section */}
-            <section className="relative h-[230px] pt-20 overflow-hidden bg-surface border-b border-app">
+            <section className="relative py-6 md:h-[230px] md:pt-20 overflow-hidden bg-surface border-b border-app">
                 <div className="absolute top-0 right-0 w-1/3 h-full bg-gradient-to-l from-red-50/50 dark:from-red-900/10 to-transparent pointer-events-none" />
                 <div className="container mx-auto px-6 relative z-10">
                     <div className="max-w-3xl space-y-2">
@@ -335,7 +333,7 @@ export default function EventsClient() {
                             />
                         </div>
 
-                        <div className="hidden lg:flex flex-wrap items-center gap-3">
+                        <div className="flex flex-wrap items-center gap-3">
                             <div className="relative">
                                 <select
                                     value={selectedMonth}
@@ -386,7 +384,7 @@ export default function EventsClient() {
             </section>
 
             {/* Main Content */}
-            <main className="container mx-auto px-6 py-12">
+            <main className="container mx-auto px-6 py-6 md:py-12">
                 {loading ? (
                     <div className="flex flex-col items-center justify-center py-20 gap-4">
                         <Loader2 className="w-10 h-10 text-[#D70F24] animate-spin" />
@@ -407,7 +405,7 @@ export default function EventsClient() {
                         </button>
                     </div>
                 ) : viewMode === 'calendar' ? (
-                    <div className="bg-surface rounded-[40px] border border-app shadow-2xl p-4 md:p-8 animate-in fade-in slide-in-from-bottom-4 duration-700 min-h-[800px]">
+                    <div className="bg-surface rounded-2xl md:rounded-[40px] border border-app shadow-sm md:shadow-2xl p-2 md:p-8 animate-in fade-in slide-in-from-bottom-4 duration-700 min-h-[500px] md:min-h-[800px]">
                         <style>{`
                             .sx__calendar-wrapper {
                                 --sx-color-primary: #D70F24;
@@ -423,7 +421,7 @@ export default function EventsClient() {
                                 --sx-color-neutral-90: var(--nl-text); /* Main text color */
                                 --sx-color-neutral-50: var(--nl-text-3); /* Secondary text */
                                 
-                                border-radius: 24px;
+                                border-radius: 16px;
                                 color: var(--nl-text) !important;
                             }
                             
@@ -436,8 +434,17 @@ export default function EventsClient() {
                             }
 
                             .sx__month-grid-day {
-                                min-height: 140px;
+                                min-height: 100px;
                                 border-color: var(--nl-border) !important;
+                            }
+
+                            @media (min-width: 768px) {
+                                .sx__month-grid-day {
+                                    min-height: 140px;
+                                }
+                                .sx__calendar-wrapper {
+                                    border-radius: 24px;
+                                }
                             }
 
                             /* Navigation arrows and header controls */
@@ -476,17 +483,27 @@ export default function EventsClient() {
                                 border-radius: 4px !important;
                                 padding: 2px 4px !important;
                                 font-weight: 600 !important;
-                                font-size: 11px !important;
+                                font-size: 10px !important;
                                 box-shadow: 0 2px 4px rgba(215, 15, 36, 0.2);
                             }
 
+                            @media (min-width: 768px) {
+                                .sx__event {
+                                    font-size: 11px !important;
+                                }
+                            }
+
                             /* Highlight apenas o dia onde o evento COMEÇA (sem overflow-left) */
-                            .sx__month-grid-day:has(.sx__month-grid-event:not(.sx__month-grid-event--overflow-left)) {
+                            /* Broadened selector to catch any event element type */
+                            .sx__month-grid-day:has(.sx__event),
+                            .sx__month-grid-day:has(.sx__month-grid-event) {
                                 background-color: rgba(215, 15, 36, 0.08) !important;
                                 transition: background-color 0.3s ease;
                             }
 
-                            .sx__month-grid-day:has(.sx__month-grid-event:not(.sx__month-grid-event--overflow-left)) .sx__month-grid-day__header-day-number {
+                            /* Highlight day number */
+                            .sx__month-grid-day:has(.sx__event) .sx__month-grid-day__header-day-number,
+                            .sx__month-grid-day:has(.sx__month-grid-event) .sx__month-grid-day__header-day-number {
                                 color: #D70F24 !important;
                                 font-weight: 900 !important;
                                 transform: scale(1.2);
@@ -508,8 +525,17 @@ export default function EventsClient() {
                                 font-size: 0.9rem;
                                 margin-left: 4px;
                             }
+                            /* HIDE Internal Header Controls as we use external filters */
+                            .sx__calendar-header,
+                            .sx__date-picker-wrapper,
+                            .sx__view-selection {
+                                display: none !important;
+                            }
                         `}</style>
-                        <ScheduleXCalendar key={events.length + viewMode + locale} calendarApp={calendarApp} />
+                        <ScheduleXCalendar
+                            key={`${events.length}-${events.map(e => e.id).join('').slice(0, 20)}-${viewMode}-${locale}`}
+                            calendarApp={calendarApp}
+                        />
                     </div>
                 ) : (
                     <div className="space-y-20">
