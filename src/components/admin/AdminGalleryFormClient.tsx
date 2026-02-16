@@ -4,17 +4,20 @@ import { useEffect, useState, useCallback, useRef } from 'react';
 import { useRouter } from '@/i18n/routing';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
-import { Camera, ChevronLeft, Save, Trash2, Plus, Image as ImageIcon, Loader2 } from 'lucide-react';
+import { Camera, ChevronLeft, Save, Trash2, Plus, Image as ImageIcon, Loader2, Globe, ChevronDown, ChevronRight } from 'lucide-react';
 import { toast } from 'react-hot-toast';
 import { createClient } from '@/utils/supabase/client';
 import { storageService } from '@/lib/storageService';
-import { MediaUploader } from '@/components/MediaUploader'; // Assuming this exists or simple input
-import { galleryService } from '@/lib/galleryService'; // We'll implement this if missing
+import { galleryService } from '@/lib/galleryService';
 
 interface GalleryAlbum {
-    id?: string; // Optional for new
+    id?: string;
     title: string;
+    title_ja?: string;
+    title_en?: string;
     description: string;
+    description_ja?: string;
+    description_en?: string;
     status: 'draft' | 'published';
     cover_photo_id?: string | null;
     custom_author_name?: string | null;
@@ -28,12 +31,12 @@ interface GalleryPhoto {
 }
 
 interface AdminGalleryFormClientProps {
-    albumId?: string; // If present, edit mode
+    albumId?: string;
 }
 
 export default function AdminGalleryFormClient({ albumId }: AdminGalleryFormClientProps) {
     // Hooks
-    const t = useTranslations('admin.galleryPage'); // Correct key
+    const t = useTranslations('admin.galleryPage');
     const router = useRouter();
     const supabase = createClient();
 
@@ -42,12 +45,20 @@ export default function AdminGalleryFormClient({ albumId }: AdminGalleryFormClie
     const [saving, setSaving] = useState(false);
     const [album, setAlbum] = useState<GalleryAlbum>({
         title: '',
+        title_ja: '',
+        title_en: '',
         description: '',
+        description_ja: '',
+        description_en: '',
         status: 'draft',
         custom_author_name: ''
     });
     const [photos, setPhotos] = useState<GalleryPhoto[]>([]);
     const [uploading, setUploading] = useState(false);
+
+    // Language accordion states
+    const [showJapanese, setShowJapanese] = useState(false);
+    const [showEnglish, setShowEnglish] = useState(false);
 
     // Fetch Album Data if Editing
     useEffect(() => {
@@ -67,11 +78,19 @@ export default function AdminGalleryFormClient({ albumId }: AdminGalleryFormClie
                     setAlbum({
                         id: albumData.id,
                         title: albumData.title,
+                        title_ja: albumData.title_ja || '',
+                        title_en: albumData.title_en || '',
                         description: albumData.description || '',
+                        description_ja: albumData.description_ja || '',
+                        description_en: albumData.description_en || '',
                         status: albumData.status,
                         cover_photo_id: albumData.cover_photo_id,
                         custom_author_name: albumData.custom_author_name
                     });
+
+                    // Auto-open language sections if they have content
+                    if (albumData.title_ja || albumData.description_ja) setShowJapanese(true);
+                    if (albumData.title_en || albumData.description_en) setShowEnglish(true);
                 }
 
                 // 2. Get Photos
@@ -117,17 +136,25 @@ export default function AdminGalleryFormClient({ albumId }: AdminGalleryFormClie
 
             let savedAlbumId = albumId;
 
+            const payload = {
+                title: album.title,
+                title_ja: album.title_ja || null,
+                title_en: album.title_en || null,
+                description: album.description,
+                description_ja: album.description_ja || null,
+                description_en: album.description_en || null,
+                status: album.status,
+                cover_photo_id: album.cover_photo_id,
+                custom_author_name: album.custom_author_name,
+                is_public: album.status === 'published'
+            };
+
             // 1. Create or Update Album
             if (albumId) {
                 const { error } = await supabase
                     .from('gallery_albums')
                     .update({
-                        title: album.title,
-                        description: album.description,
-                        status: album.status,
-                        cover_photo_id: album.cover_photo_id,
-                        custom_author_name: album.custom_author_name,
-                        is_public: album.status === 'published',
+                        ...payload,
                         updated_at: new Date().toISOString()
                     })
                     .eq('id', albumId);
@@ -138,12 +165,8 @@ export default function AdminGalleryFormClient({ albumId }: AdminGalleryFormClie
                 const { data, error } = await supabase
                     .from('gallery_albums')
                     .insert({
-                        title: album.title,
-                        description: album.description,
-                        status: album.status,
-                        created_by: user.id,
-                        custom_author_name: album.custom_author_name,
-                        is_public: album.status === 'published'
+                        ...payload,
+                        created_by: user.id
                     })
                     .select()
                     .single();
@@ -347,6 +370,96 @@ export default function AdminGalleryFormClient({ albumId }: AdminGalleryFormClie
                             />
                         </div>
 
+                        {/* Multilingual Section */}
+                        <div className="border-t border-app pt-4 mt-4">
+                            <div className="flex items-center gap-2 mb-4 text-secondary">
+                                <Globe className="w-4 h-4" />
+                                <span className="text-xs font-black uppercase tracking-widest">Traduções</span>
+                            </div>
+
+                            <div className="space-y-2">
+                                {/* Japanese */}
+                                <div className="border border-app rounded-xl overflow-hidden">
+                                    <button
+                                        type="button"
+                                        onClick={() => setShowJapanese(!showJapanese)}
+                                        className="w-full p-3 flex items-center justify-between bg-app/30 hover:bg-app/50 transition-colors"
+                                    >
+                                        <span className="flex items-center gap-3 font-bold text-secondary text-xs">
+                                            <span className="w-6 h-6 rounded flex items-center justify-center bg-white border border-app text-[9px] font-black">JP</span>
+                                            Japonês (日本語)
+                                        </span>
+                                        {showJapanese ? <ChevronDown className="w-4 h-4 text-link" /> : <ChevronRight className="w-4 h-4 text-secondary/40" />}
+                                    </button>
+
+                                    {showJapanese && (
+                                        <div className="p-4 space-y-4 bg-app/20 animate-fade-in border-t border-app">
+                                            <div className="space-y-1.5">
+                                                <label className="text-[10px] font-extrabold text-secondary/60 uppercase block tracking-widest">Título (JP)</label>
+                                                <input
+                                                    type="text"
+                                                    value={album.title_ja || ''}
+                                                    onChange={e => setAlbum(prev => ({ ...prev, title_ja: e.target.value }))}
+                                                    className="w-full p-3 bg-white border border-app rounded-lg text-primary text-sm font-bold shadow-sm outline-none focus:border-link"
+                                                    placeholder="Título em Japonês"
+                                                />
+                                            </div>
+                                            <div className="space-y-1.5">
+                                                <label className="text-[10px] font-extrabold text-secondary/60 uppercase block tracking-widest">Descrição (JP)</label>
+                                                <textarea
+                                                    value={album.description_ja || ''}
+                                                    onChange={e => setAlbum(prev => ({ ...prev, description_ja: e.target.value }))}
+                                                    rows={3}
+                                                    className="w-full p-3 bg-white border border-app rounded-lg text-primary text-sm shadow-sm outline-none focus:border-link resize-none"
+                                                    placeholder="Descrição em Japonês"
+                                                />
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
+
+                                {/* English */}
+                                <div className="border border-app rounded-xl overflow-hidden">
+                                    <button
+                                        type="button"
+                                        onClick={() => setShowEnglish(!showEnglish)}
+                                        className="w-full p-3 flex items-center justify-between bg-app/30 hover:bg-app/50 transition-colors"
+                                    >
+                                        <span className="flex items-center gap-3 font-bold text-secondary text-xs">
+                                            <span className="w-6 h-6 rounded flex items-center justify-center bg-white border border-app text-[9px] font-black">EN</span>
+                                            Inglês (English)
+                                        </span>
+                                        {showEnglish ? <ChevronDown className="w-4 h-4 text-link" /> : <ChevronRight className="w-4 h-4 text-secondary/40" />}
+                                    </button>
+
+                                    {showEnglish && (
+                                        <div className="p-4 space-y-4 bg-app/20 animate-fade-in border-t border-app">
+                                            <div className="space-y-1.5">
+                                                <label className="text-[10px] font-extrabold text-secondary/60 uppercase block tracking-widest">Título (EN)</label>
+                                                <input
+                                                    type="text"
+                                                    value={album.title_en || ''}
+                                                    onChange={e => setAlbum(prev => ({ ...prev, title_en: e.target.value }))}
+                                                    className="w-full p-3 bg-white border border-app rounded-lg text-primary text-sm font-bold shadow-sm outline-none focus:border-link"
+                                                    placeholder="Title in English"
+                                                />
+                                            </div>
+                                            <div className="space-y-1.5">
+                                                <label className="text-[10px] font-extrabold text-secondary/60 uppercase block tracking-widest">Descrição (EN)</label>
+                                                <textarea
+                                                    value={album.description_en || ''}
+                                                    onChange={e => setAlbum(prev => ({ ...prev, description_en: e.target.value }))}
+                                                    rows={3}
+                                                    className="w-full p-3 bg-white border border-app rounded-lg text-primary text-sm shadow-sm outline-none focus:border-link resize-none"
+                                                    placeholder="Description in English"
+                                                />
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+                        </div>
+
                         <div className="space-y-2">
                             <label className="text-xs font-black uppercase tracking-widest text-secondary">{t('albumStatus')}</label>
                             <div className="flex gap-2 p-1 bg-app/50 rounded-xl border border-app">
@@ -406,7 +519,8 @@ export default function AdminGalleryFormClient({ albumId }: AdminGalleryFormClie
                             />
                         </div>
 
-                        <div className="pt-4 border-t border-app">
+                        {/* Save Actions */}
+                        <div className="space-y-3 pt-4">
                             <button
                                 onClick={handleSave}
                                 disabled={saving}
