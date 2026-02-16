@@ -38,7 +38,7 @@ export default function AccessRequestsClient() {
             .from('content_creation_access')
             .select(`
                 *,
-                profiles (
+                profiles:profiles!content_creation_access_user_id_fkey (
                     username,
                     full_name
                 )

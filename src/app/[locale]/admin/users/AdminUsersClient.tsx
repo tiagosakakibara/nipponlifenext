@@ -4,7 +4,8 @@ import { useEffect, useState } from 'react';
 import {
     Users, Search, Shield, UserCheck, Clock, Ban,
     MoreHorizontal, Loader2, Camera, Mail,
-    CheckCircle2, XCircle, AlertTriangle, Trash2
+    CheckCircle2, XCircle, AlertTriangle, Trash2,
+    Briefcase, Building2, Film, Calendar
 } from 'lucide-react';
 import { useAdminUsers } from './hooks/useAdminUsers';
 import { storageService } from '@/lib/storageService';
@@ -79,6 +80,68 @@ export default function AdminUsersClient() {
         return <span className="text-emerald-500 dark:text-emerald-400 font-black text-[9px] uppercase tracking-widest flex items-center gap-1"><CheckCircle2 className="w-3 h-3" /> {t('status.active')}</span>;
     };
 
+    const renderPermissions = (user: any) => {
+        if (user.role === 'admin') {
+            return (
+                <div className="px-2 py-1 rounded-md text-[8px] font-black uppercase tracking-widest inline-flex items-center gap-1 bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20">
+                    <Shield className="w-3 h-3" />
+                    <span>ACESSO TOTAL</span>
+                </div>
+            );
+        }
+
+        if (!user.content_creation_access || user.content_creation_access.length === 0) return <span className="text-secondary/20 font-black text-[9px] uppercase tracking-widest">—</span>;
+
+        const approved = user.content_creation_access.filter((a: any) => a.status === 'approved');
+
+        if (approved.length === 0) return <span className="text-secondary/20 font-black text-[9px] uppercase tracking-widest">—</span>;
+
+        return (
+            <div className="flex flex-wrap gap-1.5 max-w-[240px]">
+                {approved.map((access: any) => {
+                    let Icon = UserCheck;
+                    let label = access.access_type;
+                    let colorClass = "bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400";
+
+                    switch (access.access_type) {
+                        case 'events':
+                            Icon = Calendar;
+                            label = "Eventos";
+                            colorClass = "bg-orange-500/10 text-orange-600 dark:text-orange-400";
+                            break;
+                        case 'jobs':
+                            Icon = Briefcase;
+                            label = "Vagas";
+                            colorClass = "bg-blue-500/10 text-blue-600 dark:text-blue-400";
+                            break;
+                        case 'businesses':
+                            Icon = Building2;
+                            label = "Negócios";
+                            colorClass = "bg-indigo-500/10 text-indigo-600 dark:text-indigo-400";
+                            break;
+                        case 'galleries':
+                            Icon = Camera;
+                            label = "Galerias";
+                            colorClass = "bg-pink-500/10 text-pink-600 dark:text-pink-400";
+                            break;
+                        case 'reels':
+                            Icon = Film;
+                            label = "Reels";
+                            colorClass = "bg-red-500/10 text-red-600 dark:text-red-400";
+                            break;
+                    }
+
+                    return (
+                        <div key={access.access_type} className={`px-2 py-1 rounded-md text-[8px] font-black uppercase tracking-widest flex items-center gap-1 ${colorClass}`} title={label}>
+                            <Icon className="w-3 h-3" />
+                            <span className="hidden xl:inline">{label}</span>
+                        </div>
+                    );
+                })}
+            </div>
+        );
+    };
+
     const filterKeyMap: Record<string, string> = {
         all: 'all',
         admin: 'admins',
@@ -108,7 +171,7 @@ export default function AdminUsersClient() {
                 </div>
 
                 <div className="flex items-center gap-2 w-full lg:w-auto overflow-x-auto pb-2 lg:pb-0">
-                    {['all', 'admin', 'photographer', 'user'].map((role) => (
+                    {['all', 'admin', 'user'].map((role) => (
                         <button
                             key={role}
                             onClick={() => setRoleFilter(role)}
@@ -131,6 +194,7 @@ export default function AdminUsersClient() {
                             <tr>
                                 <th className="px-8 py-6">{t('table.user')}</th>
                                 <th className="px-8 py-6">{t('table.role')}</th>
+                                <th className="px-8 py-6">Permissões</th>
                                 <th className="px-8 py-6">{t('table.status')}</th>
                                 <th className="px-8 py-6 text-right">{t('table.actions')}</th>
                             </tr>
@@ -138,7 +202,7 @@ export default function AdminUsersClient() {
                         <tbody className="divide-y divide-zinc-200 dark:divide-zinc-800/50">
                             {loading ? (
                                 <tr>
-                                    <td colSpan={4} className="px-8 py-32 text-center">
+                                    <td colSpan={5} className="px-8 py-32 text-center">
                                         <div className="flex flex-col items-center gap-4">
                                             <Loader2 className="w-12 h-12 text-link animate-spin" />
                                             <span className="text-secondary/40 font-black uppercase tracking-widest text-[10px]">{t('messages.loading')}</span>
@@ -147,7 +211,7 @@ export default function AdminUsersClient() {
                                 </tr>
                             ) : filtered.length === 0 ? (
                                 <tr>
-                                    <td colSpan={4} className="px-8 py-32 text-center text-secondary/30 italic font-medium">
+                                    <td colSpan={5} className="px-8 py-32 text-center text-secondary/30 italic font-medium">
                                         {t('filters.noResults')}
                                     </td>
                                 </tr>
@@ -186,6 +250,9 @@ export default function AdminUsersClient() {
                                             {getRoleBadge(user.role)}
                                         </td>
                                         <td className="px-8 py-6">
+                                            {renderPermissions(user)}
+                                        </td>
+                                        <td className="px-8 py-6">
                                             <div className="space-y-1">
                                                 {getStatusBadge(user)}
                                                 {user.ban_reason && (
@@ -207,22 +274,6 @@ export default function AdminUsersClient() {
                                                                 className="px-4 py-2 bg-[#0037680a] hover:bg-[#003768] dark:bg-blue-500/10 dark:hover:bg-blue-600 text-[#003768] dark:text-blue-400 hover:text-white rounded-xl text-[9px] font-black uppercase tracking-widest transition-all shadow-sm"
                                                             >
                                                                 {t('actions.makeAdmin')}
-                                                            </button>
-                                                        )}
-                                                        {user.role === 'user' && (
-                                                            <button
-                                                                onClick={() => handleRoleChange(user.id, 'photographer')}
-                                                                className="px-4 py-2 bg-purple-500/10 hover:bg-purple-500 text-purple-600 hover:text-white dark:text-purple-400 rounded-xl text-[9px] font-black uppercase tracking-widest transition-all shadow-sm"
-                                                            >
-                                                                {t('actions.makePhotographer')}
-                                                            </button>
-                                                        )}
-                                                        {user.role === 'photographer' && (
-                                                            <button
-                                                                onClick={() => handleRoleChange(user.id, 'user')}
-                                                                className="px-4 py-2 bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-zinc-500 dark:text-zinc-400 hover:text-zinc-700 rounded-xl text-[9px] font-black uppercase tracking-widest transition-all shadow-sm"
-                                                            >
-                                                                {t('actions.removePhotographer')}
                                                             </button>
                                                         )}
                                                         {user.status === 'active' ? (

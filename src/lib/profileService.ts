@@ -59,7 +59,13 @@ export async function updateMyProfile(userId: string, updates: ProfileUpdate) {
 export const getAllProfiles = async () => {
     const { data, error } = await supabase
         .from('profiles')
-        .select('*')
+        .select(`
+            *,
+            content_creation_access:content_creation_access!content_creation_access_user_id_fkey (
+                access_type,
+                status
+            )
+        `)
         .order('created_at', { ascending: false });
 
     return { data, error };
