@@ -28,17 +28,45 @@ export function PhotoGallery({ photos, galleryId = 'main-gallery' }: PhotoGaller
             children: 'a.pswp-link',
             pswpModule: () => import('photoswipe'),
             showHideAnimationType: 'zoom',
-            bgOpacity: 0.9,
-            padding: { top: 30, bottom: 30, left: 20, right: 20 },
+            bgOpacity: 0.92,
+            padding: { top: 40, bottom: 40, left: 40, right: 40 },
 
-            // Helpful to ensure the correct item is picked up
             initialZoomLevel: 'fit',
             secondaryZoomLevel: 1.5,
-            maxZoomLevel: 2,
+            maxZoomLevel: 3,
 
             imageClickAction: 'zoom',
             doubleTapAction: 'zoom',
             thumbSelector: 'img',
+        });
+
+        // Auto-detect image dimensions when they are not provided
+        // This prevents the "squeezed" image issue
+        lightbox.addFilter('itemData', (itemData: any) => {
+            // If dimensions are the fallback values (1600x1200), we should detect them
+            if (itemData.w === 1600 && itemData.h === 1200) {
+                // Set initial small size, will be corrected when image loads
+                itemData.w = window.innerWidth;
+                itemData.h = window.innerHeight;
+            }
+            return itemData;
+        });
+
+        // When the content is loaded, update with real dimensions
+        lightbox.on('contentLoad', (e: any) => {
+            const { content } = e;
+            if (content.type === 'image') {
+                const img = new Image();
+                img.onload = () => {
+                    content.width = img.naturalWidth;
+                    content.height = img.naturalHeight;
+                    // Force PhotoSwipe to recalculate the layout
+                    if (lightboxRef.current?.pswp) {
+                        lightboxRef.current.pswp.updateSize(true);
+                    }
+                };
+                img.src = content.data.src || content.data.msrc;
+            }
         });
 
         lightbox.init();
@@ -61,7 +89,7 @@ export function PhotoGallery({ photos, galleryId = 'main-gallery' }: PhotoGaller
     }
 
     return (
-        <div id={galleryId} className="pswp-gallery w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4 md:p-8">
+        <div id={galleryId} className="pswp-gallery w-full grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-4 p-4 md:p-8">
             {photos.map((photo) => (
                 <a
                     key={photo.id}
@@ -72,7 +100,7 @@ export function PhotoGallery({ photos, galleryId = 'main-gallery' }: PhotoGaller
                     rel="noreferrer"
                     className="pswp-link block no-underline group relative"
                 >
-                    <div className="aspect-[4/3] w-full overflow-hidden bg-surface-dark border border-app hover-lift transition-all duration-500 shadow-sm group-hover:shadow-xl group-hover:shadow-black/20">
+                    <div className="aspect-square w-full overflow-hidden bg-surface-dark border border-app hover-lift transition-all duration-500 shadow-sm group-hover:shadow-xl group-hover:shadow-black/20 rounded-lg">
                         <img
                             src={photo.image_url}
                             alt={photo.title || 'Exhibition photo'}
@@ -81,7 +109,7 @@ export function PhotoGallery({ photos, galleryId = 'main-gallery' }: PhotoGaller
                         />
 
                         {/* Hover Overlay */}
-                        <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                        <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center rounded-lg">
                             <div className="w-10 h-10 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center text-white transform scale-90 group-hover:scale-100 transition-transform duration-300">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8" /><path d="m21 21-4.3-4.3" /><path d="M8 11h6" /><path d="M11 8v6" /></svg>
                             </div>

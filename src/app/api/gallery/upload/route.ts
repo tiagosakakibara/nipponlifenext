@@ -42,10 +42,17 @@ export async function POST(request: NextRequest) {
         let outputBuffer: Buffer
         let contentType: string
         let fileExt: string
+        let imageWidth = 0
+        let imageHeight = 0
 
         try {
             // Convert to WebP with quality 80 (good balance between quality and size)
-            outputBuffer = await sharp(inputBuffer)
+            const sharpInstance = sharp(inputBuffer)
+            const metadata = await sharpInstance.metadata()
+            imageWidth = metadata.width || 0
+            imageHeight = metadata.height || 0
+
+            outputBuffer = await sharpInstance
                 .webp({ quality: 80 })
                 .toBuffer()
             contentType = 'image/webp'
@@ -78,17 +85,21 @@ export async function POST(request: NextRequest) {
             .from('gallery')
             .getPublicUrl(filePath)
 
-        // 5. Record in DB
+        // 5. Record in DB (including dimensions for proper lightbox display)
         const originalName = file.name.split('.')[0]
+        const insertData: any = {
+            album_id: albumId,
+            user_id: user.id,
+            image_url: publicUrl,
+            title: originalName,
+            status: 'published'
+        }
+        if (imageWidth > 0) insertData.width = imageWidth
+        if (imageHeight > 0) insertData.height = imageHeight
+
         const { data, error: dbError } = await supabase
             .from('gallery_photos')
-            .insert([{
-                album_id: albumId,
-                user_id: user.id,
-                image_url: publicUrl,
-                title: originalName,
-                status: 'published'
-            }])
+            .insert([insertData])
             .select()
             .single()
 
