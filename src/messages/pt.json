@@ -1580,5 +1580,18 @@
     "breadcrumb": {
         "home": "Início",
         "business": "Negócios"
+    },
+    "payment": {
+        "title": "Pagamento Seguro",
+        "menu": "Pagamento",
+        "description": "Finalize sua assinatura Premium para acessar todos os recursos.",
+        "planName": "Plano Premium Mensal",
+        "total": "Total",
+        "securePayment": "Pagamento Seguro via",
+        "payButton": "Pagar Agora",
+        "processing": "Processando...",
+        "mockMessage": "Integração API Komoju (Simulação): Redirecionando para o gateway de pagamento...",
+        "errorMessage": "Ocorreu um erro ao processar o pagamento. Tente novamente.",
+        "disclaimer": "Ao confirmar, você será redirecionado para a página segura do Komoju para finalizar a transação."
     }
 }
