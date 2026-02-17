@@ -176,7 +176,6 @@ export default async function HomePage() {
                     <SectionHeader
                         title={t('home.sections.jobs', { defaultValue: 'Vagas em Destaque' })}
                         icon={<Briefcase className="w-5 h-5" />}
-                        viewAllPath="/jobs"
                         titleLink="/jobs"
                     />
                     <FeaturedHighlights premiumBusiness={premiumBusiness} headerJobs={headerJobs} />
