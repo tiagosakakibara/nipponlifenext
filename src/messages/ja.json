@@ -1438,5 +1438,27 @@
     "breadcrumb": {
         "home": "ホーム",
         "business": "ビジネス"
+    },
+    "payment": {
+        "title": "安全な支払い",
+        "menu": "プレミアム",
+        "description": "すべての機能にアクセスするために、プレミアムプランの登録を完了してください。",
+        "planName": "月額プレミアムプラン",
+        "total": "合計",
+        "securePayment": "安全な決済方法：",
+        "payButton": "今すぐ支払う",
+        "processing": "処理中...",
+        "mockMessage": "Komoju API統合（シミュレーション）: 決済ゲートウェイにリダイレクトしています...",
+        "errorMessage": "支払いの処理中にエラーが発生しました。もう一度お試しください。",
+        "disclaimer": "確認後、支払いを完了するためにKomojuの安全なページにリダイレクトされます。",
+        "success": {
+            "title": "支払い完了！",
+            "description": "おめでとうございます！プレミアムプランが有効化されました。",
+            "nextStepsTitle": "利用可能な特典：",
+            "benefit1": "新着求人への先行アクセス",
+            "benefit2": "プレミアム企業への優先的な露出",
+            "benefit3": "コミュニティでの優先サポート",
+            "backToHome": "ホームに戻る"
+        }
     }
 }

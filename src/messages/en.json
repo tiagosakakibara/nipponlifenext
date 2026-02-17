@@ -1492,5 +1492,27 @@
     "breadcrumb": {
         "home": "Home",
         "business": "Business"
+    },
+    "payment": {
+        "title": "Secure Payment",
+        "menu": "Premium",
+        "description": "Complete your Premium subscription to access all features.",
+        "planName": "Monthly Premium Plan",
+        "total": "Total",
+        "securePayment": "Secure payment via",
+        "payButton": "Pay Now",
+        "processing": "Processing...",
+        "mockMessage": "Komoju API Integration (Simulation): Redirecting to payment gateway...",
+        "errorMessage": "An error occurred while processing the payment. Please try again.",
+        "disclaimer": "Upon confirmation, you will be redirected to Komoju's secure page to complete the transaction.",
+        "success": {
+            "title": "Payment Confirmed!",
+            "description": "Congratulations! Your Premium subscription has been successfully activated.",
+            "nextStepsTitle": "What you get now:",
+            "benefit1": "Early access to new job opportunities",
+            "benefit2": "Exclusive visibility for premium companies",
+            "benefit3": "Priority support in the community",
+            "backToHome": "Back to Home"
+        }
     }
 }
