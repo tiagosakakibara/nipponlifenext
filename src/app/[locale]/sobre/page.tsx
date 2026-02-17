@@ -88,7 +88,7 @@ export default async function AboutPage({
             <div className="bg-[var(--nl-card)] p-8 rounded-2xl border border-[var(--nl-border)] shadow-sm space-y-8">
                 <div className="relative w-full h-64 rounded-xl overflow-hidden mb-8">
                     <Image
-                        src="/images/logo-full.png"
+                        src="/images/logo.svg"
                         alt="NipponLife Team"
                         fill
                         className="object-contain p-8 bg-[var(--nl-bg-secondary)]"

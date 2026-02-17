@@ -113,7 +113,7 @@ export default function JobsClient() {
                 <div className="container mx-auto px-6 py-2 space-y-2">
                     <div className="flex flex-col lg:flex-row items-center gap-2">
                         {/* Search */}
-                        <div className="relative flex-1 group w-full">
+                        <div className="relative flex-1 group w-full hidden md:block">
                             <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-400 dark:text-zinc-500 group-focus-within:text-[#D70F24] transition-colors" />
                             <input
                                 type="text"
@@ -125,7 +125,7 @@ export default function JobsClient() {
                         </div>
 
                         {/* Location Select */}
-                        <div className="w-full lg:w-48 relative">
+                        <div className="w-1/2 md:w-full lg:w-48 relative self-start md:self-auto">
                             <select
                                 value={selectedLocation}
                                 onChange={(e) => { setSelectedLocation(e.target.value); setCurrentPage(1); }}
@@ -137,7 +137,7 @@ export default function JobsClient() {
                         </div>
 
                         {/* Type Select */}
-                        <div className="w-full lg:w-48 relative">
+                        <div className="w-full lg:w-48 relative hidden md:block">
                             <select
                                 value={selectedType}
                                 onChange={(e) => { setSelectedType(e.target.value); setCurrentPage(1); }}
@@ -174,7 +174,7 @@ export default function JobsClient() {
                                     className="group relative bg-surface border border-app rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 cursor-pointer flex flex-col h-full"
                                 >
                                     {/* Image Section */}
-                                    <div className="relative h-40 w-full overflow-hidden bg-muted/30">
+                                    <div className="relative h-28 md:h-40 w-full overflow-hidden bg-muted/30">
                                         {job.logo ? (
                                             <img
                                                 src={job.logo}
@@ -206,14 +206,14 @@ export default function JobsClient() {
                                     </div>
 
                                     {/* Content Section */}
-                                    <div className="p-4 flex flex-col flex-1">
+                                    <div className="p-3 md:p-4 flex flex-col flex-1">
                                         {/* Company Name */}
-                                        <h3 className="text-lg font-black text-primary mb-1 line-clamp-1 group-hover:text-[#D70F24] transition-colors tracking-tight">
+                                        <h3 className="text-base md:text-lg font-black text-primary mb-1 line-clamp-1 group-hover:text-[#D70F24] transition-colors tracking-tight">
                                             {job.company}
                                         </h3>
 
                                         {/* Job Title / Description Excerpt */}
-                                        <p className="text-xs font-medium text-secondary mb-3 line-clamp-2 flex-1">
+                                        <p className="text-[10px] md:text-xs font-medium text-secondary mb-3 line-clamp-2 flex-1">
                                             {job.title}
                                             {job.description && job.description.length > 0 && (
                                                 <span className="font-normal opacity-80"> — {job.description[0]}</span>

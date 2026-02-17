@@ -1,6 +1,6 @@
 'use client';
 
-import { Search, Menu, X, Sun, Moon, Compass } from 'lucide-react';
+import { Search, Menu, X, Sun, Moon } from 'lucide-react';
 import { LanguageSwitcher } from './LanguageSwitcher';
 import { UserMenu } from './UserMenu';
 import { useState, useEffect } from 'react';
@@ -66,16 +66,7 @@ export function Header({ searchQuery = '', onSearchChange = () => { } }: HeaderP
                         </div>
                     </div>
 
-                    <nav className="hidden lg:flex items-center gap-6 mx-6">
-                        <Link
-                            href="/guias/recem-chegado"
-                            className="flex items-center gap-2 px-4 py-1.5 rounded-full border border-[#D70F24]/30 text-[#D70F24] font-black text-[10px] uppercase tracking-widest hover:bg-[#D70F24] hover:text-white transition-all duration-300 shadow-sm"
-                        >
-                            <Compass className="w-4 h-4" />
-                            {t('common.guide')}
-                        </Link>
 
-                    </nav>
 
 
                     {/* Actions */}
@@ -117,27 +108,7 @@ export function Header({ searchQuery = '', onSearchChange = () => { } }: HeaderP
                 {isMenuOpen && (
                     <nav className="absolute top-[52px] left-0 w-full bg-white dark:bg-[#1a1a1a] border-b border-zinc-100 dark:border-zinc-800 shadow-2xl p-6 lg:hidden animate-slide-up">
                         <ul className="flex flex-col gap-3">
-                            {[
-                                { key: 'guide', path: '/guias/recem-chegado', icon: <Compass className="w-4 h-4" /> }
-                            ].map((item) => (
-                                <li key={item.key}>
-                                    <Link
-                                        href={item.path}
-                                        className={`block px-5 py-4 rounded-2xl transition-all ${item.key === 'guide'
-                                            ? 'bg-red-50 text-red-600 font-black border border-red-100'
-                                            : item.key === 'menu'
-                                                ? 'bg-amber-50 text-amber-600 font-black border border-amber-100'
-                                                : 'hover:bg-zinc-50 text-[#1a1a1a] dark:text-zinc-300 font-bold'
-                                            }`}
-                                        onClick={() => setIsMenuOpen(false)}
-                                    >
-                                        <div className="flex items-center gap-3 text-xs uppercase tracking-widest">
-                                            {item.icon}
-                                            {t(`nav.${item.key}`)}
-                                        </div>
-                                    </Link>
-                                </li>
-                            ))}
+
                             <li className="pt-2">
                                 <button
                                     onClick={() => {

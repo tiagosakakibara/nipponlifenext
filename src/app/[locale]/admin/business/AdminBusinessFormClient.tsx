@@ -31,6 +31,28 @@ export default function AdminBusinessFormClient({ id, initialData }: Props) {
     const [showJapanese, setShowJapanese] = useState(false);
     const [showEnglish, setShowEnglish] = useState(false);
 
+    const { register, handleSubmit, setValue, watch, formState: { errors } } = useForm<BusinessFormData>({
+        defaultValues: initialData || {
+            country: 'Japan',
+            status: 'draft',
+            featured: false,
+            gallery_images: [],
+            presentation_url: null,
+            opening_hours: {},
+            languages_supported: ['pt'],
+            price_range: '$$'
+        }
+    });
+
+    const watchedForm = watch();
+
+    useEffect(() => {
+        if (initialData) {
+            if (initialData.business_name_ja || initialData.description_short_ja) setShowJapanese(true);
+            if (initialData.business_name_en || initialData.description_short_en) setShowEnglish(true);
+        }
+    }, [initialData]);
+
     if (permissionLoading) {
         return (
             <div className="flex h-[60vh] items-center justify-center">
@@ -58,28 +80,6 @@ export default function AdminBusinessFormClient({ id, initialData }: Props) {
             </div>
         );
     }
-
-    const { register, handleSubmit, setValue, watch, formState: { errors } } = useForm<BusinessFormData>({
-        defaultValues: initialData || {
-            country: 'Japan',
-            status: 'draft',
-            featured: false,
-            gallery_images: [],
-            presentation_url: null,
-            opening_hours: {},
-            languages_supported: ['pt'],
-            price_range: '$$'
-        }
-    });
-
-    const watchedForm = watch();
-
-    useEffect(() => {
-        if (initialData) {
-            if (initialData.business_name_ja || initialData.description_short_ja) setShowJapanese(true);
-            if (initialData.business_name_en || initialData.description_short_en) setShowEnglish(true);
-        }
-    }, [initialData]);
 
     const onSubmit = async (data: BusinessFormData) => {
         try {
@@ -113,9 +113,9 @@ export default function AdminBusinessFormClient({ id, initialData }: Props) {
                     </button>
                     <div>
                         <h1 className="text-2xl md:text-4xl font-black text-primary tracking-tight">
-                            {isEditing ? 'Edit Business' : 'New Listing'}
+                            {isEditing ? t('editBusiness') : t('newBusiness')}
                         </h1>
-                        <p className="text-secondary mt-1 font-medium italic opacity-60">Directory details and contact information</p>
+                        <p className="text-secondary mt-1 font-medium italic opacity-60">{t('businessListSubtitle')}</p>
                     </div>
                 </div>
 
@@ -127,7 +127,7 @@ export default function AdminBusinessFormClient({ id, initialData }: Props) {
                         className="flex items-center justify-center gap-2 bg-[#5593C3] hover:bg-[#467ba5] text-white w-full md:w-auto px-6 md:px-10 py-3.5 rounded-2xl font-black text-sm shadow-xl shadow-blue-500/10 transition-all hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50"
                     >
                         {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : <Save className="w-5 h-5" />}
-                        {isEditing ? 'UPDATE BUSINESS' : 'CREATE LISTING'}
+                        {t('save')}
                     </button>
                 </div>
             </div>
@@ -140,26 +140,26 @@ export default function AdminBusinessFormClient({ id, initialData }: Props) {
                     <div className="bg-surface rounded-3xl border border-app p-6 shadow-sm space-y-6">
                         <div className="flex items-center gap-3 text-primary">
                             <Send className="w-4 h-4 text-link" />
-                            <h3 className="font-bold text-sm tracking-tight uppercase">Visibility</h3>
+                            <h3 className="font-bold text-sm tracking-tight uppercase">{t('displaySettings')}</h3>
                         </div>
 
                         <div className="space-y-4">
                             <div className="space-y-2">
-                                <label className="text-[10px] font-extrabold text-secondary uppercase block tracking-widest">Status</label>
+                                <label className="text-[10px] font-extrabold text-secondary uppercase block tracking-widest">{t('status')}</label>
                                 <div className="grid grid-cols-2 gap-2 bg-[#0037680a] p-1.5 rounded-2xl border border-app">
                                     <button
                                         type="button"
                                         onClick={() => setValue('status', 'draft')}
                                         className={`py-2 text-[10px] font-black rounded-xl transition-all ${watchedForm.status === 'draft' ? 'bg-white text-primary shadow-md border border-app/50' : 'text-secondary hover:text-primary'}`}
                                     >
-                                        DRAFT
+                                        {t('draft_short')}
                                     </button>
                                     <button
                                         type="button"
                                         onClick={() => setValue('status', 'published')}
                                         className={`py-2 text-[10px] font-black rounded-xl transition-all ${watchedForm.status === 'published' ? 'bg-[#5593C3] text-white shadow-md' : 'text-secondary hover:text-primary'}`}
                                     >
-                                        PUBLISHED
+                                        {t('published_short')}
                                     </button>
                                 </div>
                             </div>
@@ -172,7 +172,7 @@ export default function AdminBusinessFormClient({ id, initialData }: Props) {
                                     <div className={`p-2 rounded-lg transition-colors ${watchedForm.featured ? 'bg-amber-500 text-white' : 'bg-white text-secondary'}`}>
                                         <Star className={`w-4 h-4 ${watchedForm.featured ? 'fill-current' : ''}`} />
                                     </div>
-                                    <span className={`text-xs font-bold uppercase ${watchedForm.featured ? 'text-amber-700' : 'text-secondary'}`}>Highlight as Featured</span>
+                                    <span className={`text-xs font-bold uppercase ${watchedForm.featured ? 'text-amber-700' : 'text-secondary'}`}>{t('featuredBusiness')}</span>
                                 </div>
                                 <div className={`w-10 h-5 rounded-full relative transition-all border ${watchedForm.featured ? 'bg-amber-500 border-amber-600' : 'bg-white border-app'}`}>
                                     <div className={`absolute top-0.5 w-3.5 h-3.5 bg-white rounded-full transition-all shadow-sm ${watchedForm.featured ? 'left-[22px]' : 'left-0.5'}`} />
@@ -185,12 +185,12 @@ export default function AdminBusinessFormClient({ id, initialData }: Props) {
                     <div className="bg-surface rounded-3xl border border-app p-6 shadow-sm space-y-6">
                         <div className="flex items-center gap-3 text-primary">
                             <ImageIcon className="w-4 h-4 text-link" />
-                            <h3 className="font-bold text-sm tracking-tight uppercase">Branding</h3>
+                            <h3 className="font-bold text-sm tracking-tight uppercase">{t('branding')}</h3>
                         </div>
 
                         <div className="space-y-6">
                             <div>
-                                <label className="text-[10px] font-extrabold text-secondary uppercase block tracking-widest mb-3">Business Logo (1:1)</label>
+                                <label className="text-[10px] font-extrabold text-secondary uppercase block tracking-widest mb-3">{t('logo')} (1:1)</label>
                                 <MediaUploader
                                     value={watchedForm.logo_url}
                                     onChange={(url) => setValue('logo_url', url)}
@@ -200,7 +200,7 @@ export default function AdminBusinessFormClient({ id, initialData }: Props) {
                             </div>
 
                             <div className="pt-6 border-t border-app">
-                                <label className="text-[10px] font-extrabold text-secondary uppercase block tracking-widest mb-3">Cover Image (16:9)</label>
+                                <label className="text-[10px] font-extrabold text-secondary uppercase block tracking-widest mb-3">{t('coverImage')} (16:9)</label>
                                 <MediaUploader
                                     value={watchedForm.cover_image_url}
                                     onChange={(url) => setValue('cover_image_url', url)}
@@ -219,40 +219,40 @@ export default function AdminBusinessFormClient({ id, initialData }: Props) {
                     <div className="bg-surface rounded-3xl border border-app p-4 md:p-8 shadow-sm space-y-6">
                         <div className="flex items-center gap-3 text-primary mb-2">
                             <Info className="w-5 h-5 text-link" />
-                            <h3 className="font-black text-lg tracking-tight">Business Profile</h3>
+                            <h3 className="font-black text-lg tracking-tight">{t('basicInfo')}</h3>
                         </div>
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div className="md:col-span-2">
-                                <label className="text-[10px] font-extrabold text-secondary uppercase block tracking-widest mb-1.5">Business Name *</label>
+                                <label className="text-[10px] font-extrabold text-secondary uppercase block tracking-widest mb-1.5">{t('businessName')} *</label>
                                 <input
                                     {...register('business_name', { required: true })}
-                                    placeholder="e.g. Nippon Sushi Restobar"
+                                    placeholder="ex: Nippon Sushi Restobar"
                                     className="w-full p-4 bg-app border border-app rounded-2xl text-primary font-bold focus:bg-white focus:ring-4 focus:ring-link/5 transition-all outline-none"
                                 />
-                                {errors.business_name && <p className="text-accent text-[10px] font-bold mt-1 uppercase">Required field</p>}
+                                {errors.business_name && <p className="text-accent text-[10px] font-bold mt-1 uppercase">{t('businessNameRequired')}</p>}
                             </div>
 
                             <div>
-                                <label className="text-[10px] font-extrabold text-secondary uppercase block tracking-widest mb-1.5">Category *</label>
+                                <label className="text-[10px] font-extrabold text-secondary uppercase block tracking-widest mb-1.5">{t('category')} *</label>
                                 <select
                                     {...register('category', { required: true })}
                                     className="w-full p-4 bg-app border border-app rounded-2xl text-primary font-bold focus:bg-white transition-all outline-none appearance-none"
                                 >
-                                    <option value="">Select Category</option>
-                                    <option value="Gastronomia">Gastronomia</option>
-                                    <option value="Saúde & Bem-estar">Saúde & Bem-estar</option>
-                                    <option value="Serviços">Serviços</option>
-                                    <option value="Imobiliárias">Imobiliárias</option>
-                                    <option value="Jurídico e Vistos">Jurídico e Vistos</option>
-                                    <option value="Mudanças e Logística">Mudanças e Logística</option>
-                                    <option value="Tecnologia">Tecnologia</option>
-                                    <option value="Outros">Outros</option>
+                                    <option value="">{t('selectCategory')}</option>
+                                    <option value="Gastronomia">{bizT('categories.Gastronomia')}</option>
+                                    <option value="Saúde & Bem-estar">{bizT('categories.Saúde & Bem-estar')}</option>
+                                    <option value="Serviços">{bizT('categories.Serviços')}</option>
+                                    <option value="Imobiliárias">{bizT('categories.Imobiliárias')}</option>
+                                    <option value="Jurídico e Vistos">{bizT('categories.Jurídico e Vistos')}</option>
+                                    <option value="Mudanças e Logística">{bizT('categories.Mudanças e Logística')}</option>
+                                    <option value="Tecnologia">{bizT('categories.Tecnologia')}</option>
+                                    <option value="Outros">{bizT('categories.Outros')}</option>
                                 </select>
                             </div>
 
                             <div>
-                                <label className="text-[10px] font-extrabold text-secondary uppercase block tracking-widest mb-1.5">Price Range</label>
+                                <label className="text-[10px] font-extrabold text-secondary uppercase block tracking-widest mb-1.5">{t('priceRange')}</label>
                                 <select
                                     {...register('price_range')}
                                     className="w-full p-4 bg-app border border-app rounded-2xl text-primary font-bold focus:bg-white transition-all outline-none"
@@ -265,20 +265,20 @@ export default function AdminBusinessFormClient({ id, initialData }: Props) {
                             </div>
 
                             <div className="md:col-span-2">
-                                <label className="text-[10px] font-extrabold text-secondary uppercase block tracking-widest mb-1.5">Short Summary * (Max 160 chars)</label>
+                                <label className="text-[10px] font-extrabold text-secondary uppercase block tracking-widest mb-1.5">{t('shortDescription')} * (Max 160 chars)</label>
                                 <input
                                     {...register('description_short', { required: true, maxLength: 160 })}
-                                    placeholder="Quick descriptive hook for the list view..."
+                                    placeholder={t('shortDescriptionPlaceholder')}
                                     className="w-full p-4 bg-app border border-app rounded-2xl text-primary font-medium focus:bg-white transition-all outline-none"
                                 />
                             </div>
 
                             <div className="md:col-span-2">
-                                <label className="text-[10px] font-extrabold text-secondary uppercase block tracking-widest mb-1.5">Full Biography / Description</label>
+                                <label className="text-[10px] font-extrabold text-secondary uppercase block tracking-widest mb-1.5">{t('fullDescription')}</label>
                                 <textarea
                                     {...register('description_long')}
                                     rows={6}
-                                    placeholder="Detailed information about history, mission, and services..."
+                                    placeholder={t('shortDescriptionPlaceholder')}
                                     className="w-full p-6 bg-app border border-app rounded-3xl text-primary font-medium focus:bg-white transition-all outline-none resize-none"
                                 />
                             </div>
@@ -291,25 +291,25 @@ export default function AdminBusinessFormClient({ id, initialData }: Props) {
                         <div className="bg-surface rounded-3xl border border-app p-4 md:p-8 shadow-sm space-y-6">
                             <div className="flex items-center gap-3 text-primary mb-2">
                                 <MapPin className="w-5 h-5 text-link" />
-                                <h3 className="font-black text-lg tracking-tight">Location</h3>
+                                <h3 className="font-black text-lg tracking-tight">{t('location')}</h3>
                             </div>
 
                             <div className="space-y-4">
                                 <div className="grid grid-cols-2 gap-4">
                                     <div className="col-span-2">
-                                        <label className="text-[10px] font-extrabold text-secondary uppercase block tracking-widest mb-1.5">Street Address *</label>
+                                        <label className="text-[10px] font-extrabold text-secondary uppercase block tracking-widest mb-1.5">{t('address')} *</label>
                                         <input {...register('address_line1', { required: true })} className="w-full p-3.5 bg-app border border-app rounded-xl text-xs font-bold" />
                                     </div>
                                     <div>
-                                        <label className="text-[10px] font-extrabold text-secondary uppercase block tracking-widest mb-1.5">City *</label>
+                                        <label className="text-[10px] font-extrabold text-secondary uppercase block tracking-widest mb-1.5">{t('city')} *</label>
                                         <input {...register('city', { required: true })} className="w-full p-3.5 bg-app border border-app rounded-xl text-xs font-bold" />
                                     </div>
                                     <div>
-                                        <label className="text-[10px] font-extrabold text-secondary uppercase block tracking-widest mb-1.5">Prefecture *</label>
+                                        <label className="text-[10px] font-extrabold text-secondary uppercase block tracking-widest mb-1.5">{t('prefecture')} *</label>
                                         <input {...register('prefecture', { required: true })} className="w-full p-3.5 bg-app border border-app rounded-xl text-xs font-bold" />
                                     </div>
                                     <div className="col-span-2">
-                                        <label className="text-[10px] font-extrabold text-secondary uppercase block tracking-widest mb-1.5">Google Maps URL</label>
+                                        <label className="text-[10px] font-extrabold text-secondary uppercase block tracking-widest mb-1.5">{t('googleMapsUrl')}</label>
                                         <input {...register('google_maps_url')} placeholder="https://..." className="w-full p-3.5 bg-app border border-app rounded-xl text-xs" />
                                     </div>
                                 </div>
@@ -320,24 +320,24 @@ export default function AdminBusinessFormClient({ id, initialData }: Props) {
                         <div className="bg-surface rounded-3xl border border-app p-4 md:p-8 shadow-sm space-y-6">
                             <div className="flex items-center gap-3 text-primary mb-2">
                                 <Phone className="w-5 h-5 text-link" />
-                                <h3 className="font-black text-lg tracking-tight">Contact</h3>
+                                <h3 className="font-black text-lg tracking-tight">{t('contact')}</h3>
                             </div>
 
                             <div className="space-y-4">
                                 <div>
-                                    <label className="text-[10px] font-extrabold text-secondary uppercase block tracking-widest mb-1.5">Phone / Mobile</label>
+                                    <label className="text-[10px] font-extrabold text-secondary uppercase block tracking-widest mb-1.5">{t('phone')}</label>
                                     <input {...register('phone')} className="w-full p-3.5 bg-app border border-app rounded-xl text-xs font-bold" />
                                 </div>
                                 <div>
-                                    <label className="text-[10px] font-extrabold text-secondary uppercase block tracking-widest mb-1.5">Email Address</label>
+                                    <label className="text-[10px] font-extrabold text-secondary uppercase block tracking-widest mb-1.5">{t('email')}</label>
                                     <input {...register('email')} className="w-full p-3.5 bg-app border border-app rounded-xl text-xs" />
                                 </div>
                                 <div>
-                                    <label className="text-[10px] font-extrabold text-secondary uppercase block tracking-widest mb-1.5">Instagram @</label>
+                                    <label className="text-[10px] font-extrabold text-secondary uppercase block tracking-widest mb-1.5">{t('instagram')} @</label>
                                     <input {...register('instagram_url')} placeholder="nipponlife" className="w-full p-3.5 bg-app border border-app rounded-xl text-xs" />
                                 </div>
                                 <div>
-                                    <label className="text-[10px] font-extrabold text-secondary uppercase block tracking-widest mb-1.5">Website</label>
+                                    <label className="text-[10px] font-extrabold text-secondary uppercase block tracking-widest mb-1.5">{t('website')}</label>
                                     <input {...register('website_url')} placeholder="https://..." className="w-full p-3.5 bg-app border border-app rounded-xl text-xs" />
                                 </div>
                             </div>
@@ -348,12 +348,12 @@ export default function AdminBusinessFormClient({ id, initialData }: Props) {
                     <div className="bg-surface rounded-3xl border border-app p-4 md:p-8 shadow-sm space-y-6">
                         <div className="flex items-center gap-3 text-primary mb-2">
                             <Plus className="w-5 h-5 text-link" />
-                            <h3 className="font-black text-lg tracking-tight">Gallery & Assets</h3>
+                            <h3 className="font-black text-lg tracking-tight">{t('gallery')} & {t('media')}</h3>
                         </div>
 
                         <div className="space-y-8">
                             <div>
-                                <label className="text-[10px] font-extrabold text-secondary uppercase block tracking-widest mb-4">Photo Gallery</label>
+                                <label className="text-[10px] font-extrabold text-secondary uppercase block tracking-widest mb-4">{t('gallery')}</label>
                                 <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 gap-4">
                                     {(watchedForm.gallery_images || []).map((url, idx) => (
                                         <div key={idx} className="aspect-square relative group">
@@ -381,7 +381,7 @@ export default function AdminBusinessFormClient({ id, initialData }: Props) {
                                         <div className="p-3 bg-white rounded-xl shadow-sm group-hover:scale-110 transition-transform">
                                             <Plus className="w-5 h-5 text-link" />
                                         </div>
-                                        <span className="text-[8px] font-black uppercase tracking-widest text-secondary/50 mt-3">Add Photo</span>
+                                        <span className="text-[8px] font-black uppercase tracking-widest text-secondary/50 mt-3">{t('addImage')}</span>
                                         <input
                                             type="file"
                                             className="hidden"
@@ -399,7 +399,7 @@ export default function AdminBusinessFormClient({ id, initialData }: Props) {
                             </div>
 
                             <div className="pt-8 border-t border-app">
-                                <label className="text-[10px] font-extrabold text-secondary uppercase block tracking-widest mb-4">Presentation / PDF Menu</label>
+                                <label className="text-[10px] font-extrabold text-secondary uppercase block tracking-widest mb-4">{t('presentation')}</label>
                                 <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6">
                                     {watchedForm.presentation_url ? (
                                         <div className="flex items-center gap-4 bg-emerald-500/5 p-4 rounded-2xl border border-emerald-500/20 shadow-inner">
@@ -407,9 +407,9 @@ export default function AdminBusinessFormClient({ id, initialData }: Props) {
                                                 <FileText className="w-6 h-6 text-emerald-500" />
                                             </div>
                                             <div className="flex flex-col">
-                                                <span className="text-xs font-bold text-emerald-900">PDF Asset Linked</span>
+                                                <span className="text-xs font-bold text-emerald-900">{t('pdfFile')}</span>
                                                 <a href={watchedForm.presentation_url} target="_blank" rel="noopener noreferrer" className="text-[10px] font-black uppercase tracking-widest text-[#5593C3] hover:underline">
-                                                    Download file
+                                                    {t('download')}
                                                 </a>
                                             </div>
                                             <button
@@ -422,13 +422,13 @@ export default function AdminBusinessFormClient({ id, initialData }: Props) {
                                         </div>
                                     ) : (
                                         <div className="text-[10px] font-black uppercase tracking-widest text-secondary/30 bg-app p-4 px-6 rounded-2xl border border-app italic">
-                                            No file uploaded yet.
+                                            {t('pdfNotUploaded')}
                                         </div>
                                     )}
 
                                     <label className="cursor-pointer bg-[#5593C3]/10 text-[#5593C3] hover:bg-[#5593C3] hover:text-white px-8 py-3.5 rounded-2xl font-bold text-xs transition-all flex items-center gap-2 group border border-[#5593C3]/20 hover:shadow-xl">
                                         <Upload className="w-4 h-4 group-hover:-translate-y-1 transition-transform" />
-                                        UPLOAD PDF Asset
+                                        {t('uploadPresentation')}
                                         <input
                                             type="file"
                                             className="hidden"
@@ -451,7 +451,7 @@ export default function AdminBusinessFormClient({ id, initialData }: Props) {
                     <div className="bg-surface rounded-3xl border border-app overflow-hidden shadow-sm">
                         <div className="p-4 border-b border-app bg-[#0037680a] flex items-center gap-3">
                             <Globe className="w-5 h-5 text-link" />
-                            <h3 className="text-sm font-black text-primary uppercase tracking-tight">Multilingual Information</h3>
+                            <h3 className="text-sm font-black text-primary uppercase tracking-tight">{t('translationsTitle')}</h3>
                         </div>
 
                         <div className="border-b border-app">
@@ -462,7 +462,7 @@ export default function AdminBusinessFormClient({ id, initialData }: Props) {
                             >
                                 <span className="flex items-center gap-4 font-bold text-secondary text-sm group-hover:text-primary transition-colors">
                                     <span className="w-7 h-7 rounded-lg flex items-center justify-center bg-white border border-app text-[10px] font-black shadow-sm group-hover:shadow-md transition-shadow">JP</span>
-                                    Japanese (日本語)
+                                    {t('japaneseLanguage')}
                                 </span>
                                 {showJapanese ? <ChevronDown className="w-4 h-4 text-link" /> : <ChevronRight className="w-4 h-4 text-secondary/40" />}
                             </button>
@@ -470,15 +470,15 @@ export default function AdminBusinessFormClient({ id, initialData }: Props) {
                                 <div className="p-4 md:p-8 pt-2 space-y-6 bg-app/20 animate-fade-in">
                                     <div className="space-y-4">
                                         <div>
-                                            <label className="text-[10px] font-extrabold text-secondary/60 uppercase block tracking-widest mb-1.5">Business Name (JP)</label>
+                                            <label className="text-[10px] font-extrabold text-secondary/60 uppercase block tracking-widest mb-1.5">{t('businessName')} (JP)</label>
                                             <input {...register('business_name_ja')} className="w-full p-4 bg-white border border-app rounded-2xl text-primary font-bold shadow-inner" />
                                         </div>
                                         <div>
-                                            <label className="text-[10px] font-extrabold text-secondary/60 uppercase block tracking-widest mb-1.5">Short Description (JP)</label>
+                                            <label className="text-[10px] font-extrabold text-secondary/60 uppercase block tracking-widest mb-1.5">{t('shortDescription')} (JP)</label>
                                             <input {...register('description_short_ja')} className="w-full p-4 bg-white border border-app rounded-2xl text-xs shadow-inner" />
                                         </div>
                                         <div>
-                                            <label className="text-[10px] font-extrabold text-secondary/60 uppercase block tracking-widest mb-1.5">Full Biography (JP)</label>
+                                            <label className="text-[10px] font-extrabold text-secondary/60 uppercase block tracking-widest mb-1.5">{t('fullDescription')} (JP)</label>
                                             <textarea {...register('description_long_ja')} rows={4} className="w-full p-4 bg-white border border-app rounded-3xl text-sm shadow-inner" />
                                         </div>
                                     </div>
@@ -494,7 +494,7 @@ export default function AdminBusinessFormClient({ id, initialData }: Props) {
                             >
                                 <span className="flex items-center gap-4 font-bold text-secondary text-sm group-hover:text-primary transition-colors">
                                     <span className="w-7 h-7 rounded-lg flex items-center justify-center bg-white border border-app text-[10px] font-black shadow-sm group-hover:shadow-md transition-shadow">EN</span>
-                                    English
+                                    {t('englishLanguage')}
                                 </span>
                                 {showEnglish ? <ChevronDown className="w-4 h-4 text-link" /> : <ChevronRight className="w-4 h-4 text-secondary/40" />}
                             </button>
@@ -502,15 +502,15 @@ export default function AdminBusinessFormClient({ id, initialData }: Props) {
                                 <div className="p-4 md:p-8 pt-2 space-y-6 bg-app/20 animate-fade-in">
                                     <div className="space-y-4">
                                         <div>
-                                            <label className="text-[10px] font-extrabold text-secondary/60 uppercase block tracking-widest mb-1.5">Business Name (EN)</label>
+                                            <label className="text-[10px] font-extrabold text-secondary/60 uppercase block tracking-widest mb-1.5">{t('businessName')} (EN)</label>
                                             <input {...register('business_name_en')} className="w-full p-4 bg-white border border-app rounded-2xl text-primary font-bold shadow-inner" />
                                         </div>
                                         <div>
-                                            <label className="text-[10px] font-extrabold text-secondary/60 uppercase block tracking-widest mb-1.5">Short Description (EN)</label>
+                                            <label className="text-[10px] font-extrabold text-secondary/60 uppercase block tracking-widest mb-1.5">{t('shortDescription')} (EN)</label>
                                             <input {...register('description_short_en')} className="w-full p-4 bg-white border border-app rounded-2xl text-xs shadow-inner" />
                                         </div>
                                         <div>
-                                            <label className="text-[10px] font-extrabold text-secondary/60 uppercase block tracking-widest mb-1.5">Full Biography (EN)</label>
+                                            <label className="text-[10px] font-extrabold text-secondary/60 uppercase block tracking-widest mb-1.5">{t('fullDescription')} (EN)</label>
                                             <textarea {...register('description_long_en')} rows={4} className="w-full p-4 bg-white border border-app rounded-3xl text-sm shadow-inner" />
                                         </div>
                                     </div>

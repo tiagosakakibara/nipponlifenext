@@ -108,17 +108,7 @@ export function UserMenu() {
                             </div>
                         </button>
 
-                        {isPhotographer && (
-                            <button
-                                onClick={() => handleNavigate('/admin/gallery')}
-                                className="w-full px-4 py-3 text-left text-[15px] text-secondary hover:text-primary hover:bg-app rounded-xl transition-all flex items-center justify-between group"
-                            >
-                                <div className="flex items-center gap-3">
-                                    <Camera className="w-4.5 h-4.5 text-muted group-hover:text-primary transition-colors" />
-                                    <span>Studio Fotográfico</span>
-                                </div>
-                            </button>
-                        )}
+
 
                         {profile?.role === 'admin' && (
                             <button
