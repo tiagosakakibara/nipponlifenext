@@ -1,14 +1,16 @@
 "use client";
 
 import { useEffect, useState } from 'react';
-import { Plus, Search, Edit, Trash2, Building2, MapPin, Briefcase, Loader2, Star, ChevronRight } from 'lucide-react';
+import { Plus, Search, Edit, Trash2, Building2, MapPin, Briefcase, Loader2, Star, ChevronRight, ShieldAlert } from 'lucide-react';
 import { Link, useRouter } from '@/i18n/routing';
 import { useAdminJobs } from './hooks/useAdminJobs';
+import { usePermission } from '../hooks/usePermission';
 import { useTranslations } from 'next-intl';
 
 export default function AdminJobsClient() {
     const t = useTranslations('admin');
     const router = useRouter();
+    const { hasAccess, loading: permissionLoading } = usePermission('jobs');
     const {
         jobs,
         loading,
@@ -22,27 +24,57 @@ export default function AdminJobsClient() {
     const [searchTerm, setSearchTerm] = useState('');
 
     useEffect(() => {
-        const debounceTimer = setTimeout(() => {
-            fetchJobs(page, searchTerm);
-        }, 300);
+        if (hasAccess) {
+            const debounceTimer = setTimeout(() => {
+                fetchJobs(page, searchTerm);
+            }, 300);
+            return () => clearTimeout(debounceTimer);
+        }
+    }, [page, searchTerm, fetchJobs, hasAccess]);
 
-        return () => clearTimeout(debounceTimer);
-    }, [page, searchTerm, fetchJobs]);
+    if (permissionLoading) {
+        return (
+            <div className="flex items-center justify-center p-20">
+                <Loader2 className="w-8 h-8 text-link animate-spin" />
+            </div>
+        );
+    }
+
+    if (!hasAccess) {
+        return (
+            <div className="flex flex-col items-center justify-center p-20 space-y-4 animate-fade-in">
+                <div className="w-16 h-16 bg-red-500/10 rounded-full flex items-center justify-center">
+                    <ShieldAlert className="w-8 h-8 text-red-500" />
+                </div>
+                <h2 className="text-xl font-black text-primary">Acesso Negado</h2>
+                <p className="text-secondary text-center max-w-md">
+                    Você não tem permissão para acessar o gerenciamento de vagas.
+                    Entre em contato com um administrador se acredita que isso é um erro.
+                </p>
+                <Link
+                    href="/admin"
+                    className="mt-4 px-6 py-2.5 bg-primary text-white rounded-xl font-bold text-sm hover:bg-primary/90 transition-all"
+                >
+                    Voltar para Dashboard
+                </Link>
+            </div>
+        );
+    }
 
     return (
         <div className="space-y-8 animate-fade-in">
             {/* Header */}
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
                 <div>
-                    <h1 className="text-2xl md:text-4xl font-black text-primary tracking-tight">Job Board</h1>
-                    <p className="text-secondary mt-1 font-medium italic opacity-60">Manage career opportunities and listings</p>
+                    <h1 className="text-2xl md:text-4xl font-black text-primary tracking-tight">Vagas de Emprego</h1>
+                    <p className="text-secondary mt-1 font-medium italic opacity-60">Gerencie oportunidades de carreira e listagens</p>
                 </div>
                 <Link
                     href="/admin/jobs/new"
                     className="flex items-center gap-2 bg-[#5593C3] hover:bg-[#467ba5] text-white px-8 py-3.5 rounded-2xl font-bold text-sm shadow-xl shadow-blue-500/10 transition-all hover:scale-[1.02] active:scale-[0.98] group w-fit"
                 >
                     <Plus className="w-5 h-5 group-hover:rotate-90 transition-transform duration-300" />
-                    POST NEW JOB
+                    POSTAR NOVA VAGA
                 </Link>
             </div>
 
@@ -53,7 +85,7 @@ export default function AdminJobsClient() {
                         <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-secondary/40 group-focus-within:text-link transition-colors" />
                         <input
                             type="text"
-                            placeholder="Search by title or company..."
+                            placeholder="Buscar por título ou empresa..."
                             value={searchTerm}
                             onChange={(e) => {
                                 setSearchTerm(e.target.value);
@@ -68,11 +100,11 @@ export default function AdminJobsClient() {
                     <table className="w-full text-sm text-left border-collapse">
                         <thead className="bg-[#00376805] text-[#5593C3] text-[10px] font-black uppercase tracking-[0.2em] border-b border-app">
                             <tr>
-                                <th className="px-6 py-5 whitespace-nowrap">Opportunity</th>
-                                <th className="px-6 py-5 whitespace-nowrap">Company</th>
-                                <th className="px-6 py-5 whitespace-nowrap">Location</th>
+                                <th className="px-6 py-5 whitespace-nowrap">Oportunidade</th>
+                                <th className="px-6 py-5 whitespace-nowrap">Empresa</th>
+                                <th className="px-6 py-5 whitespace-nowrap">Localização</th>
                                 <th className="px-6 py-5 whitespace-nowrap text-center">Status</th>
-                                <th className="px-6 py-5 whitespace-nowrap text-right">Actions</th>
+                                <th className="px-6 py-5 whitespace-nowrap text-right">Ações</th>
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-app">
@@ -81,14 +113,14 @@ export default function AdminJobsClient() {
                                     <td colSpan={5} className="px-6 py-20 text-center">
                                         <div className="flex flex-col items-center gap-3">
                                             <Loader2 className="w-8 h-8 text-link animate-spin" />
-                                            <span className="text-secondary/50 font-bold uppercase tracking-widest text-[10px]">Loading assets...</span>
+                                            <span className="text-secondary/50 font-bold uppercase tracking-widest text-[10px]">Carregando vagas...</span>
                                         </div>
                                     </td>
                                 </tr>
                             ) : jobs.length === 0 ? (
                                 <tr>
                                     <td colSpan={5} className="px-6 py-20 text-center text-secondary/40 italic">
-                                        No job postings found.
+                                        Nenhuma vaga encontrada.
                                     </td>
                                 </tr>
                             ) : (
@@ -138,10 +170,10 @@ export default function AdminJobsClient() {
                                         </td>
                                         <td className="px-6 py-4 text-center">
                                             <span className={`inline-flex items-center px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest border transition-all ${job.status === 'published'
-                                                    ? 'bg-emerald-500/10 text-emerald-600 border-emerald-500/20 shadow-[0_0_15px_-5px_#10b98155]'
-                                                    : 'bg-amber-500/10 text-amber-600 border-amber-500/20'
+                                                ? 'bg-emerald-500/10 text-emerald-600 border-emerald-500/20 shadow-[0_0_15px_-5px_#10b98155]'
+                                                : 'bg-amber-500/10 text-amber-600 border-amber-500/20'
                                                 }`}>
-                                                {job.status}
+                                                {job.status === 'published' ? 'PUBLICADO' : 'RASCUNHO'}
                                             </span>
                                         </td>
                                         <td className="px-6 py-4 text-right">
@@ -175,7 +207,7 @@ export default function AdminJobsClient() {
                             disabled={page === 1}
                             className="flex items-center gap-2 px-6 py-2.5 bg-white border border-app rounded-xl text-xs font-bold text-primary disabled:opacity-30 hover:bg-app transition-all shadow-sm"
                         >
-                            PREVIOUS
+                            ANTERIOR
                         </button>
                         <div className="flex items-center gap-2">
                             {Array.from({ length: totalPages }).map((_, i) => (
@@ -183,8 +215,8 @@ export default function AdminJobsClient() {
                                     key={i}
                                     onClick={() => setPage(i + 1)}
                                     className={`w-8 h-8 rounded-lg text-[10px] font-black transition-all ${page === i + 1
-                                            ? 'bg-[#5593C3] text-white shadow-lg'
-                                            : 'text-secondary hover:bg-app'
+                                        ? 'bg-[#5593C3] text-white shadow-lg'
+                                        : 'text-secondary hover:bg-app'
                                         }`}
                                 >
                                     {i + 1}
@@ -196,7 +228,7 @@ export default function AdminJobsClient() {
                             disabled={page === totalPages}
                             className="flex items-center gap-2 px-6 py-2.5 bg-white border border-app rounded-xl text-xs font-bold text-primary disabled:opacity-30 hover:bg-app transition-all shadow-sm"
                         >
-                            NEXT
+                            PRÓXIMO
                         </button>
                     </div>
                 )}

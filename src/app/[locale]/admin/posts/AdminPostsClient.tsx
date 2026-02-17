@@ -4,19 +4,23 @@ import { useState, useEffect, useMemo } from 'react';
 import Image from 'next/image';
 import { Link, useRouter } from '@/i18n/routing';
 import { useAdminPosts } from './hooks/useAdminPosts';
-import { Trash2, Edit, Plus, FileText, Globe, Search, Loader2 } from 'lucide-react';
+import { Trash2, Edit, Plus, FileText, Globe, Search, Loader2, ShieldAlert } from 'lucide-react';
 import { useTranslations } from 'next-intl';
+import { usePermission } from '../hooks/usePermission';
 
 export default function AdminPostsClient() {
     const t = useTranslations();
     const router = useRouter();
+    const { hasAccess, loading: permissionLoading } = usePermission('posts');
     const { posts, deletePost, loading, fetchPosts } = useAdminPosts();
     const [filterStatus, setFilterStatus] = useState('all');
     const [searchTerm, setSearchTerm] = useState('');
 
     useEffect(() => {
-        fetchPosts();
-    }, [fetchPosts]);
+        if (hasAccess) {
+            fetchPosts();
+        }
+    }, [hasAccess, fetchPosts]);
 
     const filteredPosts = useMemo(() => posts.filter(p => {
         const matchesStatus = filterStatus === 'all' || p.status === filterStatus;
@@ -28,6 +32,34 @@ export default function AdminPostsClient() {
     const handleDelete = async (id: string, title: string) => {
         await deletePost(id);
     };
+
+    if (permissionLoading) {
+        return (
+            <div className="min-h-[400px] flex items-center justify-center">
+                <Loader2 className="w-8 h-8 text-link animate-spin" />
+            </div>
+        );
+    }
+
+    if (!hasAccess) {
+        return (
+            <div className="flex flex-col items-center justify-center p-20 space-y-4 animate-fade-in">
+                <div className="w-16 h-16 bg-red-500/10 rounded-full flex items-center justify-center">
+                    <ShieldAlert className="w-8 h-8 text-red-500" />
+                </div>
+                <h2 className="text-xl font-black text-primary">Acesso Negado</h2>
+                <p className="text-secondary text-center max-w-md">
+                    Você não tem permissão para gerenciar posts.
+                </p>
+                <Link
+                    href="/admin"
+                    className="mt-4 px-6 py-2.5 bg-primary text-white rounded-xl font-bold text-sm hover:bg-primary/90 transition-all"
+                >
+                    Voltar para Dashboard
+                </Link>
+            </div>
+        );
+    }
 
     if (loading && posts.length === 0) {
         return (
@@ -213,6 +245,6 @@ export default function AdminPostsClient() {
                     </div>
                 )}
             </div>
-        </div >
+        </div>
     );
 }

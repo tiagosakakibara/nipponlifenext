@@ -8,12 +8,13 @@ import {
     Save, ArrowLeft, Plus, X, Globe, ChevronDown, ChevronRight,
     Loader2, Star, Briefcase, Building2, MapPin, DollarSign,
     Tag, CheckCircle2, Heart, Gift, Clock, Bus, Shield, Utensils,
-    Calendar, Send, Info, Image as ImageIcon, Laptop
+    Calendar, Send, Info, Image as ImageIcon, Laptop, ShieldAlert
 } from 'lucide-react';
 import { jobsService } from '@/lib/jobsService';
 import { Job, JobFormData } from '@/types/job';
 import { MediaUploader } from '@/components/MediaUploader';
 import { useTranslations } from 'next-intl';
+import { usePermission } from '../hooks/usePermission';
 
 const BENEFIT_ICONS = [
     { value: 'shield', icon: Shield, i18nKey: 'insurance' },
@@ -36,6 +37,7 @@ export default function AdminJobFormClient({ id, initialData }: Props) {
     const t = useTranslations('admin.jobs.form');
     const tb = useTranslations('admin.jobs.benefits');
     const isEditing = !!id;
+    const { hasAccess, loading: permissionLoading } = usePermission('jobs');
     const [loading, setLoading] = useState(false);
     const [showJapanese, setShowJapanese] = useState(false);
     const [showEnglish, setShowEnglish] = useState(false);
@@ -118,6 +120,35 @@ export default function AdminJobFormClient({ id, initialData }: Props) {
     const removeTag = (tag: string) => {
         setValue('tags', watchedForm.tags.filter((t: string) => t !== tag));
     };
+
+    if (permissionLoading) {
+        return (
+            <div className="flex items-center justify-center p-20">
+                <Loader2 className="w-8 h-8 text-link animate-spin" />
+            </div>
+        );
+    }
+
+    if (!hasAccess) {
+        return (
+            <div className="flex flex-col items-center justify-center p-20 space-y-4 animate-fade-in">
+                <div className="w-16 h-16 bg-red-500/10 rounded-full flex items-center justify-center">
+                    <ShieldAlert className="w-8 h-8 text-red-500" />
+                </div>
+                <h2 className="text-xl font-black text-primary">Acesso Negado</h2>
+                <p className="text-secondary text-center max-w-md">
+                    Você não tem permissão para gerenciar vagas de emprego.
+                    Entre em contato com um administrador se acredita que isso é um erro.
+                </p>
+                <Link
+                    href="/admin"
+                    className="mt-4 px-6 py-2.5 bg-primary text-white rounded-xl font-bold text-sm hover:bg-primary/90 transition-all"
+                >
+                    Voltar para Dashboard
+                </Link>
+            </div>
+        );
+    }
 
     return (
         <div className="space-y-8 animate-fade-in pb-20">

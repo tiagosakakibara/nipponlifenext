@@ -1,18 +1,20 @@
-"use strict";
 "use client";
 
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
+import { Link } from '@/i18n/routing';
 import {
     Plus, Search, Trash2, Loader2,
-    Video, ExternalLink, RefreshCw, X, Play, Save, Pencil
+    Video, ExternalLink, RefreshCw, X, Play, Save, Pencil, ShieldAlert
 } from 'lucide-react';
 import { supabase } from '@/lib/supabaseClient';
 import { fetchActiveReels, parseReelUrl, CommunityReel } from '@/lib/reelsService';
 import { useTranslations } from 'next-intl';
 import { toast } from 'react-hot-toast';
+import { usePermission } from '@/app/[locale]/admin/hooks/usePermission';
 
 export default function AdminReelsClient() {
+    const { hasAccess, loading: permissionLoading } = usePermission('reels');
     const [reels, setReels] = useState<CommunityReel[]>([]);
     const [loading, setLoading] = useState(true);
     const [isAddModalOpen, setIsAddModalOpen] = useState(false);
@@ -40,8 +42,37 @@ export default function AdminReelsClient() {
     };
 
     useEffect(() => {
+        if (!hasAccess) return;
         fetchReels();
-    }, []);
+    }, [hasAccess]);
+
+    if (permissionLoading) {
+        return (
+            <div className="flex h-[60vh] items-center justify-center">
+                <Loader2 className="w-10 h-10 animate-spin text-primary" />
+            </div>
+        );
+    }
+
+    if (!hasAccess) {
+        return (
+            <div className="flex flex-col items-center justify-center p-20 space-y-4 animate-fade-in">
+                <div className="w-16 h-16 bg-red-500/10 rounded-full flex items-center justify-center">
+                    <ShieldAlert className="w-8 h-8 text-red-500" />
+                </div>
+                <h2 className="text-xl font-black text-primary">Acesso Negado</h2>
+                <p className="text-secondary text-center max-w-md">
+                    Você não tem permissão para gerenciar reels.
+                </p>
+                <Link
+                    href="/admin"
+                    className="mt-4 px-6 py-2.5 bg-primary text-white rounded-xl font-bold text-sm hover:bg-primary/90 transition-all"
+                >
+                    Voltar para Dashboard
+                </Link>
+            </div>
+        );
+    }
 
     const handleUrlChange = (url: string) => {
         setNewReelUrl(url);

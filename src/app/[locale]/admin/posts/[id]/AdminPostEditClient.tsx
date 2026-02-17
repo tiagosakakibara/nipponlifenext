@@ -1,24 +1,26 @@
 "use client";
 
 import { useState, useEffect } from 'react';
-import { useRouter } from '@/i18n/routing';
+import { useRouter, Link } from '@/i18n/routing';
 import { useParams } from 'next/navigation';
 import { useAdminPosts, AdminPost } from '../hooks/useAdminPosts';
 import {
     Loader2, ChevronRight,
     Send, Image as ImageIcon, Trash2, Pin, MessageSquare, ChevronDown, Check,
-    Globe, Wand2
+    Globe, Wand2, ShieldAlert
 } from 'lucide-react';
 import { MediaUploader } from '@/components/MediaUploader';
 import { QuillEditor } from '@/components/QuillEditor';
 import { slugify } from '@/utils/slugify';
 import { extractKeywords } from '@/utils/keywordExtractor';
 import { toast } from 'react-hot-toast';
+import { usePermission } from '@/app/[locale]/admin/hooks/usePermission';
 
 export default function AdminPostEditClient() {
     const params = useParams();
     const id = params.id as string;
     const router = useRouter();
+    const { hasAccess, loading: permissionLoading } = usePermission('posts');
     const { categories, getPost, updatePost, loading: dataLoading } = useAdminPosts();
     const [formData, setFormData] = useState<AdminPost | null>(null);
     const [tagInput, setTagInput] = useState('');
@@ -29,6 +31,7 @@ export default function AdminPostEditClient() {
     const [showEnglish, setShowEnglish] = useState(false);
 
     useEffect(() => {
+        if (!hasAccess) return;
         const fetch = async () => {
             const post = await getPost(id);
             if (post) {
@@ -38,7 +41,7 @@ export default function AdminPostEditClient() {
             }
         };
         fetch();
-    }, [id, getPost]);
+    }, [id, getPost, hasAccess]);
 
     const validate = (data: AdminPost) => {
         const errors: Record<string, string> = {};
@@ -101,6 +104,34 @@ export default function AdminPostEditClient() {
             router.push('/admin/posts');
         }
     };
+
+    if (permissionLoading) {
+        return (
+            <div className="min-h-[60vh] flex items-center justify-center">
+                <Loader2 className="w-10 h-10 animate-spin text-primary" />
+            </div>
+        );
+    }
+
+    if (!hasAccess) {
+        return (
+            <div className="flex flex-col items-center justify-center p-20 space-y-4 animate-fade-in">
+                <div className="w-16 h-16 bg-red-500/10 rounded-full flex items-center justify-center">
+                    <ShieldAlert className="w-8 h-8 text-red-500" />
+                </div>
+                <h2 className="text-xl font-black text-primary">Acesso Negado</h2>
+                <p className="text-secondary text-center max-w-md">
+                    Você não tem permissão para editar posts.
+                </p>
+                <Link
+                    href="/admin"
+                    className="mt-4 px-6 py-2.5 bg-primary text-white rounded-xl font-bold text-sm hover:bg-primary/90 transition-all"
+                >
+                    Voltar para Dashboard
+                </Link>
+            </div>
+        );
+    }
 
     if (dataLoading && !formData) {
         return (

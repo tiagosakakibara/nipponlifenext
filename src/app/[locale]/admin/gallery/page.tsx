@@ -2,11 +2,12 @@
 
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
-import { Camera, Plus, Eye, Trash2, Edit2, Image as ImageIcon, Loader2 } from 'lucide-react';
+import { Camera, Plus, Eye, Trash2, Edit2, Image as ImageIcon, Loader2, ShieldAlert } from 'lucide-react';
 import { Link } from '@/i18n/routing';
 import { useState, useEffect } from 'react';
 import { createClient } from '@/utils/supabase/client';
 import { storageService } from '@/lib/storageService';
+import { usePermission } from '../hooks/usePermission';
 
 interface GalleryAlbum {
     id: string;
@@ -21,14 +22,17 @@ interface GalleryAlbum {
 
 export default function AdminGalleryPage() {
     const t = useTranslations();
+    const { hasAccess, loading: permissionLoading } = usePermission('galleries');
     const [albums, setAlbums] = useState<GalleryAlbum[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const supabase = createClient();
 
     useEffect(() => {
-        fetchAlbums();
-    }, []);
+        if (hasAccess) {
+            fetchAlbums();
+        }
+    }, [hasAccess]);
 
     const fetchAlbums = async () => {
         try {
@@ -103,6 +107,37 @@ export default function AdminGalleryPage() {
             alert('Erro ao deletar álbum');
         }
     };
+
+    if (permissionLoading) {
+        return (
+            <div className="flex items-center justify-center min-h-[60vh]">
+                <div className="flex flex-col items-center gap-4">
+                    <Loader2 className="w-12 h-12 animate-spin text-link" />
+                </div>
+            </div>
+        );
+    }
+
+    if (!hasAccess) {
+        return (
+            <div className="flex flex-col items-center justify-center p-20 space-y-4 animate-fade-in">
+                <div className="w-16 h-16 bg-red-500/10 rounded-full flex items-center justify-center">
+                    <ShieldAlert className="w-8 h-8 text-red-500" />
+                </div>
+                <h2 className="text-xl font-black text-primary">Acesso Negado</h2>
+                <p className="text-secondary text-center max-w-md">
+                    Você não tem permissão para gerenciar a galeria de fotos.
+                    Entre em contato com um administrador se acredita que isso é um erro.
+                </p>
+                <Link
+                    href="/admin"
+                    className="mt-4 px-6 py-2.5 bg-primary text-white rounded-xl font-bold text-sm hover:bg-primary/90 transition-all"
+                >
+                    Voltar para Dashboard
+                </Link>
+            </div>
+        );
+    }
 
     if (loading) {
         return (

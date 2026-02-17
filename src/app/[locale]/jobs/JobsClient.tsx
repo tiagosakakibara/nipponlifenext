@@ -7,7 +7,7 @@ import { Search, Filter, ChevronLeft, ChevronRight, Loader2, MapPin, Briefcase, 
 import { jobsService } from '@/lib/jobsService';
 import { Link } from '@/i18n/routing';
 import type { Job } from '@/types/job';
-import RequestAccessButton from '@/components/access/RequestAccessButton';
+import JobAccessButton from './JobAccessButton';
 
 const ITEMS_PER_PAGE = 12;
 
@@ -89,7 +89,7 @@ export default function JobsClient() {
     return (
         <div className="min-h-screen bg-app">
             {/* Hero Section - Premium Design */}
-            <section className="relative py-6 md:h-[230px] md:pt-20 overflow-hidden bg-surface border-b border-app">
+            <section className="relative py-6 md:min-h-[230px] md:pt-20 overflow-hidden bg-surface border-b border-app">
                 <div className="absolute top-0 right-0 w-1/3 h-full bg-gradient-to-l from-red-50/50 dark:from-red-900/10 to-transparent pointer-events-none" />
                 <div className="container mx-auto px-6 relative z-10 text-center md:text-left">
                     <div className="max-w-3xl space-y-3">
@@ -103,12 +103,7 @@ export default function JobsClient() {
                         <p className="hidden md:block text-lg text-secondary font-medium max-w-xl mx-auto md:mx-0">
                             {t('subtitle')}
                         </p>
-                        <div className="pt-4">
-                            <RequestAccessButton
-                                accessType="jobs"
-                                createPath="/admin/jobs/new"
-                            />
-                        </div>
+                        <JobAccessButton />
                     </div>
                 </div>
             </section>

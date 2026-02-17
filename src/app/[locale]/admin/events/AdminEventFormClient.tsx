@@ -1,18 +1,19 @@
 "use client";
 
 import { useEffect, useState } from 'react';
-import { useRouter } from '@/i18n/routing';
+import { useRouter, Link } from '@/i18n/routing';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-hot-toast';
 import {
     Save, ArrowLeft, Globe, ChevronDown, ChevronRight,
     Loader2, Calendar, MapPin, Link as LinkIcon, Send,
-    Info, Image as ImageIcon, Clock
+    Info, Image as ImageIcon, Clock, ShieldAlert
 } from 'lucide-react';
 import { eventService } from '@/lib/eventService';
 import { Event } from '@/types/event';
 import { MediaUploader } from '@/components/MediaUploader';
 import { useTranslations } from 'next-intl';
+import { usePermission } from '../hooks/usePermission';
 
 interface Props {
     id?: string;
@@ -22,6 +23,7 @@ interface Props {
 export default function AdminEventFormClient({ id, initialData }: Props) {
     const router = useRouter();
     const isEditing = !!id;
+    const { hasAccess, loading: permissionLoading } = usePermission('events');
     const [loading, setLoading] = useState(false);
     const [showJapanese, setShowJapanese] = useState(false);
     const [showEnglish, setShowEnglish] = useState(false);
@@ -86,6 +88,35 @@ export default function AdminEventFormClient({ id, initialData }: Props) {
             setLoading(false);
         }
     };
+
+    if (permissionLoading) {
+        return (
+            <div className="flex items-center justify-center p-20">
+                <Loader2 className="w-8 h-8 text-link animate-spin" />
+            </div>
+        );
+    }
+
+    if (!hasAccess) {
+        return (
+            <div className="flex flex-col items-center justify-center p-20 space-y-4 animate-fade-in">
+                <div className="w-16 h-16 bg-red-500/10 rounded-full flex items-center justify-center">
+                    <ShieldAlert className="w-8 h-8 text-red-500" />
+                </div>
+                <h2 className="text-xl font-black text-primary">Acesso Negado</h2>
+                <p className="text-secondary text-center max-w-md">
+                    Você não tem permissão para gerenciar eventos.
+                    Entre em contato com um administrador se acredita que isso é um erro.
+                </p>
+                <Link
+                    href="/admin"
+                    className="mt-4 px-6 py-2.5 bg-primary text-white rounded-xl font-bold text-sm hover:bg-primary/90 transition-all"
+                >
+                    Voltar para Dashboard
+                </Link>
+            </div>
+        );
+    }
 
     return (
         <div className="space-y-8 animate-fade-in pb-20">

@@ -2,6 +2,7 @@
 
 import { useState, useRef } from 'react';
 import { Play, Film } from 'lucide-react';
+import { Link } from '@/i18n/routing';
 import { CommunityReel } from '@/lib/reelsService';
 import { ReelModal } from './ReelModal';
 
@@ -20,10 +21,12 @@ export function ReelsRow({ reels }: ReelsRowProps) {
     return (
         <>
             <div className="mb-4 flex items-center justify-between">
-                <h2 className="text-lg font-bold text-primary font-['Montserrat'] flex items-center gap-2">
-                    <Film className="w-5 h-5" />
-                    Reels
-                </h2>
+                <Link href="/reels" className="group">
+                    <h2 className="text-lg font-bold text-primary font-['Montserrat'] flex items-center gap-2 group-hover:text-[var(--nl-accent)] transition-colors">
+                        <Film className="w-5 h-5" />
+                        Reels
+                    </h2>
+                </Link>
             </div>
 
             <div

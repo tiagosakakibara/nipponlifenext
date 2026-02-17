@@ -2,15 +2,17 @@
 
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
-import { Plus, Search, Edit, Trash2, MapPin, Calendar, Clock, Loader2, Star, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Plus, Search, Edit, Trash2, MapPin, Calendar, Clock, Loader2, Star, ChevronLeft, ChevronRight, ShieldAlert } from 'lucide-react';
 import { Link, useRouter } from '@/i18n/routing';
 import { useAdminEvents } from './hooks/useAdminEvents';
 import { useTranslations, useLocale } from 'next-intl';
+import { usePermission } from '../hooks/usePermission';
 
 export default function AdminEventsClient() {
     const t = useTranslations('admin');
     const locale = useLocale();
     const router = useRouter();
+    const { hasAccess, loading: permissionLoading } = usePermission('events');
     const {
         events,
         loading,
@@ -24,12 +26,13 @@ export default function AdminEventsClient() {
     const [searchTerm, setSearchTerm] = useState('');
 
     useEffect(() => {
-        const debounceTimer = setTimeout(() => {
-            fetchEvents(page, searchTerm);
-        }, 300);
-
-        return () => clearTimeout(debounceTimer);
-    }, [page, searchTerm, fetchEvents]);
+        if (hasAccess) {
+            const debounceTimer = setTimeout(() => {
+                fetchEvents(page, searchTerm);
+            }, 300);
+            return () => clearTimeout(debounceTimer);
+        }
+    }, [page, searchTerm, fetchEvents, hasAccess]);
 
     const formatDate = (dateStr: string) => {
         try {
@@ -55,6 +58,35 @@ export default function AdminEventsClient() {
             return dateStr;
         }
     };
+
+    if (permissionLoading) {
+        return (
+            <div className="flex items-center justify-center p-20">
+                <Loader2 className="w-8 h-8 text-link animate-spin" />
+            </div>
+        );
+    }
+
+    if (!hasAccess) {
+        return (
+            <div className="flex flex-col items-center justify-center p-20 space-y-4 animate-fade-in">
+                <div className="w-16 h-16 bg-red-500/10 rounded-full flex items-center justify-center">
+                    <ShieldAlert className="w-8 h-8 text-red-500" />
+                </div>
+                <h2 className="text-xl font-black text-primary">Acesso Negado</h2>
+                <p className="text-secondary text-center max-w-md">
+                    Você não tem permissão para acessar o calendário de eventos.
+                    Entre em contato com um administrador se acredita que isso é um erro.
+                </p>
+                <Link
+                    href="/admin"
+                    className="mt-4 px-6 py-2.5 bg-primary text-white rounded-xl font-bold text-sm hover:bg-primary/90 transition-all"
+                >
+                    Voltar para Dashboard
+                </Link>
+            </div>
+        );
+    }
 
     return (
         <div className="space-y-8 animate-fade-in">
