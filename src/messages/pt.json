@@ -191,7 +191,8 @@
             "businessGuide": "Guia de Negócios",
             "communities": "Comunidades",
             "statistics": "Estatísticas",
-            "gallery": "Galeria de Eventos"
+            "gallery": "Galeria de Eventos",
+            "jobs": "Vagas em Destaque"
         },
         "empty": {
             "news": "Nenhuma notícia encontrada.",

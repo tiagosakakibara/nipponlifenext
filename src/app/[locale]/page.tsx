@@ -3,9 +3,10 @@ import { getTranslations } from 'next-intl/server';
 import { createClient } from '@/utils/supabase/server';
 import { Link } from '@/i18n/routing';
 import { Carousel } from '@/components/Carousel';
+import { SectionHeader } from '@/components/SectionHeader';
 import { BusinessCard } from '@/components/BusinessCard';
 import { HeroSection } from '@/components/HeroSection';
-import { Building2, Users, Camera, ArrowRight } from 'lucide-react';
+import { Building2, Users, Camera, ArrowRight, Briefcase } from 'lucide-react';
 import { Business } from '@/types/business';
 
 import { CommunityCard, CommunityItem } from '@/components/CommunityCard';
@@ -172,6 +173,12 @@ export default async function HomePage() {
 
                 {/* Featured Highlights (Jobs & Premium Business) */}
                 <section className="max-w-container mx-auto px-6 py-2">
+                    <SectionHeader
+                        title={t('home.sections.jobs', { defaultValue: 'Vagas em Destaque' })}
+                        icon={<Briefcase className="w-5 h-5" />}
+                        viewAllPath="/jobs"
+                        titleLink="/jobs"
+                    />
                     <FeaturedHighlights premiumBusiness={premiumBusiness} headerJobs={headerJobs} />
                 </section>
 
