@@ -133,7 +133,7 @@ export function Header({ searchQuery = '', onSearchChange = () => { } }: HeaderP
                                     >
                                         <div className="flex items-center gap-3 text-xs uppercase tracking-widest">
                                             {item.icon}
-                                            {item.namespace ? t(`${item.namespace}.${item.key}`) : t(`nav.${item.key}`)}
+                                            {t(`nav.${item.key}`)}
                                         </div>
                                     </Link>
                                 </li>
