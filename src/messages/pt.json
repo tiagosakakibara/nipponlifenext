@@ -1592,6 +1592,15 @@
         "processing": "Processando...",
         "mockMessage": "Integração API Komoju (Simulação): Redirecionando para o gateway de pagamento...",
         "errorMessage": "Ocorreu um erro ao processar o pagamento. Tente novamente.",
-        "disclaimer": "Ao confirmar, você será redirecionado para a página segura do Komoju para finalizar a transação."
+        "disclaimer": "Ao confirmar, você será redirecionado para a página segura do Komoju para finalizar a transação.",
+        "success": {
+            "title": "Pagamento Confirmado!",
+            "description": "Parabéns! Sua assinatura Premium foi ativada com sucesso.",
+            "nextStepsTitle": "O que você ganha agora:",
+            "benefit1": "Acesso antecipado a novas vagas",
+            "benefit2": "Visibilidade exclusiva para empresas premium",
+            "benefit3": "Suporte prioritário na comunidade",
+            "backToHome": "Voltar para o Início"
+        }
     }
 }
