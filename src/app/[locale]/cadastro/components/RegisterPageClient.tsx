@@ -20,7 +20,7 @@ export function RegisterPageClient() {
     const [error, setError] = useState<string | null>(null);
     const [success, setSuccess] = useState(false);
 
-    const nextUrl = searchParams.get('next') || `/${locale}/comunidade`;
+    const nextUrl = searchParams.get('next') || `/${locale}`;
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();

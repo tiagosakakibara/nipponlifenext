@@ -126,7 +126,7 @@ export async function GET(request: Request) {
     // Redirecionar para `next` deixa o browser client (@supabase/ssr) processar
     // o token do fragmento automaticamente e estabelecer a sessão.
     // Se `next` for inválido, vai para a home com locale padrão.
-    const safeNext = (next && next.startsWith('/')) ? next : '/pt/comunidade';
+    const safeNext = (next && next.startsWith('/')) ? next : '/pt';
     const forwardedHostFallback = request.headers.get('x-forwarded-host');
     const isLocalFallback = origin.includes('localhost');
     const baseFallback = isLocalFallback
