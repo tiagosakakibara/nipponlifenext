@@ -1,6 +1,6 @@
 'use client';
 
-import { Search, Menu, X, Sun, Moon, Compass, CreditCard } from 'lucide-react';
+import { Search, Menu, X, Sun, Moon, Compass } from 'lucide-react';
 import { LanguageSwitcher } from './LanguageSwitcher';
 import { UserMenu } from './UserMenu';
 import { useState, useEffect } from 'react';
@@ -74,13 +74,7 @@ export function Header({ searchQuery = '', onSearchChange = () => { } }: HeaderP
                             <Compass className="w-4 h-4" />
                             {t('common.guide')}
                         </Link>
-                        <Link
-                            href="/pagamento"
-                            className="flex items-center gap-2 px-4 py-1.5 rounded-full bg-gradient-to-r from-amber-400 to-amber-600 text-white font-black text-[10px] uppercase tracking-widest hover:scale-105 transition-all duration-300 shadow-sm"
-                        >
-                            <CreditCard className="w-4 h-4" />
-                            {t('payment.menu')}
-                        </Link>
+
                     </nav>
 
 
@@ -124,8 +118,7 @@ export function Header({ searchQuery = '', onSearchChange = () => { } }: HeaderP
                     <nav className="absolute top-[52px] left-0 w-full bg-white dark:bg-[#1a1a1a] border-b border-zinc-100 dark:border-zinc-800 shadow-2xl p-6 lg:hidden animate-slide-up">
                         <ul className="flex flex-col gap-3">
                             {[
-                                { key: 'guide', path: '/guias/recem-chegado', icon: <Compass className="w-4 h-4" /> },
-                                { key: 'menu', path: '/pagamento', icon: <CreditCard className="w-4 h-4" />, namespace: 'payment' }
+                                { key: 'guide', path: '/guias/recem-chegado', icon: <Compass className="w-4 h-4" /> }
                             ].map((item) => (
                                 <li key={item.key}>
                                     <Link

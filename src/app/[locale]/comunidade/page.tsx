@@ -7,7 +7,7 @@ import { ReelsRow } from './components/ReelsRow';
 import { CommunityReel, fetchActiveReels } from '@/lib/reelsService';
 import { getTranslatedField } from '@/lib/getTranslatedField';
 import { CommunityPost } from '@/types/community';
-import ReelsAccessButton from './ReelsAccessButton';
+
 
 export const revalidate = 60; // ISR: comunidade é dinâmica, cache de 1 minuto
 
@@ -161,7 +161,7 @@ export default async function CommunityPage({ params, searchParams }: Props) {
 
                         {/* Reels */}
                         <div className="mb-8">
-                            <ReelsAccessButton />
+
                             <ReelsRow reels={(reelsData as CommunityReel[]) || []} />
                         </div>
 
