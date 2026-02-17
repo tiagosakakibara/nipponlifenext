@@ -98,7 +98,7 @@ export default async function EventDetailPage({ params }: EventPageProps) {
     ]);
 
     return (
-        <main className="min-h-screen bg-white">
+        <main className="min-h-screen bg-[var(--nl-bg)]">
             <StructuredData data={eventSchema} />
             <StructuredData data={breadcrumbSchema} />
             {/* Header / Hero Area */}
@@ -119,11 +119,11 @@ export default async function EventDetailPage({ params }: EventPageProps) {
                             alt={title}
                             className="w-full h-full object-contain relative z-10"
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-white via-white/20 to-black/30 z-20" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-[var(--nl-bg)] via-[var(--nl-bg)]/20 to-black/30 z-20" />
                     </>
                 ) : (
-                    <div className="w-full h-full bg-zinc-50 flex items-center justify-center">
-                        <Calendar className="w-20 h-20 text-zinc-100" />
+                    <div className="w-full h-full bg-[var(--nl-surface)] flex items-center justify-center">
+                        <Calendar className="w-20 h-20 text-[var(--nl-muted)]" />
                     </div>
                 )}
 
@@ -142,11 +142,11 @@ export default async function EventDetailPage({ params }: EventPageProps) {
                 <div className="absolute bottom-0 left-0 w-full pb-12 z-30">
                     <div className="container mx-auto px-6">
                         <div className="max-w-4xl space-y-6">
-                            <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#D70F24] text-white rounded-full text-[10px] font-bold uppercase tracking-widest shadow-lg">
+                            <div className="inline-flex items-center gap-2 px-3 py-1 bg-[var(--nl-accent)]/10 backdrop-blur-md text-[var(--nl-accent)] border border-[var(--nl-accent)]/20 rounded-full text-[10px] font-bold uppercase tracking-widest shadow-lg">
                                 <Info className="w-3 h-3" />
                                 {ct('event')}
                             </div>
-                            <h1 className="text-3xl md:text-5xl font-heading font-bold text-primary tracking-tight leading-tight">
+                            <h1 className="text-3xl md:text-5xl font-heading font-bold text-[var(--nl-primary)] tracking-tight leading-tight">
                                 {title}
                             </h1>
                         </div>
@@ -161,10 +161,10 @@ export default async function EventDetailPage({ params }: EventPageProps) {
                     <div className="lg:col-span-2 space-y-12">
                         <section className="space-y-6">
                             <div className="flex items-center gap-3">
-                                <div className="w-1.5 h-6 bg-[#D70F24] rounded-full" />
-                                <h3 className="text-xl font-heading font-bold text-primary tracking-tight uppercase">{locale === 'pt' ? 'Descrição' : 'Description'}</h3>
+                                <div className="w-1.5 h-6 bg-[var(--nl-accent)] rounded-full" />
+                                <h3 className="text-xl font-heading font-bold text-[var(--nl-primary)] tracking-tight uppercase">{locale === 'pt' ? 'Descrição' : 'Description'}</h3>
                             </div>
-                            <div className="text-lg text-secondary font-medium leading-relaxed whitespace-pre-line prose prose-zinc max-w-none">
+                            <div className="text-lg text-[var(--nl-secondary)] font-medium leading-relaxed whitespace-pre-line prose prose-zinc max-w-none">
                                 {description || t('noDescription')}
                             </div>
                         </section>
@@ -173,7 +173,7 @@ export default async function EventDetailPage({ params }: EventPageProps) {
                             <section className="space-y-6">
                                 <div className="flex items-center gap-3">
                                     <div className="w-1.5 h-6 bg-emerald-500 rounded-full" />
-                                    <h3 className="text-xl font-heading font-bold text-primary tracking-tight uppercase">{t('location')}</h3>
+                                    <h3 className="text-xl font-heading font-bold text-[var(--nl-primary)] tracking-tight uppercase">{t('location')}</h3>
                                 </div>
 
                                 <div className="space-y-4">
@@ -191,9 +191,9 @@ export default async function EventDetailPage({ params }: EventPageProps) {
                                                 href={event.google_maps_url}
                                                 target="_blank"
                                                 rel="noopener noreferrer"
-                                                className="bg-white text-primary px-8 py-4 rounded-full font-bold text-sm shadow-xl hover:scale-105 hover:shadow-2xl hover:bg-zinc-50 transition-all duration-300 flex items-center gap-3 group/btn"
+                                                className="bg-white text-[var(--nl-primary)] px-8 py-4 rounded-full font-bold text-sm shadow-xl hover:scale-105 hover:shadow-2xl hover:bg-zinc-50 transition-all duration-300 flex items-center gap-3 group/btn"
                                             >
-                                                <MapPin className="w-5 h-5 text-[#D70F24] group-hover/btn:animate-bounce" />
+                                                <MapPin className="w-5 h-5 text-[var(--nl-accent)] group-hover/btn:animate-bounce" />
                                                 <span>Abrir no Google Maps</span>
                                             </a>
                                         </div>
@@ -201,8 +201,8 @@ export default async function EventDetailPage({ params }: EventPageProps) {
 
                                     {/* Location Details */}
                                     <div className="px-2">
-                                        <h4 className="text-xl font-bold text-primary">{locationName}</h4>
-                                        <p className="text-xs font-bold text-secondary/60 uppercase tracking-widest mt-1">
+                                        <h4 className="text-xl font-bold text-[var(--nl-primary)]">{locationName}</h4>
+                                        <p className="text-xs font-bold text-[var(--nl-secondary)]/60 uppercase tracking-widest mt-1">
                                             {locationName} {/* Showing title twice as placeholder for address if needed, or just remove if redundant */}
                                         </p>
                                     </div>

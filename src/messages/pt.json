@@ -159,6 +159,12 @@
         "event": "Evento",
         "comments": {
             "posted": "Comentário enviado!"
+        },
+        "breadcrumb": {
+            "home": "Home"
+        },
+        "events": {
+            "title": "Eventos"
         }
     },
     "home": {
@@ -1200,7 +1206,7 @@
         "location": "Localização",
         "contact": "Contato",
         "noContact": "Informações de contato não disponíveis para este evento.",
-        "shareText": "Confira este evento no NipponLife: {{title}}"
+        "shareText": "Confira este evento no NipponLife: {title}"
     },
     "guides": {
         "hero": {
