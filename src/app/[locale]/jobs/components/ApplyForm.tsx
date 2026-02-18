@@ -1,8 +1,9 @@
 "use client";
 
 import { useState } from 'react';
-import { Send, CheckCircle, AlertCircle, Loader2 } from 'lucide-react';
+import { Send, CheckCircle, Loader2 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
+import { submitApplication } from '@/app/actions/submitApplication';
 
 interface ApplyFormData {
     name: string;
@@ -12,11 +13,12 @@ interface ApplyFormData {
 }
 
 interface ApplyFormProps {
+    jobId: string;
     jobTitle: string;
     onClose: () => void;
 }
 
-export function ApplyForm({ jobTitle, onClose }: ApplyFormProps) {
+export function ApplyForm({ jobId, jobTitle, onClose }: ApplyFormProps) {
     const t = useTranslations('jobs.modal');
     const [formData, setFormData] = useState<ApplyFormData>({
         name: '',
@@ -27,20 +29,13 @@ export function ApplyForm({ jobTitle, onClose }: ApplyFormProps) {
     const [errors, setErrors] = useState<Partial<Record<keyof ApplyFormData, string>>>({});
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isSuccess, setIsSuccess] = useState(false);
+    const [submitError, setSubmitError] = useState('');
 
     const validateForm = (): boolean => {
         const newErrors: Partial<Record<keyof ApplyFormData, string>> = {};
-
-        if (!formData.name.trim()) {
-            newErrors.name = t('fullNameRequired');
-        }
-
-        if (!formData.whatsapp.trim()) {
-            newErrors.whatsapp = t('whatsappRequired');
-        } else if (!/^[\d\s\-+()]+$/.test(formData.whatsapp)) {
-            newErrors.whatsapp = t('whatsappInvalid');
-        }
-
+        if (!formData.name.trim()) newErrors.name = t('fullNameRequired');
+        if (!formData.whatsapp.trim()) newErrors.whatsapp = t('whatsappRequired');
+        else if (!/^[\d\s\-+()]+$/.test(formData.whatsapp)) newErrors.whatsapp = t('whatsappInvalid');
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
     };
@@ -48,20 +43,33 @@ export function ApplyForm({ jobTitle, onClose }: ApplyFormProps) {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!validateForm()) return;
+
         setIsSubmitting(true);
-        // Simulate API call
-        await new Promise((resolve) => setTimeout(resolve, 1500));
+        setSubmitError('');
+
+        const result = await submitApplication(jobId, {
+            name: formData.name,
+            whatsapp: formData.whatsapp,
+            city: formData.city || undefined,
+            message: formData.message || undefined,
+        });
+
         setIsSubmitting(false);
-        setIsSuccess(true);
+
+        if ('error' in result) {
+            setSubmitError(result.error);
+        } else {
+            setIsSuccess(true);
+        }
     };
 
     const handleChange = (field: keyof ApplyFormData, value: string) => {
         setFormData((prev) => ({ ...prev, [field]: value }));
-        if (errors[field]) {
-            setErrors((prev) => ({ ...prev, [field]: undefined }));
-        }
+        if (errors[field]) setErrors((prev) => ({ ...prev, [field]: undefined }));
+        if (submitError) setSubmitError('');
     };
 
+    // ── Tela de sucesso ──────────────────────────────────────────────────────
     if (isSuccess) {
         return (
             <div className="text-center py-12 space-y-6">
@@ -72,7 +80,8 @@ export function ApplyForm({ jobTitle, onClose }: ApplyFormProps) {
                     <h3 className="text-2xl font-heading font-bold text-primary">
                         {t('successTitle')}
                     </h3>
-                    <p className="text-muted font-medium" dangerouslySetInnerHTML={{ __html: t('successMessage', { jobTitle }) }} />
+                    <p className="text-muted font-medium"
+                        dangerouslySetInnerHTML={{ __html: t('successMessage', { jobTitle }) }} />
                 </div>
                 <button
                     type="button"
@@ -85,6 +94,7 @@ export function ApplyForm({ jobTitle, onClose }: ApplyFormProps) {
         );
     }
 
+    // ── Formulário ───────────────────────────────────────────────────────────
     return (
         <form onSubmit={handleSubmit} className="space-y-6">
             <h3 className="text-xl font-heading font-bold text-primary uppercase tracking-tight">
@@ -101,8 +111,7 @@ export function ApplyForm({ jobTitle, onClose }: ApplyFormProps) {
                         type="text"
                         value={formData.name}
                         onChange={(e) => handleChange('name', e.target.value)}
-                        className={`w-full px-6 py-4 bg-surface border rounded-2xl text-xs font-bold text-primary focus:bg-app focus:border-[#D70F24] transition-all outline-none ${errors.name ? 'border-red-500' : 'border-app'
-                            }`}
+                        className={`w-full px-6 py-4 bg-surface border rounded-2xl text-xs font-bold text-primary focus:bg-app focus:border-[#D70F24] transition-all outline-none ${errors.name ? 'border-red-500' : 'border-app'}`}
                         placeholder={t('fullNamePlaceholder')}
                     />
                     {errors.name && <p className="text-[10px] font-bold text-red-500 pl-1">{errors.name}</p>}
@@ -117,8 +126,7 @@ export function ApplyForm({ jobTitle, onClose }: ApplyFormProps) {
                         type="tel"
                         value={formData.whatsapp}
                         onChange={(e) => handleChange('whatsapp', e.target.value)}
-                        className={`w-full px-6 py-4 bg-surface border rounded-2xl text-xs font-bold text-primary focus:bg-app focus:border-[#D70F24] transition-all outline-none ${errors.whatsapp ? 'border-red-500' : 'border-app'
-                            }`}
+                        className={`w-full px-6 py-4 bg-surface border rounded-2xl text-xs font-bold text-primary focus:bg-app focus:border-[#D70F24] transition-all outline-none ${errors.whatsapp ? 'border-red-500' : 'border-app'}`}
                         placeholder={t('whatsappPlaceholder')}
                     />
                     {errors.whatsapp && <p className="text-[10px] font-bold text-red-500 pl-1">{errors.whatsapp}</p>}
@@ -153,21 +161,22 @@ export function ApplyForm({ jobTitle, onClose }: ApplyFormProps) {
                 </div>
             </div>
 
+            {/* Erro de envio */}
+            {submitError && (
+                <div className="px-4 py-3 bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-800 rounded-xl text-xs font-semibold text-red-600 dark:text-red-400">
+                    {submitError}
+                </div>
+            )}
+
             <button
                 type="submit"
                 disabled={isSubmitting}
                 className="w-full bg-[#D70F24] text-white font-bold text-xs uppercase tracking-widest py-5 rounded-3xl transition-all shadow-xl shadow-red-500/10 hover:opacity-90 disabled:opacity-50 flex items-center justify-center gap-2"
             >
                 {isSubmitting ? (
-                    <>
-                        <Loader2 className="w-4 h-4 animate-spin" />
-                        {t('sending')}
-                    </>
+                    <><Loader2 className="w-4 h-4 animate-spin" />{t('sending')}</>
                 ) : (
-                    <>
-                        <Send className="w-4 h-4" />
-                        {t('submitApplication')}
-                    </>
+                    <><Send className="w-4 h-4" />{t('submitApplication')}</>
                 )}
             </button>
         </form>

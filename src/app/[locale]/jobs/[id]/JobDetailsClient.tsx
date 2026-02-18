@@ -195,6 +195,7 @@ export default function JobDetailsClient({ job }: { job: Job }) {
                         {showApplyForm ? (
                             <div className="bg-surface rounded-[32px] border border-app p-8 md:p-12 animate-slide-up shadow-xl">
                                 <ApplyForm
+                                    jobId={job.id}
                                     jobTitle={title}
                                     onClose={() => setShowApplyForm(false)}
                                 />
