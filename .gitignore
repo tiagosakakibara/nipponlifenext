@@ -36,6 +36,9 @@ yarn-error.log*
 # MCP configuration (contains API keys)
 mcp.json
 
+# Claude Code (internal settings)
+.claude/
+
 # vercel
 .vercel
 
