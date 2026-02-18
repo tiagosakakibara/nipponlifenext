@@ -35,16 +35,20 @@ export async function uploadJobFile(formData: FormData): Promise<{ url: string }
         const fileName = `${Math.random().toString(36).substring(2)}_${Date.now()}.${ext}`;
         const filePath = `${folder}/${fileName}`;
 
+        const arrayBuffer = await file.arrayBuffer();
+        const buffer = Buffer.from(arrayBuffer);
+
         const { error: uploadError } = await admin.storage
             .from('media')
-            .upload(filePath, file, { contentType: file.type });
+            .upload(filePath, buffer, { contentType: file.type });
 
         if (uploadError) return { error: uploadError.message };
 
         const { data: { publicUrl } } = admin.storage.from('media').getPublicUrl(filePath);
         return { url: publicUrl };
-    } catch {
-        return { error: 'Erro ao fazer upload' };
+    } catch (e: any) {
+        console.error('Upload Error:', e);
+        return { error: `Erro ao fazer upload: ${e.message || JSON.stringify(e)}` };
     }
 }
 
