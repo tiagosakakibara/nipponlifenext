@@ -257,15 +257,15 @@ export default function AdminBusinessFormClient({ id, initialData }: Props) {
                                     {...register('price_range')}
                                     className="w-full p-4 bg-app border border-app rounded-2xl text-primary font-bold focus:bg-white transition-all outline-none"
                                 >
-                                    <option value="$">$ (Economy)</option>
-                                    <option value="$$">$$ (Standard)</option>
-                                    <option value="$$$">$$$ (Premium)</option>
-                                    <option value="$$$$">$$$$ (Luxury)</option>
+                                    <option value="$">$ (Econômico)</option>
+                                    <option value="$$">$$ (Padrão)</option>
+                                    <option value="$$$">$$$ (Alto Padrão)</option>
+                                    <option value="$$$$">$$$$ (Luxo)</option>
                                 </select>
                             </div>
 
                             <div className="md:col-span-2">
-                                <label className="text-[10px] font-extrabold text-secondary uppercase block tracking-widest mb-1.5">{t('shortDescription')} * (Max 160 chars)</label>
+                                <label className="text-[10px] font-extrabold text-secondary uppercase block tracking-widest mb-1.5">{t('shortDescription')} * (Máx 160 caracteres)</label>
                                 <input
                                     {...register('description_short', { required: true, maxLength: 160 })}
                                     placeholder={t('shortDescriptionPlaceholder')}

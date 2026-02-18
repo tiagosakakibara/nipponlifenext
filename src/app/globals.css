@@ -87,8 +87,8 @@
 }
 
 :root {
-  --nl-bg: #FFFFFF;
-  --nl-surface: rgba(0, 55, 104, 0.015);
+  --nl-bg: #F2F4F8;
+  --nl-surface: #FFFFFF;
   --nl-border: #EAEAEA;
   --nl-text: #002B52;
   --nl-text-2: rgba(0, 43, 82, 0.85);
