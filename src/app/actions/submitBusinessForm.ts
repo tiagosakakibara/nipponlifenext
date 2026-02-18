@@ -4,9 +4,17 @@ import { createClient } from '@supabase/supabase-js';
 
 // Admin client com service role para inserir sem auth
 function getAdminClient() {
+    const sbUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const sbKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+
+    if (!sbUrl || !sbKey) {
+        console.error('Erro de configuração: NEXT_PUBLIC_SUPABASE_URL ou SUPABASE_SERVICE_ROLE_KEY não definidos.');
+        throw new Error('Erro de configuração do servidor. Contate o suporte.');
+    }
+
     return createClient(
-        process.env.NEXT_PUBLIC_SUPABASE_URL!,
-        process.env.SUPABASE_SERVICE_ROLE_KEY!,
+        sbUrl,
+        sbKey,
         { auth: { autoRefreshToken: false, persistSession: false } }
     );
 }
