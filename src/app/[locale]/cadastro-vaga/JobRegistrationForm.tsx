@@ -234,9 +234,9 @@ export default function JobRegistrationForm() {
             <form onSubmit={handleSubmit} className="max-w-2xl mx-auto px-4 py-8 space-y-5">
 
                 {/* Info */}
-                <div className="flex gap-3 bg-blue-50 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800 rounded-xl p-4">
-                    <Info className="w-4 h-4 text-blue-500 flex-shrink-0 mt-0.5" />
-                    <p className="text-xs text-blue-700 dark:text-blue-300 leading-relaxed">
+                <div className="flex gap-3 bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-4">
+                    <Info className="w-4 h-4 text-gray-500 dark:text-gray-400 flex-shrink-0 mt-0.5" />
+                    <p className="text-xs text-gray-700 dark:text-gray-300 leading-relaxed">
                         Campos com <span className="text-[var(--nl-accent)] font-bold">*</span> são obrigatórios.
                         A vaga entrará como <strong>rascunho</strong> e será revisada antes de ser publicada.
                     </p>
@@ -330,9 +330,9 @@ export default function JobRegistrationForm() {
                 <Section icon={Link} number="04" title="Receber Candidaturas">
                     <div className="space-y-4">
                         {/* Destaque visual */}
-                        <div className="flex gap-3 bg-amber-50 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-800/50 rounded-xl p-4">
-                            <Info className="w-4 h-4 text-amber-500 flex-shrink-0 mt-0.5" />
-                            <p className="text-xs text-amber-700 dark:text-amber-300 leading-relaxed">
+                        <div className="flex gap-3 bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-4">
+                            <Info className="w-4 h-4 text-gray-500 dark:text-gray-400 flex-shrink-0 mt-0.5" />
+                            <p className="text-xs text-gray-700 dark:text-gray-300 leading-relaxed">
                                 Quando um candidato clicar em <strong>"Enviar Candidatura"</strong> na sua vaga,
                                 o NipponLife enviará automaticamente os dados dele para o seu e-mail abaixo.
                             </p>

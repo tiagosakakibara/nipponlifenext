@@ -185,11 +185,11 @@ export default function EventRegistrationForm() {
             <form onSubmit={handleSubmit} className="max-w-2xl mx-auto px-4 py-8 space-y-5">
 
                 {/* Info */}
-                <div className="flex gap-3 bg-blue-50 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800 rounded-xl p-4">
-                    <Info className="w-4 h-4 text-blue-500 flex-shrink-0 mt-0.5" />
-                    <p className="text-xs text-blue-700 dark:text-blue-300 leading-relaxed">
+                <div className="flex gap-3 bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-4">
+                    <Info className="w-4 h-4 text-gray-500 dark:text-gray-400 flex-shrink-0 mt-0.5" />
+                    <p className="text-xs text-gray-700 dark:text-gray-300 leading-relaxed">
                         Campos com <span className="text-[var(--nl-accent)] font-bold">*</span> são obrigatórios.
-                        O evento entrará como <strong>rascunho</strong> e será revisado antes de ser publicado no calendário.
+                        O evento entrará como <strong>rascunho</strong> e será revisada antes de ser publicado no calendário.
                     </p>
                 </div>
 
@@ -255,9 +255,9 @@ export default function EventRegistrationForm() {
                         </Field>
 
                         {/* Online event notice */}
-                        <div className="flex gap-3 bg-purple-50 dark:bg-purple-950/20 border border-purple-200 dark:border-purple-800 rounded-xl p-3">
-                            <Users className="w-4 h-4 text-purple-500 flex-shrink-0 mt-0.5" />
-                            <p className="text-xs text-purple-700 dark:text-purple-300">
+                        <div className="flex gap-3 bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-3">
+                            <Users className="w-4 h-4 text-gray-500 dark:text-gray-400 flex-shrink-0 mt-0.5" />
+                            <p className="text-xs text-gray-700 dark:text-gray-300">
                                 Para eventos <strong>online</strong>, escreva "Online" no campo de local e cole o link da transmissão no campo de contato/inscrição abaixo.
                             </p>
                         </div>
