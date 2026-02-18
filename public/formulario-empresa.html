@@ -1,0 +1,1092 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NipponLife — Cadastro de Empresa</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    /* Reset and Tokens */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:        #0f1b3c;
+      --navy-mid:    #1a2d5a;
+      --navy-light:  #253f7a;
+      --gold:        #c9a84c;
+      --gold-light:  #e8c96e;
+      --gold-pale:   #fdf3d8;
+      --red-accent:  #c0392b;
+      --red-light:   #e74c3c;
+      --surface:     #ffffff;
+      --surface-2:   #f8f9ff;
+      --surface-3:   #eef1f9;
+      --text-primary:#0f1b3c;
+      --text-muted:  #5a6785;
+      --text-light:  #8c9ab7;
+      --border:      #d4daea;
+      --border-focus:#3a5bbf;
+      --shadow-sm:   0 1px 3px rgba(15,27,60,.08);
+      --shadow-md:   0 4px 16px rgba(15,27,60,.10);
+      --shadow-lg:   0 8px 32px rgba(15,27,60,.14);
+      --radius-sm:   6px;
+      --radius-md:   12px;
+      --radius-lg:   18px;
+      --transition:  .2s ease;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: var(--surface-2);
+      color: var(--text-primary);
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+
+    /* Wave background decoration */
+    .wave-bg {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: 340px;
+      background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 60%, var(--navy-light) 100%);
+      z-index: 0;
+      overflow: hidden;
+    }
+    .wave-bg::after {
+      content: '';
+      position: absolute;
+      bottom: -2px; left: 0; right: 0;
+      height: 80px;
+      background: var(--surface-2);
+      clip-path: ellipse(55% 100% at 50% 100%);
+    }
+    .wave-pattern {
+      position: absolute;
+      inset: 0;
+      opacity: .06;
+      background-image:
+        repeating-linear-gradient(0deg, transparent, transparent 28px, rgba(255,255,255,.5) 28px, rgba(255,255,255,.5) 30px),
+        repeating-linear-gradient(90deg, transparent, transparent 28px, rgba(255,255,255,.5) 28px, rgba(255,255,255,.5) 30px);
+    }
+    .wave-pattern::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(circle, rgba(255,255,255,.08) 1px, transparent 1px);
+      background-size: 20px 20px;
+    }
+    .red-dot {
+      display: inline-block;
+      width: 10px; height: 10px;
+      background: var(--red-accent);
+      border-radius: 50%;
+      margin-left: 6px;
+      vertical-align: middle;
+      flex-shrink: 0;
+      box-shadow: 0 0 0 3px rgba(192,57,43,.2);
+    }
+
+    /* Page wrapper */
+    .page-wrapper {
+      position: relative;
+      z-index: 1;
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 0 16px 80px;
+    }
+
+    /* Site header */
+    .site-header {
+      padding: 44px 0 28px;
+      text-align: center;
+      color: #fff;
+    }
+    .logo-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+    .logo-torii { font-size: 2.6rem; line-height: 1; }
+    .logo-name {
+      font-family: 'Noto Serif JP', serif;
+      font-size: 2.1rem;
+      font-weight: 700;
+      letter-spacing: .04em;
+      color: #fff;
+    }
+    .logo-name span { color: var(--gold-light); }
+    .header-tagline {
+      font-size: .82rem;
+      color: rgba(255,255,255,.65);
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+    .form-intro-card {
+      background: rgba(255,255,255,.1);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,.18);
+      border-radius: var(--radius-md);
+      padding: 16px 22px;
+      color: rgba(255,255,255,.88);
+      font-size: .93rem;
+      line-height: 1.65;
+      text-align: left;
+    }
+    .form-intro-card strong { color: var(--gold-light); }
+
+    /* Progress bar */
+    .progress-wrap {
+      background: #fff;
+      border-radius: var(--radius-lg);
+      padding: 14px 22px;
+      margin: 24px 0 20px;
+      box-shadow: var(--shadow-md);
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      border: 1px solid var(--border);
+    }
+    .progress-label {
+      font-size: .78rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      white-space: nowrap;
+      min-width: 90px;
+    }
+    .progress-track {
+      flex: 1;
+      height: 8px;
+      background: var(--surface-3);
+      border-radius: 99px;
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--navy-mid), var(--gold));
+      border-radius: 99px;
+      transition: width .45s cubic-bezier(.4,0,.2,1);
+      width: 0%;
+    }
+    .progress-pct {
+      font-size: .82rem;
+      font-weight: 700;
+      color: var(--navy);
+      min-width: 38px;
+      text-align: right;
+    }
+
+    /* Section cards */
+    .section-card {
+      background: var(--surface);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-md);
+      margin-bottom: 20px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      transition: box-shadow var(--transition), transform var(--transition);
+    }
+    .section-card:hover {
+      box-shadow: var(--shadow-lg);
+      transform: translateY(-1px);
+    }
+    .section-header {
+      background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 100%);
+      padding: 18px 24px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .section-icon {
+      width: 38px; height: 38px;
+      background: rgba(255,255,255,.1);
+      border-radius: var(--radius-sm);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.15rem;
+      flex-shrink: 0;
+      border: 1px solid rgba(255,255,255,.15);
+    }
+    .section-title {
+      font-family: 'Noto Serif JP', serif;
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: #fff;
+      letter-spacing: .02em;
+    }
+    .section-subtitle {
+      font-size: .77rem;
+      color: rgba(255,255,255,.58);
+      margin-top: 2px;
+    }
+    .section-number {
+      margin-left: auto;
+      font-size: .74rem;
+      font-weight: 700;
+      color: var(--gold-light);
+      letter-spacing: .06em;
+      flex-shrink: 0;
+    }
+    .section-body { padding: 24px; }
+
+    /* Form grids */
+    .form-grid { display: grid; gap: 18px; }
+    .form-grid-2 { grid-template-columns: 1fr 1fr; }
+    .form-grid-3 { grid-template-columns: 1fr 1fr 1fr; }
+    .col-span-2 { grid-column: span 2; }
+    .col-span-3 { grid-column: span 3; }
+
+    @media (max-width: 600px) {
+      .form-grid-2, .form-grid-3 { grid-template-columns: 1fr; }
+      .col-span-2, .col-span-3 { grid-column: span 1; }
+      .section-body { padding: 16px; }
+      .section-header { padding: 14px 16px; }
+      .section-number { display: none; }
+    }
+
+    /* Fields and inputs */
+    .field { display: flex; flex-direction: column; gap: 6px; }
+
+    label {
+      font-size: .82rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      letter-spacing: .02em;
+    }
+    label .req { color: var(--red-accent); margin-left: 3px; }
+    label .opt { font-weight: 400; color: var(--text-light); font-size: .76rem; margin-left: 4px; }
+
+    input[type="text"],
+    input[type="tel"],
+    input[type="email"],
+    input[type="url"],
+    input[type="time"],
+    select,
+    textarea {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: .92rem;
+      color: var(--text-primary);
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 10px 14px;
+      width: 100%;
+      transition: border-color var(--transition), box-shadow var(--transition), background var(--transition);
+      outline: none;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--border-focus);
+      box-shadow: 0 0 0 3px rgba(58,91,191,.12);
+      background: #fff;
+    }
+    input::placeholder, textarea::placeholder { color: var(--text-light); }
+    textarea { resize: vertical; min-height: 88px; }
+
+    select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%235a6785' stroke-width='1.8' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+      padding-right: 36px;
+      cursor: pointer;
+    }
+    .char-counter {
+      font-size: .74rem;
+      color: var(--text-light);
+      text-align: right;
+      transition: color var(--transition);
+    }
+    .char-counter.warn { color: #e67e22; font-weight: 600; }
+    .char-counter.over { color: var(--red-accent); font-weight: 600; }
+    .field-hint { font-size: .76rem; color: var(--text-light); line-height: 1.45; }
+    .field-divider { border: none; border-top: 1px solid var(--border); margin: 6px 0; }
+
+    /* Toggle switch for hours */
+    .toggle-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      background: var(--surface-2);
+      border-radius: var(--radius-sm);
+      border: 1.5px solid var(--border);
+      flex-wrap: wrap;
+      transition: border-color var(--transition), background var(--transition);
+    }
+    .toggle-row.is-open {
+      border-color: rgba(26,45,90,.3);
+      background: rgba(26,45,90,.04);
+    }
+    .toggle-day-name {
+      font-size: .88rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      min-width: 72px;
+    }
+    .toggle-switch {
+      position: relative;
+      width: 44px; height: 24px;
+      flex-shrink: 0;
+    }
+    .toggle-switch input { opacity: 0; width: 0; height: 0; position: absolute; }
+    .toggle-track {
+      position: absolute;
+      inset: 0;
+      background: var(--border);
+      border-radius: 99px;
+      cursor: pointer;
+      transition: background var(--transition);
+    }
+    .toggle-track::after {
+      content: '';
+      position: absolute;
+      top: 3px; left: 3px;
+      width: 18px; height: 18px;
+      background: #fff;
+      border-radius: 50%;
+      transition: transform .2s cubic-bezier(.34,1.56,.64,1);
+      box-shadow: 0 1px 4px rgba(0,0,0,.22);
+    }
+    .toggle-switch input:checked + .toggle-track { background: var(--navy-mid); }
+    .toggle-switch input:checked + .toggle-track::after { transform: translateX(20px); }
+    .toggle-status {
+      font-size: .78rem;
+      font-weight: 600;
+      color: var(--text-light);
+      min-width: 52px;
+      transition: color var(--transition);
+    }
+    .toggle-status.open { color: var(--navy); }
+    .time-inputs {
+      display: flex;
+      align-items: flex-end;
+      gap: 8px;
+      opacity: 0;
+      pointer-events: none;
+      max-height: 0;
+      overflow: hidden;
+      transition: opacity .22s ease, max-height .25s ease;
+      flex-wrap: wrap;
+    }
+    .time-inputs.visible {
+      opacity: 1;
+      pointer-events: auto;
+      max-height: 80px;
+    }
+    .time-sep { font-size: .75rem; color: var(--text-light); padding-bottom: 8px; }
+    .time-group { display: flex; flex-direction: column; gap: 3px; }
+    .time-group > label { font-size: .7rem; color: var(--text-light); font-weight: 500; }
+    .time-inputs input[type="time"] { width: 112px; padding: 6px 10px; font-size: .83rem; }
+
+    /* Price range pills */
+    .price-pills { display: flex; gap: 10px; flex-wrap: wrap; }
+    .price-pill { position: relative; }
+    .price-pill input[type="radio"] { position: absolute; opacity: 0; width: 0; height: 0; }
+    .price-pill label {
+      display: flex; flex-direction: column; align-items: center; gap: 3px;
+      padding: 10px 20px;
+      background: var(--surface-2);
+      border: 2px solid var(--border);
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      transition: all var(--transition);
+      font-size: .8rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      min-width: 82px;
+    }
+    .price-pill label .price-symbol {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      transition: color var(--transition);
+    }
+    .price-pill label .price-sub { font-size: .68rem; font-weight: 500; color: var(--text-light); }
+    .price-pill input:checked + label {
+      background: var(--navy);
+      border-color: var(--navy);
+      color: #fff;
+    }
+    .price-pill input:checked + label .price-symbol { color: var(--gold-light); }
+    .price-pill input:checked + label .price-sub { color: rgba(255,255,255,.65); }
+    .price-pill label:hover { border-color: var(--navy-light); background: var(--surface-3); }
+
+    /* Language checkboxes */
+    .lang-grid { display: flex; flex-wrap: wrap; gap: 10px; }
+    .lang-option { position: relative; }
+    .lang-option input[type="checkbox"] { position: absolute; opacity: 0; width: 0; height: 0; }
+    .lang-option label {
+      display: flex; align-items: center; gap: 7px;
+      padding: 8px 16px;
+      background: var(--surface-2);
+      border: 2px solid var(--border);
+      border-radius: 99px;
+      cursor: pointer;
+      font-size: .83rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      transition: all var(--transition);
+    }
+    .lang-option label::before {
+      content: '';
+      width: 16px; height: 16px;
+      border: 2px solid var(--border);
+      border-radius: 4px;
+      background: #fff;
+      transition: all var(--transition);
+      flex-shrink: 0;
+    }
+    .lang-option input:checked + label {
+      background: var(--gold-pale);
+      border-color: var(--gold);
+      color: var(--navy);
+    }
+    .lang-option input:checked + label::before {
+      background: var(--gold);
+      border-color: var(--gold);
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2 6l3 3 5-5' stroke='%23fff' stroke-width='2' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: 10px;
+    }
+
+    /* Submit button */
+    .submit-wrap { margin-top: 28px; }
+    .btn-submit {
+      width: 100%;
+      padding: 16px 32px;
+      background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 100%);
+      color: #fff;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      border: none;
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      letter-spacing: .05em;
+      transition: all var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(15,27,60,.28);
+    }
+    .btn-submit::before {
+      content: '';
+      position: absolute;
+      top: 0; left: -100%;
+      width: 100%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,.12), transparent);
+      transition: left .45s ease;
+    }
+    .btn-submit:hover::before { left: 100%; }
+    .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(15,27,60,.38); }
+    .btn-submit:active { transform: translateY(0); }
+    .btn-icon { font-size: 1.15rem; }
+    .btn-gold-bar {
+      display: block;
+      height: 3px;
+      background: linear-gradient(90deg, var(--gold), var(--gold-light), var(--gold));
+      border-radius: 0 0 var(--radius-md) var(--radius-md);
+      margin-top: -4px;
+    }
+
+    /* Success screen */
+    #success-screen {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 100%);
+      z-index: 9999;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      text-align: center;
+      padding: 32px;
+    }
+    #success-screen.visible { display: flex; animation: fadeIn .5s ease; }
+
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes bounceIn {
+      0%   { transform: scale(0) rotate(-10deg); opacity: 0; }
+      60%  { transform: scale(1.12) rotate(3deg); opacity: 1; }
+      100% { transform: scale(1) rotate(0deg); }
+    }
+    @keyframes slideUp {
+      from { transform: translateY(22px); opacity: 0; }
+      to   { transform: translateY(0); opacity: 1; }
+    }
+
+    .success-torii {
+      font-size: 5.5rem;
+      animation: bounceIn .7s cubic-bezier(.34,1.56,.64,1) .15s both;
+      margin-bottom: 4px;
+    }
+    .success-title {
+      font-family: 'Noto Serif JP', serif;
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 10px;
+      animation: slideUp .5s ease .55s both;
+    }
+    .success-title span { color: var(--gold-light); }
+    .success-msg {
+      font-size: 1rem;
+      color: rgba(255,255,255,.78);
+      max-width: 460px;
+      line-height: 1.75;
+      animation: slideUp .5s ease .7s both;
+    }
+    .success-bar {
+      width: 56px; height: 2px;
+      background: var(--gold);
+      border-radius: 99px;
+      margin: 28px auto;
+      animation: slideUp .5s ease .85s both;
+    }
+    .success-note {
+      font-size: .82rem;
+      color: rgba(255,255,255,.48);
+      animation: slideUp .5s ease .95s both;
+    }
+    .success-dots {
+      display: flex; gap: 8px; justify-content: center; margin-top: 30px;
+      animation: slideUp .5s ease 1.05s both;
+    }
+    .success-dots span { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,.18); }
+    .success-dots span.active { background: var(--gold); }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 99px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--text-light); }
+
+    /* Footer */
+    .page-footer { text-align: center; padding: 6px 0 16px; font-size: .75rem; color: var(--text-light); }
+    .page-footer a { color: var(--navy-light); text-decoration: none; }
+    .page-footer a:hover { color: var(--navy); }
+  </style>
+</head>
+<body>
+
+  <!-- Wave decorative background -->
+  <div class="wave-bg"><div class="wave-pattern"></div></div>
+
+  <!-- Success overlay -->
+  <div id="success-screen">
+    <div class="success-torii">⛩️</div>
+    <div class="success-title">Obrigado! <span>ありがとう</span></div>
+    <div class="success-msg">
+      Recebemos os dados da sua empresa com sucesso.<br>
+      Nossa equipe entrará em contato em breve para confirmar seu perfil no NipponLife.
+    </div>
+    <div class="success-bar"></div>
+    <div class="success-note">Os dados foram registrados e enviados para análise.</div>
+    <div class="success-dots">
+      <span></span><span class="active"></span><span></span>
+    </div>
+  </div>
+
+  <!-- Page -->
+  <div class="page-wrapper">
+
+    <!-- Header -->
+    <header class="site-header">
+      <div class="logo-row">
+        <span class="logo-torii">⛩️</span>
+        <span class="logo-name">Nippon<span>Life</span></span>
+        <span class="red-dot"></span>
+      </div>
+      <div class="header-tagline">Diretório de Empresas Brasileiras no Japão</div>
+      <div class="form-intro-card">
+        Preencha os dados da sua empresa para que possamos criar seu perfil no NipponLife.
+        <strong>Quanto mais completo, melhor será sua visibilidade!</strong>
+      </div>
+    </header>
+
+    <!-- Progress bar -->
+    <div class="progress-wrap">
+      <div class="progress-label">Preenchimento</div>
+      <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+      <div class="progress-pct" id="progressPct">0%</div>
+    </div>
+
+    <!-- Form -->
+    <form id="empresaForm" novalidate>
+
+      <!-- SECTION 1: Informações Básicas -->
+      <div class="section-card">
+        <div class="section-header">
+          <div class="section-icon">🏢</div>
+          <div>
+            <div class="section-title">Informações Básicas</div>
+            <div class="section-subtitle">Nome, categoria e descrição da empresa</div>
+          </div>
+          <div class="section-number">01 / 05</div>
+        </div>
+        <div class="section-body">
+          <div class="form-grid form-grid-2">
+
+            <div class="field">
+              <label for="business_name">Nome da Empresa <span class="req">*</span></label>
+              <input type="text" id="business_name" name="business_name"
+                placeholder="Ex: Restaurante Sakura Brasil" required />
+            </div>
+
+            <div class="field">
+              <label for="category">Categoria <span class="req">*</span></label>
+              <select id="category" name="category" required>
+                <option value="">Selecione uma categoria...</option>
+                <option value="Gastronomia">🍱 Gastronomia</option>
+                <option value="Saúde &amp; Bem-estar">🌿 Saúde &amp; Bem-estar</option>
+                <option value="Serviços">🔧 Serviços</option>
+                <option value="Imobiliárias">🏠 Imobiliárias</option>
+                <option value="Jurídico e Vistos">⚖️ Jurídico e Vistos</option>
+                <option value="Mudanças e Logística">📦 Mudanças e Logística</option>
+                <option value="Tecnologia">💻 Tecnologia</option>
+                <option value="Outros">✨ Outros</option>
+              </select>
+            </div>
+
+            <div class="field col-span-2">
+              <label for="description_short">
+                Descrição Curta <span class="req">*</span>
+                <span class="opt">(aparece nos cards de busca)</span>
+              </label>
+              <textarea id="description_short" name="description_short"
+                rows="2" maxlength="160"
+                placeholder="Resuma sua empresa em até 160 caracteres..." required></textarea>
+              <div class="char-counter" id="shortCounter">0 / 160</div>
+            </div>
+
+            <div class="field col-span-2">
+              <label for="description_long">
+                Descrição Completa <span class="opt">(opcional)</span>
+              </label>
+              <textarea id="description_long" name="description_long" rows="4"
+                placeholder="Conte mais sobre sua empresa, história, diferenciais, especialidades..."></textarea>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- SECTION 2: Localização -->
+      <div class="section-card">
+        <div class="section-header">
+          <div class="section-icon">📍</div>
+          <div>
+            <div class="section-title">Localização</div>
+            <div class="section-subtitle">Endereço e mapa da sua empresa</div>
+          </div>
+          <div class="section-number">02 / 05</div>
+        </div>
+        <div class="section-body">
+          <div class="form-grid form-grid-2">
+
+            <div class="field col-span-2">
+              <label for="address_line1">Endereço <span class="req">*</span></label>
+              <input type="text" id="address_line1" name="address_line1"
+                placeholder="Ex: 1-2-3 Namba" required />
+            </div>
+
+            <div class="field col-span-2">
+              <label for="address_line2">Complemento <span class="opt">(opcional)</span></label>
+              <input type="text" id="address_line2" name="address_line2"
+                placeholder="Apartamento, andar, complemento..." />
+            </div>
+
+            <div class="field">
+              <label for="neighborhood">Bairro <span class="opt">(opcional)</span></label>
+              <input type="text" id="neighborhood" name="neighborhood"
+                placeholder="Ex: Shinsaibashi" />
+            </div>
+
+            <div class="field">
+              <label for="postal_code">Código Postal <span class="opt">(opcional)</span></label>
+              <input type="text" id="postal_code" name="postal_code"
+                placeholder="Ex: 542-0076" />
+            </div>
+
+            <div class="field">
+              <label for="city">Cidade <span class="req">*</span></label>
+              <input type="text" id="city" name="city"
+                placeholder="Ex: Osaka" required />
+            </div>
+
+            <div class="field">
+              <label for="prefecture">Prefeitura <span class="req">*</span></label>
+              <input type="text" id="prefecture" name="prefecture"
+                placeholder="Ex: Osaka-fu" required />
+            </div>
+
+            <div class="field col-span-2">
+              <label for="google_maps_url">Link do Google Maps <span class="opt">(opcional)</span></label>
+              <input type="url" id="google_maps_url" name="google_maps_url"
+                placeholder="https://maps.google.com/..." />
+              <div class="field-hint">Cole o link de compartilhamento do Google Maps para facilitar que os clientes te encontrem.</div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- SECTION 3: Contato -->
+      <div class="section-card">
+        <div class="section-header">
+          <div class="section-icon">📞</div>
+          <div>
+            <div class="section-title">Contato</div>
+            <div class="section-subtitle">Formas de contato e redes sociais</div>
+          </div>
+          <div class="section-number">03 / 05</div>
+        </div>
+        <div class="section-body">
+          <div class="form-grid form-grid-2">
+
+            <div class="field">
+              <label for="phone">Telefone <span class="opt">(opcional)</span></label>
+              <input type="tel" id="phone" name="phone"
+                placeholder="+81 06-1234-5678" />
+            </div>
+
+            <div class="field">
+              <label for="whatsapp">WhatsApp <span class="opt">(opcional)</span></label>
+              <input type="tel" id="whatsapp" name="whatsapp"
+                placeholder="+81 90-1234-5678" />
+            </div>
+
+            <div class="field">
+              <label for="email">E-mail <span class="opt">(opcional)</span></label>
+              <input type="email" id="email" name="email"
+                placeholder="contato@suaempresa.com" />
+            </div>
+
+            <div class="field">
+              <label for="website_url">Site / Website <span class="opt">(opcional)</span></label>
+              <input type="url" id="website_url" name="website_url"
+                placeholder="https://suaempresa.com" />
+            </div>
+
+            <div class="field">
+              <label for="instagram_url">Instagram <span class="opt">(opcional)</span></label>
+              <input type="text" id="instagram_url" name="instagram_url"
+                placeholder="@suaempresa ou link completo" />
+            </div>
+
+            <div class="field">
+              <label for="line_url">LINE <span class="opt">(opcional)</span></label>
+              <input type="text" id="line_url" name="line_url"
+                placeholder="ID do LINE ou link de convite" />
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- SECTION 4: Mídia -->
+      <div class="section-card">
+        <div class="section-header">
+          <div class="section-icon">🖼️</div>
+          <div>
+            <div class="section-title">Mídia</div>
+            <div class="section-subtitle">Logo e imagem de capa da empresa</div>
+          </div>
+          <div class="section-number">04 / 05</div>
+        </div>
+        <div class="section-body">
+          <div class="form-grid form-grid-2">
+
+            <div class="field">
+              <label for="logo_url">Logo <span class="opt">(opcional)</span></label>
+              <input type="text" id="logo_url" name="logo_url"
+                placeholder="Link para a imagem ou 'Enviarei separado'" />
+              <div class="field-hint">URL pública da imagem (JPG, PNG, WebP). Tamanho ideal: 400×400 px.</div>
+            </div>
+
+            <div class="field">
+              <label for="cover_image_url">Imagem de Capa <span class="opt">(opcional)</span></label>
+              <input type="text" id="cover_image_url" name="cover_image_url"
+                placeholder="Link para a imagem ou 'Enviarei separado'" />
+              <div class="field-hint">URL pública da imagem. Tamanho ideal: 1200×400 px, proporção 3:1.</div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- SECTION 5: Funcionamento -->
+      <div class="section-card">
+        <div class="section-header">
+          <div class="section-icon">🕐</div>
+          <div>
+            <div class="section-title">Funcionamento</div>
+            <div class="section-subtitle">Horários, faixa de preço e idiomas</div>
+          </div>
+          <div class="section-number">05 / 05</div>
+        </div>
+        <div class="section-body">
+          <div class="form-grid">
+
+            <div class="field">
+              <label>Horário de Funcionamento <span class="opt">(opcional)</span></label>
+              <div id="hoursGrid" style="display:grid; gap:9px; margin-top:5px;"></div>
+            </div>
+
+            <hr class="field-divider" />
+
+            <div class="field">
+              <label>Faixa de Preço <span class="opt">(opcional)</span></label>
+              <div class="price-pills">
+                <div class="price-pill">
+                  <input type="radio" name="price_range" id="price1" value="$" />
+                  <label for="price1">
+                    <span class="price-symbol">$</span>
+                    <span class="price-sub">Econômico</span>
+                  </label>
+                </div>
+                <div class="price-pill">
+                  <input type="radio" name="price_range" id="price2" value="$$" />
+                  <label for="price2">
+                    <span class="price-symbol">$$</span>
+                    <span class="price-sub">Moderado</span>
+                  </label>
+                </div>
+                <div class="price-pill">
+                  <input type="radio" name="price_range" id="price3" value="$$$" />
+                  <label for="price3">
+                    <span class="price-symbol">$$$</span>
+                    <span class="price-sub">Sofisticado</span>
+                  </label>
+                </div>
+                <div class="price-pill">
+                  <input type="radio" name="price_range" id="price4" value="$$$$" />
+                  <label for="price4">
+                    <span class="price-symbol">$$$$</span>
+                    <span class="price-sub">Premium</span>
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <hr class="field-divider" />
+
+            <div class="field">
+              <label>Idiomas Atendidos <span class="opt">(opcional)</span></label>
+              <div class="lang-grid">
+                <div class="lang-option">
+                  <input type="checkbox" id="lang_pt" name="languages_supported" value="Português" />
+                  <label for="lang_pt">🇧🇷 Português</label>
+                </div>
+                <div class="lang-option">
+                  <input type="checkbox" id="lang_ja" name="languages_supported" value="Japonês" />
+                  <label for="lang_ja">🇯🇵 Japonês</label>
+                </div>
+                <div class="lang-option">
+                  <input type="checkbox" id="lang_en" name="languages_supported" value="Inglês" />
+                  <label for="lang_en">🇺🇸 Inglês</label>
+                </div>
+                <div class="lang-option">
+                  <input type="checkbox" id="lang_es" name="languages_supported" value="Espanhol" />
+                  <label for="lang_es">🇪🇸 Espanhol</label>
+                </div>
+                <div class="lang-option">
+                  <input type="checkbox" id="lang_other" name="languages_supported" value="Outros" />
+                  <label for="lang_other">🌐 Outros</label>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="submit-wrap">
+            <button type="submit" class="btn-submit">
+              <span class="btn-icon">⛩️</span>
+              Enviar Cadastro
+            </button>
+            <span class="btn-gold-bar"></span>
+          </div>
+
+        </div>
+      </div>
+
+    </form>
+
+    <div class="page-footer">
+      &copy; 2025 NipponLife &mdash; <a href="#">Diretório Brasileiro no Japão</a>
+    </div>
+  </div>
+  <script>
+    const DAYS = [
+      { key: "segunda",  label: "Segunda"  },
+      { key: "terca",    label: "Terça"    },
+      { key: "quarta",   label: "Quarta"   },
+      { key: "quinta",   label: "Quinta"   },
+      { key: "sexta",    label: "Sexta"    },
+      { key: "sabado",   label: "Sábado"   },
+      { key: "domingo",  label: "Domingo"  },
+      { key: "feriados", label: "Feriados" },
+    ];
+
+    const hoursGrid = document.getElementById("hoursGrid");
+    DAYS.forEach(function(day) {
+      var row = document.createElement("div");
+      row.className = "toggle-row";
+      row.id = "row_" + day.key;
+      row.innerHTML =
+        "<span class=\"toggle-day-name\">" + day.label + "</span>" +
+        "<label class=\"toggle-switch\">" +
+          "<input type=\"checkbox\" id=\"open_" + day.key + "\" name=\"open_" + day.key + "\" />" +
+          "<span class=\"toggle-track\"></span>" +
+        "</label>" +
+        "<span class=\"toggle-status\" id=\"status_" + day.key + "\">Fechado</span>" +
+        "<div class=\"time-inputs\" id=\"times_" + day.key + "\">" +
+          "<div class=\"time-group\">" +
+            "<label>Abertura</label>" +
+            "<input type=\"time\" name=\"hours_" + day.key + "_open\" value=\"09:00\" />" +
+          "</div>" +
+          "<span class=\"time-sep\">→</span>" +
+          "<div class=\"time-group\">" +
+            "<label>Fechamento</label>" +
+            "<input type=\"time\" name=\"hours_" + day.key + "_close\" value=\"18:00\" />" +
+          "</div>" +
+        "</div>";
+      hoursGrid.appendChild(row);
+
+      var chk    = document.getElementById("open_" + day.key);
+      var status = document.getElementById("status_" + day.key);
+      var times  = document.getElementById("times_" + day.key);
+      var rowEl  = document.getElementById("row_" + day.key);
+
+      chk.addEventListener("change", function() {
+        if (chk.checked) {
+          status.textContent = "Aberto";
+          status.classList.add("open");
+          times.classList.add("visible");
+          rowEl.classList.add("is-open");
+        } else {
+          status.textContent = "Fechado";
+          status.classList.remove("open");
+          times.classList.remove("visible");
+          rowEl.classList.remove("is-open");
+        }
+        updateProgress();
+      });
+    });
+    var shortDesc    = document.getElementById("description_short");
+    var shortCounter = document.getElementById("shortCounter");
+    shortDesc.addEventListener("input", function() {
+      var len = shortDesc.value.length;
+      shortCounter.textContent = len + " / 160";
+      shortCounter.className = "char-counter" +
+        (len >= 160 ? " over" : len >= 130 ? " warn" : "");
+    });
+
+    var REQUIRED_IDS = ["business_name","category","description_short","address_line1","city","prefecture"];
+    var OPTIONAL_IDS = [
+      "description_long","address_line2","neighborhood","postal_code",
+      "google_maps_url","phone","whatsapp","email","website_url",
+      "instagram_url","line_url","logo_url","cover_image_url",
+    ];
+
+    function countFilled(ids) {
+      return ids.filter(function(id) {
+        var el = document.getElementById(id);
+        return el && el.value.trim().length > 0;
+      }).length;
+    }
+
+    function updateProgress() {
+      var reqFilled = countFilled(REQUIRED_IDS);
+      var optFilled = countFilled(OPTIONAL_IDS);
+      var langs     = document.querySelectorAll("input[name=\"languages_supported\"]:checked").length;
+      var hasPrice  = document.querySelector("input[name=\"price_range\"]:checked") ? 1 : 0;
+      var daysOpen  = document.querySelectorAll("input[type=\"checkbox\"][id^=\"open_\"]:checked").length;
+      var reqScore = (reqFilled / REQUIRED_IDS.length) * 60;
+      var extras   = optFilled + langs + hasPrice + Math.min(daysOpen, 3);
+      var extMax   = OPTIONAL_IDS.length + 5 + 1 + 3;
+      var optScore = Math.min((extras / extMax) * 40, 40);
+      var pct      = Math.round(reqScore + optScore);
+      document.getElementById("progressFill").style.width = pct + "%";
+      document.getElementById("progressPct").textContent  = pct + "%";
+    }
+
+    document.getElementById("empresaForm").addEventListener("input",  updateProgress);
+    document.getElementById("empresaForm").addEventListener("change", updateProgress);
+    updateProgress();
+    function collectFormData() {
+      var data = {};
+      var fields = [
+        "business_name","category","description_short","description_long",
+        "address_line1","address_line2","neighborhood","city","prefecture",
+        "postal_code","google_maps_url","phone","whatsapp","email",
+        "website_url","instagram_url","line_url","logo_url","cover_image_url",
+      ];
+      fields.forEach(function(f) {
+        var el = document.getElementById(f);
+        data[f] = el ? el.value.trim() : "";
+      });
+      var priceEl = document.querySelector("input[name=\"price_range\"]:checked");
+      data.price_range = priceEl ? priceEl.value : "";
+      data.languages_supported = Array.from(
+        document.querySelectorAll("input[name=\"languages_supported\"]:checked")
+      ).map(function(el) { return el.value; });
+      data.opening_hours = {};
+      DAYS.forEach(function(day) {
+        var isOpen = document.getElementById("open_" + day.key).checked;
+        if (isOpen) {
+          var o = document.querySelector("input[name=\"hours_" + day.key + "_open\"]");
+          var c = document.querySelector("input[name=\"hours_" + day.key + "_close\"]");
+          data.opening_hours[day.key] = { open: o ? o.value : "", close: c ? c.value : "" };
+        } else {
+          data.opening_hours[day.key] = { closed: true };
+        }
+      });
+      return data;
+    }
+
+    function markInvalid(el) {
+      el.style.borderColor = "var(--red-accent)";
+      el.style.boxShadow   = "0 0 0 3px rgba(192,57,43,.12)";
+      el.addEventListener("input", function() {
+        el.style.borderColor = "";
+        el.style.boxShadow   = "";
+      }, { once: true });
+    }
+
+    document.getElementById("empresaForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      var required = ["business_name","category","description_short","address_line1","city","prefecture"];
+      var firstInvalid = null;
+      required.forEach(function(id) {
+        var el = document.getElementById(id);
+        if (el && !el.value.trim()) {
+          markInvalid(el);
+          if (!firstInvalid) firstInvalid = el;
+        }
+      });
+      if (firstInvalid) {
+        firstInvalid.scrollIntoView({ behavior: "smooth", block: "center" });
+        firstInvalid.focus();
+        return;
+      }
+      var formData = collectFormData();
+      console.log("NipponLife — Dados da Empresa (JSON):");
+      console.log(JSON.stringify(formData, null, 2));
+      var screen = document.getElementById("success-screen");
+      screen.classList.add("visible");
+      document.body.style.overflow = "hidden";
+    });
+  </script>
+</body>
+</html>

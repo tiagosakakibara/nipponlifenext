@@ -206,8 +206,48 @@ export function mapDbToJob(j: any): Job {
 }
 
 export function mapJobToDb(job: any) {
-    // This is a simplified mapping, might need more detail for exact db schema
-    const db: any = { ...job };
-    // Handle field name differences if necessary
+    const allowedFields = [
+        'title', 'company_name', 'location', 'description',
+        'requirements', 'benefits', 'salary_text', 'bonus_text',
+        'tags', 'job_type', 'featured', 'cover_image_url',
+        'slug', 'status', 'expires_at', 'position_order',
+        'pay_unit', 'pay_rate_yen', 'pay_text', 'application_mode',
+        'application_url', 'application_whatsapp', 'contact',
+        'prefecture', 'city', 'view_count',
+        // Translations
+        'title_ja', 'title_en',
+        'description_ja', 'description_en',
+        'requirements_ja', 'requirements_en',
+        'benefits_ja', 'benefits_en',
+        'salary_text_ja', 'salary_text_en',
+        'bonus_text_ja', 'bonus_text_en',
+        'location_ja', 'location_en'
+    ];
+
+    const db: any = {};
+
+    // Copy only allowed fields
+    for (const field of allowedFields) {
+        if (job[field] !== undefined) {
+            db[field] = job[field];
+        }
+    }
+
+    // Handle empty date strings
+    if (db.expires_at === '') {
+        db.expires_at = null;
+    }
+
+    // Handle array conversions if essential (e.g. description is array in app but string in db)
+    if (Array.isArray(db.description)) {
+        db.description = db.description.join('\n');
+    }
+    if (Array.isArray(db.description_ja)) {
+        db.description_ja = db.description_ja.join('\n');
+    }
+    if (Array.isArray(db.description_en)) {
+        db.description_en = db.description_en.join('\n');
+    }
+
     return db;
 }

@@ -8,11 +8,32 @@ import { X, ChevronLeft, ChevronRight } from 'lucide-react';
 interface BusinessGalleryProps {
     images: string[];
     title?: string;
+    videoUrl?: string | null;
 }
 
-export function BusinessGallery({ images, title }: BusinessGalleryProps) {
+function getEmbedUrl(url: string): string | null {
+    if (!url) return null;
+
+    // YouTube
+    const ytMatch = url.match(/(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/);
+    if (ytMatch && ytMatch[1]) {
+        return `https://www.youtube.com/embed/${ytMatch[1]}`;
+    }
+
+    // Vimeo
+    const vimeoMatch = url.match(/(?:https?:\/\/)?(?:www\.)?vimeo\.com\/(\d+)/);
+    if (vimeoMatch && vimeoMatch[1]) {
+        return `https://player.vimeo.com/video/${vimeoMatch[1]}`;
+    }
+
+    return null;
+}
+
+export function BusinessGallery({ images, title, videoUrl }: BusinessGalleryProps) {
     const t = useTranslations();
     const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(null);
+
+    const embedUrl = videoUrl ? getEmbedUrl(videoUrl) : null;
 
     const handleNextImage = useCallback(() => {
         if (selectedImageIndex === null || !images) return;
@@ -35,29 +56,44 @@ export function BusinessGallery({ images, title }: BusinessGalleryProps) {
         return () => window.removeEventListener('keydown', handleKeyDown);
     }, [selectedImageIndex, handleNextImage, handlePrevImage]);
 
-    if (!images || images.length === 0) return null;
+    if ((!images || images.length === 0) && !embedUrl) return null;
 
     return (
         <div>
             <h2 className="text-2xl font-bold mb-4 font-display text-primary">{t('business.gallery', { defaultMessage: 'Galeria' })}</h2>
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                {images.map((img, idx) => (
-                    <button
-                        key={idx}
-                        onClick={() => setSelectedImageIndex(idx)}
-                        className="aspect-video rounded-xl overflow-hidden bg-gray-100 dark:bg-white/5 border border-app group focus:outline-none focus:ring-2 focus:ring-sakura relative"
-                    >
-                        <img
-                            src={storageService.getFileUrl(img)}
-                            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                            alt={`${title || 'Gallery'} ${idx + 1}`}
-                        />
-                    </button>
-                ))}
-            </div>
+
+            {embedUrl && (
+                <div className="mb-6 rounded-2xl overflow-hidden aspect-video shadow-sm border border-app bg-black">
+                    <iframe
+                        src={embedUrl}
+                        className="w-full h-full"
+                        allowFullScreen
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        title={title ? `${title} Video` : 'Video'}
+                    />
+                </div>
+            )}
+
+            {images && images.length > 0 && (
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                    {images.map((img, idx) => (
+                        <button
+                            key={idx}
+                            onClick={() => setSelectedImageIndex(idx)}
+                            className="aspect-video rounded-xl overflow-hidden bg-gray-100 dark:bg-white/5 border border-app group focus:outline-none focus:ring-2 focus:ring-sakura relative"
+                        >
+                            <img
+                                src={storageService.getFileUrl(img)}
+                                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                                alt={`${title || 'Gallery'} ${idx + 1}`}
+                            />
+                        </button>
+                    ))}
+                </div>
+            )}
 
             {/* Lightbox */}
-            {selectedImageIndex !== null && (
+            {selectedImageIndex !== null && images && (
                 <div
                     className="fixed inset-0 z-[100] flex items-center justify-center bg-black/95 backdrop-blur-sm p-4 animate-fade-in"
                     onClick={() => setSelectedImageIndex(null)}

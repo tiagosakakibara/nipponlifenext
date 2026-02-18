@@ -58,6 +58,7 @@ export interface Business {
     gallery_images: string[] | null;
     presentation_url: string | null;
     // map_image_url: string | null; // DEPRECATED - No longer used in the UI
+    video_url: string | null;
 
     // Operation
     opening_hours: Record<string, string> | null; // e.g. { "monday": "09:00 - 18:00" } or structured

@@ -205,7 +205,7 @@ export default async function BusinessProfilePage({ params }: Props) {
                         )}
 
                         {/* Gallery */}
-                        <BusinessGallery images={b.gallery_images || []} title={name} />
+                        <BusinessGallery images={b.gallery_images || []} title={name} videoUrl={b.video_url} />
                     </div>
 
                     {/* Sidebar */}

@@ -398,6 +398,15 @@ export default function AdminBusinessFormClient({ id, initialData }: Props) {
                                 </div>
                             </div>
 
+                            <div className="space-y-2">
+                                <label className="text-[10px] font-extrabold text-secondary uppercase block tracking-widest">{t('video')}</label>
+                                <input
+                                    {...register('video_url')}
+                                    placeholder="https://youtube.com/..."
+                                    className="w-full p-3.5 bg-app border border-app rounded-xl text-xs"
+                                />
+                            </div>
+
                             <div className="pt-8 border-t border-app">
                                 <label className="text-[10px] font-extrabold text-secondary uppercase block tracking-widest mb-4">{t('presentation')}</label>
                                 <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6">
