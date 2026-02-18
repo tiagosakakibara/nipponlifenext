@@ -228,7 +228,7 @@ export async function submitApplication(
         const { error: sendError } = await resend.emails.send({
             from: `NipponLife Candidaturas <${fromEmail}>`,
             to: [recipientEmail],
-            replyTo: fromEmail,
+            replyTo: 'tiagosakakibara@gmail.com',
             subject: `📋 Nova candidatura para "${job.title}" — ${data.name}`,
             html: emailHtml,
         });
