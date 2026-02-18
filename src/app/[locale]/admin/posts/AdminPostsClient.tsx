@@ -210,7 +210,7 @@ export default function AdminPostsClient() {
                                             <Link
                                                 href={`/admin/posts/${post.id}`}
                                                 className="w-9 h-9 flex items-center justify-center rounded-lg bg-link/10 text-link hover:bg-link hover:text-white transition-all"
-                                                title={t('admin.posts.list.table.actions.edit')}
+                                                title={t('admin.posts.list.table.edit')}
                                             >
                                                 <Edit className="w-4 h-4" />
                                             </Link>
@@ -218,7 +218,7 @@ export default function AdminPostsClient() {
                                                 type="button"
                                                 onClick={() => handleDelete(post.id, post.title)}
                                                 className="w-9 h-9 flex items-center justify-center rounded-lg bg-accent/10 text-accent hover:bg-accent hover:text-white transition-all"
-                                                title={t('admin.posts.list.table.actions.delete')}
+                                                title={t('admin.posts.list.table.delete')}
                                             >
                                                 <Trash2 className="w-4 h-4" />
                                             </button>
@@ -245,6 +245,6 @@ export default function AdminPostsClient() {
                     </div>
                 )}
             </div>
-        </div>
+        </div >
     );
 }
