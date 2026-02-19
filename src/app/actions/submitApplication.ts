@@ -96,14 +96,18 @@ function buildEmailHtml(data: {
                 </tr>
               </table>
 
-              <!-- WhatsApp -->
+              <!-- Contato -->
               <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:12px;">
                 <tr>
                   <td style="padding:14px 18px;background:#f8f9ff;border-radius:10px;border-left:3px solid #25D366;">
-                    <p style="margin:0 0 2px;font-size:10px;font-weight:700;color:#9aa4be;text-transform:uppercase;letter-spacing:1px;">WhatsApp</p>
+                    <p style="margin:0 0 2px;font-size:10px;font-weight:700;color:#9aa4be;text-transform:uppercase;letter-spacing:1px;">Número de Contato</p>
                     <p style="margin:0;font-size:16px;font-weight:700;color:#0f1b3c;">
                       ${candidateWhatsapp}
-                      ${waLink ? `<a href="${waLink}" style="margin-left:12px;font-size:12px;color:#25D366;font-weight:600;text-decoration:none;">Abrir no WhatsApp →</a>` : ''}
+                      <br/>
+                      <span style="font-size:12px;display:inline-block;margin-top:8px;">
+                          ${waLink ? `<a href="${waLink}" style="color:#25D366;font-weight:700;text-decoration:none;margin-right:12px;">WhatsApp →</a>` : ''}
+                          <a href="https://line.me/R/nv/addFriends" style="color:#06C755;font-weight:700;text-decoration:none;">LINE →</a>
+                      </span>
                     </p>
                   </td>
                 </tr>
@@ -134,15 +138,19 @@ function buildEmailHtml(data: {
             </td>
           </tr>
 
-          <!-- CTA WhatsApp -->
-          ${waLink ? `
+          <!-- CTA Buttons -->
           <tr>
             <td style="padding:0 40px 32px;">
-              <a href="${waLink}" style="display:block;text-align:center;background:#25D366;color:white;text-decoration:none;padding:16px;border-radius:12px;font-weight:700;font-size:14px;letter-spacing:0.5px;">
+              ${waLink ? `
+              <a href="${waLink}" style="display:block;text-align:center;background:#25D366;color:white;text-decoration:none;padding:16px;border-radius:12px;font-weight:700;font-size:14px;letter-spacing:0.5px;margin-bottom:12px;box-shadow:0 4px 6px rgba(37,211,102,0.2);">
                 💬 Responder via WhatsApp
+              </a>` : ''}
+              
+              <a href="https://line.me/R/nv/addFriends" style="display:block;text-align:center;background:#06C755;color:white;text-decoration:none;padding:16px;border-radius:12px;font-weight:700;font-size:14px;letter-spacing:0.5px;box-shadow:0 4px 6px rgba(6,199,85,0.2);">
+                 Abrir no LINE
               </a>
             </td>
-          </tr>` : ''}
+          </tr>
 
           <!-- Footer -->
           <tr>
