@@ -23,6 +23,7 @@
             "emailPlaceholder": "example@email.com",
             "passwordLabel": "パスワード",
             "passwordPlaceholder": "••••••••",
+            "forgotPasswordLink": "パスワードをお忘れですか？",
             "loginButton": "ログイン",
             "loggingIn": "ログイン中...",
             "socialLoginPrompt": "または以下で続ける",
@@ -58,6 +59,42 @@
                 "passwordTooShort": "パスワードは6文字以上である必要があります。",
                 "emailTaken": "このメールアドレスは既に登録されています。",
                 "unexpected": "予期しないエラーが発生しました。もう一度お試しください。"
+            }
+        },
+        "forgotPassword": {
+            "title": "パスワードの再設定",
+            "subtitle": "再設定リンクを受け取るためにメールアドレスを入力してください",
+            "instruction": "パスワード再設定用のリンクをお送りします。",
+            "emailLabel": "メールアドレス",
+            "emailPlaceholder": "example@email.com",
+            "submitButton": "再設定リンクを送信",
+            "sending": "送信中...",
+            "successTitle": "メールを確認してください",
+            "successMessage": "{email} に再設定リンクを送信しました",
+            "backToLogin": "ログインに戻る",
+            "errors": {
+                "fillEmail": "メールアドレスを入力してください。",
+                "unexpected": "予期しないエラーが発生しました。もう一度お試しください。"
+            }
+        },
+        "resetPassword": {
+            "title": "パスワードの再設定",
+            "subtitle": "新しいパスワードを作成してください",
+            "newPasswordLabel": "新しいパスワード",
+            "newPasswordPlaceholder": "6文字以上",
+            "confirmPasswordLabel": "新しいパスワード（確認）",
+            "confirmPasswordPlaceholder": "もう一度入力してください",
+            "submitButton": "パスワードを再設定",
+            "submitting": "再設定中...",
+            "successTitle": "パスワードが再設定されました！",
+            "successMessage": "パスワードが正常に変更されました。",
+            "redirecting": "ログインへリダイレクト中...",
+            "errors": {
+                "noSession": "リンクが無効か期限切れです。",
+                "fillFields": "すべての項目を入力してください。",
+                "passwordsDontMatch": "パスワードが一致しません。",
+                "passwordTooShort": "パスワードは6文字以上である必要があります。",
+                "unexpected": "パスワードの再設定中にエラーが発生しました。"
             }
         },
         "linkAccount": {

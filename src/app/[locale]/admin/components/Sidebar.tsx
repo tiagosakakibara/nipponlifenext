@@ -3,6 +3,7 @@
 import { Link, usePathname } from '@/i18n/routing';
 import { useTranslations } from 'next-intl';
 import { useState, useEffect } from 'react';
+import { useAuth } from '@/hooks/useAuth';
 import { createClient } from '../../../../utils/supabase/client';
 import {
     LayoutDashboard,
@@ -59,38 +60,45 @@ interface SidebarProps {
 export function Sidebar({ isOpen, onClose }: SidebarProps) {
     const t = useTranslations();
     const pathname = usePathname();
-    const [isAdmin, setIsAdmin] = useState(false);
+    const { user, profile, isAdmin, loading: authLoading } = useAuth();
     const [permissions, setPermissions] = useState<string[]>([]);
-    const [loading, setLoading] = useState(true);
+    const [permissionsLoading, setPermissionsLoading] = useState(true);
 
     useEffect(() => {
-        const checkUser = async () => {
-            const supabase = createClient();
-            const { data: { user } } = await supabase.auth.getUser();
-            if (!user) return;
-
-            const { data: profile } = await supabase.from('profiles').select('role').eq('id', user.id).single();
-            if (profile?.role === 'admin') {
-                setIsAdmin(true);
-            } else {
-                const { data: access } = await supabase
-                    .from('content_creation_access')
-                    .select('access_type')
-                    .eq('user_id', user.id)
-                    .eq('status', 'approved');
-                setPermissions(access?.map(a => a.access_type) || []);
+        const fetchPermissions = async () => {
+            if (!user) {
+                setPermissionsLoading(false);
+                return;
             }
-            setLoading(false);
+
+            // If admin, no need to fetch specific permissions (all allowed)
+            if (isAdmin) {
+                setPermissionsLoading(false);
+                return;
+            }
+
+            const supabase = createClient();
+            const { data: access } = await supabase
+                .from('content_creation_access')
+                .select('access_type')
+                .eq('user_id', user.id)
+                .eq('status', 'approved');
+
+            setPermissions(access?.map(a => a.access_type) || []);
+            setPermissionsLoading(false);
         };
-        checkUser();
-    }, []);
+
+        if (!authLoading) {
+            fetchPermissions();
+        }
+    }, [user, authLoading, isAdmin]);
 
     const filteredItems = menuItems.filter(item => {
-        if (loading) return false;
+        if (authLoading || permissionsLoading) return false;
         if (isAdmin) return true;
 
-        // Always allow Dashboard for landing
-        if (item.path === '/admin') return true;
+        // If explicitly 'dashboard', hide for non-admins
+        if (item.path === '/admin') return false;
 
         const required = ACCESS_MAPPING[item.path];
         if (required) return permissions.includes(required);
@@ -98,7 +106,7 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
         return false; // Default: Admin only
     });
 
-    if (loading) return null; // Or skeleton
+    if (authLoading || permissionsLoading) return null; // Or skeleton
 
     return (
         <aside className={`

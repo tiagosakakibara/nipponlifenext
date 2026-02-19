@@ -23,6 +23,7 @@
             "emailPlaceholder": "seu@email.com",
             "passwordLabel": "Senha",
             "passwordPlaceholder": "••••••••",
+            "forgotPasswordLink": "Esqueceu sua senha?",
             "loginButton": "Entrar",
             "loggingIn": "Entrando...",
             "socialLoginPrompt": "Ou continue com",
@@ -58,6 +59,42 @@
                 "passwordTooShort": "A senha deve ter pelo menos 6 caracteres.",
                 "emailTaken": "Este email já está cadastrado.",
                 "unexpected": "Erro inesperado. Tente novamente."
+            }
+        },
+        "forgotPassword": {
+            "title": "Recuperar senha",
+            "subtitle": "Digite seu email para receber um link de recuperação",
+            "instruction": "Nós enviaremos um link para você redefinir sua senha.",
+            "emailLabel": "Email",
+            "emailPlaceholder": "seu@email.com",
+            "submitButton": "Enviar link de recuperação",
+            "sending": "Enviando...",
+            "successTitle": "Verifique seu email",
+            "successMessage": "Enviamos um link de recuperação para {email}",
+            "backToLogin": "Voltar para o login",
+            "errors": {
+                "fillEmail": "Digite seu email.",
+                "unexpected": "Erro inesperado. Tente novamente."
+            }
+        },
+        "resetPassword": {
+            "title": "Redefinir senha",
+            "subtitle": "Crie uma nova senha para sua conta",
+            "newPasswordLabel": "Nova senha",
+            "newPasswordPlaceholder": "Mínimo 6 caracteres",
+            "confirmPasswordLabel": "Confirmar nova senha",
+            "confirmPasswordPlaceholder": "Digite novamente",
+            "submitButton": "Redefinir senha",
+            "submitting": "Redefinindo...",
+            "successTitle": "Senha redefinida!",
+            "successMessage": "Sua senha foi alterada com sucesso.",
+            "redirecting": "Redirecionando para o login...",
+            "errors": {
+                "noSession": "Link inválido ou expirado.",
+                "fillFields": "Preencha todos os campos.",
+                "passwordsDontMatch": "As senhas não coincidem.",
+                "passwordTooShort": "A senha deve ter pelo menos 6 caracteres.",
+                "unexpected": "Erro ao redefinir senha."
             }
         },
         "linkAccount": {

@@ -19,6 +19,8 @@ import {
     Camera
 } from 'lucide-react';
 import { Link } from '@/i18n/routing';
+import { useAuth } from '@/hooks/useAuth';
+import { createClient } from '@/utils/supabase/client';
 import { useEffect, useState } from 'react';
 
 const ActivityChart = dynamic(() => import('./components/DashboardCharts').then(mod => ({ default: mod.ActivityChart })), {
@@ -33,6 +35,10 @@ export default function AdminDashboardPage() {
     const currentLocale = useLocale();
     const [lastUpdate, setLastUpdate] = useState<string>('');
 
+    // Auth & Permission Check
+    const { user, isAdmin, loading: authLoading } = useAuth();
+    const [permissionCheckLoading, setPermissionCheckLoading] = useState(true);
+
     // Map next-intl locale (pt/en/ja) to browser locale format (pt-BR/en-US/ja-JP)
     const localeMap: Record<string, string> = {
         'pt': 'pt-BR',
@@ -45,7 +51,59 @@ export default function AdminDashboardPage() {
         setLastUpdate(new Date().toLocaleTimeString(locale));
     }, [locale]);
 
-    if (loading) {
+    // Redirection Logic for Non-Admins
+    useEffect(() => {
+        const checkRedirect = async () => {
+            if (authLoading) return;
+
+            if (!user) {
+                // Not logged in, Sidebar/Layout handles this or Middleware, but safe to redirect
+                // router.push('/login'); 
+                setPermissionCheckLoading(false);
+                return;
+            }
+
+            if (isAdmin) {
+                // Admins see the dashboard
+                setPermissionCheckLoading(false);
+                return;
+            }
+
+            // Non-admin: Find first accessible route
+            const supabase = createClient();
+            const { data: access } = await supabase
+                .from('content_creation_access')
+                .select('access_type')
+                .eq('user_id', user.id)
+                .eq('status', 'approved');
+
+            const permissions = access?.map(a => a.access_type) || [];
+
+            // Mapping from permission key to route
+            const PERMISSION_TO_ROUTE: Record<string, string> = {
+                'events': '/admin/events',
+                'jobs': '/admin/jobs',
+                'businesses': '/admin/business',
+                'galleries': '/admin/gallery',
+                'reels': '/admin/comunidade/reels',
+            };
+
+            // Find first match
+            for (const perm of permissions) {
+                if (PERMISSION_TO_ROUTE[perm]) {
+                    router.replace(PERMISSION_TO_ROUTE[perm]);
+                    return;
+                }
+            }
+
+            // No permissions? Redirect home or show error
+            router.replace('/');
+        };
+
+        checkRedirect();
+    }, [user, isAdmin, authLoading, router]);
+
+    if (loading || authLoading || permissionCheckLoading) {
         return (
             <div className="flex items-center justify-center min-h-[60vh]">
                 <div className="flex flex-col items-center gap-4">
@@ -55,6 +113,9 @@ export default function AdminDashboardPage() {
             </div>
         );
     }
+
+    // Double check to prevent flash of content
+    if (!isAdmin) return null;
 
     if (error || !kpis) {
         return (

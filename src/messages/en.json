@@ -23,6 +23,7 @@
             "emailPlaceholder": "your@email.com",
             "passwordLabel": "Password",
             "passwordPlaceholder": "••••••••",
+            "forgotPasswordLink": "Forgot your password?",
             "loginButton": "Sign in",
             "loggingIn": "Signing in...",
             "socialLoginPrompt": "Or continue with",
@@ -58,6 +59,42 @@
                 "passwordTooShort": "Password must be at least 6 characters.",
                 "emailTaken": "This email is already registered.",
                 "unexpected": "Unexpected error. Please try again."
+            }
+        },
+        "forgotPassword": {
+            "title": "Reset Password",
+            "subtitle": "Enter your email to receive a recovery link",
+            "instruction": "We will send you a link to reset your password.",
+            "emailLabel": "Email",
+            "emailPlaceholder": "your@email.com",
+            "submitButton": "Send recovery link",
+            "sending": "Sending...",
+            "successTitle": "Check your email",
+            "successMessage": "We sent a recovery link to {email}",
+            "backToLogin": "Back to login",
+            "errors": {
+                "fillEmail": "Enter your email.",
+                "unexpected": "Unexpected error. Please try again."
+            }
+        },
+        "resetPassword": {
+            "title": "Reset Password",
+            "subtitle": "Create a new password for your account",
+            "newPasswordLabel": "New password",
+            "newPasswordPlaceholder": "Minimum 6 characters",
+            "confirmPasswordLabel": "Confirm new password",
+            "confirmPasswordPlaceholder": "Enter again",
+            "submitButton": "Reset password",
+            "submitting": "Resetting...",
+            "successTitle": "Password reset!",
+            "successMessage": "Your password has been changed successfully.",
+            "redirecting": "Redirecting to login...",
+            "errors": {
+                "noSession": "Invalid or expired link.",
+                "fillFields": "Please fill in all fields.",
+                "passwordsDontMatch": "Passwords do not match.",
+                "passwordTooShort": "Password must be at least 6 characters.",
+                "unexpected": "Error resetting password."
             }
         },
         "linkAccount": {

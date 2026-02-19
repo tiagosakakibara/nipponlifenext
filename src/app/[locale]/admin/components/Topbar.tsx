@@ -95,7 +95,10 @@ export function Topbar({ onToggleSidebar }: TopbarProps) {
                         <p className="text-xs font-bold text-primary leading-tight hover:text-[var(--nl-accent)] transition-colors">
                             {profile?.full_name || user?.email?.split('@')[0] || 'Admin'}
                         </p>
-                        <p className="text-[10px] text-muted font-medium uppercase tracking-tighter">Administrator</p>
+                        <p className="text-[10px] text-muted font-medium uppercase tracking-tighter">
+                            {profile?.role === 'admin' ? 'Administrator' :
+                                profile?.role === 'photographer' ? 'Photographer' : 'User'}
+                        </p>
                     </div>
                     <div className="w-8 h-8 md:w-9 md:h-9 rounded-xl overflow-hidden bg-[var(--nl-accent)]/10 flex items-center justify-center border border-[var(--nl-accent)]/20 group-hover:bg-[var(--nl-accent)]/20 transition-all shadow-sm">
                         {profile?.avatar_url ? (

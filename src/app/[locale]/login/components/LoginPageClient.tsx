@@ -126,6 +126,14 @@ export function LoginPageClient() {
                                     className="w-full pl-10 pr-4 py-2.5 border border-app rounded-xl bg-app text-primary placeholder:text-muted text-sm focus:outline-none focus:ring-2 focus:ring-[#D70F24]/30 focus:border-[#D70F24] transition-all"
                                 />
                             </div>
+                            <div className="flex justify-end mt-2">
+                                <Link
+                                    href="/forgot-password"
+                                    className="text-sm text-secondary hover:text-primary transition-colors underline"
+                                >
+                                    {t('auth.loginPage.forgotPasswordLink')}
+                                </Link>
+                            </div>
                         </div>
 
                         {/* Error */}
