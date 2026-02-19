@@ -128,9 +128,11 @@ export function JobComments({ jobId }: JobCommentsProps) {
                     </div>
                 </form>
             ) : (
-                <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-100 dark:border-blue-800 rounded-2xl p-6 text-center mb-8">
-                    <MessageSquare className="w-8 h-8 text-blue-400 mx-auto mb-3 opacity-50" />
-                    <p className="text-blue-800 dark:text-blue-200 font-medium text-sm">
+                <div className="bg-surface border border-app rounded-2xl p-8 text-center mb-8">
+                    <div className="w-16 h-16 bg-app rounded-full flex items-center justify-center mx-auto mb-4">
+                        <MessageSquare className="w-6 h-6 text-secondary/40" />
+                    </div>
+                    <p className="text-secondary font-bold text-sm max-w-md mx-auto">
                         {t('loginToComment')}
                     </p>
                 </div>
