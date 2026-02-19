@@ -117,7 +117,7 @@ export async function submitJobForm(formData: FormData): Promise<{ success: true
             pay_unit: (formData.get('pay_unit') as string) || 'hour',
             pay_text: (formData.get('pay_text') as string) || null,
 
-            application_mode: 'email' as const,
+            application_mode: 'internal_form' as const,
             application_url: (formData.get('application_url') as string) || null,
             application_whatsapp: (formData.get('application_whatsapp') as string) || null,
             // contact = email da empreiteira para receber candidaturas
