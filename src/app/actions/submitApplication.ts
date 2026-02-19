@@ -4,50 +4,50 @@ import { createClient } from '@supabase/supabase-js';
 import { Resend } from 'resend';
 
 function getAdminClient() {
-    return createClient(
-        process.env.NEXT_PUBLIC_SUPABASE_URL!,
-        process.env.SUPABASE_SERVICE_ROLE_KEY!,
-        { auth: { autoRefreshToken: false, persistSession: false } }
-    );
+  return createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!,
+    { auth: { autoRefreshToken: false, persistSession: false } }
+  );
 }
 
 // ─── Tipos ────────────────────────────────────────────────────────────────────
 
 export interface ApplicationData {
-    name: string;
-    whatsapp: string;
-    city?: string;
-    message?: string;
+  name: string;
+  whatsapp: string;
+  city?: string;
+  message?: string;
 }
 
 export type SubmitApplicationResult =
-    | { success: true }
-    | { error: string };
+  | { success: true }
+  | { error: string };
 
 // ─── Email HTML ───────────────────────────────────────────────────────────────
 
 function buildEmailHtml(data: {
-    candidateName: string;
-    candidateWhatsapp: string;
-    candidateCity: string;
-    candidateMessage: string;
-    jobTitle: string;
-    companyName: string;
-    prefecture: string;
-    city: string;
-    jobType: string;
-    salaryText: string;
+  candidateName: string;
+  candidateWhatsapp: string;
+  candidateCity: string;
+  candidateMessage: string;
+  jobTitle: string;
+  companyName: string;
+  prefecture: string;
+  city: string;
+  jobType: string;
+  salaryText: string;
 }) {
-    const {
-        candidateName, candidateWhatsapp, candidateCity, candidateMessage,
-        jobTitle, companyName, prefecture, city, jobType, salaryText,
-    } = data;
+  const {
+    candidateName, candidateWhatsapp, candidateCity, candidateMessage,
+    jobTitle, companyName, prefecture, city, jobType, salaryText,
+  } = data;
 
-    const waLink = candidateWhatsapp
-        ? `https://wa.me/${candidateWhatsapp.replace(/\D/g, '')}`
-        : null;
+  const waLink = candidateWhatsapp
+    ? `https://wa.me/${candidateWhatsapp.replace(/\D/g, '')}`
+    : null;
 
-    return `<!DOCTYPE html>
+  return `<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
@@ -168,79 +168,83 @@ function buildEmailHtml(data: {
 // ─── Server Action principal ──────────────────────────────────────────────────
 
 export async function submitApplication(
-    jobId: string,
-    data: ApplicationData
+  jobId: string,
+  data: ApplicationData
 ): Promise<SubmitApplicationResult> {
-    try {
-        if (!data.name?.trim() || !data.whatsapp?.trim()) {
-            return { error: 'Nome e WhatsApp são obrigatórios.' };
-        }
-
-        const admin = getAdminClient();
-
-        // 1. Buscar a vaga para pegar o email da empreiteira
-        const { data: job, error: jobError } = await admin
-            .from('jobs')
-            .select('title, company_name, prefecture, city, job_type, salary_text, contact')
-            .eq('id', jobId)
-            .single();
-
-        if (jobError || !job) {
-            return { error: 'Vaga não encontrada.' };
-        }
-
-        const recipientEmail = job.contact as string | null;
-
-        if (!recipientEmail) {
-            // Empreiteira não deixou email — deixa passar silenciosamente (compatibilidade)
-            return { success: true };
-        }
-
-        // Validação básica de email
-        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(recipientEmail)) {
-            return { error: 'Email de destino inválido.' };
-        }
-
-        // 2. Enviar email via Resend
-        const resendApiKey = process.env.RESEND_API_KEY;
-        if (!resendApiKey || resendApiKey === 're_SUBSTITUA_PELA_SUA_CHAVE') {
-            // Chave não configurada — logar mas não bloquear o candidato
-            console.warn('[submitApplication] RESEND_API_KEY não configurada. Email não enviado.');
-            return { success: true };
-        }
-
-        const resend = new Resend(resendApiKey);
-        const fromEmail = process.env.RESEND_FROM_EMAIL || 'candidaturas@nippon-life.com';
-
-        const emailHtml = buildEmailHtml({
-            candidateName: data.name,
-            candidateWhatsapp: data.whatsapp,
-            candidateCity: data.city || '',
-            candidateMessage: data.message || '',
-            jobTitle: job.title,
-            companyName: job.company_name,
-            prefecture: job.prefecture || '',
-            city: job.city || '',
-            jobType: job.job_type || '',
-            salaryText: job.salary_text || '',
-        });
-
-        const { error: sendError } = await resend.emails.send({
-            from: `NipponLife Candidaturas <${fromEmail}>`,
-            to: [recipientEmail],
-            replyTo: 'tiagosakakibara@gmail.com',
-            subject: `📋 Nova candidatura para "${job.title}" — ${data.name}`,
-            html: emailHtml,
-        });
-
-        if (sendError) {
-            console.error('[submitApplication] Resend error:', sendError);
-            return { error: 'Erro ao enviar notificação. Tente novamente.' };
-        }
-
-        return { success: true };
-    } catch (e: any) {
-        console.error('[submitApplication] Unexpected error:', e);
-        return { error: e?.message || 'Erro inesperado.' };
+  try {
+    if (!data.name?.trim() || !data.whatsapp?.trim()) {
+      return { error: 'Nome e WhatsApp são obrigatórios.' };
     }
+
+    const admin = getAdminClient();
+
+    // 1. Buscar a vaga para pegar o email da empreiteira
+    const { data: job, error: jobError } = await admin
+      .from('jobs')
+      .select('title, company_name, prefecture, city, job_type, salary_text, contact')
+      .eq('id', jobId)
+      .single();
+
+    if (jobError || !job) {
+      return { error: 'Vaga não encontrada.' };
+    }
+
+    const recipientEmail = job.contact as string | null;
+
+    if (!recipientEmail) {
+      console.log('[submitApplication] Vaga sem email de contato (job.contact). Retornando sucesso silencioso.');
+      return { success: true };
+    }
+
+    console.log(`[submitApplication] Enviando email para: ${recipientEmail} (Vaga: ${job.title})`);
+
+    // Validação básica de email
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(recipientEmail)) {
+      console.error('[submitApplication] Email de destino inválido:', recipientEmail);
+      return { error: 'Email de destino inválido.' };
+    }
+
+    // 2. Enviar email via Resend
+    const resendApiKey = process.env.RESEND_API_KEY;
+    if (!resendApiKey || resendApiKey === 're_SUBSTITUA_PELA_SUA_CHAVE') {
+      console.warn('[submitApplication] RESEND_API_KEY não configurada. Email não enviado.');
+      return { success: true };
+    }
+
+    const resend = new Resend(resendApiKey);
+    const fromEmail = process.env.RESEND_FROM_EMAIL || 'candidaturas@nippon-life.com';
+
+    const emailHtml = buildEmailHtml({
+      candidateName: data.name,
+      candidateWhatsapp: data.whatsapp,
+      candidateCity: data.city || '',
+      candidateMessage: data.message || '',
+      jobTitle: job.title,
+      companyName: job.company_name,
+      prefecture: job.prefecture || '',
+      city: job.city || '',
+      jobType: job.job_type || '',
+      salaryText: job.salary_text || '',
+    });
+
+    const { data: sendData, error: sendError } = await resend.emails.send({
+      from: `NipponLife Candidaturas <${fromEmail}>`,
+      to: [recipientEmail],
+      replyTo: 'tiagosakakibara@gmail.com',
+      subject: `📋 Nova candidatura para "${job.title}" — ${data.name}`,
+      html: emailHtml,
+    });
+
+    if (sendError) {
+      console.error('[submitApplication] Resend error:', sendError);
+      return { error: 'Erro ao enviar notificação. Tente novamente.' };
+    }
+
+    console.log('[submitApplication] Email enviado com sucesso via Resend. ID:', sendData?.id);
+
+    return { success: true };
+  } catch (e: any) {
+    console.error('[submitApplication] Unexpected error:', e);
+    return { error: e?.message || 'Erro inesperado.' };
+  }
 }

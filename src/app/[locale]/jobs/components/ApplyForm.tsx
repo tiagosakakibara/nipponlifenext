@@ -80,8 +80,7 @@ export function ApplyForm({ jobId, jobTitle, onClose }: ApplyFormProps) {
                     <h3 className="text-2xl font-heading font-bold text-primary">
                         {t('successTitle')}
                     </h3>
-                    <p className="text-muted font-medium"
-                        dangerouslySetInnerHTML={{ __html: t('successMessage', { jobTitle }) }} />
+
                 </div>
                 <button
                     type="button"

@@ -8,7 +8,7 @@ import {
     Save, ArrowLeft, Plus, X, Globe, ChevronDown, ChevronRight,
     Loader2, Star, Briefcase, Building2, MapPin, DollarSign,
     Tag, CheckCircle2, Heart, Gift, Clock, Bus, Shield, Utensils,
-    Calendar, Send, Info, Image as ImageIcon, Laptop, ShieldAlert
+    Calendar, Send, Info, Image as ImageIcon, Laptop, ShieldAlert, Mail
 } from 'lucide-react';
 import { jobsService } from '@/lib/jobsService';
 import { Job, JobFormData } from '@/types/job';
@@ -59,6 +59,7 @@ export default function AdminJobFormClient({ id, initialData }: Props) {
             featured: initialData.featured || false,
             pay_unit: initialData.db_fields?.pay_unit || 'hour',
             application_mode: initialData.db_fields?.application_mode || 'internal_form',
+            contact: initialData.db_fields?.contact || '',
             expires_at: initialData.expires_at || '',
             position_order: initialData.position_order || 0
         } : {
@@ -67,6 +68,7 @@ export default function AdminJobFormClient({ id, initialData }: Props) {
             job_type: 'Full-time',
             pay_unit: 'hour',
             application_mode: 'internal_form',
+            contact: '',
             tags: [],
             requirements: [],
             benefits: [],
@@ -359,6 +361,28 @@ export default function AdminJobFormClient({ id, initialData }: Props) {
                                         placeholder="e.g. Toyota-shi"
                                         className="w-full p-4 bg-app border border-app rounded-2xl text-sm font-bold text-primary focus:bg-white transition-all outline-none"
                                     />
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Application Contact */}
+                        <div className="bg-surface rounded-3xl border border-app p-4 md:p-8 shadow-sm space-y-8">
+                            <div className="flex items-center gap-3 text-primary">
+                                <Mail className="w-5 h-5 text-link" />
+                                <h3 className="font-black text-lg tracking-tight">Contato para Candidaturas</h3>
+                            </div>
+
+                            <div className="space-y-6">
+                                <div>
+                                    <label className="text-[10px] font-extrabold text-secondary uppercase block tracking-widest mb-1.5">Email Principal para Recebimento</label>
+                                    <input
+                                        {...register('contact')}
+                                        placeholder="ex: contato@empresa.com"
+                                        className="w-full p-4 bg-app border border-app rounded-2xl text-sm font-bold text-primary focus:bg-white transition-all outline-none"
+                                    />
+                                    <p className="text-[10px] font-bold text-secondary/50 mt-2">
+                                        Este email receberá as notificações de novas candidaturas.
+                                    </p>
                                 </div>
                             </div>
                         </div>
