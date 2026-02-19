@@ -62,12 +62,9 @@ function buildEmailHtml(data: {
 
           <!-- Header vermelho com logo -->
           <tr>
-            <td style="background:linear-gradient(135deg,#D70F24 0%,#a80c1c 100%);padding:36px 40px;text-align:center;">
-              <div style="display:inline-flex;align-items:center;gap:10px;">
-                <div style="width:36px;height:36px;background:white;border-radius:50%;display:inline-block;"></div>
-                <span style="color:white;font-size:24px;font-weight:800;letter-spacing:-0.5px;">NipponLife</span>
-              </div>
-              <p style="color:rgba(255,255,255,0.85);font-size:13px;margin:8px 0 0;letter-spacing:0.5px;">NOVA CANDIDATURA RECEBIDA</p>
+            <td style="background:#ffffff;padding:40px 40px 20px;text-align:center;border-bottom:1px solid #eef0f6;">
+              <img src="https://nippon-life.com/images/logo-full.png" alt="NipponLife" width="180" style="display:block;margin:0 auto;border:0;" />
+              <p style="color:#D70F24;font-size:12px;font-weight:700;margin:16px 0 0;letter-spacing:1px;text-transform:uppercase;">NOVA CANDIDATURA RECEBIDA</p>
             </td>
           </tr>
 
@@ -192,15 +189,12 @@ export async function submitApplication(
     const recipientEmail = job.contact as string | null;
 
     if (!recipientEmail) {
-      console.log('[submitApplication] Vaga sem email de contato (job.contact). Retornando sucesso silencioso.');
+      // Empreiteira não deixou email — deixa passar silenciosamente (compatibilidade)
       return { success: true };
     }
 
-    console.log(`[submitApplication] Enviando email para: ${recipientEmail} (Vaga: ${job.title})`);
-
     // Validação básica de email
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(recipientEmail)) {
-      console.error('[submitApplication] Email de destino inválido:', recipientEmail);
       return { error: 'Email de destino inválido.' };
     }
 
@@ -227,7 +221,7 @@ export async function submitApplication(
       salaryText: job.salary_text || '',
     });
 
-    const { data: sendData, error: sendError } = await resend.emails.send({
+    const { error: sendError } = await resend.emails.send({
       from: `NipponLife Candidaturas <${fromEmail}>`,
       to: [recipientEmail],
       replyTo: 'tiagosakakibara@gmail.com',
@@ -239,8 +233,6 @@ export async function submitApplication(
       console.error('[submitApplication] Resend error:', sendError);
       return { error: 'Erro ao enviar notificação. Tente novamente.' };
     }
-
-    console.log('[submitApplication] Email enviado com sucesso via Resend. ID:', sendData?.id);
 
     return { success: true };
   } catch (e: any) {
