@@ -11,44 +11,11 @@ import {
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 
+import { useTranslations } from 'next-intl';
+
+// ─── Types ───────────────────────────────────────────────────────────────────
+
 type DayKey = 'segunda' | 'terca' | 'quarta' | 'quinta' | 'sexta' | 'sabado' | 'domingo' | 'feriados';
-
-const DAYS: { key: DayKey; label: string }[] = [
-    { key: 'segunda', label: 'Segunda-feira' },
-    { key: 'terca', label: 'Terça-feira' },
-    { key: 'quarta', label: 'Quarta-feira' },
-    { key: 'quinta', label: 'Quinta-feira' },
-    { key: 'sexta', label: 'Sexta-feira' },
-    { key: 'sabado', label: 'Sábado' },
-    { key: 'domingo', label: 'Domingo' },
-    { key: 'feriados', label: 'Feriados' },
-];
-
-const CATEGORIES = [
-    'Gastronomia',
-    'Saúde & Bem-estar',
-    'Serviços',
-    'Imobiliárias',
-    'Jurídico e Vistos',
-    'Mudanças e Logística',
-    'Tecnologia',
-    'Outros',
-];
-
-const PRICE_RANGES = [
-    { value: '$', label: '$', desc: 'Econômico' },
-    { value: '$$', label: '$$', desc: 'Moderado' },
-    { value: '$$$', label: '$$$', desc: 'Sofisticado' },
-    { value: '$$$$', label: '$$$$', desc: 'Premium' },
-];
-
-const LANGUAGES = [
-    { value: 'pt', label: 'Português' },
-    { value: 'ja', label: 'Japonês' },
-    { value: 'en', label: 'Inglês' },
-    { value: 'es', label: 'Espanhol' },
-    { value: 'outros', label: 'Outros' },
-];
 
 // ─── Image Uploader Component ─────────────────────────────────────────────────
 
@@ -67,6 +34,7 @@ function ImageUploader({
     value: string;
     onChange: (url: string) => void;
 }) {
+    const t = useTranslations('business');
     const [uploading, setUploading] = useState(false);
     const [error, setError] = useState('');
     const inputRef = useRef<HTMLInputElement>(null);
@@ -122,8 +90,8 @@ function ImageUploader({
                     ) : (
                         <>
                             <Upload className="w-6 h-6 text-[var(--nl-text-3)]" />
-                            <span className="text-xs text-[var(--nl-text-3)] text-center px-2">
-                                Clique ou arraste a imagem aqui<br />JPG, PNG, WEBP — máx 10MB
+                            <span className="text-xs text-[var(--nl-text-3)] text-center px-2 whitespace-pre-line">
+                                {t('registration.uploadText')}
                             </span>
                         </>
                     )}
@@ -225,10 +193,49 @@ const inputClass =
 // ─── Main Form ────────────────────────────────────────────────────────────────
 
 export default function BusinessRegistrationForm() {
+    const t = useTranslations('business');
     const [submitting, setSubmitting] = useState(false);
     const [submitted, setSubmitted] = useState(false);
     const [submitError, setSubmitError] = useState('');
     const [charCount, setCharCount] = useState(0);
+
+    // Definitions
+    const DAYS: { key: DayKey; label: string }[] = [
+        { key: 'segunda', label: t('registration.days.segunda') },
+        { key: 'terca', label: t('registration.days.terca') },
+        { key: 'quarta', label: t('registration.days.quarta') },
+        { key: 'quinta', label: t('registration.days.quinta') },
+        { key: 'sexta', label: t('registration.days.sexta') },
+        { key: 'sabado', label: t('registration.days.sabado') },
+        { key: 'domingo', label: t('registration.days.domingo') },
+        { key: 'feriados', label: t('registration.days.feriados') },
+    ];
+
+    const CATEGORIES = [
+        'Gastronomia',
+        'Saúde & Bem-estar',
+        'Serviços',
+        'Imobiliárias',
+        'Jurídico e Vistos',
+        'Mudanças e Logística',
+        'Tecnologia',
+        'Outros',
+    ];
+
+    const PRICE_RANGES = [
+        { value: '$', label: '$', desc: t('registration.price.cheap') },
+        { value: '$$', label: '$$', desc: t('registration.price.moderate') },
+        { value: '$$$', label: '$$$', desc: t('registration.price.expensive') },
+        { value: '$$$$', label: '$$$$', desc: t('registration.price.luxury') },
+    ];
+
+    const LANGUAGES = [
+        { value: 'pt', label: t('registration.languages.pt') },
+        { value: 'ja', label: t('registration.languages.ja') },
+        { value: 'en', label: t('registration.languages.en') },
+        { value: 'es', label: t('registration.languages.es') },
+        { value: 'outros', label: t('registration.languages.others') },
+    ];
 
     // Image URLs
     const [logoUrl, setLogoUrl] = useState('');
@@ -291,6 +298,7 @@ export default function BusinessRegistrationForm() {
     }
 
     // ── Success Screen ─────────────────────────────────────────────────────────
+    // ── Success Screen ─────────────────────────────────────────────────────────
     if (submitted) {
         return (
             <div className="min-h-screen bg-[var(--nl-bg)] flex items-center justify-center px-4">
@@ -300,15 +308,14 @@ export default function BusinessRegistrationForm() {
                     </div>
                     <div>
                         <h1 className="font-heading text-3xl font-bold text-[var(--nl-text)] mb-2">
-                            Obrigado! 🎉
+                            {t('registration.successTitle')}
                         </h1>
-                        <p className="text-[var(--nl-text-2)] text-base leading-relaxed">
-                            Os dados da sua empresa foram enviados com sucesso.<br />
-                            Nossa equipe irá revisar e publicar seu perfil em breve.
+                        <p className="text-[var(--nl-text-2)] text-base leading-relaxed whitespace-pre-line">
+                            {t('registration.successMessage')}
                         </p>
                     </div>
                     <div className="bg-[var(--nl-surface)] rounded-2xl border border-[var(--nl-border)] p-5 text-sm text-[var(--nl-text-3)]">
-                        <p>Você receberá uma confirmação assim que seu perfil estiver no ar. Enquanto isso, pode entrar em contato conosco pelo WhatsApp.</p>
+                        <p>{t('registration.successNote')}</p>
                     </div>
                     <Image
                         src="/images/logo-full.png"
@@ -336,11 +343,10 @@ export default function BusinessRegistrationForm() {
                         className="mx-auto brightness-0 invert"
                     />
                     <h1 className="font-heading text-2xl md:text-3xl font-bold leading-tight">
-                        Cadastre sua Empresa
+                        {t('registration.title')}
                     </h1>
                     <p className="text-white/85 text-sm md:text-base max-w-md mx-auto leading-relaxed">
-                        Preencha os dados da sua empresa para que possamos criar seu perfil no NipponLife.
-                        Quanto mais completo, melhor será sua visibilidade!
+                        {t('registration.headerSubtitle')}
                     </p>
                 </div>
             </div>
@@ -352,37 +358,39 @@ export default function BusinessRegistrationForm() {
                 <div className="flex gap-3 bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-4">
                     <Info className="w-4 h-4 text-gray-500 dark:text-gray-400 flex-shrink-0 mt-0.5" />
                     <p className="text-xs text-gray-700 dark:text-gray-300 leading-relaxed">
-                        Campos marcados com <span className="text-[var(--nl-accent)] font-bold">*</span> são obrigatórios.
-                        Seu cadastro entrará como <strong>rascunho</strong> e será revisado antes de ser publicado.
+                        {t.rich('registration.info', {
+                            strong: (chunks) => <strong>{chunks}</strong>,
+                            accent: (chunks) => <span className="text-[var(--nl-accent)] font-bold">{chunks}</span>
+                        })}
                     </p>
                 </div>
 
                 {/* ── 01 Informações Básicas ── */}
-                <Section icon={Building2} number="01" title="Informações Básicas">
+                <Section icon={Building2} number="01" title={t('registration.section1')}>
                     <div className="space-y-4">
-                        <Field label="Nome da empresa" required>
+                        <Field label={t('registration.companyName')} required>
                             <input
                                 type="text"
                                 name="business_name"
                                 required
-                                placeholder="Ex: Restaurante Sakura"
+                                placeholder={t('registration.companyNamePlaceholder')}
                                 className={inputClass}
                             />
                         </Field>
 
-                        <Field label="Categoria" required>
+                        <Field label={t('registration.category')} required>
                             <select name="category" required className={inputClass}>
-                                <option value="">Selecione uma categoria...</option>
+                                <option value="">{t('registration.categoryPlaceholder')}</option>
                                 {CATEGORIES.map(c => (
-                                    <option key={c} value={c}>{c}</option>
+                                    <option key={c} value={c}>{t('categories.' + c)}</option>
                                 ))}
                             </select>
                         </Field>
 
                         <Field
-                            label="Descrição curta"
+                            label={t('registration.shortDescription')}
                             required
-                            hint="Máximo 160 caracteres. Aparece nos resultados de busca."
+                            hint={t('registration.shortDescriptionHint')}
                         >
                             <div className="relative">
                                 <textarea
@@ -390,7 +398,7 @@ export default function BusinessRegistrationForm() {
                                     required
                                     maxLength={160}
                                     rows={3}
-                                    placeholder="Uma frase que descreva sua empresa..."
+                                    placeholder={t('registration.shortDescriptionPlaceholder')}
                                     className={`${inputClass} resize-none`}
                                     onChange={(e) => setCharCount(e.target.value.length)}
                                 />
@@ -400,11 +408,11 @@ export default function BusinessRegistrationForm() {
                             </div>
                         </Field>
 
-                        <Field label="Descrição completa" hint="Conte mais sobre seus serviços, história, diferenciais...">
+                        <Field label={t('registration.longDescription')} hint={t('registration.longDescriptionHint')}>
                             <textarea
                                 name="description_long"
                                 rows={5}
-                                placeholder="Descreva sua empresa com mais detalhes..."
+                                placeholder={t('registration.longDescriptionPlaceholder')}
                                 className={`${inputClass} resize-none`}
                             />
                         </Field>
@@ -412,71 +420,71 @@ export default function BusinessRegistrationForm() {
                 </Section>
 
                 {/* ── 02 Localização ── */}
-                <Section icon={MapPin} number="02" title="Localização">
+                <Section icon={MapPin} number="02" title={t('registration.section2')}>
                     <div className="space-y-4">
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            <Field label="Endereço" required>
-                                <input type="text" name="address_line1" required placeholder="Rua, número" className={inputClass} />
+                            <Field label={t('registration.address')} required>
+                                <input type="text" name="address_line1" required placeholder={t('registration.addressPlaceholder')} className={inputClass} />
                             </Field>
-                            <Field label="Complemento">
-                                <input type="text" name="address_line2" placeholder="Apto, sala..." className={inputClass} />
-                            </Field>
-                        </div>
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            <Field label="Bairro / Distrito">
-                                <input type="text" name="neighborhood" placeholder="Bairro" className={inputClass} />
-                            </Field>
-                            <Field label="CEP / Código Postal">
-                                <input type="text" name="postal_code" placeholder="000-0000" className={inputClass} />
+                            <Field label={t('registration.complement')}>
+                                <input type="text" name="address_line2" placeholder={t('registration.complementPlaceholder')} className={inputClass} />
                             </Field>
                         </div>
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            <Field label="Cidade" required>
-                                <input type="text" name="city" required placeholder="Ex: Hamamatsu" className={inputClass} />
+                            <Field label={t('registration.neighborhood')}>
+                                <input type="text" name="neighborhood" placeholder={t('registration.neighborhoodPlaceholder')} className={inputClass} />
                             </Field>
-                            <Field label="Prefeitura" required>
+                            <Field label={t('registration.postalCode')}>
+                                <input type="text" name="postal_code" placeholder={t('registration.postalCodePlaceholder')} className={inputClass} />
+                            </Field>
+                        </div>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <Field label={t('registration.city')} required>
+                                <input type="text" name="city" required placeholder={t('registration.cityPlaceholder')} className={inputClass} />
+                            </Field>
+                            <Field label={t('registration.prefecture')} required>
                                 <input type="text" name="prefecture" required placeholder="Ex: Shizuoka" className={inputClass} />
                             </Field>
                         </div>
-                        <Field label="Link do Google Maps" hint="Cole o link de compartilhamento do Google Maps">
-                            <input type="url" name="google_maps_url" placeholder="https://maps.google.com/..." className={inputClass} />
+                        <Field label={t('registration.googleMaps')} hint={t('registration.googleMapsHint')}>
+                            <input type="url" name="google_maps_url" placeholder={t('registration.googleMapsPlaceholder')} className={inputClass} />
                         </Field>
                     </div>
                 </Section>
 
                 {/* ── 03 Contato ── */}
-                <Section icon={Phone} number="03" title="Contato">
+                <Section icon={Phone} number="03" title={t('registration.section3')}>
                     <div className="space-y-4">
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            <Field label="Telefone">
-                                <input type="tel" name="phone" placeholder="+55 11 99999-9999" className={inputClass} />
+                            <Field label={t('registration.phone')}>
+                                <input type="tel" name="phone" placeholder={t('registration.phonePlaceholder')} className={inputClass} />
                             </Field>
-                            <Field label="WhatsApp">
-                                <input type="tel" name="whatsapp" placeholder="+55 11 99999-9999" className={inputClass} />
+                            <Field label={t('registration.whatsapp')}>
+                                <input type="tel" name="whatsapp" placeholder={t('registration.whatsappPlaceholder')} className={inputClass} />
                             </Field>
                         </div>
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            <Field label="E-mail">
-                                <input type="email" name="email" placeholder="contato@empresa.com" className={inputClass} />
+                            <Field label={t('registration.email')}>
+                                <input type="email" name="email" placeholder={t('registration.emailPlaceholder')} className={inputClass} />
                             </Field>
-                            <Field label="Site">
+                            <Field label={t('registration.website')}>
                                 <div className="relative">
                                     <Globe className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--nl-text-3)]" />
-                                    <input type="url" name="website_url" placeholder="https://..." className={`${inputClass} pl-9`} />
+                                    <input type="url" name="website_url" placeholder={t('registration.websitePlaceholder')} className={`${inputClass} pl-9`} />
                                 </div>
                             </Field>
                         </div>
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            <Field label="Instagram">
+                            <Field label={t('registration.instagram')}>
                                 <div className="relative">
                                     <Instagram className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--nl-text-3)]" />
-                                    <input type="text" name="instagram_url" placeholder="@suaempresa" className={`${inputClass} pl-9`} />
+                                    <input type="text" name="instagram_url" placeholder={t('registration.instagramPlaceholder')} className={`${inputClass} pl-9`} />
                                 </div>
                             </Field>
-                            <Field label="LINE">
+                            <Field label={t('registration.line')}>
                                 <div className="relative">
                                     <MessageCircle className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--nl-text-3)]" />
-                                    <input type="text" name="line_url" placeholder="ID ou link do LINE" className={`${inputClass} pl-9`} />
+                                    <input type="text" name="line_url" placeholder={t('registration.linePlaceholder')} className={`${inputClass} pl-9`} />
                                 </div>
                             </Field>
                         </div>
@@ -484,11 +492,11 @@ export default function BusinessRegistrationForm() {
                 </Section>
 
                 {/* ── 04 Imagens ── */}
-                <Section icon={ImageIcon} number="04" title="Imagens">
+                <Section icon={ImageIcon} number="04" title={t('registration.section4')}>
                     <div className="space-y-6">
                         <ImageUploader
-                            label="Logo da empresa"
-                            hint="Proporção quadrada (1:1). Recomendado: 400×400px."
+                            label={t('registration.logoLabel')}
+                            hint={t('registration.logoHint')}
                             fieldName="logo_url"
                             ratio="1:1"
                             value={logoUrl}
@@ -496,8 +504,8 @@ export default function BusinessRegistrationForm() {
                         />
                         <div className="border-t border-[var(--nl-border)]" />
                         <ImageUploader
-                            label="Foto de capa"
-                            hint="Proporção 16:9. Recomendado: 1200×675px."
+                            label={t('registration.coverLabel')}
+                            hint={t('registration.coverHint')}
                             fieldName="cover_image_url"
                             ratio="16:9"
                             value={coverUrl}
@@ -507,14 +515,14 @@ export default function BusinessRegistrationForm() {
                 </Section>
 
                 {/* ── 05 Funcionamento ── */}
-                <Section icon={Clock} number="05" title="Funcionamento" defaultOpen={false}>
+                <Section icon={Clock} number="05" title={t('registration.section5')} defaultOpen={false}>
                     <div className="space-y-6">
 
                         {/* Horários */}
                         <div className="space-y-3">
                             <h3 className="text-sm font-semibold text-[var(--nl-text)] flex items-center gap-2">
                                 <Clock className="w-4 h-4 text-[var(--nl-accent)]" />
-                                Horário de funcionamento
+                                {t('registration.operatingHours')}
                             </h3>
                             <div className="space-y-2">
                                 {DAYS.map(({ key, label }) => (
@@ -536,7 +544,7 @@ export default function BusinessRegistrationForm() {
                                                     onChange={e => setHoursFrom(p => ({ ...p, [key]: e.target.value }))}
                                                     className="px-2 py-1 text-sm rounded-lg border border-[var(--nl-border)] bg-[var(--nl-bg)] text-[var(--nl-text)] focus:outline-none focus:ring-1 focus:ring-[var(--nl-accent)]"
                                                 />
-                                                <span className="text-[var(--nl-text-3)] text-xs">até</span>
+                                                <span className="text-[var(--nl-text-3)] text-xs">{t('registration.until')}</span>
                                                 <input
                                                     type="time"
                                                     value={hoursTo[key]}
@@ -545,7 +553,7 @@ export default function BusinessRegistrationForm() {
                                                 />
                                             </div>
                                         ) : (
-                                            <span className="text-xs text-[var(--nl-text-3)] italic">Fechado</span>
+                                            <span className="text-xs text-[var(--nl-text-3)] italic">{t('registration.closed')}</span>
                                         )}
                                     </div>
                                 ))}
@@ -556,7 +564,7 @@ export default function BusinessRegistrationForm() {
                         <div className="space-y-3">
                             <h3 className="text-sm font-semibold text-[var(--nl-text)] flex items-center gap-2">
                                 <DollarSign className="w-4 h-4 text-[var(--nl-accent)]" />
-                                Faixa de preço
+                                {t('registration.priceRange')}
                             </h3>
                             <div className="flex flex-wrap gap-2">
                                 {PRICE_RANGES.map(p => (
@@ -580,7 +588,7 @@ export default function BusinessRegistrationForm() {
                         <div className="space-y-3">
                             <h3 className="text-sm font-semibold text-[var(--nl-text)] flex items-center gap-2">
                                 <Languages className="w-4 h-4 text-[var(--nl-accent)]" />
-                                Idiomas atendidos
+                                {t('registration.languagesTitle')}
                             </h3>
                             <div className="flex flex-wrap gap-2">
                                 {LANGUAGES.map(l => (
@@ -617,18 +625,18 @@ export default function BusinessRegistrationForm() {
                     {submitting ? (
                         <>
                             <Loader2 className="w-5 h-5 animate-spin" />
-                            Enviando...
+                            {t('registration.submitting')}
                         </>
                     ) : (
                         <>
                             <CheckCircle2 className="w-5 h-5" />
-                            Enviar Cadastro
+                            {t('registration.submitButton')}
                         </>
                     )}
                 </button>
 
                 <p className="text-center text-xs text-[var(--nl-text-3)] pb-8">
-                    Ao enviar, você concorda que seus dados serão utilizados para criar seu perfil público no NipponLife.
+                    {t('registration.agreement')}
                 </p>
             </form>
         </div>

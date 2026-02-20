@@ -11,18 +11,9 @@ import {
 
 // ─── Constants ────────────────────────────────────────────────────────────────
 
-const JOB_TYPES = [
-    { value: 'full-time', label: 'Tempo integral' },
-    { value: 'part-time', label: 'Meio período' },
-    { value: 'contract', label: 'Contrato' },
-    { value: 'temporary', label: 'Temporário' },
-];
+import { useTranslations } from 'next-intl';
 
-const PAY_UNITS = [
-    { value: 'hour', label: 'Por hora' },
-    { value: 'day', label: 'Por dia' },
-    { value: 'month', label: 'Por mês' },
-];
+// ─── Constants ────────────────────────────────────────────────────────────────
 
 const PREFECTURES = [
     'Aichi', 'Akita', 'Aomori', 'Chiba', 'Ehime', 'Fukui', 'Fukuoka',
@@ -38,6 +29,7 @@ const PREFECTURES = [
 // ─── Image Uploader ───────────────────────────────────────────────────────────
 
 function ImageUploader({ value, onChange }: { value: string; onChange: (url: string) => void }) {
+    const t = useTranslations('jobs.registration');
     const [uploading, setUploading] = useState(false);
     const [error, setError] = useState('');
     const inputRef = useRef<HTMLInputElement>(null);
@@ -73,8 +65,8 @@ function ImageUploader({ value, onChange }: { value: string; onChange: (url: str
                         ? <Loader2 className="w-6 h-6 animate-spin text-[var(--nl-accent)]" />
                         : (<>
                             <Upload className="w-6 h-6 text-[var(--nl-text-3)]" />
-                            <span className="text-xs text-[var(--nl-text-3)] text-center px-4">
-                                Clique ou arraste a imagem aqui<br />JPG, PNG, WEBP — máx 10MB
+                            <span className="text-xs text-[var(--nl-text-3)] text-center px-4 whitespace-pre-line">
+                                {t('uploadText')}
                             </span>
                         </>)}
                 </div>
@@ -129,6 +121,7 @@ const inputClass = 'w-full px-4 py-2.5 rounded-xl border border-[var(--nl-border
 
 function ListEditor({ label, hint, name, placeholder }:
     { label: string; hint: string; name: string; placeholder: string }) {
+    const t = useTranslations('jobs.registration');
     const [items, setItems] = useState<string[]>(['']);
 
     return (
@@ -154,7 +147,7 @@ function ListEditor({ label, hint, name, placeholder }:
             ))}
             <button type="button" onClick={() => setItems(prev => [...prev, ''])}
                 className="flex items-center gap-1.5 text-xs text-[var(--nl-accent)] font-semibold hover:underline">
-                <Plus className="w-3.5 h-3.5" /> Adicionar item
+                <Plus className="w-3.5 h-3.5" /> {t('addItem')}
             </button>
             {/* Hidden textarea with all items joined */}
             <textarea name={name} className="hidden" readOnly value={items.filter(Boolean).join('\n')} />
@@ -165,11 +158,12 @@ function ListEditor({ label, hint, name, placeholder }:
 // ─── Main Form ────────────────────────────────────────────────────────────────
 
 export default function JobRegistrationForm() {
+    const t = useTranslations('jobs.registration');
     const [submitting, setSubmitting] = useState(false);
     const [submitted, setSubmitted] = useState(false);
     const [submitError, setSubmitError] = useState('');
     const [coverUrl, setCoverUrl] = useState('');
-    const [jobType, setJobType] = useState('full-time');
+    const [jobType, setJobType] = useState('fullTime');
     const [payUnit, setPayUnit] = useState('hour');
 
     async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -198,20 +192,32 @@ export default function JobRegistrationForm() {
                         <CheckCircle2 className="w-10 h-10 text-green-500" />
                     </div>
                     <div>
-                        <h1 className="font-heading text-3xl font-bold text-[var(--nl-text)] mb-2">Vaga enviada! 🎉</h1>
-                        <p className="text-[var(--nl-text-2)] text-base leading-relaxed">
-                            Sua vaga foi enviada com sucesso e está em análise.<br />
-                            Nossa equipe irá revisá-la e publicar em breve.
+                        <h1 className="font-heading text-3xl font-bold text-[var(--nl-text)] mb-2">{t('successTitle')}</h1>
+                        <p className="text-[var(--nl-text-2)] text-base leading-relaxed whitespace-pre-line">
+                            {t('successMessage')}
                         </p>
                     </div>
                     <div className="bg-[var(--nl-surface)] rounded-2xl border border-[var(--nl-border)] p-5 text-sm text-[var(--nl-text-3)]">
-                        A vaga entrará como <strong>rascunho</strong> e ficará visível após a publicação pela equipe NipponLife.
+                        {t.rich('draftNote', { strong: (chunks) => <strong>{chunks}</strong> })}
                     </div>
                     <Image src="/images/logo-full.png" alt="NipponLife" width={140} height={40} className="mx-auto opacity-60" />
                 </div>
             </div>
         );
     }
+
+    const jobTypes = [
+        { value: 'full-time', label: t('fullTime') },
+        { value: 'part-time', label: t('partTime') },
+        { value: 'contract', label: t('contract') },
+        { value: 'temporary', label: t('temporary') },
+    ];
+
+    const payUnits = [
+        { value: 'hour', label: t('hour') },
+        { value: 'day', label: t('day') },
+        { value: 'month', label: t('month') },
+    ];
 
     // ── Form ───────────────────────────────────────────────────────────────────
     return (
@@ -222,11 +228,10 @@ export default function JobRegistrationForm() {
                     <Image src="/images/logo-full.png" alt="NipponLife" width={160} height={48}
                         className="mx-auto brightness-0 invert" />
                     <h1 className="font-heading text-2xl md:text-3xl font-bold leading-tight">
-                        Publicar Vaga de Emprego
+                        {t('title')}
                     </h1>
                     <p className="text-white/85 text-sm md:text-base max-w-md mx-auto leading-relaxed">
-                        Preencha os dados da vaga para que possamos publicá-la no NipponLife e alcançar
-                        candidatos qualificados da comunidade brasileira no Japão.
+                        {t('headerSubtitle')}
                     </p>
                 </div>
             </div>
@@ -237,111 +242,112 @@ export default function JobRegistrationForm() {
                 <div className="flex gap-3 bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-4">
                     <Info className="w-4 h-4 text-gray-500 dark:text-gray-400 flex-shrink-0 mt-0.5" />
                     <p className="text-xs text-gray-700 dark:text-gray-300 leading-relaxed">
-                        Campos com <span className="text-[var(--nl-accent)] font-bold">*</span> são obrigatórios.
-                        A vaga entrará como <strong>rascunho</strong> e será revisada antes de ser publicada.
+                        {t.rich('info', {
+                            strong: (chunks) => <strong>{chunks}</strong>,
+                            accent: (chunks) => <span className="text-[var(--nl-accent)] font-bold">{chunks}</span>
+                        })}
                     </p>
                 </div>
 
                 {/* ── 01 Definição da Vaga ── */}
-                <Section icon={Briefcase} number="01" title="Definição da Vaga">
+                <Section icon={Briefcase} number="01" title={t('section1')}>
                     <div className="space-y-4">
-                        <Field label="Título do cargo" required>
-                            <input type="text" name="title" required placeholder="Ex: Operador de Produção" className={inputClass} />
+                        <Field label={t('jobTitle')} required>
+                            <input type="text" name="title" required placeholder={t('jobTitlePlaceholder')} className={inputClass} />
                         </Field>
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            <Field label="Nome da empresa" required>
-                                <input type="text" name="company_name" required placeholder="Ex: Toyota do Japão" className={inputClass} />
+                            <Field label={t('companyName')} required>
+                                <input type="text" name="company_name" required placeholder={t('companyNamePlaceholder')} className={inputClass} />
                             </Field>
-                            <Field label="Tipo de emprego">
+                            <Field label={t('jobType')}>
                                 <div className="flex flex-wrap gap-2">
-                                    {JOB_TYPES.map(t => (
-                                        <button key={t.value} type="button" onClick={() => setJobType(t.value)}
-                                            className={`px-3 py-1.5 rounded-lg border text-xs font-semibold transition-all ${jobType === t.value ? 'bg-[var(--nl-accent)] border-[var(--nl-accent)] text-white' : 'border-[var(--nl-border)] text-[var(--nl-text-2)] hover:border-[var(--nl-accent)]'}`}>
-                                            {t.label}
+                                    {jobTypes.map(type => (
+                                        <button key={type.value} type="button" onClick={() => setJobType(type.value)}
+                                            className={`px-3 py-1.5 rounded-lg border text-xs font-semibold transition-all ${jobType === type.value ? 'bg-[var(--nl-accent)] border-[var(--nl-accent)] text-white' : 'border-[var(--nl-border)] text-[var(--nl-text-2)] hover:border-[var(--nl-accent)]'}`}>
+                                            {type.label}
                                         </button>
                                     ))}
                                 </div>
                             </Field>
                         </div>
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            <Field label="Prefeitura (Ken)" required>
+                            <Field label={t('location')} required>
                                 <select name="prefecture" required className={inputClass}>
-                                    <option value="">Selecione...</option>
+                                    <option value="">{t('location')}...</option>
                                     {PREFECTURES.map(p => <option key={p} value={p}>{p}</option>)}
                                 </select>
                             </Field>
-                            <Field label="Cidade">
-                                <input type="text" name="city" placeholder="Ex: Toyota-shi" className={inputClass} />
+                            <Field label={t('city')}>
+                                <input type="text" name="city" placeholder={t('cityPlaceholder')} className={inputClass} />
                             </Field>
                         </div>
                     </div>
                 </Section>
 
                 {/* ── 02 Compensação e Salário ── */}
-                <Section icon={DollarSign} number="02" title="Compensação e Salário">
+                <Section icon={DollarSign} number="02" title={t('section2')}>
                     <div className="space-y-4">
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            <Field label="Rótulo de salário público" hint="Ex: ¥1.200 ~ ¥1.500/hr">
-                                <input type="text" name="salary_text" placeholder="¥1.200 ~ ¥1.500/hr" className={inputClass} />
+                            <Field label={t('salaryLabel')} hint={t('salaryPlaceholder')}>
+                                <input type="text" name="salary_text" placeholder={t('salaryPlaceholder')} className={inputClass} />
                             </Field>
                             <div className="space-y-1.5">
-                                <label className="block text-sm font-semibold text-[var(--nl-text)]">Unidade</label>
+                                <label className="block text-sm font-semibold text-[var(--nl-text)]">{t('payUnit')}</label>
                                 <div className="flex gap-2">
-                                    {PAY_UNITS.map(u => (
-                                        <button key={u.value} type="button" onClick={() => setPayUnit(u.value)}
-                                            className={`flex-1 py-2 rounded-xl border text-xs font-semibold transition-all ${payUnit === u.value ? 'bg-[var(--nl-accent)] border-[var(--nl-accent)] text-white' : 'border-[var(--nl-border)] text-[var(--nl-text-2)] hover:border-[var(--nl-accent)]'}`}>
-                                            {u.label}
+                                    {payUnits.map(unit => (
+                                        <button key={unit.value} type="button" onClick={() => setPayUnit(unit.value)}
+                                            className={`flex-1 py-2 rounded-xl border text-xs font-semibold transition-all ${payUnit === unit.value ? 'bg-[var(--nl-accent)] border-[var(--nl-accent)] text-white' : 'border-[var(--nl-border)] text-[var(--nl-text-2)] hover:border-[var(--nl-accent)]'}`}>
+                                            {unit.label}
                                         </button>
                                     ))}
                                 </div>
                             </div>
                         </div>
-                        <Field label="Valor em ienes (¥)" hint="Número sem formatação, ex: 1200">
+                        <Field label={t('yenAmount')} hint={t('yenHint')}>
                             <input type="number" name="pay_rate_yen" placeholder="1200" min="0" className={inputClass} />
                         </Field>
-                        <Field label="Texto de bônus e extras" hint="Ex: Auxílio transporte, bônus anual, apoio moradia...">
-                            <textarea name="bonus_text" rows={3} placeholder="Descreva benefícios adicionais..." className={`${inputClass} resize-none`} />
+                        <Field label={t('bonusText')} hint={t('bonusHint')}>
+                            <textarea name="bonus_text" rows={3} placeholder={t('bonusPlaceholder')} className={`${inputClass} resize-none`} />
                         </Field>
                     </div>
                 </Section>
 
                 {/* ── 03 Descrição e Requisitos ── */}
-                <Section icon={FileText} number="03" title="Descrição e Requisitos">
+                <Section icon={FileText} number="03" title={t('section3')}>
                     <div className="space-y-4">
-                        <Field label="Descrição da vaga" required hint="Descreva as atividades, ambiente de trabalho, diferenciais...">
-                            <textarea name="description" required rows={5} placeholder="Detalhe as responsabilidades e o ambiente de trabalho..." className={`${inputClass} resize-none`} />
+                        <Field label={t('description')} required hint={t('descriptionHint')}>
+                            <textarea name="description" required rows={5} placeholder={t('descriptionPlaceholder')} className={`${inputClass} resize-none`} />
                         </Field>
                         <ListEditor
                             name="requirements"
-                            label="Requisitos"
-                            hint="Liste os requisitos da vaga, um por campo."
-                            placeholder="Requisito"
+                            label={t('requirements')}
+                            hint={t('requirementsHint')}
+                            placeholder={t('requirementsPlaceholder')}
                         />
-                        <Field label="Tags / palavras-chave" hint="Separadas por vírgula. Ex: manufatura, linha de montagem, japonês básico">
-                            <input type="text" name="tags" placeholder="manufatura, Toyota, japonês N5..." className={inputClass} />
+                        <Field label={t('tags')} hint={t('tagsHint')}>
+                            <input type="text" name="tags" placeholder={t('tagsPlaceholder')} className={inputClass} />
                         </Field>
-                        <Field label="Validade da vaga" hint="Deixe em branco para sem prazo definido">
+                        <Field label={t('expiresAt')} hint={t('expiresAtHint')}>
                             <input type="date" name="expires_at" className={inputClass} />
                         </Field>
                     </div>
                 </Section>
 
                 {/* ── 04 Receber Candidaturas ── */}
-                <Section icon={Link} number="04" title="Receber Candidaturas">
+                <Section icon={Link} number="04" title={t('section4')}>
                     <div className="space-y-4">
                         {/* Destaque visual */}
                         <div className="flex gap-3 bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-4">
                             <Info className="w-4 h-4 text-gray-500 dark:text-gray-400 flex-shrink-0 mt-0.5" />
                             <p className="text-xs text-gray-700 dark:text-gray-300 leading-relaxed">
-                                Quando um candidato clicar em <strong>"Enviar Candidatura"</strong> na sua vaga,
-                                o NipponLife enviará automaticamente os dados dele para o seu e-mail abaixo.
+                                {t.rich('contactEmailHint', { strong: (chunks) => <strong>{chunks}</strong> })}
                             </p>
                         </div>
 
                         <Field
-                            label="E-mail para receber candidaturas"
+                            label={t('contactEmail')}
                             required
-                            hint="Use um e-mail que você verifica com frequência. Cada candidatura chegará direto na sua caixa de entrada."
+                            hint={t('contactEmailHint')}
                         >
                             <div className="relative">
                                 <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--nl-text-3)]" />
@@ -349,7 +355,7 @@ export default function JobRegistrationForm() {
                                     type="email"
                                     name="contact_email"
                                     required
-                                    placeholder="suaempresa@email.com"
+                                    placeholder={t('emailPlaceholder')}
                                     className={`${inputClass} pl-9`}
                                 />
                             </div>
@@ -358,13 +364,13 @@ export default function JobRegistrationForm() {
                         {/* Como vai chegar */}
                         <div className="rounded-xl border border-[var(--nl-border)] overflow-hidden">
                             <div className="px-4 py-2.5 bg-[var(--nl-bg)] border-b border-[var(--nl-border)]">
-                                <p className="text-xs font-bold text-[var(--nl-text-3)] uppercase tracking-widest">Como o e-mail chegará</p>
+                                <p className="text-xs font-bold text-[var(--nl-text-3)] uppercase tracking-widest">{t('howItWorks')}</p>
                             </div>
                             <div className="px-4 py-3 space-y-2">
                                 {[
-                                    { dot: 'bg-[var(--nl-accent)]', text: 'Remetente: NipponLife Candidaturas <candidaturas@nippon-life.com>' },
-                                    { dot: 'bg-blue-500', text: 'Assunto: 📋 Nova candidatura para "[Título da Vaga]" — [Nome do candidato]' },
-                                    { dot: 'bg-green-500', text: 'Conteúdo: Nome, WhatsApp (com link direto), cidade e mensagem do candidato' },
+                                    { dot: 'bg-[var(--nl-accent)]', text: t('sender') },
+                                    { dot: 'bg-blue-500', text: t('subject') },
+                                    { dot: 'bg-green-500', text: t('content') },
                                 ].map((item, i) => (
                                     <div key={i} className="flex items-start gap-2.5">
                                         <div className={`w-2 h-2 rounded-full ${item.dot} flex-shrink-0 mt-1`} />
@@ -377,7 +383,7 @@ export default function JobRegistrationForm() {
                 </Section>
 
                 {/* ── 05 Logo / Banner ── */}
-                <Section icon={ImageIcon} number="05" title="Logo ou Banner da Empresa" defaultOpen={false}>
+                <Section icon={ImageIcon} number="05" title={t('section5')} defaultOpen={false}>
                     <ImageUploader value={coverUrl} onChange={setCoverUrl} />
                 </Section>
 
@@ -391,12 +397,12 @@ export default function JobRegistrationForm() {
                 <button type="submit" disabled={submitting}
                     className="w-full py-4 rounded-xl bg-[var(--nl-accent)] text-white font-heading font-bold text-base hover:bg-[var(--nl-accent)]/90 disabled:opacity-60 disabled:cursor-not-allowed transition-all flex items-center justify-center gap-2 shadow-lg shadow-[var(--nl-accent)]/20">
                     {submitting
-                        ? <><Loader2 className="w-5 h-5 animate-spin" />Enviando...</>
-                        : <><CheckCircle2 className="w-5 h-5" />Enviar Vaga</>}
+                        ? <><Loader2 className="w-5 h-5 animate-spin" />{t('submitting')}</>
+                        : <><CheckCircle2 className="w-5 h-5" />{t('submitButton')}</>}
                 </button>
 
                 <p className="text-center text-xs text-[var(--nl-text-3)] pb-8">
-                    Ao enviar, você concorda que as informações da vaga serão publicadas no portal NipponLife.
+                    {t('agreement')}
                 </p>
             </form>
         </div>

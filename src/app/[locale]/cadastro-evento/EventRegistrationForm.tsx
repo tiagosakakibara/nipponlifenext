@@ -2,6 +2,7 @@
 
 import { useState, useRef, useCallback } from 'react';
 import Image from 'next/image';
+import { useTranslations } from 'next-intl';
 import { submitEventForm, uploadEventFile } from '@/app/actions/submitEventForm';
 import {
     Calendar, MapPin, Image as ImageIcon, FileText,
@@ -28,11 +29,13 @@ function ImageUploader({ value, onChange }: { value: string; onChange: (url: str
         else onChange(result.url);
     }, [onChange]);
 
+    const t = useTranslations('events.registration');
+
     return (
         <div className="space-y-2">
             {value ? (
                 <div className="relative aspect-video max-w-sm rounded-xl overflow-hidden border-2 border-[var(--nl-accent)] group">
-                    <Image src={value} alt="Banner do evento" fill className="object-cover" />
+                    <Image src={value} alt={t('bannerAlt')} fill className="object-cover" />
                     <button type="button" onClick={() => onChange('')}
                         className="absolute top-2 right-2 p-1.5 bg-black/70 rounded-full text-white opacity-0 group-hover:opacity-100 transition-opacity">
                         <X className="w-3.5 h-3.5" />
@@ -48,7 +51,7 @@ function ImageUploader({ value, onChange }: { value: string; onChange: (url: str
                         : (<>
                             <Upload className="w-6 h-6 text-[var(--nl-text-3)]" />
                             <span className="text-xs text-[var(--nl-text-3)] text-center px-4">
-                                Clique ou arraste o banner aqui<br />JPG, PNG, WEBP — máx 10MB
+                                {t.rich('uploadText', { br: () => <br /> })}
                             </span>
                         </>)}
                 </div>
@@ -120,6 +123,7 @@ function DateTimeField({ label, name, required, hint }: { label: string; name: s
 // ─── Main Form ────────────────────────────────────────────────────────────────
 
 export default function EventRegistrationForm() {
+    const t = useTranslations('events.registration');
     const [submitting, setSubmitting] = useState(false);
     const [submitted, setSubmitted] = useState(false);
     const [submitError, setSubmitError] = useState('');
@@ -149,14 +153,13 @@ export default function EventRegistrationForm() {
                         <CheckCircle2 className="w-10 h-10 text-green-500" />
                     </div>
                     <div>
-                        <h1 className="font-heading text-3xl font-bold text-[var(--nl-text)] mb-2">Evento enviado! 🎉</h1>
+                        <h1 className="font-heading text-3xl font-bold text-[var(--nl-text)] mb-2">{t('successTitle')}</h1>
                         <p className="text-[var(--nl-text-2)] text-base leading-relaxed">
-                            Seu evento foi enviado com sucesso e está em análise.<br />
-                            Nossa equipe irá revisá-lo e publicar no calendário em breve.
+                            {t.rich('successMessage', { br: () => <br /> })}
                         </p>
                     </div>
                     <div className="bg-[var(--nl-surface)] rounded-2xl border border-[var(--nl-border)] p-5 text-sm text-[var(--nl-text-3)]">
-                        O evento entrará como <strong>rascunho</strong> e ficará visível após a publicação pela equipe NipponLife.
+                        {t.rich('draftNote', { strong: (chunks) => <strong>{chunks}</strong> })}
                     </div>
                     <Image src="/images/logo-full.png" alt="NipponLife" width={140} height={40} className="mx-auto opacity-60" />
                 </div>
@@ -173,11 +176,10 @@ export default function EventRegistrationForm() {
                     <Image src="/images/logo-full.png" alt="NipponLife" width={160} height={48}
                         className="mx-auto brightness-0 invert" />
                     <h1 className="font-heading text-2xl md:text-3xl font-bold leading-tight">
-                        Divulgar Evento
+                        {t('title')}
                     </h1>
                     <p className="text-white/85 text-sm md:text-base max-w-md mx-auto leading-relaxed">
-                        Preencha os dados do seu evento para publicá-lo no calendário do NipponLife
-                        e alcançar toda a comunidade brasileira no Japão.
+                        {t('headerSubtitle')}
                     </p>
                 </div>
             </div>
@@ -188,68 +190,71 @@ export default function EventRegistrationForm() {
                 <div className="flex gap-3 bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-4">
                     <Info className="w-4 h-4 text-gray-500 dark:text-gray-400 flex-shrink-0 mt-0.5" />
                     <p className="text-xs text-gray-700 dark:text-gray-300 leading-relaxed">
-                        Campos com <span className="text-[var(--nl-accent)] font-bold">*</span> são obrigatórios.
-                        O evento entrará como <strong>rascunho</strong> e será revisada antes de ser publicado no calendário.
+                        {t.rich('info', {
+                            accent: (chunks) => <span className="text-[var(--nl-accent)] font-bold">{chunks}</span>,
+                            strong: (chunks) => <strong>{chunks}</strong>
+                        })}
                     </p>
                 </div>
 
                 {/* ── 01 Sobre o Evento ── */}
-                <Section icon={Calendar} number="01" title="Sobre o Evento">
+                <Section icon={Calendar} number="01" title={t('section1')}>
                     <div className="space-y-4">
-                        <Field label="Título do evento" required>
+                        <Field label={t('eventTitle')} required>
                             <input type="text" name="title" required
-                                placeholder="Ex: Festival Brasileiro de Verão em Osaka"
+                                placeholder={t('eventTitlePlaceholder')}
                                 className={inputClass} />
                         </Field>
-                        <Field label="Descrição" hint="Conte o que vai acontecer, para quem é e o que as pessoas podem esperar.">
+                        <Field label={t('description')} hint={t('descriptionHint')}>
                             <textarea name="description" rows={5}
-                                placeholder="Detalhe o evento, atrações, programação, ingressos..."
+                                placeholder={t('descriptionPlaceholder')}
                                 className={`${inputClass} resize-none`} />
                         </Field>
                     </div>
                 </Section>
 
                 {/* ── 02 Data e Hora ── */}
-                <Section icon={Clock} number="02" title="Data e Hora">
+                <Section icon={Clock} number="02" title={t('section2')}>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <DateTimeField
-                            label="Início"
+                            label={t('startsAt')}
                             name="starts_at"
                             required
-                            hint="Data e hora de início do evento"
+                            hint={t('startsAtHint')}
                         />
                         <DateTimeField
-                            label="Fim"
+                            label={t('endsAt')}
                             name="ends_at"
-                            hint="Opcional — data e hora de encerramento"
+                            hint={t('endsAtHint')}
                         />
                     </div>
 
                     {/* Visual date preview */}
                     <div className="mt-4 p-4 bg-[var(--nl-accent)]/5 border border-[var(--nl-accent)]/20 rounded-xl">
                         <p className="text-xs text-[var(--nl-text-3)]">
-                            <span className="font-semibold text-[var(--nl-accent)]">Dica:</span> Para eventos de dia inteiro, coloque 00:00 como horário de início e 23:59 como término.
-                            Para eventos recorrentes, cadastre cada data separadamente.
+                            {t.rich('dateTip', {
+                                span: (chunks) => <span className="font-semibold text-[var(--nl-accent)]">{chunks}</span>
+                            })}
                         </p>
                     </div>
                 </Section>
 
                 {/* ── 03 Local ── */}
-                <Section icon={MapPin} number="03" title="Local">
+                <Section icon={MapPin} number="03" title={t('section3')}>
                     <div className="space-y-4">
-                        <Field label="Nome do local / endereço" hint="Ex: Parque Yoyogi, Tokyo — ou endereço completo">
+                        <Field label={t('location')} hint={t('locationHint')}>
                             <div className="relative">
                                 <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--nl-text-3)]" />
                                 <input type="text" name="location"
-                                    placeholder="Ex: Centro Comunitário Nikkei, Hamamatsu"
+                                    placeholder={t('locationPlaceholder')}
                                     className={`${inputClass} pl-9`} />
                             </div>
                         </Field>
-                        <Field label="Link do Google Maps" hint="Cole o link de compartilhamento">
+                        <Field label={t('googleMaps')} hint={t('googleMapsHint')}>
                             <div className="relative">
                                 <Link className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--nl-text-3)]" />
                                 <input type="url" name="google_maps_url"
-                                    placeholder="https://maps.google.com/..."
+                                    placeholder={t('googleMapsPlaceholder')}
                                     className={`${inputClass} pl-9`} />
                             </div>
                         </Field>
@@ -258,23 +263,23 @@ export default function EventRegistrationForm() {
                         <div className="flex gap-3 bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-3">
                             <Users className="w-4 h-4 text-gray-500 dark:text-gray-400 flex-shrink-0 mt-0.5" />
                             <p className="text-xs text-gray-700 dark:text-gray-300">
-                                Para eventos <strong>online</strong>, escreva "Online" no campo de local e cole o link da transmissão no campo de contato/inscrição abaixo.
+                                {t.rich('onlineEventNotice', { strong: (chunks) => <strong>{chunks}</strong> })}
                             </p>
                         </div>
                     </div>
                 </Section>
 
                 {/* ── 04 Inscrição / Contato ── */}
-                <Section icon={FileText} number="04" title="Inscrição e Contato">
+                <Section icon={FileText} number="04" title={t('section4')}>
                     <div className="space-y-4">
                         <Field
-                            label="Link de inscrição ou contato"
-                            hint="WhatsApp, Eventbrite, Google Forms, Instagram ou qualquer link para participar"
+                            label={t('contactUrl')}
+                            hint={t('contactUrlHint')}
                         >
                             <div className="relative">
                                 <Link className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--nl-text-3)]" />
                                 <input type="url" name="contact_url"
-                                    placeholder="https://wa.me/... ou https://forms.google.com/..."
+                                    placeholder={t('contactUrlPlaceholder')}
                                     className={`${inputClass} pl-9`} />
                             </div>
                         </Field>
@@ -295,10 +300,10 @@ export default function EventRegistrationForm() {
                 </Section>
 
                 {/* ── 05 Banner / Imagem ── */}
-                <Section icon={ImageIcon} number="05" title="Banner do Evento" defaultOpen={false}>
+                <Section icon={ImageIcon} number="05" title={t('section5')} defaultOpen={false}>
                     <div className="space-y-3">
                         <p className="text-sm text-[var(--nl-text-2)]">
-                            Adicione um banner atrativo para o seu evento. Proporção 16:9. Recomendado: 1200×675px.
+                            {t('bannerHint')}
                         </p>
                         <ImageUploader value={coverUrl} onChange={setCoverUrl} />
                     </div>
@@ -314,12 +319,12 @@ export default function EventRegistrationForm() {
                 <button type="submit" disabled={submitting}
                     className="w-full py-4 rounded-xl bg-[var(--nl-accent)] text-white font-heading font-bold text-base hover:bg-[var(--nl-accent)]/90 disabled:opacity-60 disabled:cursor-not-allowed transition-all flex items-center justify-center gap-2 shadow-lg shadow-[var(--nl-accent)]/20">
                     {submitting
-                        ? <><Loader2 className="w-5 h-5 animate-spin" />Enviando...</>
-                        : <><CheckCircle2 className="w-5 h-5" />Enviar Evento</>}
+                        ? <><Loader2 className="w-5 h-5 animate-spin" />{t('submitting')}</>
+                        : <><CheckCircle2 className="w-5 h-5" />{t('submitButton')}</>}
                 </button>
 
                 <p className="text-center text-xs text-[var(--nl-text-3)] pb-8">
-                    Ao enviar, você autoriza a publicação das informações do evento no calendário do NipponLife.
+                    {t('agreement')}
                 </p>
             </form>
         </div>
