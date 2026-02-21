@@ -58,7 +58,7 @@ export function SmallFeaturedCard({ item, className = '' }: SmallFeaturedCardPro
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
 
                 {/* Category Badge */}
-                <div className="absolute top-4 left-4 px-3 py-1.5 rounded-lg bg-[var(--nl-accent)] text-white text-[10px] font-bold uppercase tracking-widest z-10">
+                <div className={`absolute top-4 left-4 px-3 py-1 ${item.type === 'job' ? 'bg-black/60 backdrop-blur-md rounded-full border border-white/10 shadow-sm' : 'bg-[#D70F24] rounded-lg'} text-white text-[10px] font-bold uppercase tracking-widest z-10`}>
                     {t(`categories.${normalizeCategorySlug(item.category)}`, { defaultMessage: item.category })}
                 </div>
 
@@ -66,36 +66,45 @@ export function SmallFeaturedCard({ item, className = '' }: SmallFeaturedCardPro
             </div>
 
             {/* Content */}
-            <div className="p-5 flex flex-col flex-1 h-[150px]">
+            <div className="p-4 flex flex-col flex-1 bg-white h-[150px]">
                 {/* Top Row: Title & Salary */}
-                <div className="flex items-start justify-between gap-3 mb-2">
-                    <div className="flex-1 min-w-0">
-                        <h3 className="text-base font-bold text-[var(--nl-primary)] line-clamp-2 leading-tight group-hover:text-[var(--nl-accent)] transition-colors duration-300">
+                <div className="flex items-start justify-between gap-3 mb-3">
+                    <div className="flex-1 min-w-0 flex flex-col justify-center">
+                        <h3 className={`font-black text-[#002B52] leading-none mb-1 group-hover:text-[#D70F24] transition-colors tracking-tight ${item.type === 'job' ? 'text-lg md:text-xl line-clamp-1' : 'text-base line-clamp-2'}`}>
                             {title}
                         </h3>
+                        {item.type === 'job' && (
+                            <p className="text-sm md:text-[15px] font-medium text-[#1872B6] mt-1 line-clamp-1">
+                                {item.summary?.split('•')[0]?.trim() || t(`categories.${normalizeCategorySlug(item.category)}`, { defaultMessage: item.category })}
+                            </p>
+                        )}
                     </div>
                     {item.type === 'job' && item.salary && (
-                        <div className="text-right shrink-0">
-                            <span className="text-xl font-black text-[var(--nl-primary)] tracking-tight leading-none block">
+                        <div className="text-right shrink-0 flex flex-col justify-center">
+                            <span className="text-xl md:text-2xl font-black text-[#002B52] tracking-tight leading-none block">
                                 {item.salary.includes('¥') ? '' : '¥'}{item.salary.split('/')[0].replace('¥', '').trim()}
                             </span>
-                            <span className="text-[9px] font-bold text-[var(--nl-secondary)] uppercase tracking-wider block mt-0.5">
+                            <span className="text-[10px] font-bold text-[#1872B6] uppercase tracking-wider block mt-1">
                                 {t('jobs.salaryLabel', { defaultValue: 'Valor da Hora' })}
                             </span>
                         </div>
                     )}
                 </div>
 
+                <div className="w-full h-px bg-gray-200 mt-auto mb-3" />
+
                 {/* Bottom Row: Location & Date */}
-                <div className="mt-auto flex items-end justify-between gap-2 border-t border-[var(--nl-primary)]/5 pt-3">
+                <div className="flex items-center justify-between">
                     <div className="flex flex-col gap-1.5">
-                        <div className="flex items-center gap-1.5 text-[var(--nl-accent)]">
-                            <MapPin className="w-3.5 h-3.5" />
-                            <span className="text-xs font-bold line-clamp-1 uppercase tracking-wider">
-                                {item.summary.split('•')[1]?.trim() || t(`categories.${normalizeCategorySlug(item.category)}`, { defaultMessage: item.category })}
+                        <div className="flex items-center gap-1.5 text-[#D70F24]">
+                            <MapPin className="w-4 h-4 md:w-4 md:h-4 stroke-[2.5]" />
+                            <span className="text-xs md:text-[13px] font-bold line-clamp-1 uppercase tracking-wider">
+                                {item.type === 'job' ? (item.summary?.split('•')[1]?.trim() || 'JAPAN') : (item.summary?.split('•')[1]?.trim() || t(`categories.${normalizeCategorySlug(item.category)}`, { defaultMessage: item.category }))}
                             </span>
                         </div>
-                        <div className="flex items-center gap-1.5 text-[var(--nl-secondary)] opacity-80">
+                    </div>
+                    {item.type !== 'job' && (
+                        <div className="flex items-center gap-1.5 text-[#1872B6] opacity-80">
                             <Calendar className="w-3.5 h-3.5" />
                             <span className="text-[11px] font-medium">
                                 {new Date(item.date).toLocaleDateString(locale, {
@@ -105,7 +114,7 @@ export function SmallFeaturedCard({ item, className = '' }: SmallFeaturedCardPro
                                 })}
                             </span>
                         </div>
-                    </div>
+                    )}
                 </div>
             </div>
 

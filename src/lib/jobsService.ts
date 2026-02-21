@@ -170,7 +170,7 @@ export function mapDbToJob(j: any): Job {
         id: j.id,
         title: j.title,
         company: j.company_name,
-        location: j.prefecture ? `${j.prefecture}, ${j.city || ''}` : j.location,
+        location: j.prefecture && j.prefecture.toLowerCase() !== 'null' ? `${j.prefecture}${j.city && j.city.toLowerCase() !== 'null' ? `, ${j.city}` : ''}` : (j.location && j.location.toLowerCase() !== 'null' ? j.location : ''),
         description: j.description ? j.description.split('\n') : [],
         requirements: j.requirements || [],
         benefits: Array.isArray(j.benefits) ? j.benefits : [],

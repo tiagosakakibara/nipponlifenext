@@ -87,7 +87,7 @@ export default async function HomePage() {
     const { data: headerJobsData } = await supabase
         .from('jobs')
         .select(`
-             id, title, company_name, location,
+             id, title, company_name, location, prefecture, city,
              cover_image_url, created_at,
              pay_rate_yen, pay_unit, pay_text, salary_text
         `)
@@ -95,18 +95,25 @@ export default async function HomePage() {
         .order('created_at', { ascending: false })
         .limit(9);
 
-    const headerJobs: FeaturedItem[] = (headerJobsData || []).map((job) => ({
-        id: job.id,
-        type: 'job',
-        title: job.title,
-        summary: `${job.company_name} • ${job.location}`,
-        date: job.created_at,
-        image: job.cover_image_url || 'https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?auto=format&fit=crop&q=80&w=800',
-        category: 'vagas', // "Vagas" normalized
-        slug: job.id,
-        pay_rate_yen: job.pay_rate_yen,
-        salary: job.salary_text || (job.pay_rate_yen ? `¥${job.pay_rate_yen.toLocaleString()}/${job.pay_unit || 'h'}` : job.pay_text),
-    }));
+    const headerJobs: FeaturedItem[] = (headerJobsData || []).map((job) => {
+        const pref = job.prefecture && job.prefecture.toLowerCase() !== 'null' ? job.prefecture : null;
+        const cty = job.city && job.city.toLowerCase() !== 'null' ? job.city : null;
+        let finalLocation = pref ? `${pref}${cty ? `, ${cty}` : ''}` : (job.location && job.location.toLowerCase() !== 'null' ? job.location : 'JAPAN');
+        if (!finalLocation) finalLocation = 'JAPAN';
+
+        return {
+            id: job.id,
+            type: 'job',
+            title: job.title,
+            summary: `${job.company_name} • ${finalLocation}`,
+            date: job.created_at,
+            image: job.cover_image_url || 'https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?auto=format&fit=crop&q=80&w=800',
+            category: 'vagas', // "Vagas" normalized
+            slug: job.id,
+            pay_rate_yen: job.pay_rate_yen,
+            salary: job.salary_text || (job.pay_rate_yen ? `¥${job.pay_rate_yen.toLocaleString()}/${job.pay_unit || 'h'}` : job.pay_text),
+        };
+    });
 
     // 5. Fetch Premium Business (for large card - limit 1)
     const { data: premiumBusinessData } = await supabase

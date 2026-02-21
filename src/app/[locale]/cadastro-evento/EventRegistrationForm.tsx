@@ -171,7 +171,7 @@ export default function EventRegistrationForm() {
     return (
         <div className="min-h-screen bg-[var(--nl-bg)]">
             {/* Header */}
-            <div className="bg-[var(--nl-accent)] text-white py-10 px-4">
+            <div className="bg-[#002B52] text-white py-10 px-4">
                 <div className="max-w-2xl mx-auto text-center space-y-4">
                     <Image src="/images/logo-full.png" alt="NipponLife" width={160} height={48}
                         className="mx-auto brightness-0 invert" />

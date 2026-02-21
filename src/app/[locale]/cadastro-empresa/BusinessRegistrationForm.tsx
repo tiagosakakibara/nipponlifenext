@@ -333,7 +333,7 @@ export default function BusinessRegistrationForm() {
     return (
         <div className="min-h-screen bg-[var(--nl-bg)]">
             {/* Header */}
-            <div className="bg-[var(--nl-accent)] text-white py-10 px-4">
+            <div className="bg-[#002B52] text-white py-10 px-4">
                 <div className="max-w-2xl mx-auto text-center space-y-4">
                     <Image
                         src="/images/logo-full.png"
