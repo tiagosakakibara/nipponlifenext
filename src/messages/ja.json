@@ -255,7 +255,7 @@
         "sunday": "日曜",
         "closed": "休業",
         "premium": "プレミアム",
-        "foundCount": "{{count}}件の結果を表示中",
+        "foundCount": "{count}件の結果を表示中",
         "noResults": "ビジネスが見つかりませんでした",
         "noResultsDesc": "検索フィルターを調整してみてください。",
         "featuredTitle": "おすすめのビジネス",
