@@ -3,7 +3,7 @@
 import { useRouter } from '@/i18n/routing';
 import Image from 'next/image';
 import { useTranslations, useLocale } from 'next-intl';
-import { Calendar } from 'lucide-react';
+import { Calendar, MapPin } from 'lucide-react';
 import { getTranslatedField, normalizeCategorySlug } from '@/lib/getTranslatedField';
 import { storageService } from '@/lib/storageService';
 import { FeaturedItem } from './LargeFeaturedCard';
@@ -58,28 +58,54 @@ export function SmallFeaturedCard({ item, className = '' }: SmallFeaturedCardPro
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
 
                 {/* Category Badge */}
-                <div className="absolute top-4 left-4 px-3 py-1.5 rounded-lg bg-[var(--nl-accent)] text-white text-[10px] font-bold uppercase tracking-widest">
+                <div className="absolute top-4 left-4 px-3 py-1.5 rounded-lg bg-[var(--nl-accent)] text-white text-[10px] font-bold uppercase tracking-widest z-10">
                     {t(`categories.${normalizeCategorySlug(item.category)}`, { defaultMessage: item.category })}
                 </div>
+
+
             </div>
 
             {/* Content */}
-            <div className="p-6">
-                {/* Title */}
-                <h3 className="text-lg font-bold text-[var(--nl-primary)] mb-3 line-clamp-2 group-hover:text-[var(--nl-accent)] transition-colors duration-300">
-                    {title}
-                </h3>
+            <div className="p-5 flex flex-col flex-1 h-[150px]">
+                {/* Top Row: Title & Salary */}
+                <div className="flex items-start justify-between gap-3 mb-2">
+                    <div className="flex-1 min-w-0">
+                        <h3 className="text-base font-bold text-[var(--nl-primary)] line-clamp-2 leading-tight group-hover:text-[var(--nl-accent)] transition-colors duration-300">
+                            {title}
+                        </h3>
+                    </div>
+                    {item.type === 'job' && item.salary && (
+                        <div className="text-right shrink-0">
+                            <span className="text-xl font-black text-[var(--nl-primary)] tracking-tight leading-none block">
+                                {item.salary.includes('¥') ? '' : '¥'}{item.salary.split('/')[0].replace('¥', '').trim()}
+                            </span>
+                            <span className="text-[9px] font-bold text-[var(--nl-secondary)] uppercase tracking-wider block mt-0.5">
+                                {t('jobs.salaryLabel', { defaultValue: 'Valor da Hora' })}
+                            </span>
+                        </div>
+                    )}
+                </div>
 
-                {/* Date */}
-                <div className="flex items-center gap-2 text-[var(--nl-secondary)]">
-                    <Calendar className="w-3.5 h-3.5" />
-                    <span className="text-xs">
-                        {new Date(item.date).toLocaleDateString(locale, {
-                            day: '2-digit',
-                            month: 'short',
-                            year: 'numeric'
-                        })}
-                    </span>
+                {/* Bottom Row: Location & Date */}
+                <div className="mt-auto flex items-end justify-between gap-2 border-t border-[var(--nl-primary)]/5 pt-3">
+                    <div className="flex flex-col gap-1.5">
+                        <div className="flex items-center gap-1.5 text-[var(--nl-accent)]">
+                            <MapPin className="w-3.5 h-3.5" />
+                            <span className="text-xs font-bold line-clamp-1 uppercase tracking-wider">
+                                {item.summary.split('•')[1]?.trim() || t(`categories.${normalizeCategorySlug(item.category)}`, { defaultMessage: item.category })}
+                            </span>
+                        </div>
+                        <div className="flex items-center gap-1.5 text-[var(--nl-secondary)] opacity-80">
+                            <Calendar className="w-3.5 h-3.5" />
+                            <span className="text-[11px] font-medium">
+                                {new Date(item.date).toLocaleDateString(locale, {
+                                    day: '2-digit',
+                                    month: 'short',
+                                    year: 'numeric'
+                                })}
+                            </span>
+                        </div>
+                    </div>
                 </div>
             </div>
 

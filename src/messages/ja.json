@@ -1163,6 +1163,7 @@
         "company": "会社",
         "searchPlaceholder": "職種、会社名、都市で検索...",
         "searchLabel": "求人を検索",
+        "salaryLabel": "給与",
         "regionLabel": "地域",
         "typeLabel": "雇用形態",
         "allRegions": "すべての地域",

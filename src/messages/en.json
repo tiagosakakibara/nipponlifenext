@@ -1207,6 +1207,7 @@
         "company": "Company",
         "searchPlaceholder": "Search by position, company or city...",
         "searchLabel": "Search jobs",
+        "salaryLabel": "Hourly Pay",
         "regionLabel": "Region",
         "typeLabel": "Job type",
         "allRegions": "All regions",

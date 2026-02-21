@@ -1298,6 +1298,7 @@
         "company": "Empresa",
         "searchPlaceholder": "Buscar por cargo, empresa ou cidade...",
         "searchLabel": "Buscar vagas",
+        "salaryLabel": "Valor da Hora",
         "regionLabel": "Região",
         "typeLabel": "Tipo de vaga",
         "allRegions": "Todas as regiões",

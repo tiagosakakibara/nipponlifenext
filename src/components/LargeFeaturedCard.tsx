@@ -20,6 +20,8 @@ export interface FeaturedItem {
     title_en?: string;
     summary_ja?: string;
     summary_en?: string;
+    salary?: string;
+    pay_rate_yen?: number;
 }
 
 interface LargeFeaturedCardProps {

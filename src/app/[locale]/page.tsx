@@ -88,7 +88,8 @@ export default async function HomePage() {
         .from('jobs')
         .select(`
              id, title, company_name, location,
-             cover_image_url, created_at
+             cover_image_url, created_at,
+             pay_rate_yen, pay_unit, pay_text, salary_text
         `)
         .eq('status', 'published')
         .order('created_at', { ascending: false })
@@ -102,7 +103,9 @@ export default async function HomePage() {
         date: job.created_at,
         image: job.cover_image_url || 'https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?auto=format&fit=crop&q=80&w=800',
         category: 'vagas', // "Vagas" normalized
-        slug: job.id
+        slug: job.id,
+        pay_rate_yen: job.pay_rate_yen,
+        salary: job.salary_text || (job.pay_rate_yen ? `¥${job.pay_rate_yen.toLocaleString()}/${job.pay_unit || 'h'}` : job.pay_text),
     }));
 
     // 5. Fetch Premium Business (for large card - limit 1)
