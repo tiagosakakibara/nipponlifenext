@@ -106,12 +106,12 @@ export default function AdminCommunityPostFormClient({ id, initialData }: Props)
             {/* Header */}
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
                 <div>
-                    <div className="flex items-center gap-2 text-zinc-400 mb-2">
+                    <div className="flex items-center gap-2 text-secondary mb-2">
                         <span className="text-[10px] font-black uppercase tracking-[0.2em]">Community</span>
                         <ChevronRight className="w-3 h-3" />
-                        <span className="text-[10px] font-black uppercase tracking-[0.2em] text-[#5593C3]">Editor</span>
+                        <span className="text-[10px] font-black uppercase tracking-[0.2em] text-link">Editor</span>
                     </div>
-                    <h1 className="text-4xl font-black text-[#1a1a1a] dark:text-white tracking-tight">
+                    <h1 className="text-4xl font-black text-primary tracking-tight">
                         {id ? 'Refine Post' : 'Craft Experience'}
                     </h1>
                 </div>
