@@ -32,6 +32,18 @@ function getEmbedUrl(url: string): string | null {
 export function BusinessGallery({ images, title, videoUrl }: BusinessGalleryProps) {
     const t = useTranslations();
     const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(null);
+    const [touchStart, setTouchStart] = useState<number | null>(null);
+    const [touchEnd, setTouchEnd] = useState<number | null>(null);
+
+    // Minimum swipe distance (in px) to register a swipe
+    const minSwipeDistance = 50;
+
+    const onTouchStart = (e: React.TouchEvent) => {
+        setTouchEnd(null); // otherwise the swipe is fired even with usual touch events
+        setTouchStart(e.targetTouches[0].clientX);
+    };
+
+    const onTouchMove = (e: React.TouchEvent) => setTouchEnd(e.targetTouches[0].clientX);
 
     const embedUrl = videoUrl ? getEmbedUrl(videoUrl) : null;
 
@@ -44,6 +56,18 @@ export function BusinessGallery({ images, title, videoUrl }: BusinessGalleryProp
         if (selectedImageIndex === null || !images) return;
         setSelectedImageIndex((selectedImageIndex - 1 + images.length) % images.length);
     }, [selectedImageIndex, images]);
+
+    const onTouchEnd = () => {
+        if (!touchStart || !touchEnd) return;
+        const distance = touchStart - touchEnd;
+        const isLeftSwipe = distance > minSwipeDistance;
+        const isRightSwipe = distance < -minSwipeDistance;
+        if (isLeftSwipe) {
+            handleNextImage();
+        } else if (isRightSwipe) {
+            handlePrevImage();
+        }
+    };
 
     useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
@@ -97,6 +121,9 @@ export function BusinessGallery({ images, title, videoUrl }: BusinessGalleryProp
                 <div
                     className="fixed inset-0 z-[100] flex items-center justify-center bg-black/95 backdrop-blur-sm p-4 animate-fade-in"
                     onClick={() => setSelectedImageIndex(null)}
+                    onTouchStart={onTouchStart}
+                    onTouchMove={onTouchMove}
+                    onTouchEnd={onTouchEnd}
                 >
                     <button
                         className="absolute top-6 right-6 p-2 text-white hover:bg-white/10 rounded-full transition-colors z-50"
