@@ -113,7 +113,7 @@ export function Header({ searchQuery = '', onSearchChange = () => { } }: HeaderP
                                 <button
                                     onClick={() => {
                                         setIsMenuOpen(false);
-                                        router.push(user ? '/perfil' : '/login');
+                                        router.push(user ? '/perfil' : `/login?redirect=${encodeURIComponent(pathname)}`);
                                     }}
                                     className="block w-full text-center px-5 py-4 rounded-2xl bg-[#1a1a1a] text-white font-black text-xs uppercase tracking-widest hover:bg-black transition-all"
                                 >

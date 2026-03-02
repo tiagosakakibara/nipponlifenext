@@ -2,6 +2,7 @@
 
 import { useState, useRef, FormEvent } from 'react';
 import { useTranslations } from 'next-intl';
+import { usePathname } from 'next/navigation';
 import { HelpCircle, Lock, Loader2, ChevronDown } from 'lucide-react';
 import { supabase } from '@/lib/supabaseClient';
 import { useAuth } from '@/hooks/useAuth';
@@ -13,6 +14,7 @@ export function PublishQuestionForm() {
     const t = useTranslations();
     const { user } = useAuth();
     const router = useRouter();
+    const pathname = usePathname();
     const [questionTitle, setQuestionTitle] = useState('');
     const [category, setCategory] = useState('');
     const [description, setDescription] = useState('');
@@ -22,7 +24,7 @@ export function PublishQuestionForm() {
         e.preventDefault();
 
         if (!user) {
-            router.push('/login');
+            router.push(`/login?redirect=${encodeURIComponent(pathname)}`);
             return;
         }
 
@@ -77,91 +79,108 @@ export function PublishQuestionForm() {
                 <HelpCircle className="w-5 h-5 text-[#5593C3]" />
             </div>
 
-            {/* Form */}
-            <form onSubmit={handleSubmit} className="p-5 space-y-5">
-                {/* Title Input */}
-                <div>
-                    <label className="block text-sm font-medium text-primary mb-1.5">
-                        {t('community.questions.formTitleLabel', { defaultMessage: 'Título da pergunta' })}
-                    </label>
-                    <input
-                        type="text"
-                        value={questionTitle}
-                        onChange={(e) => setQuestionTitle(e.target.value)}
-                        placeholder={t('community.questions.formTitlePlaceholder', { defaultMessage: 'Ex: Como renovar o visto de trabalho?' })}
-                        className="w-full px-4 py-2.5 border border-app rounded-xl bg-app text-primary placeholder:text-muted text-sm focus:outline-none focus:ring-2 focus:ring-[#D70F24]/30 focus:border-[#D70F24] transition-all"
-                        disabled={submitting || !user}
+            {/* Wrapper for Unauthenticated Overlay */}
+            <div className="relative">
+                {!user && (
+                    <div
+                        className="absolute inset-0 z-10 cursor-pointer"
+                        onClick={() => {
+                            toast.error(t('community.questions.loginRequiredMessage', { defaultMessage: 'Você precisa registrar no site ou estar logado para poder postar.' }), {
+                                duration: 4000,
+                            });
+                            setTimeout(() => {
+                                router.push(`/login?redirect=${encodeURIComponent(pathname)}`);
+                            }, 1500);
+                        }}
                     />
-                </div>
+                )}
 
-                {/* Category Select */}
-                <div>
-                    <label className="block text-sm font-medium text-primary mb-1.5">
-                        {t('community.questions.formCategoryLabel', { defaultMessage: 'Categoria' })}
-                    </label>
-                    <div className="flex flex-col sm:flex-row sm:items-center gap-2">
-                        <div className="relative flex-1">
-                            <select
-                                value={category}
-                                onChange={(e) => setCategory(e.target.value)}
-                                className="w-full px-4 py-2.5 border border-app rounded-xl bg-app text-primary text-sm focus:outline-none focus:ring-2 focus:ring-[#D70F24]/30 focus:border-[#D70F24] appearance-none cursor-pointer transition-all"
-                                disabled={submitting || !user}
-                            >
-                                <option value="">{t('admin.selectCategory', { defaultMessage: 'Selecione uma categoria...' })}</option>
-                                {QUESTION_CATEGORIES.map((cat) => {
-                                    const CATEGORY_MAP: Record<string, string> = {
-                                        'Visto e imigração': 'visto',
-                                        'Saúde e seguros': 'saude',
-                                        'Trabalho': 'trabalho',
-                                        'Moradia': 'moradia',
-                                        'Documentos e registros': 'documentos',
-                                        'Convivência e cultura': 'cultura',
-                                        'Outros': 'outros'
-                                    };
-                                    const catKey = CATEGORY_MAP[cat] || cat;
-                                    return (
-                                        <option key={cat} value={cat}>
-                                            {t(`community.categories.${catKey}`, { defaultMessage: cat })}
-                                        </option>
-                                    );
-                                })}
-                            </select>
-                            <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted pointer-events-none" />
+                {/* Form */}
+                <form onSubmit={handleSubmit} className="p-5 space-y-5">
+                    {/* Title Input */}
+                    <div>
+                        <label className="block text-sm font-medium text-primary mb-1.5">
+                            {t('community.questions.formTitleLabel', { defaultMessage: 'Título da pergunta' })}
+                        </label>
+                        <input
+                            type="text"
+                            value={questionTitle}
+                            onChange={(e) => setQuestionTitle(e.target.value)}
+                            placeholder={t('community.questions.formTitlePlaceholder', { defaultMessage: 'Ex: Como renovar o visto de trabalho?' })}
+                            className="w-full px-4 py-2.5 border border-app rounded-xl bg-app text-primary placeholder:text-muted text-sm focus:outline-none focus:ring-2 focus:ring-[#D70F24]/30 focus:border-[#D70F24] transition-all"
+                            disabled={submitting || !user}
+                        />
+                    </div>
+
+                    {/* Category Select */}
+                    <div>
+                        <label className="block text-sm font-medium text-primary mb-1.5">
+                            {t('community.questions.formCategoryLabel', { defaultMessage: 'Categoria' })}
+                        </label>
+                        <div className="flex flex-col sm:flex-row sm:items-center gap-2">
+                            <div className="relative flex-1">
+                                <select
+                                    value={category}
+                                    onChange={(e) => setCategory(e.target.value)}
+                                    className="w-full px-4 py-2.5 border border-app rounded-xl bg-app text-primary text-sm focus:outline-none focus:ring-2 focus:ring-[#D70F24]/30 focus:border-[#D70F24] appearance-none cursor-pointer transition-all"
+                                    disabled={submitting || !user}
+                                >
+                                    <option value="">{t('admin.selectCategory', { defaultMessage: 'Selecione uma categoria...' })}</option>
+                                    {QUESTION_CATEGORIES.map((cat) => {
+                                        const CATEGORY_MAP: Record<string, string> = {
+                                            'Visto e imigração': 'visto',
+                                            'Saúde e seguros': 'saude',
+                                            'Trabalho': 'trabalho',
+                                            'Moradia': 'moradia',
+                                            'Documentos e registros': 'documentos',
+                                            'Convivência e cultura': 'cultura',
+                                            'Outros': 'outros'
+                                        };
+                                        const catKey = CATEGORY_MAP[cat] || cat;
+                                        return (
+                                            <option key={cat} value={cat}>
+                                                {t(`community.categories.${catKey}`, { defaultMessage: cat })}
+                                            </option>
+                                        );
+                                    })}
+                                </select>
+                                <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted pointer-events-none" />
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                {/* Description Textarea */}
-                <div>
-                    <label className="block text-sm font-medium text-primary mb-1.5">
-                        {t('community.questions.formDescriptionLabel', { defaultMessage: 'Detalhes (opcional)' })}
-                    </label>
-                    <textarea
-                        value={description}
-                        onChange={(e) => setDescription(e.target.value)}
-                        placeholder={t('community.questions.formDescriptionPlaceholder', { defaultMessage: 'Descreva melhor sua dúvida...' })}
-                        rows={4}
-                        className="w-full px-4 py-2.5 border border-app rounded-xl bg-app text-primary placeholder:text-muted text-sm focus:outline-none focus:ring-2 focus:ring-[#D70F24]/30 focus:border-[#D70F24] resize-none transition-all"
-                        disabled={submitting || !user}
-                    />
-                </div>
-            </form>
+                    {/* Description Textarea */}
+                    <div>
+                        <label className="block text-sm font-medium text-primary mb-1.5">
+                            {t('community.questions.formDescriptionLabel', { defaultMessage: 'Detalhes (opcional)' })}
+                        </label>
+                        <textarea
+                            value={description}
+                            onChange={(e) => setDescription(e.target.value)}
+                            placeholder={t('community.questions.formDescriptionPlaceholder', { defaultMessage: 'Descreva melhor sua dúvida...' })}
+                            rows={4}
+                            className="w-full px-4 py-2.5 border border-app rounded-xl bg-app text-primary placeholder:text-muted text-sm focus:outline-none focus:ring-2 focus:ring-[#D70F24]/30 focus:border-[#D70F24] resize-none transition-all"
+                            disabled={submitting || !user}
+                        />
+                    </div>
+                </form>
 
-            {/* Footer */}
-            <div className="flex flex-col sm:flex-row items-center justify-between gap-3 px-5 py-4 border-t border-app bg-surface">
-                <div className="flex items-center gap-2 text-muted text-xs">
-                    <Lock className="w-3.5 h-3.5" />
-                    <span>{user ? t('community.questions.loggedInToPublish', { defaultMessage: 'Você está logado' }) : t('community.questions.loginToPublish', { defaultMessage: 'Faça login para perguntar' })}</span>
+                {/* Footer */}
+                <div className="flex flex-col sm:flex-row items-center justify-between gap-3 px-5 py-4 border-t border-app bg-surface">
+                    <div className="flex items-center gap-2 text-muted text-xs">
+                        <Lock className="w-3.5 h-3.5" />
+                        <span>{user ? t('community.questions.loggedInToPublish', { defaultMessage: 'Você está logado' }) : t('community.questions.loginToPublish', { defaultMessage: 'Faça login para perguntar' })}</span>
+                    </div>
+                    <button
+                        type="submit"
+                        onClick={handleSubmit}
+                        disabled={submitting || !questionTitle.trim() || !user}
+                        className="w-full sm:w-auto px-6 py-2.5 bg-[#D70F24] hover:bg-[#b80d1f] text-white font-semibold text-sm rounded-xl transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                    >
+                        {submitting && <Loader2 className="w-4 h-4 animate-spin" />}
+                        {submitting ? t('community.questions.publishing', { defaultMessage: 'Publicando...' }) : t('community.questions.publishButton', { defaultMessage: 'Publicar Dúvida' })}
+                    </button>
                 </div>
-                <button
-                    type="submit"
-                    onClick={handleSubmit}
-                    disabled={submitting || !questionTitle.trim() || !user}
-                    className="w-full sm:w-auto px-6 py-2.5 bg-[#D70F24] hover:bg-[#b80d1f] text-white font-semibold text-sm rounded-xl transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-                >
-                    {submitting && <Loader2 className="w-4 h-4 animate-spin" />}
-                    {submitting ? t('community.questions.publishing', { defaultMessage: 'Publicando...' }) : t('community.questions.publishButton', { defaultMessage: 'Publicar Dúvida' })}
-                </button>
             </div>
         </div>
     );

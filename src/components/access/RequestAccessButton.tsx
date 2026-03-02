@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from '@/i18n/routing';
+import { usePathname } from 'next/navigation';
 import { createClient } from '@/utils/supabase/client';
 import { useTranslations } from 'next-intl';
 import { Loader2, CheckCircle, Clock, Plus } from 'lucide-react';
@@ -18,6 +19,7 @@ interface RequestAccessButtonProps {
 export default function RequestAccessButton({ accessType, createPath, className = '' }: RequestAccessButtonProps) {
     const t = useTranslations('access');
     const router = useRouter();
+    const pathname = usePathname();
     const [status, setStatus] = useState<AccessStatus>('none');
     const [loading, setLoading] = useState(true);
     const [requesting, setRequesting] = useState(false);
@@ -99,7 +101,7 @@ export default function RequestAccessButton({ accessType, createPath, className 
     if (!userId) {
         return (
             <button
-                onClick={() => router.push('/login')}
+                onClick={() => router.push(`/login?redirect=${encodeURIComponent(pathname)}`)}
                 className={`inline-flex items-center gap-2 bg-[#5593C3] hover:opacity-90 text-white px-6 py-3 rounded-xl font-bold text-sm shadow-xl shadow-blue-500/20 transition-all hover:scale-105 active:scale-95 ${className}`}
             >
                 {t('loginToRequest')}

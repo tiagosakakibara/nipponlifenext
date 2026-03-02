@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 import { User, LogOut, Settings, LayoutDashboard, Camera } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 import { supabase } from '@/lib/supabaseClient';
@@ -10,6 +10,7 @@ import { useTranslations, useLocale } from 'next-intl';
 export function UserMenu() {
     const { user, profile } = useAuth();
     const router = useRouter();
+    const pathname = usePathname();
     const t = useTranslations();
     const locale = useLocale();
     const [isOpen, setIsOpen] = useState(false);
@@ -48,7 +49,7 @@ export function UserMenu() {
     if (!user) {
         return (
             <button
-                onClick={() => router.push('/login')}
+                onClick={() => router.push(`/login?redirect=${encodeURIComponent(pathname)}`)}
                 className="p-1.5 sm:p-2 rounded-xl hover:bg-surface transition-colors focus:outline-none focus:ring-2 focus:ring-primary/20"
                 aria-label={t('auth.login')}
             >

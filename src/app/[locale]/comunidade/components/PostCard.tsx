@@ -47,10 +47,7 @@ export function PostCard({ avatar, name, time, category, title, content, image, 
     const handleLike = async (e: React.MouseEvent) => {
         e.stopPropagation();
         if (!user) {
-            // Need to pass searchParam or handle redirect?
-            // router.push('/login?redirect=...');
-            // For now just /login
-            router.push('/login');
+            router.push(`/login?redirect=${encodeURIComponent(window.location.pathname)}`);
             return;
         }
 

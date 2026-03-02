@@ -18,7 +18,7 @@ export function LoginPageClient() {
     const [error, setError] = useState<string | null>(null);
 
     // Get return URL from query params, default to community dashboard with locale prefix
-    const nextUrl = searchParams.get('next') || `/${locale}`;
+    const nextUrl = searchParams.get('next') || searchParams.get('redirect') || `/${locale}`;
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();

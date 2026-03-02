@@ -20,7 +20,7 @@ export function RegisterPageClient() {
     const [error, setError] = useState<string | null>(null);
     const [success, setSuccess] = useState(false);
 
-    const nextUrl = searchParams.get('next') || `/${locale}`;
+    const nextUrl = searchParams.get('next') || searchParams.get('redirect') || `/${locale}`;
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
