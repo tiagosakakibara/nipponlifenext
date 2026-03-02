@@ -51,6 +51,7 @@ export default async function CommunityQuestionsPage({ params, searchParams }: P
 
     const questions = (questionsData || []).map((q: any) => ({
         ...q,
+        body: q.content || q.body,
         answers_count: q.answers ? (q.answers.length > 0 ? q.answers[0].count : (q.answers.count || 0)) : 0
         // Supabase count returns array `{ count: N }` usually if specified as head or aggregate?
         // Actually `answers(count)` returns `[{count: N}]` or similar.

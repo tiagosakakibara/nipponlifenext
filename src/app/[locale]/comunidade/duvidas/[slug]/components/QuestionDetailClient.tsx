@@ -22,13 +22,13 @@ function Breadcrumb({ category }: { category: string }) {
         }
         // Handle mapped legacy values
         const MAP: Record<string, string> = {
-            'Visto e imigração': 'visa',
-            'Saúde e seguros': 'health',
-            'Trabalho': 'work',
-            'Moradia': 'housing',
-            'Documentos e registros': 'documents',
-            'Convivência e cultura': 'culture',
-            'Outros': 'others'
+            'Visto e imigração': 'visto',
+            'Saúde e seguros': 'saude',
+            'Trabalho': 'trabalho',
+            'Moradia': 'moradia',
+            'Documentos e registros': 'documentos',
+            'Convivência e cultura': 'cultura',
+            'Outros': 'outros'
         };
         return MAP[cat] || cat.toLowerCase();
     };
@@ -121,13 +121,13 @@ export function QuestionDetailClient({ initialQuestion, initialAnswers }: { init
             return cat.split('.').pop()?.toLowerCase() || 'others';
         }
         const MAP: Record<string, string> = {
-            'Visto e imigração': 'visa',
-            'Saúde e seguros': 'health',
-            'Trabalho': 'work',
-            'Moradia': 'housing',
-            'Documentos e registros': 'documents',
-            'Convivência e cultura': 'culture',
-            'Outros': 'others'
+            'Visto e imigração': 'visto',
+            'Saúde e seguros': 'saude',
+            'Trabalho': 'trabalho',
+            'Moradia': 'moradia',
+            'Documentos e registros': 'documentos',
+            'Convivência e cultura': 'cultura',
+            'Outros': 'outros'
         };
         return MAP[cat] || cat.toLowerCase();
     };

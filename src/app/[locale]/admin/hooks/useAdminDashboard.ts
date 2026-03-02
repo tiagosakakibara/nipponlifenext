@@ -234,7 +234,7 @@ export function useAdminDashboard(): UseAdminDashboardResult {
             supabase.from('community_answers')
                 .select(`
                     id,
-                    body,
+                    content,
                     created_at,
                     question_id,
                     community_questions!inner(slug),
@@ -276,7 +276,7 @@ export function useAdminDashboard(): UseAdminDashboardResult {
         const activities: any[] = [
             ...(recentAnswers || []).map(a => ({
                 id: a.id,
-                content: (a as any).body,
+                content: (a as any).content,
                 author: (a as any).profiles?.full_name || 'Usuário',
                 date: (a as any).created_at,
                 type: 'answer' as const,

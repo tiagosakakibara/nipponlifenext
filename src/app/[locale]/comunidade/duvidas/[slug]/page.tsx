@@ -23,7 +23,7 @@ export async function generateMetadata({ params }: Props) {
 
     return generateSEOMetadata({
         title: question.title,
-        description: (question.body || '').substring(0, 160),
+        description: (question.content || question.body || '').substring(0, 160),
         locale,
         type: 'article',
         url: `/comunidade/duvidas/${slug}`,
@@ -53,6 +53,7 @@ export default async function QuestionDetailPage({ params }: Props) {
 
     const question = {
         ...questionData,
+        body: questionData.content || questionData.body,
         author: Array.isArray(questionData.author) ? questionData.author[0] : questionData.author
     } as CommunityQuestion;
 
@@ -69,6 +70,7 @@ export default async function QuestionDetailPage({ params }: Props) {
 
     const answers = (answersData || []).map((a: any) => ({
         ...a,
+        body: a.content || a.body,
         author: Array.isArray(a.author) ? a.author[0] : a.author
     })) as CommunityAnswer[];
 

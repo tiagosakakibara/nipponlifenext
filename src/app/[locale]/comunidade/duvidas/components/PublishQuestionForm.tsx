@@ -45,7 +45,7 @@ export function PublishQuestionForm() {
                 .from('community_questions')
                 .insert({
                     title: questionTitle.trim(),
-                    body: description.trim(),
+                    content: description.trim(),
                     category: category || null,
                     author_id: user.id,
                     slug: slug

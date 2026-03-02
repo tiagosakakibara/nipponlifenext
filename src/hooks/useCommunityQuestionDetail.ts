@@ -81,6 +81,7 @@ export function useCommunityQuestionDetail(
                     // Normalize author logic if array
                     const normalizedQuestion = {
                         ...data,
+                        body: data.content || data.body,
                         author: Array.isArray(data.author) ? data.author[0] : data.author
                     };
                     setQuestion(normalizedQuestion as CommunityQuestion);
@@ -142,6 +143,7 @@ export function useCommunityQuestionDetail(
 
                 const normalizedAnswers = (data || []).map(a => ({
                     ...a,
+                    body: a.content || a.body,
                     author: Array.isArray(a.author) ? a.author[0] : a.author
                 }));
                 setAnswers(normalizedAnswers as CommunityAnswer[]);
@@ -277,7 +279,7 @@ export function useCommunityQuestionDetail(
                 .insert({
                     question_id: q.id,
                     author_id: user.id,
-                    body,
+                    content: body,
                 });
 
             if (insertError) {
@@ -301,6 +303,7 @@ export function useCommunityQuestionDetail(
             if (data) {
                 const normalizedAnswers = data.map(a => ({
                     ...a,
+                    body: a.content || a.body,
                     author: Array.isArray(a.author) ? a.author[0] : a.author
                 }));
                 setAnswers(normalizedAnswers as CommunityAnswer[]);
@@ -322,7 +325,7 @@ export function useCommunityQuestionDetail(
         try {
             const { error: updateError } = await supabase
                 .from('community_answers')
-                .update({ body, updated_at: new Date().toISOString() })
+                .update({ content: body, updated_at: new Date().toISOString() })
                 .eq('id', answerId)
                 .eq('author_id', user.id);
 
@@ -361,7 +364,7 @@ export function useCommunityQuestionDetail(
         try {
             const updateData: any = { updated_at: new Date().toISOString() };
             if (params.title) updateData.title = params.title;
-            if (params.body) updateData.body = params.body;
+            if (params.body) updateData.content = params.body;
 
 
             if (params.category) updateData.category = params.category;
