@@ -113,6 +113,10 @@ export function ProfilePageClient() {
             }
 
             if (url) {
+                // Remove intermediate uploaded image to save storage if user changes it multiple times before saving
+                if (avatarUrl && avatarUrl !== profile?.avatar_url) {
+                    import('@/lib/storageService').then(m => m.storageService.deleteFile(avatarUrl));
+                }
                 setAvatarUrl(url);
                 toast.success(t('auth.profile.success.avatarUpdated'));
             }
@@ -146,15 +150,14 @@ export function ProfilePageClient() {
         setSaving(true);
 
         try {
+            const { updateMyProfile } = await import('@/lib/profileService');
             const updates = {
-                id: user.id,
                 full_name: fullName.trim(),
                 username: normalizedUsername,
                 avatar_url: avatarUrl || undefined,
-                updated_at: new Date().toISOString(),
             };
 
-            const { error } = await supabase.from('profiles').update(updates).eq('id', user.id);
+            const { error } = await updateMyProfile(user.id, updates);
 
             if (error) throw error;
 
