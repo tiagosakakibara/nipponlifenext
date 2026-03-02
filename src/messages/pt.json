@@ -164,6 +164,8 @@
     "error": "Erro",
     "success": "Sucesso",
     "save": "Salvar",
+    "saving": "Salvando...",
+    "saveChanges": "Salvar Alterações",
     "cancel": "Cancelar",
     "delete": "Excluir",
     "edit": "Editar",
@@ -192,6 +194,7 @@
     "city": "Cidade",
     "select": "Selecione...",
     "optional": "Opcional",
+    "readOnly": "Somente leitura",
     "submitting": "Enviando...",
     "event": "Evento",
     "comments": {

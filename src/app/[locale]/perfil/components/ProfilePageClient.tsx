@@ -154,7 +154,7 @@ export function ProfilePageClient() {
                 updated_at: new Date().toISOString(),
             };
 
-            const { error } = await supabase.from('profiles').upsert(updates);
+            const { error } = await supabase.from('profiles').update(updates).eq('id', user.id);
 
             if (error) throw error;
 
