@@ -1,0 +1,589 @@
+
+D:\Antigravity\nipponlife-next\scripts\list_all_users.js
+  2:26  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+D:\Antigravity\nipponlife-next\scripts\list_all_users_detailed.js
+  2:26  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+D:\Antigravity\nipponlife-next\scripts\list_users_final.js
+  2:26  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+D:\Antigravity\nipponlife-next\scripts\sync_accounts.js
+  2:26  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\admin\categories\AdminCategoriesClient.tsx
+  20:50  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  47:30  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\admin\components\Topbar.tsx
+  25:9  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\admin\components\Topbar.tsx:25:9
+  23 |
+  24 |     useEffect(() => {
+> 25 |         setMounted(true);
+     |         ^^^^^^^^^^ Avoid calling setState() directly within an effect
+  26 |     }, []);
+  27 |
+  28 |     const handleLogout = async () => {  react-hooks/set-state-in-effect
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\admin\comunidade\posts\AdminCommunityPostFormClient.tsx
+  19:19  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  26:50  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  62:39  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  66:28  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  93:25  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\admin\comunidade\posts\[id]\page.tsx
+  32:16  error  Error: Avoid constructing JSX within try/catch
+
+React does not immediately render components when JSX is rendered, so any errors from this component will not be caught by the try/catch. To catch errors in rendering a given component, wrap that component in an error boundary. (https://react.dev/reference/react/Component#catching-rendering-errors-with-an-error-boundary).
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\admin\comunidade\posts\[id]\page.tsx:32:16
+  30 |         }
+  31 |
+> 32 |         return <AdminCommunityPostFormClient id={params.id} initialData={post} />;
+     |                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Avoid constructing JSX within try/catch
+  33 |     } catch (error) {
+  34 |         console.error('Error in EditCommunityPostPage catch block:', error);
+  35 |         notFound();  react-hooks/error-boundaries
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\admin\comunidade\posts\hooks\useAdminCommunityPosts.ts
+  8:40  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\admin\comunidade\reels\AdminReelsClient.tsx
+  23:52  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\admin\events\AdminEventFormClient.tsx
+  43:88  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  65:35  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\admin\gallery\page.tsx
+  59:17  error  'photoMap' is never reassigned. Use 'const' instead  prefer-const
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\admin\guides\hooks\useAdminGuides.ts
+   55:59  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   82:40  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  103:23  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  154:25  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  176:28  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  203:25  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  223:25  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\admin\hooks\useAdminDashboard.ts
+  110:42  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  118:33  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  276:27  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  279:32  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  280:31  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  281:29  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  283:33  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  284:35  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  288:32  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  289:31  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  290:29  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  292:33  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  293:35  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  317:59  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  317:73  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\admin\jobs\AdminJobFormClient.tsx
+   48:97  error  Unexpected any. Specify a different type                                                                    @typescript-eslint/no-explicit-any
+   91:35  error  Unexpected any. Specify a different type                                                                    @typescript-eslint/no-explicit-any
+  111:30  error  Unexpected any. Specify a different type                                                                    @typescript-eslint/no-explicit-any
+  503:77  error  Unexpected any. Specify a different type                                                                    @typescript-eslint/no-explicit-any
+  508:79  error  Optional chain expressions can return undefined by design - using a non-null assertion is unsafe and wrong  @typescript-eslint/no-non-null-asserted-optional-chain
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\admin\page.tsx
+  51:9  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\admin\page.tsx:51:9
+  49 |
+  50 |     useEffect(() => {
+> 51 |         setLastUpdate(new Date().toLocaleTimeString(locale));
+     |         ^^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  52 |     }, [locale]);
+  53 |
+  54 |     // Redirection Logic for Non-Admins  react-hooks/set-state-in-effect
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\admin\posts\[id]\AdminPostEditClient.tsx
+  363:59  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\admin\posts\hooks\useAdminPosts.ts
+   60:54  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   95:39  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  121:23  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  178:25  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  205:28  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  258:25  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  294:25  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\admin\requests\AccessRequestsClient.tsx
+   31:9    error  Error: Cannot access variable before it is declared
+
+`fetchRequests` is accessed before it is declared, which prevents the earlier access from updating when this value changes over time.
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\admin\requests\AccessRequestsClient.tsx:31:9
+  29 |
+  30 |     useEffect(() => {
+> 31 |         fetchRequests();
+     |         ^^^^^^^^^^^^^ `fetchRequests` accessed before it is declared
+  32 |     }, []);
+  33 |
+  34 |     async function fetchRequests() {
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\admin\requests\AccessRequestsClient.tsx:34:5
+  32 |     }, []);
+  33 |
+> 34 |     async function fetchRequests() {
+     |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 35 |         setLoading(true);
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^
+> 36 |         const supabase = createClient();
+     ÔÇª
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^
+> 64 |         setLoading(false);
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^
+> 65 |     }
+     | ^^^^^^ `fetchRequests` is declared here
+  66 |
+  67 |     async function handleApprove(requestId: string) {
+  68 |         setProcessing(requestId);  react-hooks/immutability
+   60:60   error  Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              @typescript-eslint/no-explicit-any
+  251:67   error  Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              @typescript-eslint/no-explicit-any
+  251:148  error  Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              @typescript-eslint/no-explicit-any
+  361:59   error  Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              @typescript-eslint/no-explicit-any
+  361:140  error  Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              @typescript-eslint/no-explicit-any
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\admin\settings\AdminSettingsClient.tsx
+  16:46  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\admin\settings\hooks\useAdminSettings.ts
+  25:68  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\admin\users\AdminUsersClient.tsx
+   39:74  error  Error: Cannot call impure function during render
+
+`Date.now` is an impure function. Calling an impure function can produce unstable results that update unpredictably when the component happens to re-render. (https://react.dev/reference/rules/components-and-hooks-must-be-pure#components-and-hooks-must-be-idempotent).
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\admin\users\AdminUsersClient.tsx:39:74
+  37 |             reason = window.prompt(t('messages.enterReason')) || '';
+  38 |             if (newStatus === 'suspended') {
+> 39 |                 until = window.prompt(t('messages.enterUntil'), new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString()) || '';
+     |                                                                          ^^^^^^^^^^ Cannot call impure function
+  40 |             }
+  41 |         }
+  42 |  react-hooks/purity
+   77:35  error  Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               @typescript-eslint/no-explicit-any
+   83:38  error  Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               @typescript-eslint/no-explicit-any
+   95:66  error  Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               @typescript-eslint/no-explicit-any
+  101:40  error  Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               @typescript-eslint/no-explicit-any
+  260:57  error  `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        react/no-unescaped-entities
+  260:75  error  `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        react/no-unescaped-entities
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\admin\users\hooks\useAdminUsers.ts
+   9:40  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  66:25  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\comunidade\[slug]\page.tsx
+   76:56  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   77:56  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   80:40  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   80:75  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   81:42  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  218:79  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\comunidade\components\CategoriesSidebar.tsx
+  16:32  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\comunidade\components\CommentSection.tsx
+  85:39  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\comunidade\duvidas\[slug]\components\QuestionDetailClient.tsx
+  115:51  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  115:97  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  116:50  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\comunidade\duvidas\[slug]\page.tsx
+  70:49  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\comunidade\duvidas\components\QuestionCard.tsx
+  14:44  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  14:83  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  15:43  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\comunidade\duvidas\components\ReplyCard.tsx
+  16:18  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  39:42  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  39:79  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  40:41  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\comunidade\duvidas\page.tsx
+  52:53  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\comunidade\page.tsx
+   96:35   error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  173:67   error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  179:64   error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  180:88   error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  181:91   error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  192:79   error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  193:82   error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  193:136  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\contribute\cost-of-living\components\CostOfLivingForm.tsx
+  125:23  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\guias\recem-chegado\components\CommunityRecommendations.tsx
+   26:87  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  101:42  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\guias\recem-chegado\components\GuideCategoryGrid.tsx
+  13:31  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  92:50  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\jobs\[id]\JobDetailsClient.tsx
+  248:69  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  273:33  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\layout.tsx
+  50:32  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  51:38  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  73:45  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\link-account\page.tsx
+  39:9  error  Error: Cannot call impure function during render
+
+`Date.now` is an impure function. Calling an impure function can produce unstable results that update unpredictably when the component happens to re-render. (https://react.dev/reference/rules/components-and-hooks-must-be-pure#components-and-hooks-must-be-idempotent).
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\link-account\page.tsx:39:9
+  37 |     }
+  38 |
+> 39 |     if (Date.now() > pendingLink.expiresAt) {
+     |         ^^^^^^^^^^ Cannot call impure function
+  40 |         redirect(`/${locale}/`);
+  41 |     }
+  42 |  react-hooks/purity
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\login\components\LoginPageClient.tsx
+  76:23  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\noticias\NewsList.tsx
+  12:19  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  13:17  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  53:38  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\noticias\[slug]\page.tsx
+  281:58  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\pagamento\PaymentClient.tsx
+  46:25  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\page.tsx
+  153:76  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  176:73  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\perfil\components\ProfilePageClient.tsx
+  119:25  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  163:25  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\statistics\page.tsx
+   85:60   error  Unexpected any. Specify a different type                         @typescript-eslint/no-explicit-any
+   86:56   error  Unexpected any. Specify a different type                         @typescript-eslint/no-explicit-any
+   87:52   error  Unexpected any. Specify a different type                         @typescript-eslint/no-explicit-any
+  119:27   error  Unexpected any. Specify a different type                         @typescript-eslint/no-explicit-any
+  452:145  error  Unexpected any. Specify a different type                         @typescript-eslint/no-explicit-any
+  547:171  error  `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  562:101  error  Unexpected any. Specify a different type                         @typescript-eslint/no-explicit-any
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\termos\page.tsx
+  68:67  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  68:78  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+D:\Antigravity\nipponlife-next\src\app\actions\mediaCleanup.ts
+   86:21  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  137:21  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Antigravity\nipponlife-next\src\app\actions\submitApplication.ts
+  246:15  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Antigravity\nipponlife-next\src\app\actions\submitBusinessForm.ts
+   80:13  error  'slug' is never reassigned. Use 'const' instead  prefer-const
+  162:17  error  Unexpected any. Specify a different type         @typescript-eslint/no-explicit-any
+
+D:\Antigravity\nipponlife-next\src\app\actions\submitEventForm.ts
+  63:13  error  'slug' is never reassigned. Use 'const' instead  prefer-const
+  96:17  error  Unexpected any. Specify a different type         @typescript-eslint/no-explicit-any
+
+D:\Antigravity\nipponlife-next\src\app\actions\submitJobForm.ts
+   49:17  error  Unexpected any. Specify a different type         @typescript-eslint/no-explicit-any
+   71:13  error  'slug' is never reassigned. Use 'const' instead  prefer-const
+  134:17  error  Unexpected any. Specify a different type         @typescript-eslint/no-explicit-any
+
+D:\Antigravity\nipponlife-next\src\app\actions\userAdmin.ts
+  182:21  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Antigravity\nipponlife-next\src\app\api\gallery\fix-dimensions\route.ts
+  99:21  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Antigravity\nipponlife-next\src\app\api\gallery\upload\route.ts
+   90:27  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  121:21  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Antigravity\nipponlife-next\src\app\api\media\delete\route.ts
+  67:21  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Antigravity\nipponlife-next\src\app\api\media\upload\route.ts
+   47:52  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   49:32  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   67:45  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  111:21  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Antigravity\nipponlife-next\src\app\api\payment\create-session\route.ts
+  61:21  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Antigravity\nipponlife-next\src\app\api\payment\webhook\route.ts
+  47:21  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Antigravity\nipponlife-next\src\app\api\site-settings\newcomer_guide_views\route.ts
+  51:21  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Antigravity\nipponlife-next\src\app\sitemap.ts
+  121:55  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Antigravity\nipponlife-next\src\components\Header.tsx
+  29:9  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+D:\Antigravity\nipponlife-next\src\components\Header.tsx:29:9
+  27 |
+  28 |     useEffect(() => {
+> 29 |         setMounted(true);
+     |         ^^^^^^^^^^ Avoid calling setState() directly within an effect
+  30 |     }, []);
+  31 |
+  32 |     const isAdmin = pathname?.includes('/admin');  react-hooks/set-state-in-effect
+
+D:\Antigravity\nipponlife-next\src\components\HeroSection.tsx
+  12:19  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Antigravity\nipponlife-next\src\components\LargeFeaturedCard.tsx
+  43:91  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Antigravity\nipponlife-next\src\components\MediaUploader.tsx
+  53:48  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  90:23  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Antigravity\nipponlife-next\src\components\QuillEditor.tsx
+  27:29  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Antigravity\nipponlife-next\src\components\ResponsiveImage.tsx
+  33:9  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+D:\Antigravity\nipponlife-next\src\components\ResponsiveImage.tsx:33:9
+  31 |     // Reset error state when src changes
+  32 |     useEffect(() => {
+> 33 |         setIsError(false);
+     |         ^^^^^^^^^^ Avoid calling setState() directly within an effect
+  34 |     }, [src]);
+  35 |
+  36 |     const finalSrc = (isError || !rawUrl) ? fallbackSrc : rawUrl;  react-hooks/set-state-in-effect
+
+D:\Antigravity\nipponlife-next\src\components\SmallFeaturedCard.tsx
+  26:91  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Antigravity\nipponlife-next\src\components\StructuredData.tsx
+  4:24  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Antigravity\nipponlife-next\src\components\TourismVisualCard.tsx
+  26:9  error  Error: Cannot access refs during render
+
+React refs are values that are not needed for rendering. Refs should only be accessed outside of render, such as in event handlers or effects. Accessing a ref value (the `current` property) during render can cause your component not to update as expected (https://react.dev/reference/react/useRef).
+
+D:\Antigravity\nipponlife-next\src\components\TourismVisualCard.tsx:26:9
+  24 |             lottieRef.current.setSpeed(0.7);
+  25 |         }
+> 26 |     }, [lottieRef.current]);
+     |         ^^^^^^^^^^^^^^^^^ Cannot access ref value during render
+  27 |
+  28 |     return (
+  29 |         <div className="bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-slate-800 dark:to-slate-900 rounded-3xl p-6 md:p-10 shadow-sm border border-slate-100 dark:border-zinc-800 flex flex-col justify-center relative overflow-hidden min-h-[400px]">  react-hooks/refs
+  26:9  error  Error: Cannot access refs during render
+
+React refs are values that are not needed for rendering. Refs should only be accessed outside of render, such as in event handlers or effects. Accessing a ref value (the `current` property) during render can cause your component not to update as expected (https://react.dev/reference/react/useRef).
+
+D:\Antigravity\nipponlife-next\src\components\TourismVisualCard.tsx:26:9
+  24 |             lottieRef.current.setSpeed(0.7);
+  25 |         }
+> 26 |     }, [lottieRef.current]);
+     |         ^^^^^^^^^^^^^^^^^ Cannot access ref value during render
+  27 |
+  28 |     return (
+  29 |         <div className="bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-slate-800 dark:to-slate-900 rounded-3xl p-6 md:p-10 shadow-sm border border-slate-100 dark:border-zinc-800 flex flex-col justify-center relative overflow-hidden min-h-[400px]">  react-hooks/refs
+
+D:\Antigravity\nipponlife-next\src\components\UserMenu.tsx
+  82:18  error  Error: Cannot create components during render
+
+Components created during render will reset their state each time they are created. Declare components outside of render.
+
+D:\Antigravity\nipponlife-next\src\components\UserMenu.tsx:82:18
+  80 |                 aria-label="Menu de usu├írio"
+  81 |             >
+> 82 |                 <Avatar />
+     |                  ^^^^^^ This component is created during render
+  83 |             </button>
+  84 |
+  85 |             {/* Unified Dropdown for Desktop and Mobile */}
+
+D:\Antigravity\nipponlife-next\src\components\UserMenu.tsx:61:20
+  59 |     }
+  60 |
+> 61 |     const Avatar = () => (
+     |                    ^^^^^^^
+> 62 |         <div className="w-8 h-8 md:w-9 md:h-9 rounded-full bg-[#D70F24] flex items-center justify-center text-white text-xs md:text-sm font-semibold shadow-sm ring-2 ring-transparent group-hover:ring-primary/10 transition-all overflow-hidden">
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 63 |             {profile?.avatar_url ? (
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 64 |                 <img src={profile.avatar_url} alt={profile.full_name || 'User'} className="w-full h-full object-cover" />
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 65 |             ) : (
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 66 |                 <span>{profile?.username?.[0]?.toUpperCase() || profile?.full_name?.[0]?.toUpperCase() || 'U'}</span>
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 67 |             )}
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 68 |         </div>
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 69 |     );
+     | ^^^^^^ The component is created during render here
+  70 |
+  71 |     const isPhotographer = profile?.role === 'photographer' || profile?.role === 'admin';
+  72 |  react-hooks/static-components
+
+D:\Antigravity\nipponlife-next\src\components\access\RequestAccessButton.tsx
+  29:9  error  Error: Cannot access variable before it is declared
+
+`checkAccessStatus` is accessed before it is declared, which prevents the earlier access from updating when this value changes over time.
+
+D:\Antigravity\nipponlife-next\src\components\access\RequestAccessButton.tsx:29:9
+  27 |
+  28 |     useEffect(() => {
+> 29 |         checkAccessStatus();
+     |         ^^^^^^^^^^^^^^^^^ `checkAccessStatus` accessed before it is declared
+  30 |     }, []);
+  31 |
+  32 |     async function checkAccessStatus() {
+
+D:\Antigravity\nipponlife-next\src\components\access\RequestAccessButton.tsx:32:5
+  30 |     }, []);
+  31 |
+> 32 |     async function checkAccessStatus() {
+     |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 33 |         const supabase = createClient();
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 34 |
+     ÔÇª
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 60 |         setLoading(false);
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 61 |     }
+     | ^^^^^^ `checkAccessStatus` is declared here
+  62 |
+  63 |     async function handleRequestAccess() {
+  64 |         if (!userId) return;  react-hooks/immutability
+
+D:\Antigravity\nipponlife-next\src\components\gallery\PhotoGallery.tsx
+  47:40  error  Unexpected any. Specify a different type              @typescript-eslint/no-explicit-any
+  58:21  error  'timeoutId' is never reassigned. Use 'const' instead  prefer-const
+
+D:\Antigravity\nipponlife-next\src\contexts\AuthContext.tsx
+  32:38  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  32:75  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Antigravity\nipponlife-next\src\hooks\useComments.ts
+  44:34  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Antigravity\nipponlife-next\src\hooks\useCommunityQuestionDetail.ts
+  362:31  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Antigravity\nipponlife-next\src\i18n\request.ts
+  8:56  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Antigravity\nipponlife-next\src\lib\businessService.ts
+  133:13  error  'slug' is never reassigned. Use 'const' instead  prefer-const
+
+D:\Antigravity\nipponlife-next\src\lib\categoryService.ts
+  21:37  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Antigravity\nipponlife-next\src\lib\communityService.ts
+  41:29  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Antigravity\nipponlife-next\src\lib\eventService.ts
+  108:29  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  119:41  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Antigravity\nipponlife-next\src\lib\getTranslatedField.ts
+   21:26  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   63:26  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  128:55  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Antigravity\nipponlife-next\src\lib\guidesCategoriesService.ts
+  149:20  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Antigravity\nipponlife-next\src\lib\guidesService.ts
+  125:41  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  150:41  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  174:41  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  237:20  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Antigravity\nipponlife-next\src\lib\jobsService.ts
+   73:27  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   84:39  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  119:29  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  157:19  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  161:21  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  168:31  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  180:45  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  208:33  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  227:15  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Antigravity\nipponlife-next\src\lib\mediaService.ts
+  23:37  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  51:25  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  73:25  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Antigravity\nipponlife-next\src\lib\profileService.ts
+  153:27  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Antigravity\nipponlife-next\src\lib\siteSettingsService.ts
+  27:27  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Antigravity\nipponlife-next\src\types\job.ts
+  64:17  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+Ô£û 200 problems (200 errors, 0 warnings)
+  5 errors and 0 warnings potentially fixable with the `--fix` option.
+

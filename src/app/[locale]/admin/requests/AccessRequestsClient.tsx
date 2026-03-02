@@ -27,10 +27,6 @@ export default function AccessRequestsClient() {
     const [filter, setFilter] = useState<'all' | 'pending' | 'approved' | 'rejected'>('pending');
     const [processing, setProcessing] = useState<string | null>(null);
 
-    useEffect(() => {
-        fetchRequests();
-    }, []);
-
     async function fetchRequests() {
         setLoading(true);
         const supabase = createClient();
@@ -63,6 +59,10 @@ export default function AccessRequestsClient() {
 
         setLoading(false);
     }
+
+    useEffect(() => {
+        fetchRequests();
+    }, []);
 
     async function handleApprove(requestId: string) {
         setProcessing(requestId);

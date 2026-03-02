@@ -25,10 +25,6 @@ export default function RequestAccessButton({ accessType, createPath, className 
     const [requesting, setRequesting] = useState(false);
     const [userId, setUserId] = useState<string | null>(null);
 
-    useEffect(() => {
-        checkAccessStatus();
-    }, []);
-
     async function checkAccessStatus() {
         const supabase = createClient();
 
@@ -59,6 +55,10 @@ export default function RequestAccessButton({ accessType, createPath, className 
 
         setLoading(false);
     }
+
+    useEffect(() => {
+        checkAccessStatus();
+    }, []);
 
     async function handleRequestAccess() {
         if (!userId) return;

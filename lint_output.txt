@@ -1,0 +1,935 @@
+
+> nipponlife-next@0.1.0 lint
+> eslint
+
+
+D:\Antigravity\nipponlife-next\scripts\list_all_users.js
+  2:26  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+D:\Antigravity\nipponlife-next\scripts\list_all_users_detailed.js
+   2:26  error    A `require()` style import is forbidden     @typescript-eslint/no-require-imports
+  10:29  warning  'error' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+D:\Antigravity\nipponlife-next\scripts\list_users_final.js
+  2:26  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+D:\Antigravity\nipponlife-next\scripts\sync_accounts.js
+  2:26  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\admin\business\AdminBusinessFormClient.tsx
+  11:5   warning  'Mail' is defined but never used       @typescript-eslint/no-unused-vars
+  11:11  warning  'Instagram' is defined but never used  @typescript-eslint/no-unused-vars
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\admin\business\AdminBusinessListClient.tsx
+   5:60  warning  'ChevronRight' is defined but never used      @typescript-eslint/no-unused-vars
+  12:11  warning  't' is assigned a value but never used        @typescript-eslint/no-unused-vars
+  13:11  warning  'commonT' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  14:11  warning  'bizT' is assigned a value but never used     @typescript-eslint/no-unused-vars
+  15:11  warning  'router' is assigned a value but never used   @typescript-eslint/no-unused-vars
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\admin\business\hooks\useAdminBusiness.ts
+  5:20  warning  'BusinessFormData' is defined but never used  @typescript-eslint/no-unused-vars
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\admin\categories\AdminCategoriesClient.tsx
+   4:43  warning  'ChevronRight' is defined but never used  @typescript-eslint/no-unused-vars
+   9:11  warning  't' is assigned a value but never used    @typescript-eslint/no-unused-vars
+  20:50  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  47:30  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\admin\components\Sidebar.tsx
+   63:19  warning  'profile' is assigned a value but never used                                                                                                                                                                                                                                             @typescript-eslint/no-unused-vars
+  119:21  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\admin\components\Topbar.tsx
+   25:9   error    Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\admin\components\Topbar.tsx:25:9
+  23 |
+  24 |     useEffect(() => {
+> 25 |         setMounted(true);
+     |         ^^^^^^^^^^ Avoid calling setState() directly within an effect
+  26 |     }, []);
+  27 |
+  28 |     const handleLogout = async () => {  react-hooks/set-state-in-effect
+  105:29  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        @next/next/no-img-element
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\admin\comunidade\posts\AdminCommunityPostFormClient.tsx
+    3:31  warning  'useRef' is defined but never used             @typescript-eslint/no-unused-vars
+    6:11  warning  'Send' is defined but never used               @typescript-eslint/no-unused-vars
+    6:17  warning  'X' is defined but never used                  @typescript-eslint/no-unused-vars
+    6:20  warning  'Upload' is defined but never used             @typescript-eslint/no-unused-vars
+    7:5   warning  'ArrowLeft' is defined but never used          @typescript-eslint/no-unused-vars
+    7:16  warning  'Globe' is defined but never used              @typescript-eslint/no-unused-vars
+    7:36  warning  'CheckCircle2' is defined but never used       @typescript-eslint/no-unused-vars
+    8:5   warning  'Layout' is defined but never used             @typescript-eslint/no-unused-vars
+    8:22  warning  'ImageIcon' is defined but never used          @typescript-eslint/no-unused-vars
+    8:33  warning  'Calendar' is defined but never used           @typescript-eslint/no-unused-vars
+    8:43  warning  'Tag' is defined but never used                @typescript-eslint/no-unused-vars
+    9:19  warning  'Info' is defined but never used               @typescript-eslint/no-unused-vars
+    9:25  warning  'AlertTriangle' is defined but never used      @typescript-eslint/no-unused-vars
+   12:10  warning  'storageService' is defined but never used     @typescript-eslint/no-unused-vars
+   19:19  error    Unexpected any. Specify a different type       @typescript-eslint/no-explicit-any
+   23:11  warning  'router' is assigned a value but never used    @typescript-eslint/no-unused-vars
+   26:50  error    Unexpected any. Specify a different type       @typescript-eslint/no-explicit-any
+   33:37  warning  'setValue' is assigned a value but never used  @typescript-eslint/no-unused-vars
+   33:67  warning  'errors' is assigned a value but never used    @typescript-eslint/no-unused-vars
+   48:11  warning  'status' is assigned a value but never used    @typescript-eslint/no-unused-vars
+   62:39  error    Unexpected any. Specify a different type       @typescript-eslint/no-explicit-any
+   66:28  error    Unexpected any. Specify a different type       @typescript-eslint/no-explicit-any
+   93:25  error    Unexpected any. Specify a different type       @typescript-eslint/no-explicit-any
+  296:51  warning  'prev' is defined but never used               @typescript-eslint/no-unused-vars
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\admin\comunidade\posts\AdminCommunityPostsClient.tsx
+   6:19  warning  'Filter' is defined but never used           @typescript-eslint/no-unused-vars
+   6:27  warning  'Eye' is defined but never used              @typescript-eslint/no-unused-vars
+   6:32  warning  'Heart' is defined but never used            @typescript-eslint/no-unused-vars
+   6:39  warning  'MessageCircle' is defined but never used    @typescript-eslint/no-unused-vars
+   7:19  warning  'Archive' is defined but never used          @typescript-eslint/no-unused-vars
+   8:15  warning  'ArrowUpRight' is defined but never used     @typescript-eslint/no-unused-vars
+   8:29  warning  'TrendingUp' is defined but never used       @typescript-eslint/no-unused-vars
+  16:11  warning  't' is assigned a value but never used       @typescript-eslint/no-unused-vars
+  17:11  warning  'locale' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\admin\comunidade\posts\[id]\page.tsx
+  32:16  error  Error: Avoid constructing JSX within try/catch
+
+React does not immediately render components when JSX is rendered, so any errors from this component will not be caught by the try/catch. To catch errors in rendering a given component, wrap that component in an error boundary. (https://react.dev/reference/react/Component#catching-rendering-errors-with-an-error-boundary).
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\admin\comunidade\posts\[id]\page.tsx:32:16
+  30 |         }
+  31 |
+> 32 |         return <AdminCommunityPostFormClient id={params.id} initialData={post} />;
+     |                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Avoid constructing JSX within try/catch
+  33 |     } catch (error) {
+  34 |         console.error('Error in EditCommunityPostPage catch block:', error);
+  35 |         notFound();  react-hooks/error-boundaries
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\admin\comunidade\posts\hooks\useAdminCommunityPosts.ts
+  8:40  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\admin\comunidade\reels\AdminReelsClient.tsx
+    7:11  warning  'Search' is defined but never used            @typescript-eslint/no-unused-vars
+    8:26  warning  'RefreshCw' is defined but never used         @typescript-eslint/no-unused-vars
+   11:10  warning  'fetchActiveReels' is defined but never used  @typescript-eslint/no-unused-vars
+   12:10  warning  'useTranslations' is defined but never used   @typescript-eslint/no-unused-vars
+   23:52  error    Unexpected any. Specify a different type      @typescript-eslint/no-explicit-any
+   31:27  warning  'error' is assigned a value but never used    @typescript-eslint/no-unused-vars
+  128:18  warning  'error' is defined but never used             @typescript-eslint/no-unused-vars
+  143:18  warning  'error' is defined but never used             @typescript-eslint/no-unused-vars
+  160:18  warning  'error' is defined but never used             @typescript-eslint/no-unused-vars
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\admin\events\AdminEventFormClient.tsx
+  15:10  warning  'useTranslations' is defined but never used  @typescript-eslint/no-unused-vars
+  43:67  warning  'errors' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  43:88  error    Unexpected any. Specify a different type     @typescript-eslint/no-explicit-any
+  65:35  error    Unexpected any. Specify a different type     @typescript-eslint/no-explicit-any
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\admin\events\AdminEventsClient.tsx
+   5:72  warning  'Star' is defined but never used             @typescript-eslint/no-unused-vars
+  12:11  warning  't' is assigned a value but never used       @typescript-eslint/no-unused-vars
+  14:11  warning  'router' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\admin\footer\FooterSettingsClient.tsx
+   9:5  warning  'FileText' is defined but never used  @typescript-eslint/no-unused-vars
+  13:5  warning  'Globe' is defined but never used     @typescript-eslint/no-unused-vars
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\admin\gallery\page.tsx
+  24:11  warning  't' is assigned a value but never used                                                                          @typescript-eslint/no-unused-vars
+  35:8   warning  React Hook useEffect has a missing dependency: 'fetchAlbums'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+  59:17  error    'photoMap' is never reassigned. Use 'const' instead                                                             prefer-const
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\admin\guides\hooks\useAdminGuides.ts
+   55:59  error    Unexpected any. Specify a different type                                                                                                                                                                                                @typescript-eslint/no-explicit-any
+   63:8   warning  React Hook useCallback has an unnecessary dependency: 'supabase'. Either exclude it or remove the dependency array. Outer scope values like 'supabase' aren't valid dependencies because mutating them doesn't re-render the component  react-hooks/exhaustive-deps
+   82:40  error    Unexpected any. Specify a different type                                                                                                                                                                                                @typescript-eslint/no-explicit-any
+  103:23  error    Unexpected any. Specify a different type                                                                                                                                                                                                @typescript-eslint/no-explicit-any
+  154:25  error    Unexpected any. Specify a different type                                                                                                                                                                                                @typescript-eslint/no-explicit-any
+  159:8   warning  React Hook useCallback has an unnecessary dependency: 'supabase'. Either exclude it or remove the dependency array. Outer scope values like 'supabase' aren't valid dependencies because mutating them doesn't re-render the component  react-hooks/exhaustive-deps
+  176:28  error    Unexpected any. Specify a different type                                                                                                                                                                                                @typescript-eslint/no-explicit-any
+  203:25  error    Unexpected any. Specify a different type                                                                                                                                                                                                @typescript-eslint/no-explicit-any
+  208:8   warning  React Hook useCallback has an unnecessary dependency: 'supabase'. Either exclude it or remove the dependency array. Outer scope values like 'supabase' aren't valid dependencies because mutating them doesn't re-render the component  react-hooks/exhaustive-deps
+  223:25  error    Unexpected any. Specify a different type                                                                                                                                                                                                @typescript-eslint/no-explicit-any
+  227:8   warning  React Hook useCallback has an unnecessary dependency: 'supabase'. Either exclude it or remove the dependency array. Outer scope values like 'supabase' aren't valid dependencies because mutating them doesn't re-render the component  react-hooks/exhaustive-deps
+  267:8   warning  React Hook useCallback has an unnecessary dependency: 'supabase'. Either exclude it or remove the dependency array. Outer scope values like 'supabase' aren't valid dependencies because mutating them doesn't re-render the component  react-hooks/exhaustive-deps
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\admin\guides\new\AdminGuideNewClient.tsx
+  8:24  warning  'Check' is defined but never used  @typescript-eslint/no-unused-vars
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\admin\guides\page.tsx
+  24:11  warning  't' is assigned a value but never used                                                                          @typescript-eslint/no-unused-vars
+  32:8   warning  React Hook useEffect has a missing dependency: 'fetchGuides'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\admin\hooks\useAdminDashboard.ts
+  110:42  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  118:33  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  276:27  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  279:32  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  280:31  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  281:29  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  283:33  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  284:35  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  288:32  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  289:31  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  290:29  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  292:33  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  293:35  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  317:59  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  317:73  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\admin\jobs\AdminJobFormClient.tsx
+    5:19  warning  'useFieldArray' is defined but never used                                                                   @typescript-eslint/no-unused-vars
+    9:31  warning  'Building2' is defined but never used                                                                       @typescript-eslint/no-unused-vars
+    9:42  warning  'MapPin' is defined but never used                                                                          @typescript-eslint/no-unused-vars
+   14:15  warning  'JobFormData' is defined but never used                                                                     @typescript-eslint/no-unused-vars
+   48:54  warning  'control' is assigned a value but never used                                                                @typescript-eslint/no-unused-vars
+   48:76  warning  'errors' is assigned a value but never used                                                                 @typescript-eslint/no-unused-vars
+   48:97  error    Unexpected any. Specify a different type                                                                    @typescript-eslint/no-explicit-any
+   91:35  error    Unexpected any. Specify a different type                                                                    @typescript-eslint/no-explicit-any
+  111:30  error    Unexpected any. Specify a different type                                                                    @typescript-eslint/no-explicit-any
+  503:77  error    Unexpected any. Specify a different type                                                                    @typescript-eslint/no-explicit-any
+  508:79  error    Optional chain expressions can return undefined by design - using a non-null assertion is unsafe and wrong  @typescript-eslint/no-non-null-asserted-optional-chain
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\admin\jobs\AdminJobsClient.tsx
+    4:83  warning  'ChevronRight' is defined but never used                                                                                                                                                                                                                                                 @typescript-eslint/no-unused-vars
+   11:11  warning  't' is assigned a value but never used                                                                                                                                                                                                                                                   @typescript-eslint/no-unused-vars
+   12:11  warning  'router' is assigned a value but never used                                                                                                                                                                                                                                              @typescript-eslint/no-unused-vars
+  133:57  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\admin\media\AdminMediaClient.tsx
+  7:19  warning  'FileText' is defined but never used      @typescript-eslint/no-unused-vars
+  7:35  warning  'MoreVertical' is defined but never used  @typescript-eslint/no-unused-vars
+  8:19  warning  'AlertCircle' is defined but never used   @typescript-eslint/no-unused-vars
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\admin\page.tsx
+  51:9  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\admin\page.tsx:51:9
+  49 |
+  50 |     useEffect(() => {
+> 51 |         setLastUpdate(new Date().toLocaleTimeString(locale));
+     |         ^^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  52 |     }, [locale]);
+  53 |
+  54 |     // Redirection Logic for Non-Admins  react-hooks/set-state-in-effect
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\admin\posts\AdminPostsClient.tsx
+  13:11  warning  'router' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  32:45  warning  'title' is defined but never used            @typescript-eslint/no-unused-vars
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\admin\posts\[id]\AdminPostEditClient.tsx
+    9:20  warning  'ImageIcon' is defined but never used      @typescript-eslint/no-unused-vars
+    9:31  warning  'Trash2' is defined but never used         @typescript-eslint/no-unused-vars
+    9:39  warning  'Pin' is defined but never used            @typescript-eslint/no-unused-vars
+    9:44  warning  'MessageSquare' is defined but never used  @typescript-eslint/no-unused-vars
+  363:59  error    Unexpected any. Specify a different type   @typescript-eslint/no-explicit-any
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\admin\posts\hooks\useAdminPosts.ts
+   60:54  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   95:39  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  121:23  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  178:25  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  205:28  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  258:25  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  294:25  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\admin\posts\new\AdminPostNewClient.tsx
+   9:5   warning  'X' is defined but never used                 @typescript-eslint/no-unused-vars
+   9:8   warning  'Plus' is defined but never used              @typescript-eslint/no-unused-vars
+  10:11  warning  'Calendar' is defined but never used          @typescript-eslint/no-unused-vars
+  10:30  warning  'ImageIcon' is defined but never used         @typescript-eslint/no-unused-vars
+  10:41  warning  'Trash2' is defined but never used            @typescript-eslint/no-unused-vars
+  10:49  warning  'Pin' is defined but never used               @typescript-eslint/no-unused-vars
+  10:54  warning  'MessageSquare' is defined but never used     @typescript-eslint/no-unused-vars
+  23:34  warning  'loading' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\admin\requests\AccessRequestsClient.tsx
+   24:11   warning  't' is assigned a value but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                @typescript-eslint/no-unused-vars
+   31:9    error    Error: Cannot access variable before it is declared
+
+`fetchRequests` is accessed before it is declared, which prevents the earlier access from updating when this value changes over time.
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\admin\requests\AccessRequestsClient.tsx:31:9
+  29 |
+  30 |     useEffect(() => {
+> 31 |         fetchRequests();
+     |         ^^^^^^^^^^^^^ `fetchRequests` accessed before it is declared
+  32 |     }, []);
+  33 |
+  34 |     async function fetchRequests() {
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\admin\requests\AccessRequestsClient.tsx:34:5
+  32 |     }, []);
+  33 |
+> 34 |     async function fetchRequests() {
+     |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 35 |         setLoading(true);
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^
+> 36 |         const supabase = createClient();
+     ÔÇª
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^
+> 64 |         setLoading(false);
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^
+> 65 |     }
+     | ^^^^^^ `fetchRequests` is declared here
+  66 |
+  67 |     async function handleApprove(requestId: string) {
+  68 |         setProcessing(requestId);  react-hooks/immutability
+   32:8    warning  React Hook useEffect has a missing dependency: 'fetchRequests'. Either include it or remove the dependency array                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      react-hooks/exhaustive-deps
+   60:60   error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              @typescript-eslint/no-explicit-any
+  119:8    warning  React Hook useEffect has a missing dependency: 'fetchRequests'. Either include it or remove the dependency array                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      react-hooks/exhaustive-deps
+  251:67   error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              @typescript-eslint/no-explicit-any
+  251:148  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              @typescript-eslint/no-explicit-any
+  361:59   error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              @typescript-eslint/no-explicit-any
+  361:140  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              @typescript-eslint/no-explicit-any
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\admin\settings\AdminSettingsClient.tsx
+   5:5   warning  'Settings' is defined but never used             @typescript-eslint/no-unused-vars
+   5:36  warning  'Bell' is defined but never used                 @typescript-eslint/no-unused-vars
+  16:46  error    Unexpected any. Specify a different type         @typescript-eslint/no-explicit-any
+  40:11  warning  'handleSave' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  57:18  warning  'error' is defined but never used                @typescript-eslint/no-unused-vars
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\admin\settings\hooks\useAdminSettings.ts
+  25:68  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\admin\statistics\page.tsx
+  16:5  warning  'ArrowUpRight' is defined but never used  @typescript-eslint/no-unused-vars
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\admin\users\AdminUsersClient.tsx
+    6:38  warning  'Mail' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       @typescript-eslint/no-unused-vars
+    7:19  warning  'XCircle' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    @typescript-eslint/no-unused-vars
+    7:28  warning  'AlertTriangle' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              @typescript-eslint/no-unused-vars
+   39:74  error    Error: Cannot call impure function during render
+
+`Date.now` is an impure function. Calling an impure function can produce unstable results that update unpredictably when the component happens to re-render. (https://react.dev/reference/rules/components-and-hooks-must-be-pure#components-and-hooks-must-be-idempotent).
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\admin\users\AdminUsersClient.tsx:39:74
+  37 |             reason = window.prompt(t('messages.enterReason')) || '';
+  38 |             if (newStatus === 'suspended') {
+> 39 |                 until = window.prompt(t('messages.enterUntil'), new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString()) || '';
+     |                                                                          ^^^^^^^^^^ Cannot call impure function
+  40 |             }
+  41 |         }
+  42 |  react-hooks/purity
+   77:35  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               @typescript-eslint/no-explicit-any
+   83:38  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               @typescript-eslint/no-explicit-any
+   95:66  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               @typescript-eslint/no-explicit-any
+  101:40  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               @typescript-eslint/no-explicit-any
+  225:57  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                @next/next/no-img-element
+  260:57  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        react/no-unescaped-entities
+  260:75  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        react/no-unescaped-entities
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\admin\users\hooks\useAdminUsers.ts
+   9:40  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  66:25  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\business\BusinessDirectory.tsx
+  43:11  warning  'createQueryString' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\business\[slug]\page.tsx
+   98:21  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+  123:37  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\business\page.tsx
+  5:10  warning  'Filter' is defined but never used  @typescript-eslint/no-unused-vars
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\comunidade\[slug]\page.tsx
+    8:10  warning  'ShareActions' is defined but never used                                                                                                                                                                                                                                                 @typescript-eslint/no-unused-vars
+   12:54  warning  'ThumbsUp' is defined but never used                                                                                                                                                                                                                                                     @typescript-eslint/no-unused-vars
+   12:64  warning  'Share2' is defined but never used                                                                                                                                                                                                                                                       @typescript-eslint/no-unused-vars
+   76:56  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+   77:56  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+   80:40  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+   80:75  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+   81:11  warning  'authorAvatar' is assigned a value but never used                                                                                                                                                                                                                                        @typescript-eslint/no-unused-vars
+   81:42  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+  103:25  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+  207:49  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+  218:79  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\comunidade\components\CategoriesSidebar.tsx
+  16:32  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\comunidade\components\CommentSection.tsx
+    3:50  warning  'MouseEvent' is defined but never used                                                                                                                                                                                                                                                   @typescript-eslint/no-unused-vars
+   85:39  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+  145:37  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+  205:37  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\comunidade\components\FloatingPostActions.tsx
+  28:8   warning  React Hook useEffect has a missing dependency: 'checkIfLiked'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+  41:18  warning  'error' is defined but never used                                                                                @typescript-eslint/no-unused-vars
+  82:22  warning  'err' is defined but never used                                                                                  @typescript-eslint/no-unused-vars
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\comunidade\components\PostCard.tsx
+   90:21  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+  132:25  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\comunidade\components\PostInteractions.tsx
+   4:33  warning  'Check' is defined but never used                                                                                @typescript-eslint/no-unused-vars
+  41:8   warning  React Hook useEffect has a missing dependency: 'checkIfLiked'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+  45:27  warning  'error' is assigned a value but never used                                                                       @typescript-eslint/no-unused-vars
+  54:18  warning  'error' is defined but never used                                                                                @typescript-eslint/no-unused-vars
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\comunidade\components\ReelModal.tsx
+  79:25  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\comunidade\components\ReelsRow.tsx
+  69:33  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\comunidade\components\RightWidgets.tsx
+  105:25  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\comunidade\duvidas\[slug]\components\QuestionDetailClient.tsx
+   57:19  warning  'profile' is assigned a value but never used                                                                                                                                                                                                                                             @typescript-eslint/no-unused-vars
+   84:28  warning  'loading' is assigned a value but never used                                                                                                                                                                                                                                             @typescript-eslint/no-unused-vars
+   84:53  warning  'notFound' is assigned a value but never used                                                                                                                                                                                                                                            @typescript-eslint/no-unused-vars
+  115:51  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+  115:97  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+  116:50  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+  223:11  warning  'getTimeAgo' is assigned a value but never used                                                                                                                                                                                                                                          @typescript-eslint/no-unused-vars
+  236:21  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\comunidade\duvidas\[slug]\page.tsx
+   2:10  warning  'getTranslations' is defined but never used  @typescript-eslint/no-unused-vars
+   4:10  warning  'ArticleTracking' is defined but never used  @typescript-eslint/no-unused-vars
+  70:49  error    Unexpected any. Specify a different type     @typescript-eslint/no-explicit-any
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\comunidade\duvidas\components\PublishQuestionForm.tsx
+   3:20  warning  'useRef' is defined but never used         @typescript-eslint/no-unused-vars
+  10:10  warning  'Link' is defined but never used           @typescript-eslint/no-unused-vars
+  44:21  warning  'data' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\comunidade\duvidas\components\QuestionCard.tsx
+  14:44  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+  14:83  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+  15:43  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+  79:33  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\comunidade\duvidas\components\ReplyCard.tsx
+  16:18  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+  39:42  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+  39:79  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+  40:41  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+  86:17  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\comunidade\duvidas\page.tsx
+  52:53  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\comunidade\page.tsx
+    7:25   warning  'fetchActiveReels' is defined but never used  @typescript-eslint/no-unused-vars
+    9:10   warning  'CommunityPost' is defined but never used     @typescript-eslint/no-unused-vars
+   96:35   error    Unexpected any. Specify a different type      @typescript-eslint/no-explicit-any
+  173:67   error    Unexpected any. Specify a different type      @typescript-eslint/no-explicit-any
+  179:64   error    Unexpected any. Specify a different type      @typescript-eslint/no-explicit-any
+  180:88   error    Unexpected any. Specify a different type      @typescript-eslint/no-explicit-any
+  181:91   error    Unexpected any. Specify a different type      @typescript-eslint/no-explicit-any
+  192:79   error    Unexpected any. Specify a different type      @typescript-eslint/no-explicit-any
+  193:82   error    Unexpected any. Specify a different type      @typescript-eslint/no-explicit-any
+  193:136  error    Unexpected any. Specify a different type      @typescript-eslint/no-explicit-any
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\contribute\cost-of-living\components\CostOfLivingForm.tsx
+    8:24  warning  'AlertCircle' is defined but never used   @typescript-eslint/no-unused-vars
+  125:23  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\eventos\EventsClient.tsx
+   10:8   warning  'RequestAccessButton' is defined but never used                                                                 @typescript-eslint/no-unused-vars
+  108:8   warning  React Hook useEffect has a missing dependency: 'fetchEvents'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+  295:80  warning  Unused eslint-disable directive (no problems were reported)
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\eventos\[slug]\components\EventSidebar.tsx
+  3:40  warning  'Share2' is defined but never used  @typescript-eslint/no-unused-vars
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\eventos\[slug]\page.tsx
+  110:29  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+  117:25  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\eventos\components\EventTileCard.tsx
+   4:10  warning  'useTranslations' is defined but never used                                                                                                                                                                                                                                              @typescript-eslint/no-unused-vars
+  52:25  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\galeria\album\[albumId]\page.tsx
+    9:59  warning  'Share2' is defined but never used                                                                                                                                                                                                                                                       @typescript-eslint/no-unused-vars
+   13:10  warning  'ResponsiveImage' is defined but never used                                                                                                                                                                                                                                              @typescript-eslint/no-unused-vars
+   30:12  warning  'coverUrl' is assigned a value but never used                                                                                                                                                                                                                                            @typescript-eslint/no-unused-vars
+  212:33  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\guias\[category]\[slug]\page.tsx
+  135:25  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\guias\[category]\page.tsx
+  110:49  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\guias\recem-chegado\components\CommunityRecommendations.tsx
+   26:87  error    Unexpected any. Specify a different type                                                                     @typescript-eslint/no-explicit-any
+   27:11  warning  't' is assigned a value but never used                                                                       @typescript-eslint/no-unused-vars
+   75:52  warning  'locale' is defined but never used                                                                           @typescript-eslint/no-unused-vars
+  101:42  error    Unexpected any. Specify a different type                                                                     @typescript-eslint/no-explicit-any
+  113:8   warning  React Hook useEffect has a missing dependency: 'supabase'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\guias\recem-chegado\components\FinalCTASection.tsx
+  11:43  warning  'locale' is defined but never used  @typescript-eslint/no-unused-vars
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\guias\recem-chegado\components\GuideCategoryGrid.tsx
+  13:31  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  92:50  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\guias\recem-chegado\components\GuideHeroSection.tsx
+  153:41  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\guias\recem-chegado\page.tsx
+  1:10  warning  'createClient' is defined but never used  @typescript-eslint/no-unused-vars
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\jobs\JobsClient.tsx
+    6:26  warning  'ChevronLeft' is defined but never used                                                                                                                                                                                                                                                  @typescript-eslint/no-unused-vars
+    6:39  warning  'ChevronRight' is defined but never used                                                                                                                                                                                                                                                 @typescript-eslint/no-unused-vars
+    6:81  warning  'Eye' is defined but never used                                                                                                                                                                                                                                                          @typescript-eslint/no-unused-vars
+   81:8   warning  React Hook useMemo has a missing dependency: 'regions'. Either include it or remove the dependency array                                                                                                                                                                                 react-hooks/exhaustive-deps
+  179:45  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\jobs\[id]\JobDetailsClient.tsx
+    6:61  warning  'Calendar' is defined but never used                                                                                                                                                                                                                                                     @typescript-eslint/no-unused-vars
+  107:37  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+  248:69  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+  273:33  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\jobs\components\ApplyForm.tsx
+  21:36  warning  'jobTitle' is defined but never used  @typescript-eslint/no-unused-vars
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\jobs\components\JobComments.tsx
+   20:37  warning  'authLoading' is assigned a value but never used                                                                                                                                                                                                                                         @typescript-eslint/no-unused-vars
+   32:8   warning  React Hook useEffect has a missing dependency: 'loadComments'. Either include it or remove the dependency array                                                                                                                                                                          react-hooks/exhaustive-deps
+   89:33  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+  152:37  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\layout.tsx
+  50:11  warning  'title' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  50:32  error    Unexpected any. Specify a different type    @typescript-eslint/no-explicit-any
+  51:38  error    Unexpected any. Specify a different type    @typescript-eslint/no-explicit-any
+  73:45  error    Unexpected any. Specify a different type    @typescript-eslint/no-explicit-any
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\link-account\page.tsx
+  39:9  error  Error: Cannot call impure function during render
+
+`Date.now` is an impure function. Calling an impure function can produce unstable results that update unpredictably when the component happens to re-render. (https://react.dev/reference/rules/components-and-hooks-must-be-pure#components-and-hooks-must-be-idempotent).
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\link-account\page.tsx:39:9
+  37 |     }
+  38 |
+> 39 |     if (Date.now() > pendingLink.expiresAt) {
+     |         ^^^^^^^^^^ Cannot call impure function
+  40 |         redirect(`/${locale}/`);
+  41 |     }
+  42 |  react-hooks/purity
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\login\components\LoginPageClient.tsx
+  76:23  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\noticias\NewsList.tsx
+   4:18  warning  'Clock' is defined but never used            @typescript-eslint/no-unused-vars
+  12:19  error    Unexpected any. Specify a different type     @typescript-eslint/no-explicit-any
+  13:17  error    Unexpected any. Specify a different type     @typescript-eslint/no-explicit-any
+  19:11  warning  'locale' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  20:11  warning  'router' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  53:38  error    Unexpected any. Specify a different type     @typescript-eslint/no-explicit-any
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\noticias\[slug]\page.tsx
+   26:11  warning  't' is assigned a value but never used    @typescript-eslint/no-unused-vars
+  281:58  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\noticias\page.tsx
+  20:46  warning  'params' is defined but never used  @typescript-eslint/no-unused-vars
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\pagamento\PaymentClient.tsx
+   7:8   warning  'Image' is defined but never used         @typescript-eslint/no-unused-vars
+  46:25  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\pagamento\retorno\ReturnClient.tsx
+  10:11  warning  't' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\page.tsx
+    9:36  warning  'ArrowRight' is defined but never used    @typescript-eslint/no-unused-vars
+  153:76  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  176:73  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\perfil\components\ProfilePageClient.tsx
+    8:57  warning  'AlertCircle' is defined but never used                                                                                                                                                                                                                                                  @typescript-eslint/no-unused-vars
+   83:8   warning  React Hook useCallback has a missing dependency: 'getUsernameError'. Either include it or remove the dependency array                                                                                                                                                                    react-hooks/exhaustive-deps
+  119:25  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+  163:25  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+  216:37  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\reels\ReelsPageClient.tsx
+  16:11  warning  't' is assigned a value but never used                                                                                                                                                                                                                                                   @typescript-eslint/no-unused-vars
+  73:37  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\statistics\page.tsx
+   71:9    warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+   85:60   error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+   86:56   error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+   87:52   error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+  119:27   error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+  452:145  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+  547:171  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`                                                                                                                                                                                                                          react/no-unescaped-entities
+  562:101  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+
+D:\Antigravity\nipponlife-next\src\app\[locale]\termos\page.tsx
+  68:67  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  68:78  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+D:\Antigravity\nipponlife-next\src\app\actions\mediaCleanup.ts
+   86:21  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  137:21  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Antigravity\nipponlife-next\src\app\actions\submitApplication.ts
+  246:15  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Antigravity\nipponlife-next\src\app\actions\submitBusinessForm.ts
+   58:14  warning  'e' is defined but never used                    @typescript-eslint/no-unused-vars
+   80:13  error    'slug' is never reassigned. Use 'const' instead  prefer-const
+  162:17  error    Unexpected any. Specify a different type         @typescript-eslint/no-explicit-any
+
+D:\Antigravity\nipponlife-next\src\app\actions\submitEventForm.ts
+  63:13  error  'slug' is never reassigned. Use 'const' instead  prefer-const
+  96:17  error  Unexpected any. Specify a different type         @typescript-eslint/no-explicit-any
+
+D:\Antigravity\nipponlife-next\src\app\actions\submitJobForm.ts
+   49:17  error  Unexpected any. Specify a different type         @typescript-eslint/no-explicit-any
+   71:13  error  'slug' is never reassigned. Use 'const' instead  prefer-const
+  134:17  error  Unexpected any. Specify a different type         @typescript-eslint/no-explicit-any
+
+D:\Antigravity\nipponlife-next\src\app\actions\userAdmin.ts
+  182:21  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Antigravity\nipponlife-next\src\app\api\gallery\fix-dimensions\route.ts
+  99:21  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Antigravity\nipponlife-next\src\app\api\gallery\upload\route.ts
+   90:27  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  121:21  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Antigravity\nipponlife-next\src\app\api\media\delete\route.ts
+  67:21  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Antigravity\nipponlife-next\src\app\api\media\upload\route.ts
+   47:52  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   49:32  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   67:45  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  111:21  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Antigravity\nipponlife-next\src\app\api\payment\create-session\route.ts
+   4:28  warning  'request' is defined but never used       @typescript-eslint/no-unused-vars
+  61:21  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Antigravity\nipponlife-next\src\app\api\payment\webhook\route.ts
+  30:19  warning  'externalOrderNum' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  31:19  warning  'sessionId' is assigned a value but never used         @typescript-eslint/no-unused-vars
+  35:23  warning  'supabase' is assigned a value but never used          @typescript-eslint/no-unused-vars
+  47:21  error    Unexpected any. Specify a different type               @typescript-eslint/no-explicit-any
+
+D:\Antigravity\nipponlife-next\src\app\api\site-settings\newcomer_guide_views\route.ts
+  51:21  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Antigravity\nipponlife-next\src\app\sitemap.ts
+  121:55  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Antigravity\nipponlife-next\src\components\BusinessGallery.tsx
+  109:29  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+  156:25  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+D:\Antigravity\nipponlife-next\src\components\CommentSection.tsx
+   10:10  warning  'Link' is defined but never used                                                                                                                                                                                                                                                         @typescript-eslint/no-unused-vars
+  150:37  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+  210:37  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+D:\Antigravity\nipponlife-next\src\components\Header.tsx
+  29:9   error    Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+D:\Antigravity\nipponlife-next\src\components\Header.tsx:29:9
+  27 |
+  28 |     useEffect(() => {
+> 29 |         setMounted(true);
+     |         ^^^^^^^^^^ Avoid calling setState() directly within an effect
+  30 |     }, []);
+  31 |
+  32 |     const isAdmin = pathname?.includes('/admin');  react-hooks/set-state-in-effect
+  45:25  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                @next/next/no-img-element
+
+D:\Antigravity\nipponlife-next\src\components\HeroSection.tsx
+  12:19  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Antigravity\nipponlife-next\src\components\LargeFeaturedCard.tsx
+  43:91  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Antigravity\nipponlife-next\src\components\MediaUploader.tsx
+   6:39  warning  'ImageIcon' is defined but never used            @typescript-eslint/no-unused-vars
+  33:11  warning  'supabase' is assigned a value but never used    @typescript-eslint/no-unused-vars
+  34:12  warning  'imageError' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  53:48  error    Unexpected any. Specify a different type         @typescript-eslint/no-explicit-any
+  90:23  error    Unexpected any. Specify a different type         @typescript-eslint/no-explicit-any
+
+D:\Antigravity\nipponlife-next\src\components\PostCard.tsx
+  12:7  warning  'supabase' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+D:\Antigravity\nipponlife-next\src\components\QuillEditor.tsx
+  27:11  warning  'quillRef' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  27:29  error    Unexpected any. Specify a different type       @typescript-eslint/no-explicit-any
+
+D:\Antigravity\nipponlife-next\src\components\ReelModal.tsx
+  79:25  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+D:\Antigravity\nipponlife-next\src\components\ReelsRow.tsx
+  74:29  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+D:\Antigravity\nipponlife-next\src\components\ResponsiveImage.tsx
+  33:9  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+D:\Antigravity\nipponlife-next\src\components\ResponsiveImage.tsx:33:9
+  31 |     // Reset error state when src changes
+  32 |     useEffect(() => {
+> 33 |         setIsError(false);
+     |         ^^^^^^^^^^ Avoid calling setState() directly within an effect
+  34 |     }, [src]);
+  35 |
+  36 |     const finalSrc = (isError || !rawUrl) ? fallbackSrc : rawUrl;  react-hooks/set-state-in-effect
+
+D:\Antigravity\nipponlife-next\src\components\ShareActions.tsx
+  36:18  warning  'e' is defined but never used    @typescript-eslint/no-unused-vars
+  95:18  warning  'err' is defined but never used  @typescript-eslint/no-unused-vars
+
+D:\Antigravity\nipponlife-next\src\components\SmallFeaturedCard.tsx
+  26:91  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Antigravity\nipponlife-next\src\components\StructuredData.tsx
+  4:24  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Antigravity\nipponlife-next\src\components\TourismVisualCard.tsx
+  26:8  warning  React Hook useEffect has an unnecessary dependency: 'lottieRef.current'. Either exclude it or remove the dependency array. Mutable values like 'lottieRef.current' aren't valid dependencies because mutating them doesn't re-render the component                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              react-hooks/exhaustive-deps
+  26:9  error    Error: Cannot access refs during render
+
+React refs are values that are not needed for rendering. Refs should only be accessed outside of render, such as in event handlers or effects. Accessing a ref value (the `current` property) during render can cause your component not to update as expected (https://react.dev/reference/react/useRef).
+
+D:\Antigravity\nipponlife-next\src\components\TourismVisualCard.tsx:26:9
+  24 |             lottieRef.current.setSpeed(0.7);
+  25 |         }
+> 26 |     }, [lottieRef.current]);
+     |         ^^^^^^^^^^^^^^^^^ Cannot access ref value during render
+  27 |
+  28 |     return (
+  29 |         <div className="bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-slate-800 dark:to-slate-900 rounded-3xl p-6 md:p-10 shadow-sm border border-slate-100 dark:border-zinc-800 flex flex-col justify-center relative overflow-hidden min-h-[400px]">  react-hooks/refs
+  26:9  error    Error: Cannot access refs during render
+
+React refs are values that are not needed for rendering. Refs should only be accessed outside of render, such as in event handlers or effects. Accessing a ref value (the `current` property) during render can cause your component not to update as expected (https://react.dev/reference/react/useRef).
+
+D:\Antigravity\nipponlife-next\src\components\TourismVisualCard.tsx:26:9
+  24 |             lottieRef.current.setSpeed(0.7);
+  25 |         }
+> 26 |     }, [lottieRef.current]);
+     |         ^^^^^^^^^^^^^^^^^ Cannot access ref value during render
+  27 |
+  28 |     return (
+  29 |         <div className="bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-slate-800 dark:to-slate-900 rounded-3xl p-6 md:p-10 shadow-sm border border-slate-100 dark:border-zinc-800 flex flex-col justify-center relative overflow-hidden min-h-[400px]">  react-hooks/refs
+
+D:\Antigravity\nipponlife-next\src\components\UserMenu.tsx
+   5:51  warning  'Camera' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           @typescript-eslint/no-unused-vars
+  64:17  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      @next/next/no-img-element
+  71:11  warning  'isPhotographer' is assigned a value but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          @typescript-eslint/no-unused-vars
+  82:18  error    Error: Cannot create components during render
+
+Components created during render will reset their state each time they are created. Declare components outside of render.
+
+D:\Antigravity\nipponlife-next\src\components\UserMenu.tsx:82:18
+  80 |                 aria-label="Menu de usu├írio"
+  81 |             >
+> 82 |                 <Avatar />
+     |                  ^^^^^^ This component is created during render
+  83 |             </button>
+  84 |
+  85 |             {/* Unified Dropdown for Desktop and Mobile */}
+
+D:\Antigravity\nipponlife-next\src\components\UserMenu.tsx:61:20
+  59 |     }
+  60 |
+> 61 |     const Avatar = () => (
+     |                    ^^^^^^^
+> 62 |         <div className="w-8 h-8 md:w-9 md:h-9 rounded-full bg-[#D70F24] flex items-center justify-center text-white text-xs md:text-sm font-semibold shadow-sm ring-2 ring-transparent group-hover:ring-primary/10 transition-all overflow-hidden">
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 63 |             {profile?.avatar_url ? (
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 64 |                 <img src={profile.avatar_url} alt={profile.full_name || 'User'} className="w-full h-full object-cover" />
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 65 |             ) : (
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 66 |                 <span>{profile?.username?.[0]?.toUpperCase() || profile?.full_name?.[0]?.toUpperCase() || 'U'}</span>
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 67 |             )}
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 68 |         </div>
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 69 |     );
+     | ^^^^^^ The component is created during render here
+  70 |
+  71 |     const isPhotographer = profile?.role === 'photographer' || profile?.role === 'admin';
+  72 |  react-hooks/static-components
+
+D:\Antigravity\nipponlife-next\src\components\access\RequestAccessButton.tsx
+  29:9  error    Error: Cannot access variable before it is declared
+
+`checkAccessStatus` is accessed before it is declared, which prevents the earlier access from updating when this value changes over time.
+
+D:\Antigravity\nipponlife-next\src\components\access\RequestAccessButton.tsx:29:9
+  27 |
+  28 |     useEffect(() => {
+> 29 |         checkAccessStatus();
+     |         ^^^^^^^^^^^^^^^^^ `checkAccessStatus` accessed before it is declared
+  30 |     }, []);
+  31 |
+  32 |     async function checkAccessStatus() {
+
+D:\Antigravity\nipponlife-next\src\components\access\RequestAccessButton.tsx:32:5
+  30 |     }, []);
+  31 |
+> 32 |     async function checkAccessStatus() {
+     |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 33 |         const supabase = createClient();
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 34 |
+     ÔÇª
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 60 |         setLoading(false);
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 61 |     }
+     | ^^^^^^ `checkAccessStatus` is declared here
+  62 |
+  63 |     async function handleRequestAccess() {
+  64 |         if (!userId) return;  react-hooks/immutability
+  30:8  warning  React Hook useEffect has a missing dependency: 'checkAccessStatus'. Either include it or remove the dependency array                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               react-hooks/exhaustive-deps
+
+D:\Antigravity\nipponlife-next\src\components\admin\AdminGalleryFormClient.tsx
+   3:31  warning  'useCallback' is defined but never used     @typescript-eslint/no-unused-vars
+   7:10  warning  'Camera' is defined but never used          @typescript-eslint/no-unused-vars
+  11:10  warning  'galleryService' is defined but never used  @typescript-eslint/no-unused-vars
+
+D:\Antigravity\nipponlife-next\src\components\cards\GalleryAlbumCard.tsx
+  135:25  warning  Image elements must have an alt prop, either with meaningful text, or an empty string for decorative images  jsx-a11y/alt-text
+  164:37  warning  Image elements must have an alt prop, either with meaningful text, or an empty string for decorative images  jsx-a11y/alt-text
+
+D:\Antigravity\nipponlife-next\src\components\gallery\PhotoGallery.tsx
+   47:40  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+   58:21  error    'timeoutId' is never reassigned. Use 'const' instead                                                                                                                                                                                                                                     prefer-const
+   71:30  warning  '_' is defined but never used                                                                                                                                                                                                                                                            @typescript-eslint/no-unused-vars
+   78:34  warning  '_' is defined but never used                                                                                                                                                                                                                                                            @typescript-eslint/no-unused-vars
+   81:38  warning  '_' is defined but never used                                                                                                                                                                                                                                                            @typescript-eslint/no-unused-vars
+  100:60  warning  '_' is defined but never used                                                                                                                                                                                                                                                            @typescript-eslint/no-unused-vars
+  102:83  warning  '_' is defined but never used                                                                                                                                                                                                                                                            @typescript-eslint/no-unused-vars
+  103:72  warning  '_' is defined but never used                                                                                                                                                                                                                                                            @typescript-eslint/no-unused-vars
+  108:59  warning  '_' is defined but never used                                                                                                                                                                                                                                                            @typescript-eslint/no-unused-vars
+  124:60  warning  '_' is defined but never used                                                                                                                                                                                                                                                            @typescript-eslint/no-unused-vars
+  182:25  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+D:\Antigravity\nipponlife-next\src\contexts\AuthContext.tsx
+  32:38  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  32:75  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Antigravity\nipponlife-next\src\hooks\useComments.ts
+  44:34  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Antigravity\nipponlife-next\src\hooks\useCommunityQuestionDetail.ts
+  111:8   warning  React Hook useCallback has a missing dependency: 'initialQuestion'. Either include it or remove the dependency array          react-hooks/exhaustive-deps
+  171:8   warning  React Hook useCallback has missing dependencies: 'answers' and 'loading'. Either include them or remove the dependency array  react-hooks/exhaustive-deps
+  362:31  error    Unexpected any. Specify a different type                                                                                      @typescript-eslint/no-explicit-any
+
+D:\Antigravity\nipponlife-next\src\i18n\request.ts
+  8:56  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Antigravity\nipponlife-next\src\lib\businessService.ts
+  133:13  error    'slug' is never reassigned. Use 'const' instead  prefer-const
+  183:17  warning  'slug' is assigned a value but never used        @typescript-eslint/no-unused-vars
+
+D:\Antigravity\nipponlife-next\src\lib\categoryService.ts
+  21:37  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Antigravity\nipponlife-next\src\lib\communityService.ts
+  41:29  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Antigravity\nipponlife-next\src\lib\eventService.ts
+  108:29  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  119:41  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Antigravity\nipponlife-next\src\lib\getTranslatedField.ts
+   21:26  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   63:26  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  128:55  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Antigravity\nipponlife-next\src\lib\guidesCategoriesService.ts
+  149:20  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Antigravity\nipponlife-next\src\lib\guidesService.ts
+  125:41  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  150:41  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  174:41  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  237:20  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Antigravity\nipponlife-next\src\lib\jobsService.ts
+   73:27  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   84:39  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  119:29  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  157:19  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  161:21  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  168:31  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  180:45  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  208:33  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  227:15  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Antigravity\nipponlife-next\src\lib\mediaService.ts
+   2:10  warning  'storageService' is defined but never used  @typescript-eslint/no-unused-vars
+  23:37  error    Unexpected any. Specify a different type    @typescript-eslint/no-explicit-any
+  51:25  error    Unexpected any. Specify a different type    @typescript-eslint/no-explicit-any
+  73:25  error    Unexpected any. Specify a different type    @typescript-eslint/no-explicit-any
+
+D:\Antigravity\nipponlife-next\src\lib\profileService.ts
+  153:27  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Antigravity\nipponlife-next\src\lib\reelsService.ts
+  2:10  warning  'storageService' is defined but never used  @typescript-eslint/no-unused-vars
+
+D:\Antigravity\nipponlife-next\src\lib\siteSettingsService.ts
+  27:27  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Antigravity\nipponlife-next\src\lib\storageService.ts
+  22:57  warning  'userId' is defined but never used   @typescript-eslint/no-unused-vars
+  22:74  warning  'albumId' is defined but never used  @typescript-eslint/no-unused-vars
+
+D:\Antigravity\nipponlife-next\src\types\job.ts
+  64:17  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Antigravity\nipponlife-next\src\utils\supabase\middleware.ts
+  19:58  warning  'options' is defined but never used  @typescript-eslint/no-unused-vars
+
+Ô£û 440 problems (200 errors, 240 warnings)
+  5 errors and 1 warning potentially fixable with the `--fix` option.
+
