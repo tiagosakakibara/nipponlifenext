@@ -45,17 +45,17 @@ export function SmallFeaturedCard({ item, className = '' }: SmallFeaturedCardPro
             className={`group relative h-[350px] rounded-2xl overflow-hidden cursor-pointer shadow-lg hover:shadow-accent/20 transition-all duration-500 bg-surface border border-app ${className}`}
         >
             {/* Image */}
-            <div className="relative h-[200px] overflow-hidden">
+            <div className={`relative h-[200px] overflow-hidden ${item.type === 'job' ? 'bg-white' : ''}`}>
                 <Image
                     src={storageService.getFileUrl(item.image)}
                     alt={title}
                     fill
-                    className="object-cover group-hover:scale-110 transition-transform duration-700"
+                    className={`group-hover:scale-110 transition-transform duration-700 ${item.type === 'job' ? 'object-contain' : 'object-cover'}`}
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 />
 
                 {/* Gradient Overlay on Image */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                {item.type !== 'job' && <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />}
 
                 {/* Category Badge */}
                 <div className={`absolute top-4 left-4 px-3 py-1 ${item.type === 'job' ? 'bg-black/60 backdrop-blur-md rounded-full border border-white/10 shadow-sm' : 'bg-[#D70F24] rounded-lg'} text-white text-[10px] font-bold uppercase tracking-widest z-10`}>
