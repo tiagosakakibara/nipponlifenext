@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
 import { Link } from '@/i18n/routing';
-import { MapPin, Briefcase, Eye, ChevronRight, ChevronLeft, Calendar, Share2, Building, Clock } from 'lucide-react';
+import { MapPin, Briefcase, Eye, ChevronRight, ChevronLeft, Calendar, Share2, Building, Clock, Phone } from 'lucide-react';
 import { Job } from '@/types/job';
 import { ApplyForm } from '../components/ApplyForm';
 import { JobComments } from '../components/JobComments';
@@ -166,6 +166,30 @@ export default function JobDetailsClient({ job }: { job: Job }) {
                                     </button>
                                 )}
                             </div>
+
+                            {(job.contact_phone1 || job.contact_phone2) && (
+                                <div className="mt-6 pt-6 border-t border-app space-y-4">
+                                    <p className="text-[10px] font-black text-zinc-400 dark:text-zinc-500 uppercase tracking-widest mb-2 text-center">Contatos da Vaga</p>
+                                    <div className="flex flex-col gap-3">
+                                        {job.contact_phone1 && (
+                                            <a href={`tel:${job.contact_phone1}`} className="flex items-center justify-center gap-3 p-3 rounded-2xl bg-app/50 border border-app hover:bg-app transition-colors group">
+                                                <div className="w-8 h-8 rounded-full bg-surface flex items-center justify-center text-primary border border-app shadow-sm group-hover:text-link transition-colors">
+                                                    <Phone className="w-4 h-4" />
+                                                </div>
+                                                <span className="text-sm font-bold text-primary">{job.contact_phone1}</span>
+                                            </a>
+                                        )}
+                                        {job.contact_phone2 && (
+                                            <a href={`tel:${job.contact_phone2}`} className="flex items-center justify-center gap-3 p-3 rounded-2xl bg-app/50 border border-app hover:bg-app transition-colors group">
+                                                <div className="w-8 h-8 rounded-full bg-surface flex items-center justify-center text-primary border border-app shadow-sm group-hover:text-link transition-colors">
+                                                    <Phone className="w-4 h-4" />
+                                                </div>
+                                                <span className="text-sm font-bold text-primary">{job.contact_phone2}</span>
+                                            </a>
+                                        )}
+                                    </div>
+                                </div>
+                            )}
                         </div>
 
                         {/* Salary & Bonus if available */}

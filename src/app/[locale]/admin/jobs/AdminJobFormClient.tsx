@@ -341,10 +341,11 @@ export default function AdminJobFormClient({ id, initialData }: Props) {
                                         {...register('job_type')}
                                         className="w-full p-4 bg-app border border-app rounded-2xl text-sm font-bold text-primary focus:bg-white transition-all outline-none appearance-none"
                                     >
-                                        <option value="Full-time">Full-time</option>
-                                        <option value="Part-time">Part-time</option>
-                                        <option value="Contract">Contract</option>
-                                        <option value="Temporary">Temporary</option>
+                                        <option value="Full-time">Tempo integral (Full-time)</option>
+                                        <option value="Part-time">Meio período (Part-time)</option>
+                                        <option value="Contract">Contrato (Contract)</option>
+                                        <option value="Temporary">Temporário (Temporary)</option>
+                                        <option value="Alternado">Alternado</option>
                                     </select>
                                 </div>
                             </div>

@@ -1112,6 +1112,7 @@
       "partTime": "パート・アルバイト",
       "contract": "契約社員",
       "temporary": "派遣社員",
+      "alternado": "交替制",
       "location": "都道府県",
       "city": "市区町村",
       "cityPlaceholder": "例: 豊田市",
@@ -1190,7 +1191,8 @@
       "fullTime": "正社員",
       "partTime": "パートタイム",
       "contract": "契約社員",
-      "temporary": "派遣・臨時"
+      "temporary": "派遣・臨時",
+      "alternado": "交替制"
     },
     "modal": {
       "careerOpportunity": "キャリア機会",

@@ -16,7 +16,7 @@ export interface Job {
     salary?: string;
     bonus?: string;
     tags: string[];
-    type: 'full-time' | 'part-time' | 'contract' | 'temporary' | 'Full-time' | 'Part-time' | 'Contract' | 'Temporary';
+    type: 'full-time' | 'part-time' | 'contract' | 'temporary' | 'Full-time' | 'Part-time' | 'Contract' | 'Temporary' | 'alternado' | 'Alternado';
     featured?: boolean;
     logo?: string;
     slug?: string;
@@ -94,6 +94,7 @@ export const JOB_TYPES = [
     { value: 'part-time', label: 'Meio período' },
     { value: 'contract', label: 'Contrato' },
     { value: 'temporary', label: 'Temporário' },
+    { value: 'alternado', label: 'Alternado' },
 ];
 
 export interface JobComment {

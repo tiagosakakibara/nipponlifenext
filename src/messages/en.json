@@ -1156,6 +1156,7 @@
       "partTime": "Part-time",
       "contract": "Contract",
       "temporary": "Temporary",
+      "alternado": "Alternating",
       "location": "Prefecture (Ken)",
       "city": "City",
       "cityPlaceholder": "Ex: Toyota-shi",
@@ -1234,7 +1235,8 @@
       "fullTime": "Full-time",
       "partTime": "Part-time",
       "contract": "Contract",
-      "temporary": "Temporary"
+      "temporary": "Temporary",
+      "alternado": "Alternating"
     },
     "modal": {
       "careerOpportunity": "CAREER OPPORTUNITY",

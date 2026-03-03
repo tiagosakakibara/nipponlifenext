@@ -211,6 +211,7 @@ export default function JobRegistrationForm() {
         { value: 'part-time', label: t('partTime') },
         { value: 'contract', label: t('contract') },
         { value: 'temporary', label: t('temporary') },
+        { value: 'alternado', label: t('alternado') },
     ];
 
     const payUnits = [
