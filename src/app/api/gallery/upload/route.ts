@@ -35,6 +35,41 @@ export async function POST(request: NextRequest) {
             return NextResponse.json({ error: 'Album ID required' }, { status: 400 })
         }
 
+        // 2b. Determine author folder
+        let authorFolder = 'desconhecido';
+        try {
+            const { data: albumData } = await supabase
+                .from('gallery_albums')
+                .select('created_by, custom_author_name')
+                .eq('id', albumId)
+                .single();
+
+            if (albumData) {
+                let name = albumData.custom_author_name;
+
+                if (!name && albumData.created_by) {
+                    const { data: profile } = await supabase
+                        .from('profiles')
+                        .select('full_name, username')
+                        .eq('id', albumData.created_by)
+                        .single();
+
+                    name = profile?.full_name || profile?.username || albumData.created_by;
+                }
+
+                if (!name) name = 'admin';
+
+                authorFolder = name
+                    .normalize("NFD").replace(/[\u0300-\u036f]/g, "") // remove diacritics
+                    .replace(/[^a-zA-Z0-9 -]/g, '') // remove invalid chars
+                    .trim()
+                    .replace(/\s+/g, '-') // spaces to dashes
+                    .toLowerCase() || 'admin';
+            }
+        } catch (err) {
+            console.warn('Could not determine author folder:', err);
+        }
+
         // 3. Convert image to WebP using sharp
         const fileBuffer = await file.arrayBuffer()
         const inputBuffer = Buffer.from(fileBuffer)
@@ -67,7 +102,7 @@ export async function POST(request: NextRequest) {
 
         // 4. Upload to storage
         const fileName = `${Math.random().toString(36).substring(2)}_${Date.now()}.${fileExt}`
-        const filePath = `gallery/${fileName}`
+        const filePath = `gallery/${authorFolder}/${fileName}`
 
         const { error: uploadError } = await supabase.storage
             .from('gallery')
