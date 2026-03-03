@@ -111,6 +111,7 @@ export default async function HomePage() {
             category: 'vagas', // "Vagas" normalized
             slug: job.id,
             pay_rate_yen: job.pay_rate_yen,
+            pay_unit: job.pay_unit,
             salary: job.salary_text || (job.pay_rate_yen ? `¥${job.pay_rate_yen.toLocaleString()}/${job.pay_unit || 'h'}` : job.pay_text),
         };
     });

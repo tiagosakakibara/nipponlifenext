@@ -85,7 +85,22 @@ export function SmallFeaturedCard({ item, className = '' }: SmallFeaturedCardPro
                                 {item.salary.includes('¥') ? '' : '¥'}{item.salary.split('/')[0].replace('¥', '').trim()}
                             </span>
                             <span className="text-[10px] font-bold text-[#1872B6] uppercase tracking-wider block mt-1">
-                                {t('jobs.salaryLabel', { defaultValue: 'Valor da Hora' })}
+                                {(() => {
+                                    switch (item.pay_unit?.toLowerCase()) {
+                                        case 'month':
+                                        case 'mês':
+                                        case 'mes':
+                                            return t('jobs.payUnitMonth', { defaultValue: 'Por Mês' });
+                                        case 'day':
+                                        case 'dia':
+                                            return t('jobs.payUnitDay', { defaultValue: 'Por Dia' });
+                                        case 'hour':
+                                        case 'hora':
+                                        case 'h':
+                                        default:
+                                            return t('jobs.salaryLabel', { defaultValue: 'Valor da Hora' });
+                                    }
+                                })()}
                             </span>
                         </div>
                     )}

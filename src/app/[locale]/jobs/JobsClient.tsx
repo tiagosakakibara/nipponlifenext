@@ -174,20 +174,18 @@ export default function JobsClient() {
                                     className="group relative bg-surface border border-app rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 cursor-pointer flex flex-col h-full"
                                 >
                                     {/* Image Section */}
-                                    <div className="relative h-28 md:h-40 w-full overflow-hidden bg-muted/30">
+                                    <div className="relative h-28 md:h-40 w-full overflow-hidden bg-white">
                                         {job.logo ? (
                                             <img
                                                 src={job.logo}
                                                 alt={job.company}
-                                                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                                                className="w-full h-full object-contain transition-transform duration-700 group-hover:scale-105"
                                             />
                                         ) : (
                                             <div className="w-full h-full flex items-center justify-center bg-app text-muted">
                                                 <Briefcase className="w-10 h-10 opacity-50" />
                                             </div>
                                         )}
-
-                                        <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/10" />
 
 
 
@@ -225,7 +223,22 @@ export default function JobsClient() {
                                                         {job.salary.includes('¥') ? '' : '¥'}{job.salary.split('/')[0].replace('¥', '').trim()}
                                                     </span>
                                                     <span className="text-[10px] font-bold text-[#1872B6] uppercase tracking-wider block mt-1">
-                                                        {t('salaryLabel', { defaultValue: 'Valor da Hora' })}
+                                                        {(() => {
+                                                            switch (job.db_fields?.pay_unit?.toLowerCase()) {
+                                                                case 'month':
+                                                                case 'mês':
+                                                                case 'mes':
+                                                                    return t('payUnitMonth', { defaultValue: 'Por Mês' });
+                                                                case 'day':
+                                                                case 'dia':
+                                                                    return t('payUnitDay', { defaultValue: 'Por Dia' });
+                                                                case 'hour':
+                                                                case 'hora':
+                                                                case 'h':
+                                                                default:
+                                                                    return t('salaryLabel', { defaultValue: 'Valor da Hora' });
+                                                            }
+                                                        })()}
                                                     </span>
                                                 </div>
                                             )}

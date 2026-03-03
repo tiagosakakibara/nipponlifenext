@@ -1171,7 +1171,7 @@
       "bonusText": "Bonus and Extras Text",
       "bonusHint": "Ex: Transport allowance, annual bonus, housing support...",
       "bonusPlaceholder": "Describe additional benefits...",
-      "description": "Job Description",
+      "description": "Contractor Description",
       "descriptionHint": "Describe activities, work environment, differentials...",
       "descriptionPlaceholder": "Detail responsibilities and work environment...",
       "requirements": "Requirements",
@@ -1241,7 +1241,7 @@
     "modal": {
       "careerOpportunity": "CAREER OPPORTUNITY",
       "closeModal": "Close modal",
-      "jobDescription": "Job Description",
+      "jobDescription": "Contractor Description",
       "requirements": "Requirements",
       "benefits": "Benefits",
       "bonus": "Bonus",

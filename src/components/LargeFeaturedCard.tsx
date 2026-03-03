@@ -22,6 +22,7 @@ export interface FeaturedItem {
     summary_en?: string;
     salary?: string;
     pay_rate_yen?: number;
+    pay_unit?: string;
 }
 
 interface LargeFeaturedCardProps {
