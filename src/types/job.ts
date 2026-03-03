@@ -42,6 +42,8 @@ export interface Job {
     application_mode?: 'internal_form' | 'external_url' | 'whatsapp';
     application_url?: string;
     application_whatsapp?: string;
+    contact_phone1?: string;
+    contact_phone2?: string;
 
     // Translation fields
     title_ja?: string;

@@ -8,7 +8,7 @@ import {
     Save, ArrowLeft, Plus, X, Globe, ChevronDown, ChevronRight,
     Loader2, Star, Briefcase, Building2, MapPin, DollarSign,
     Tag, CheckCircle2, Heart, Gift, Clock, Bus, Shield, Utensils,
-    Calendar, Send, Info, Image as ImageIcon, Laptop, ShieldAlert, Mail
+    Calendar, Send, Info, Image as ImageIcon, Laptop, ShieldAlert, Mail, Phone
 } from 'lucide-react';
 import { jobsService } from '@/lib/jobsService';
 import { Job, JobFormData } from '@/types/job';
@@ -60,6 +60,8 @@ export default function AdminJobFormClient({ id, initialData }: Props) {
             pay_unit: initialData.db_fields?.pay_unit || 'hour',
             application_mode: initialData.db_fields?.application_mode || 'internal_form',
             contact: initialData.db_fields?.contact || '',
+            contact_phone1: initialData.db_fields?.contact_phone1 || '',
+            contact_phone2: initialData.db_fields?.contact_phone2 || '',
             expires_at: initialData.expires_at || '',
             position_order: initialData.position_order || 0
         } : {
@@ -69,6 +71,8 @@ export default function AdminJobFormClient({ id, initialData }: Props) {
             pay_unit: 'hour',
             application_mode: 'internal_form',
             contact: '',
+            contact_phone1: '',
+            contact_phone2: '',
             tags: [],
             requirements: [],
             benefits: [],
@@ -383,6 +387,28 @@ export default function AdminJobFormClient({ id, initialData }: Props) {
                                     <p className="text-[10px] font-bold text-secondary/50 mt-2">
                                         Este email receberá as notificações de novas candidaturas.
                                     </p>
+                                </div>
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div>
+                                        <label className="flex items-center gap-2 text-[10px] font-extrabold text-secondary uppercase block tracking-widest mb-1.5">
+                                            <Phone className="w-3 h-3" /> Telefone Contato 1
+                                        </label>
+                                        <input
+                                            {...register('contact_phone1')}
+                                            placeholder="ex: 090-1234-5678"
+                                            className="w-full p-4 bg-app border border-app rounded-2xl text-sm font-bold text-primary focus:bg-white transition-all outline-none"
+                                        />
+                                    </div>
+                                    <div>
+                                        <label className="flex items-center gap-2 text-[10px] font-extrabold text-secondary uppercase block tracking-widest mb-1.5">
+                                            <Phone className="w-3 h-3" /> Telefone Contato 2 (Opcional)
+                                        </label>
+                                        <input
+                                            {...register('contact_phone2')}
+                                            placeholder="ex: 080-9876-5432"
+                                            className="w-full p-4 bg-app border border-app rounded-2xl text-sm font-bold text-primary focus:bg-white transition-all outline-none"
+                                        />
+                                    </div>
                                 </div>
                             </div>
                         </div>

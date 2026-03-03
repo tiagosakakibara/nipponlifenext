@@ -184,6 +184,8 @@ export function mapDbToJob(j: any): Job {
         status: j.status,
         expires_at: j.expires_at,
         position_order: j.position_order,
+        contact_phone1: j.contact_phone1,
+        contact_phone2: j.contact_phone2,
         // Original Db fields for form
         db_fields: j,
 
@@ -213,6 +215,7 @@ export function mapJobToDb(job: any) {
         'slug', 'status', 'expires_at', 'position_order',
         'pay_unit', 'pay_rate_yen', 'pay_text', 'application_mode',
         'application_url', 'application_whatsapp', 'contact',
+        'contact_phone1', 'contact_phone2',
         'prefecture', 'city', 'view_count',
         // Translations
         'title_ja', 'title_en',
