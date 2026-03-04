@@ -15,6 +15,7 @@ import { Job, JobFormData } from '@/types/job';
 import { MediaUploader } from '@/components/MediaUploader';
 import { useTranslations } from 'next-intl';
 import { usePermission } from '../hooks/usePermission';
+import { slugify, generateSlugSuffix } from '@/utils/slugify';
 
 const BENEFIT_ICONS = [
     { value: 'shield', icon: Shield, i18nKey: 'insurance' },
@@ -95,6 +96,11 @@ export default function AdminJobFormClient({ id, initialData }: Props) {
     const onSubmit = async (data: any) => {
         try {
             setLoading(true);
+
+            if (!isEditing && !data.slug) {
+                data.slug = `${slugify(data.title || 'vaga')}-${generateSlugSuffix()}`;
+            }
+
             // Convert arrays to strings if necessary for some DB fields or handle in service
             if (isEditing && id) {
                 await jobsService.updateJob(id, data);
