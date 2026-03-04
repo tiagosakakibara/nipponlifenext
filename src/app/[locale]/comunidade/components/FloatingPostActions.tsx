@@ -99,9 +99,9 @@ export function FloatingPostActions({ postId, pageUrl, title }: FloatingPostActi
             <button
                 onClick={handleLike}
                 disabled={loading}
-                className={`w-12 h-12 rounded-full border flex items-center justify-center transition-all shadow-sm group ${isLiked
-                        ? 'bg-red-50 border-red-200 text-[#D70F24]'
-                        : 'bg-zinc-50 dark:bg-zinc-900 border-zinc-100 dark:border-zinc-800 text-zinc-400 hover:text-[#D70F24] hover:border-[#D70F24]/30'
+                className={`w-12 h-12 rounded-full border border-app bg-surface flex items-center justify-center transition-all shadow-sm group ${isLiked
+                    ? 'bg-red-50 border-red-200 text-[#D70F24]'
+                    : 'text-zinc-400 hover:text-[#D70F24] hover:border-[#D70F24]/30 hover:bg-zinc-100/50'
                     }`}
                 title={t('common.like')}
             >

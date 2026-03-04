@@ -119,26 +119,26 @@ export function PostInteractions({
                     onClick={handleLike}
                     disabled={loading}
                     className={`flex items-center justify-center gap-2 px-3 py-1.5 border rounded-xl transition-all group min-w-[60px] ${isLiked
-                            ? 'bg-red-50 border-red-200 text-[#D70F24]'
-                            : 'bg-zinc-50 dark:bg-zinc-900 border-zinc-100 dark:border-zinc-800 text-zinc-400 hover:bg-zinc-100'
+                        ? 'bg-red-50 border-red-200 text-[#D70F24]'
+                        : 'bg-surface border-app text-zinc-500 hover:border-[#D70F24]/30 hover:bg-zinc-100/50'
                         }`}
                 >
                     <ThumbsUp className={`w-3.5 h-3.5 ${isLiked ? 'fill-current' : 'group-hover:text-[#D70F24]'}`} />
-                    <span className={`text-xs font-bold ${isLiked ? 'text-[#D70F24]' : 'text-zinc-500'}`}>{likes}</span>
+                    <span className={`text-xs font-medium ${isLiked ? 'text-[#D70F24]' : 'text-zinc-500 group-hover:text-[#D70F24]'}`}>{likes}</span>
                 </button>
 
-                <div className="flex items-center justify-center gap-2 px-3 py-1.5 bg-zinc-50 dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800 rounded-xl min-w-[60px]">
+                <div className="flex items-center justify-center gap-2 px-3 py-1.5 bg-surface border border-app rounded-xl min-w-[60px]">
                     <Eye className="w-3.5 h-3.5 text-zinc-400" />
-                    <span className="text-xs font-bold text-zinc-500">{initialViewCount}</span>
+                    <span className="text-xs font-medium text-zinc-500">{initialViewCount}</span>
                 </div>
 
                 <div className="relative group/share">
                     <button
                         onClick={handleShareClick}
-                        className="flex items-center justify-center gap-2 px-3 py-1.5 bg-zinc-50 dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800 rounded-xl hover:bg-zinc-100 transition-colors group min-w-[60px]"
+                        className="flex items-center justify-center gap-2 px-3 py-1.5 bg-surface border border-app rounded-xl hover:border-[#D70F24]/30 hover:bg-zinc-100/50 transition-colors group min-w-[60px]"
                     >
                         <Share2 className="w-3.5 h-3.5 text-zinc-400 group-hover:text-[#D70F24]" />
-                        <span className="text-xs font-bold text-zinc-500">{shares}</span>
+                        <span className="text-xs font-medium text-zinc-500 group-hover:text-[#D70F24]">{shares}</span>
                     </button>
 
                     {/* Share Dropdown on hover/click could be added here, but ShareActions is already available */}
@@ -147,7 +147,7 @@ export function PostInteractions({
 
             {/* Direct Share Icons */}
             <div className="flex flex-col gap-3">
-                <span className="text-[10px] font-black text-secondary uppercase tracking-[0.2em]">
+                <span className="text-[10px] font-medium text-secondary uppercase tracking-[0.2em]">
                     {t('common.share', { defaultMessage: 'Compartilhar' })}
                 </span>
                 <div onClick={handleShareClick}>
