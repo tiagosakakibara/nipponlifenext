@@ -39,8 +39,7 @@ export default function AdminBusinessFormClient({ id, initialData }: Props) {
             gallery_images: [],
             presentation_url: null,
             opening_hours: {},
-            languages_supported: ['pt'],
-            price_range: '$$'
+            languages_supported: ['pt']
         }
     });
 
@@ -248,19 +247,6 @@ export default function AdminBusinessFormClient({ id, initialData }: Props) {
                                     <option value="Mudanças e Logística">{bizT('categories.Mudanças e Logística')}</option>
                                     <option value="Tecnologia">{bizT('categories.Tecnologia')}</option>
                                     <option value="Outros">{bizT('categories.Outros')}</option>
-                                </select>
-                            </div>
-
-                            <div>
-                                <label className="text-[10px] font-extrabold text-secondary uppercase block tracking-widest mb-1.5">{t('priceRange')}</label>
-                                <select
-                                    {...register('price_range')}
-                                    className="w-full p-4 bg-app border border-app rounded-2xl text-primary font-bold focus:bg-white transition-all outline-none"
-                                >
-                                    <option value="$">$ (Econômico)</option>
-                                    <option value="$$">$$ (Padrão)</option>
-                                    <option value="$$$">$$$ (Alto Padrão)</option>
-                                    <option value="$$$$">$$$$ (Luxo)</option>
                                 </select>
                             </div>
 
