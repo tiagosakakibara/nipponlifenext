@@ -122,6 +122,8 @@ export async function submitJobForm(formData: FormData): Promise<{ success: true
             application_whatsapp: (formData.get('application_whatsapp') as string) || null,
             // contact = email da empreiteira para receber candidaturas
             contact: (formData.get('contact_email') as string) || null,
+            contact_phone1: (formData.get('contact_phone1') as string) || null,
+            contact_phone2: (formData.get('contact_phone2') as string) || null,
 
             cover_image_url: (formData.get('cover_image_url') as string) || null,
             expires_at: expires_at_raw || null,

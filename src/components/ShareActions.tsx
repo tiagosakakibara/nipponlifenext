@@ -28,7 +28,20 @@ export function ShareActions({
 
     const getShareUrl = () => {
         if (typeof window === 'undefined') return '';
-        const baseUrl = url || window.location.href;
+        let baseUrl = url || window.location.href;
+
+        // Verify if a local url leaked to client running on a real domain
+        if (url && url.startsWith('http://localhost') && !window.location.href.startsWith('http://localhost')) {
+            try {
+                const urlObj = new URL(url);
+                baseUrl = window.location.origin + urlObj.pathname + urlObj.search;
+            } catch (e) {
+                // Ignore parsing errors
+            }
+        } else if (url && url.startsWith('/')) {
+            baseUrl = window.location.origin + url;
+        }
+
         try {
             const shareUrl = new URL(baseUrl);
             shareUrl.searchParams.set('lng', locale);

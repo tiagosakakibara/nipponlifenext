@@ -362,6 +362,25 @@ export default function JobRegistrationForm() {
                             </div>
                         </Field>
 
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <Field label={t('contactPhone1')}>
+                                <input
+                                    type="tel"
+                                    name="contact_phone1"
+                                    placeholder="Ex: 090-1234-5678"
+                                    className={inputClass}
+                                />
+                            </Field>
+                            <Field label={t('contactPhone2')}>
+                                <input
+                                    type="tel"
+                                    name="contact_phone2"
+                                    placeholder="Ex: 080-8765-4321"
+                                    className={inputClass}
+                                />
+                            </Field>
+                        </div>
+
                         {/* Como vai chegar */}
                         <div className="rounded-xl border border-[var(--nl-border)] overflow-hidden">
                             <div className="px-4 py-2.5 bg-[var(--nl-bg)] border-b border-[var(--nl-border)]">
