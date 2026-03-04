@@ -6,7 +6,7 @@ import { submitBusinessForm, uploadBusinessFile } from '@/app/actions/submitBusi
 import {
     Building2, MapPin, Phone, Clock, Image as ImageIcon,
     CheckCircle2, ChevronDown, ChevronUp, Upload, X, Loader2,
-    Globe, Instagram, MessageCircle, DollarSign, Languages, Info
+    Globe, Instagram, Facebook, MessageCircle, DollarSign, Languages, Info
 } from 'lucide-react';
 
 // ─── Types ───────────────────────────────────────────────────────────────────
@@ -470,10 +470,10 @@ export default function BusinessRegistrationForm() {
                                     <input type="text" name="instagram_url" placeholder={t('registration.instagramPlaceholder')} className={`${inputClass} pl-9`} />
                                 </div>
                             </Field>
-                            <Field label={t('registration.line')}>
+                            <Field label={t('registration.facebook')}>
                                 <div className="relative">
-                                    <MessageCircle className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--nl-text-3)]" />
-                                    <input type="text" name="line_url" placeholder={t('registration.linePlaceholder')} className={`${inputClass} pl-9`} />
+                                    <Facebook className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--nl-text-3)]" />
+                                    <input type="text" name="facebook_url" placeholder={t('registration.facebookPlaceholder')} className={`${inputClass} pl-9`} />
                                 </div>
                             </Field>
                         </div>

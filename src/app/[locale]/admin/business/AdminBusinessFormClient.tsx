@@ -8,7 +8,7 @@ import { toast } from 'react-hot-toast';
 import {
     Save, ArrowLeft, Upload, X, Plus, FileText, Globe,
     ChevronDown, ChevronRight, Loader2, Star, MapPin, Phone,
-    Mail, Instagram, Send, Info, Image as ImageIcon, ShieldAlert
+    Mail, Instagram, Send, Facebook, Info, Image as ImageIcon, ShieldAlert
 } from 'lucide-react';
 import { businessService } from '@/lib/businessService';
 import { Business, BusinessFormData } from '@/types/business';
@@ -39,7 +39,8 @@ export default function AdminBusinessFormClient({ id, initialData }: Props) {
             gallery_images: [],
             presentation_url: null,
             opening_hours: {},
-            languages_supported: ['pt']
+            languages_supported: ['pt'],
+            facebook_url: null
         }
     });
 
@@ -315,7 +316,7 @@ export default function AdminBusinessFormClient({ id, initialData }: Props) {
                                     <input {...register('phone')} className="w-full p-3.5 bg-app border border-app rounded-xl text-xs font-bold" />
                                 </div>
                                 <div>
-                                    <label className="text-[10px] font-extrabold text-secondary uppercase block tracking-widest mb-1.5">WhatsApp</label>
+                                    <label className="text-[10px] font-extrabold text-secondary uppercase block tracking-widest mb-1.5">{bizT('registration.whatsapp')}</label>
                                     <input {...register('whatsapp')} className="w-full p-3.5 bg-app border border-app rounded-xl text-xs font-bold" />
                                 </div>
                                 <div>
@@ -329,6 +330,10 @@ export default function AdminBusinessFormClient({ id, initialData }: Props) {
                                 <div>
                                     <label className="text-[10px] font-extrabold text-secondary uppercase block tracking-widest mb-1.5">{t('website')}</label>
                                     <input {...register('website_url')} placeholder="https://..." className="w-full p-3.5 bg-app border border-app rounded-xl text-xs" />
+                                </div>
+                                <div>
+                                    <label className="text-[10px] font-extrabold text-secondary uppercase block tracking-widest mb-1.5">{bizT('registration.facebook')}</label>
+                                    <input {...register('facebook_url')} placeholder="https://facebook.com/..." className="w-full p-3.5 bg-app border border-app rounded-xl text-xs" />
                                 </div>
                             </div>
                         </div>

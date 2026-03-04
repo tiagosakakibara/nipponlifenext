@@ -50,7 +50,7 @@ export interface Business {
     email: string | null;
     website_url: string | null;
     instagram_url: string | null;
-    line_url: string | null;
+    facebook_url: string | null;
 
     // Media
     logo_url: string | null;

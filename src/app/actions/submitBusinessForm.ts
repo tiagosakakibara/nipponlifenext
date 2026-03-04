@@ -136,7 +136,7 @@ export async function submitBusinessForm(formData: FormData): Promise<{ success:
             email: (formData.get('email') as string) || null,
             website_url: (formData.get('website_url') as string) || null,
             instagram_url: (formData.get('instagram_url') as string) || null,
-            line_url: (formData.get('line_url') as string) || null,
+            facebook_url: (formData.get('facebook_url') as string) || null,
 
             logo_url: (formData.get('logo_url') as string) || null,
             cover_image_url: (formData.get('cover_image_url') as string) || null,

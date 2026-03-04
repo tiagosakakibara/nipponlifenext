@@ -8,7 +8,7 @@ import { Business } from '@/types/business';
 import { ArticleTracking } from '@/components/ArticleTracking';
 import { BusinessGallery } from '@/components/BusinessGallery';
 import { ShareActions } from '@/components/ShareActions';
-import { MapPin, Globe, Phone, Instagram, Clock, ArrowLeft, Eye, ExternalLink } from 'lucide-react';
+import { MapPin, Globe, Phone, Instagram, Facebook, Clock, ArrowLeft, Eye, ExternalLink } from 'lucide-react';
 import { generateSEOMetadata, generateBusinessSchema, generateBreadcrumbSchema } from '@/lib/metadata';
 import { StructuredData } from '@/components/StructuredData';
 
@@ -258,6 +258,14 @@ export default async function BusinessProfilePage({ params }: Props) {
                                             <Instagram className="w-4 h-4" />
                                         </div>
                                         <span>@{b.instagram_url.split('/').filter(Boolean).pop()?.replace('@', '')}</span>
+                                    </a>
+                                )}
+                                {b.facebook_url && (
+                                    <a href={b.facebook_url} target="_blank" className="flex items-center gap-4 text-secondary hover:text-blue-500 transition-colors group p-2 hover:bg-app rounded-xl -mx-2">
+                                        <div className="w-10 h-10 rounded-full bg-app group-hover:bg-surface flex items-center justify-center border border-app transition-colors">
+                                            <Facebook className="w-4 h-4" />
+                                        </div>
+                                        <span>Facebook</span>
                                     </a>
                                 )}
                             </div>
