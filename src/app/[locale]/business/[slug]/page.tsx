@@ -120,7 +120,7 @@ export default async function BusinessProfilePage({ params }: Props) {
                         <div className="flex flex-col md:flex-row gap-6 items-center md:items-end">
                             <div className="w-32 h-32 md:w-40 md:h-40 rounded-3xl bg-surface border-[6px] border-surface overflow-hidden shadow-2xl flex-shrink-0 relative group">
                                 {b.logo_url ? (
-                                    <img src={storageService.getFileUrl(b.logo_url)} className="w-full h-full object-cover transition-transform group-hover:scale-110" alt={name} />
+                                    <img src={storageService.getFileUrl(b.logo_url)} className="w-full h-full object-contain bg-white transition-transform group-hover:scale-105" alt={name} />
                                 ) : (
                                     <div className="w-full h-full flex items-center justify-center bg-gray-800 text-4xl font-display text-white">
                                         {name[0]}
