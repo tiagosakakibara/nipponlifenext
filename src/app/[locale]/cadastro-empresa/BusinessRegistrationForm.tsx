@@ -222,13 +222,6 @@ export default function BusinessRegistrationForm() {
         'Outros',
     ];
 
-    const PRICE_RANGES = [
-        { value: '$', label: '$', desc: t('registration.price.cheap') },
-        { value: '$$', label: '$$', desc: t('registration.price.moderate') },
-        { value: '$$$', label: '$$$', desc: t('registration.price.expensive') },
-        { value: '$$$$', label: '$$$$', desc: t('registration.price.luxury') },
-    ];
-
     const LANGUAGES = [
         { value: 'pt', label: t('registration.languages.pt') },
         { value: 'ja', label: t('registration.languages.ja') },
@@ -256,9 +249,6 @@ export default function BusinessRegistrationForm() {
     // Languages
     const [langs, setLangs] = useState<string[]>(['pt']);
 
-    // Price
-    const [price, setPrice] = useState('$$');
-
     const formRef = useRef<HTMLFormElement>(null);
 
     const toggleLang = (v: string) =>
@@ -274,7 +264,6 @@ export default function BusinessRegistrationForm() {
         // Adicionar campos controlados
         fd.set('logo_url', logoUrl);
         fd.set('cover_image_url', coverUrl);
-        fd.set('price_range', price);
 
         // Remover entradas antigas de langs e recolocar
         fd.delete('languages_supported');
@@ -526,60 +515,38 @@ export default function BusinessRegistrationForm() {
                             </h3>
                             <div className="space-y-2">
                                 {DAYS.map(({ key, label }) => (
-                                    <div key={key} className="flex items-center gap-3 py-2 border-b border-[var(--nl-border)] last:border-0">
-                                        {/* Toggle */}
-                                        <button
-                                            type="button"
-                                            onClick={() => setHoursOpen(prev => ({ ...prev, [key]: !prev[key] }))}
-                                            className={`relative w-10 h-5 rounded-full transition-colors flex-shrink-0 ${hoursOpen[key] ? 'bg-[var(--nl-accent)]' : 'bg-[var(--nl-border)]'}`}
-                                        >
-                                            <span className={`absolute top-0.5 left-0.5 w-4 h-4 rounded-full bg-white shadow transition-transform ${hoursOpen[key] ? 'translate-x-5' : 'translate-x-0'}`} />
-                                        </button>
-                                        <span className="text-sm text-[var(--nl-text)] w-36 flex-shrink-0">{label}</span>
+                                    <div key={key} className="flex flex-col sm:flex-row sm:items-center py-3 border-b border-[var(--nl-border)] last:border-0 gap-2 sm:gap-3">
+                                        <div className="flex items-center gap-3 sm:w-36 flex-shrink-0">
+                                            {/* Toggle */}
+                                            <button
+                                                type="button"
+                                                onClick={() => setHoursOpen(prev => ({ ...prev, [key]: !prev[key] }))}
+                                                className={`relative w-10 h-5 rounded-full transition-colors flex-shrink-0 ${hoursOpen[key] ? 'bg-[var(--nl-accent)]' : 'bg-[var(--nl-border)]'}`}
+                                            >
+                                                <span className={`absolute top-0.5 left-0.5 w-4 h-4 rounded-full bg-white shadow transition-transform ${hoursOpen[key] ? 'translate-x-5' : 'translate-x-0'}`} />
+                                            </button>
+                                            <span className="text-sm text-[var(--nl-text)] flex-shrink-0 truncate">{label}</span>
+                                        </div>
                                         {hoursOpen[key] ? (
-                                            <div className="flex items-center gap-2 flex-1">
+                                            <div className="flex items-center gap-2 flex-1 pl-[3.25rem] sm:pl-0">
                                                 <input
                                                     type="time"
                                                     value={hoursFrom[key]}
                                                     onChange={e => setHoursFrom(p => ({ ...p, [key]: e.target.value }))}
-                                                    className="px-2 py-1 text-sm rounded-lg border border-[var(--nl-border)] bg-[var(--nl-bg)] text-[var(--nl-text)] focus:outline-none focus:ring-1 focus:ring-[var(--nl-accent)]"
+                                                    className="w-full sm:w-auto px-2 py-1 text-sm rounded-lg border border-[var(--nl-border)] bg-[var(--nl-bg)] text-[var(--nl-text)] focus:outline-none focus:ring-1 focus:ring-[var(--nl-accent)]"
                                                 />
                                                 <span className="text-[var(--nl-text-3)] text-xs">{t('registration.until')}</span>
                                                 <input
                                                     type="time"
                                                     value={hoursTo[key]}
                                                     onChange={e => setHoursTo(p => ({ ...p, [key]: e.target.value }))}
-                                                    className="px-2 py-1 text-sm rounded-lg border border-[var(--nl-border)] bg-[var(--nl-bg)] text-[var(--nl-text)] focus:outline-none focus:ring-1 focus:ring-[var(--nl-accent)]"
+                                                    className="w-full sm:w-auto px-2 py-1 text-sm rounded-lg border border-[var(--nl-border)] bg-[var(--nl-bg)] text-[var(--nl-text)] focus:outline-none focus:ring-1 focus:ring-[var(--nl-accent)]"
                                                 />
                                             </div>
                                         ) : (
-                                            <span className="text-xs text-[var(--nl-text-3)] italic">{t('registration.closed')}</span>
+                                            <span className="text-xs text-[var(--nl-text-3)] italic pl-[3.25rem] sm:pl-0">{t('registration.closed')}</span>
                                         )}
                                     </div>
-                                ))}
-                            </div>
-                        </div>
-
-                        {/* Faixa de preço */}
-                        <div className="space-y-3">
-                            <h3 className="text-sm font-semibold text-[var(--nl-text)] flex items-center gap-2">
-                                <DollarSign className="w-4 h-4 text-[var(--nl-accent)]" />
-                                {t('registration.priceRange')}
-                            </h3>
-                            <div className="flex flex-wrap gap-2">
-                                {PRICE_RANGES.map(p => (
-                                    <button
-                                        key={p.value}
-                                        type="button"
-                                        onClick={() => setPrice(p.value)}
-                                        className={`flex flex-col items-center px-5 py-2.5 rounded-xl border text-sm font-bold transition-all ${price === p.value
-                                            ? 'bg-[var(--nl-accent)] border-[var(--nl-accent)] text-white'
-                                            : 'border-[var(--nl-border)] text-[var(--nl-text-2)] hover:border-[var(--nl-accent)]'
-                                            }`}
-                                    >
-                                        <span>{p.label}</span>
-                                        <span className="text-[0.65rem] font-normal opacity-75">{p.desc}</span>
-                                    </button>
                                 ))}
                             </div>
                         </div>

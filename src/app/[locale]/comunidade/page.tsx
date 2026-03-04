@@ -170,11 +170,8 @@ export default async function CommunityPage({ params, searchParams }: Props) {
                             {postsData && postsData.length > 0 ? (
                                 postsData.map(post => {
                                     // Transform post for Card
-                                    const author = post.author as any; // Type assertion (single object)
-                                    // Supabase returns array if not single, but here it's joined.
-                                    // Actually `author:profiles(...)` returns single object if relation is 1:1 or N:1 correctly defined.
-                                    // Usually it returns an object if foreign key is used.
-                                    // Let's assume it works as `post.author`.
+                                    const authorData = post.author as any;
+                                    const author = Array.isArray(authorData) ? authorData[0] : authorData;
 
                                     const tags = (post.tags as any[])?.map(t => `#${t.tag}`) || [];
                                     const categorySlug = (post.community_categories as any)?.slug || 'geral';

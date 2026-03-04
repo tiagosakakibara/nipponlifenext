@@ -77,8 +77,11 @@ export default async function CommunityPostDetailPage({ params }: Props) {
     const categorySlug = (post.community_categories as any)?.slug || 'geral';
 
     const categoryLabel = t(`community.categories.${categorySlug}`, { defaultMessage: categoryName });
-    const authorName = (post.author as any)?.full_name || (post.author as any)?.username || t('community.questions.anonymous', { defaultMessage: 'Anônimo' });
-    const authorAvatar = (post.author as any)?.avatar_url;
+    const authorData = post.author as any;
+    const authorObj = Array.isArray(authorData) ? authorData[0] : authorData;
+
+    const authorName = authorObj?.full_name || authorObj?.username || t('community.questions.anonymous', { defaultMessage: 'Anônimo' });
+    const authorAvatar = authorObj?.avatar_url;
 
     // Format date manually or use library. Server Component -> toLocaleString
     const publishDate = new Date(post.published_at || post.created_at).toLocaleDateString(locale, {

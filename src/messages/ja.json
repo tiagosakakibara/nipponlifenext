@@ -333,7 +333,20 @@
       "until": "〜",
       "closed": "定休日",
       "priceRange": "価格帯",
-      "languages": "対応言語",
+      "price": {
+        "cheap": "¥1,000未満 (安い)",
+        "moderate": "¥1,000 - ¥3,000 (普通)",
+        "expensive": "¥3,000 - ¥8,000 (高い)",
+        "luxury": "¥8,000以上 (高級)"
+      },
+      "languagesTitle": "対応言語",
+      "languages": {
+        "pt": "ポルトガル語",
+        "ja": "日本語",
+        "en": "英語",
+        "es": "スペイン語",
+        "others": "その他"
+      },
       "submitButton": "登録を送信",
       "submitting": "送信中...",
       "agreement": "送信することで、あなたのデータがNipponLifeでの公開プロフィール作成に使用されることに同意したものとみなされます。",
@@ -1091,7 +1104,9 @@
         "enterReason": "理由（任意）:",
         "enterUntil": "停止期間（ISO日付）:"
       }
-    }
+    },
+    "whatsapp": "WhatsApp",
+    "line": "LINE"
   },
   "jobs": {
     "registration": {
@@ -1686,5 +1701,12 @@
       "benefit3": "コミュニティでの優先サポート",
       "backToHome": "ホームに戻る"
     }
+  },
+  "reels": {
+    "galleryTitle": "ビデオギャラリー",
+    "gallerySubtitle": "コミュニティで共有された最高の瞬間を探索しましょう。",
+    "noReels": "リールが見つかりません",
+    "beFirst": "コミュニティに動画を共有する最初の人になりましょう！",
+    "communityReels": "コミュニティリール"
   }
 }

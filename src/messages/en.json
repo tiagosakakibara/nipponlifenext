@@ -333,7 +333,20 @@
       "until": "until",
       "closed": "Closed",
       "priceRange": "Price Range",
-      "languages": "Supported Languages",
+      "price": {
+        "cheap": "Under ¥1,000 (Cheap)",
+        "moderate": "¥1,000 - ¥3,000 (Moderate)",
+        "expensive": "¥3,000 - ¥8,000 (Expensive)",
+        "luxury": "Over ¥8,000 (Luxury)"
+      },
+      "languagesTitle": "Supported Languages",
+      "languages": {
+        "pt": "Portuguese",
+        "ja": "Japanese",
+        "en": "English",
+        "es": "Spanish",
+        "others": "Others"
+      },
       "submitButton": "Submit Registration",
       "submitting": "Sending...",
       "agreement": "By submitting, you agree that your data will be used to create your public profile on NipponLife.",
@@ -1135,7 +1148,9 @@
       "photoRemoved": "Photo removed",
       "deletePhotoError": "Error deleting photo",
       "saveAlbumFirst": "Save the album before adding photos."
-    }
+    },
+    "whatsapp": "WhatsApp",
+    "line": "LINE"
   },
   "jobs": {
     "registration": {
@@ -1728,5 +1743,12 @@
       "benefit3": "Priority support in the community",
       "backToHome": "Back to Home"
     }
+  },
+  "reels": {
+    "galleryTitle": "Video Gallery",
+    "gallerySubtitle": "Explore the best moments shared by our community.",
+    "noReels": "No reels found",
+    "beFirst": "Be the first to share a video with the community!",
+    "communityReels": "Community Reels"
   }
 }

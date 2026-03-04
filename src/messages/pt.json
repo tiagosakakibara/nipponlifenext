@@ -371,7 +371,20 @@
       "until": "até",
       "closed": "Fechado",
       "priceRange": "Faixa de preço",
-      "languages": "Idiomas atendidos",
+      "price": {
+        "cheap": "Até ¥1.000 (Econômico)",
+        "moderate": "¥1.000 - ¥3.000 (Moderado)",
+        "expensive": "¥3.000 - ¥8.000 (Caro)",
+        "luxury": "Acima de ¥8.000 (Luxo)"
+      },
+      "languagesTitle": "Idiomas atendidos",
+      "languages": {
+        "pt": "Português",
+        "ja": "Japonês",
+        "en": "Inglês",
+        "es": "Espanhol",
+        "others": "Outros"
+      },
       "submitButton": "Enviar Cadastro",
       "submitting": "Enviando...",
       "agreement": "Ao enviar, você concorda que seus dados serão utilizados para criar seu perfil público no NipponLife.",
@@ -1229,7 +1242,9 @@
       "photographerName": "Nome do Fotógrafo / Autor",
       "photographerNamePlaceholder": "Ex: João Silva",
       "saveChanges": "Salvar Alterações"
-    }
+    },
+    "whatsapp": "WhatsApp",
+    "line": "LINE"
   },
   "jobs": {
     "registration": {
@@ -1826,5 +1841,12 @@
       "benefit3": "Suporte prioritário na comunidade",
       "backToHome": "Voltar para o Início"
     }
+  },
+  "reels": {
+    "galleryTitle": "Galeria de Vídeos",
+    "gallerySubtitle": "Explore os melhores momentos compartilhados pela nossa comunidade.",
+    "noReels": "Nenhum reel encontrado",
+    "beFirst": "Seja o primeiro a compartilhar um vídeo com a comunidade!",
+    "communityReels": "Reels da Comunidade"
   }
 }

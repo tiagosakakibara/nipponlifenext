@@ -49,13 +49,17 @@ export default async function CommunityQuestionsPage({ params, searchParams }: P
 
     const { data: questionsData } = await questionQuery;
 
-    const questions = (questionsData || []).map((q: any) => ({
-        ...q,
-        body: q.content || q.body,
-        answers_count: q.answers ? (q.answers.length > 0 ? q.answers[0].count : (q.answers.count || 0)) : 0
-        // Supabase count returns array `{ count: N }` usually if specified as head or aggregate?
-        // Actually `answers(count)` returns `[{count: N}]` or similar.
-    })) as CommunityQuestion[];
+    const questions = (questionsData || []).map((q: any) => {
+        const authorData = q.author;
+        const authorObj = Array.isArray(authorData) ? authorData[0] : authorData;
+
+        return {
+            ...q,
+            author: authorObj,
+            body: q.content || q.body,
+            answers_count: q.answers ? (Array.isArray(q.answers) && q.answers.length > 0 ? q.answers[0].count : (q.answers.count || 0)) : 0
+        };
+    }) as CommunityQuestion[];
 
     // 2. Fetch Stats
     // We can do this via RPC or separate queries.

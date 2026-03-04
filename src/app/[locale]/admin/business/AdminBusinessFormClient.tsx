@@ -329,6 +329,10 @@ export default function AdminBusinessFormClient({ id, initialData }: Props) {
                                     <input {...register('phone')} className="w-full p-3.5 bg-app border border-app rounded-xl text-xs font-bold" />
                                 </div>
                                 <div>
+                                    <label className="text-[10px] font-extrabold text-secondary uppercase block tracking-widest mb-1.5">WhatsApp</label>
+                                    <input {...register('whatsapp')} className="w-full p-3.5 bg-app border border-app rounded-xl text-xs font-bold" />
+                                </div>
+                                <div>
                                     <label className="text-[10px] font-extrabold text-secondary uppercase block tracking-widest mb-1.5">{t('email')}</label>
                                     <input {...register('email')} className="w-full p-3.5 bg-app border border-app rounded-xl text-xs" />
                                 </div>
