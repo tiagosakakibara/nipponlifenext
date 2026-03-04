@@ -110,9 +110,10 @@ export default function AdminJobFormClient({ id, initialData }: Props) {
                 toast.success('Vaga criada com sucesso!');
             }
             router.push({ pathname: '/admin/jobs' });
-        } catch (error) {
+        } catch (error: any) {
             console.error('Error saving job:', error);
-            toast.error('Erro ao salvar vaga.');
+            const errorMsg = error?.message || error?.details || JSON.stringify(error);
+            toast.error(`Erro ao salvar vaga: ${errorMsg}`);
         } finally {
             setLoading(false);
         }

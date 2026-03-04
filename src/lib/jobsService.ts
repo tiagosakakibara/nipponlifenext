@@ -241,6 +241,17 @@ export function mapJobToDb(job: any) {
         db.expires_at = null;
     }
 
+    // Handle integer parsing
+    const intFields = ['position_order', 'pay_rate_yen', 'view_count'];
+    for (const field of intFields) {
+        if (db[field] === '') {
+            db[field] = null;
+        } else if (db[field] !== undefined && db[field] !== null && typeof db[field] !== 'number') {
+            db[field] = parseInt(db[field], 10);
+            if (isNaN(db[field])) db[field] = null;
+        }
+    }
+
     // Handle array conversions if essential (e.g. description is array in app but string in db)
     if (Array.isArray(db.description)) {
         db.description = db.description.join('\n');
