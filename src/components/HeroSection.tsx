@@ -15,6 +15,7 @@ interface HeroSectionProps {
         eventsCount: number;
         businessesCount: number;
         businessesCountError?: boolean;
+        closestEventImage?: string | null;
     };
 }
 
@@ -169,6 +170,17 @@ export function HeroSection({ featuredNews, stats }: HeroSectionProps) {
                         className="lg:col-span-4 lg:row-span-1 bg-surface border border-app rounded-[2.5rem] p-7 flex flex-col justify-between group hover:border-[var(--nl-accent)]/30 transition-all duration-500 cursor-pointer overflow-hidden relative shadow-sm hover:shadow-xl hover:shadow-[var(--nl-accent)]/5"
                         onClick={() => router.push('/eventos')}
                     >
+                        {stats.closestEventImage && (
+                            <div className="absolute inset-0 z-0 overflow-hidden rounded-[2.5rem]">
+                                <Image
+                                    src={storageService.getFileUrl(stats.closestEventImage)}
+                                    alt="Próximo Evento"
+                                    fill
+                                    className="object-cover opacity-60 group-hover:opacity-80 group-hover:scale-110 transition-all duration-700"
+                                />
+                                <div className="absolute inset-0 bg-gradient-to-r from-surface/95 via-surface/60 to-transparent" />
+                            </div>
+                        )}
                         {/* Premium Gradient Background Decor */}
                         <div className="absolute -top-12 -right-12 w-48 h-48 bg-gradient-to-br from-[var(--nl-accent)]/10 to-transparent rounded-full blur-3xl group-hover:from-[var(--nl-accent)]/20 transition-all duration-700" />
 

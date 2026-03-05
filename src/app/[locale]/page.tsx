@@ -73,14 +73,15 @@ export default async function HomePage() {
     // 5. Fetch Counts (Parallel)
     const [jobsRes, eventsRes, businessesRes] = await Promise.all([
         supabase.from('jobs').select('*', { count: 'exact', head: true }).eq('status', 'published'),
-        supabase.from('calendar_events').select('*', { count: 'exact', head: true }).eq('status', 'published').gte('starts_at', now),
+        supabase.from('calendar_events').select('cover_image_url', { count: 'exact' }).eq('status', 'published').gte('starts_at', now).order('starts_at', { ascending: true }).limit(1),
         supabase.from('businesses').select('*', { count: 'exact', head: true }).eq('status', 'published')
     ]);
 
     const stats = {
         jobsCount: jobsRes.count || 0,
         eventsCount: eventsRes.count || 0,
-        businessesCount: businessesRes.count || 0
+        businessesCount: businessesRes.count || 0,
+        closestEventImage: eventsRes.data?.[0]?.cover_image_url || null
     };
 
     // 4. Fetch Header Jobs (for small cards - limit 9)
