@@ -14,6 +14,7 @@ import { Event } from '@/types/event';
 import { MediaUploader } from '@/components/MediaUploader';
 import { useTranslations } from 'next-intl';
 import { usePermission } from '../hooks/usePermission';
+import { slugify } from '@/utils/slugify';
 
 interface Props {
     id?: string;
@@ -68,6 +69,7 @@ export default function AdminEventFormClient({ id, initialData }: Props) {
 
             const payload = {
                 ...data,
+                slug: data.slug || slugify(data.title || ''),
                 starts_at: data.starts_at ? new Date(data.starts_at).toISOString() : null,
                 ends_at: data.ends_at ? new Date(data.ends_at).toISOString() : null,
                 updated_at: new Date().toISOString()
