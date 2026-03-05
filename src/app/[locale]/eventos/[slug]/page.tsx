@@ -102,51 +102,55 @@ export default async function EventDetailPage({ params }: EventPageProps) {
             <StructuredData data={eventSchema} />
             <StructuredData data={breadcrumbSchema} />
             {/* Header / Hero Area */}
-            <div className="relative h-[32vh] md:h-[40vh] min-h-[320px] w-full overflow-hidden">
-                {event.cover_image_url ? (
-                    <>
-                        {/* Background blurred */}
-                        <div className="absolute inset-0">
+            <div className="relative w-full bg-[var(--nl-bg)] pb-12">
+                {/* Blurred Background Header */}
+                <div className="absolute top-0 left-0 w-full h-[60vh] md:h-[70vh] max-h-[700px] overflow-hidden">
+                    {event.cover_image_url ? (
+                        <>
+                            <div className="absolute inset-0 bg-black/40 dark:bg-black/60 z-10" />
                             <img
                                 src={coverUrl}
                                 alt=""
-                                className="w-full h-full object-cover blur-2xl scale-110 opacity-50"
+                                className="w-full h-full object-cover blur-3xl scale-110 opacity-70 dark:opacity-40"
                             />
-                        </div>
-                        {/* Main Image */}
-                        <img
-                            src={coverUrl}
-                            alt={title}
-                            className="w-full h-full object-contain relative z-10"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-[var(--nl-bg)] via-[var(--nl-bg)]/20 to-black/30 z-20" />
-                    </>
-                ) : (
-                    <div className="w-full h-full bg-[var(--nl-surface)] flex items-center justify-center">
-                        <Calendar className="w-20 h-20 text-[var(--nl-muted)]" />
-                    </div>
-                )}
-
-                <div className="absolute top-32 left-0 w-full z-30">
-                    <div className="container mx-auto px-6">
-                        <Link
-                            href="/eventos"
-                            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/20 backdrop-blur-md border border-white/30 text-white font-bold text-xs uppercase tracking-widest hover:bg-white/40 transition-all mb-8 shadow-lg"
-                        >
-                            <ArrowLeft className="w-4 h-4" />
-                            {t('backToCalendar')}
-                        </Link>
-                    </div>
+                            <div className="absolute inset-0 bg-gradient-to-t from-[var(--nl-bg)] via-[var(--nl-bg)]/80 to-transparent z-20" />
+                        </>
+                    ) : (
+                        <div className="w-full h-full bg-[var(--nl-surface)]/50" />
+                    )}
                 </div>
 
-                <div className="absolute bottom-0 left-0 w-full pb-12 z-30">
-                    <div className="container mx-auto px-6">
-                        <div className="max-w-4xl space-y-6">
-                            <div className="inline-flex items-center gap-2 px-3 py-1 bg-[var(--nl-accent)]/10 backdrop-blur-md text-[var(--nl-accent)] border border-[var(--nl-accent)]/20 rounded-full text-[10px] font-bold uppercase tracking-widest shadow-lg">
-                                <Info className="w-3 h-3" />
+                {/* Content */}
+                <div className="relative z-30 container mx-auto px-6 pt-24 md:pt-32">
+                    <Link
+                        href="/eventos"
+                        className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-black/40 dark:bg-black/60 backdrop-blur-xl border border-white/10 text-white font-bold text-xs uppercase tracking-widest hover:bg-black/60 dark:hover:bg-black/80 transition-all mb-8 shadow-2xl"
+                    >
+                        <ArrowLeft className="w-4 h-4" />
+                        {t('backToCalendar')}
+                    </Link>
+
+                    <div className="flex flex-col md:flex-row gap-8 lg:gap-12 items-center md:items-end mt-2 md:mt-12">
+                        {event.cover_image_url ? (
+                            <div className="w-full md:w-auto md:max-w-[45vw] lg:max-w-[500px] shrink-0 group relative z-10 flex justify-center md:justify-start">
+                                <img
+                                    src={coverUrl}
+                                    alt={title}
+                                    className="w-auto h-auto max-w-full max-h-[60vh] md:max-h-[70vh] rounded-xl md:rounded-2xl shadow-[0_20px_60px_-15px_rgba(0,0,0,0.4)] transition-transform duration-700 group-hover:scale-[1.02] bg-white/5 dark:bg-black/20"
+                                />
+                            </div>
+                        ) : (
+                            <div className="w-[85vw] max-w-[360px] md:w-1/3 xl:w-1/4 shrink-0 aspect-[3/4] rounded-2xl bg-[var(--nl-surface)] flex items-center justify-center border border-zinc-100 dark:border-zinc-800 shadow-xl">
+                                <Calendar className="w-20 h-20 text-[var(--nl-muted)]" />
+                            </div>
+                        )}
+
+                        <div className="flex-1 space-y-6 md:pb-8 text-center md:text-left z-10 w-full relative">
+                            <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-[var(--nl-accent)]/10 backdrop-blur-md text-[var(--nl-accent)] border border-[var(--nl-accent)]/30 rounded-full text-xs font-bold uppercase tracking-widest shadow-lg">
+                                <Info className="w-3.5 h-3.5" />
                                 {ct('event')}
                             </div>
-                            <h1 className="text-3xl md:text-5xl font-heading font-bold text-[var(--nl-primary)] tracking-tight leading-tight">
+                            <h1 className="text-4xl md:text-5xl lg:text-7xl font-heading font-black text-[var(--nl-primary)] tracking-tight leading-[1.1] [text-shadow:0_4px_30px_rgba(255,255,255,0.2)] dark:[text-shadow:0_4px_30px_rgba(0,0,0,0.4)]">
                                 {title}
                             </h1>
                         </div>
