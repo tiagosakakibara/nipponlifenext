@@ -509,10 +509,9 @@ export default function BusinessRegistrationForm() {
 
                         {/* Horários */}
                         <div className="space-y-3">
-                            <h3 className="text-sm font-semibold text-[var(--nl-text)] flex items-center gap-2">
-                                <Clock className="w-4 h-4 text-[var(--nl-accent)]" />
-                                {t('registration.operatingHours')}
-                            </h3>
+                            <label className="block text-sm font-semibold text-[var(--nl-text)] mb-2">
+                                {t('registration.hoursLabel')}
+                            </label>
                             <div className="space-y-2">
                                 {DAYS.map(({ key, label }) => (
                                     <div key={key} className="flex flex-col sm:flex-row sm:items-center py-3 border-b border-[var(--nl-border)] last:border-0 gap-2 sm:gap-3">
@@ -544,7 +543,7 @@ export default function BusinessRegistrationForm() {
                                                 />
                                             </div>
                                         ) : (
-                                            <span className="text-xs text-[var(--nl-text-3)] italic pl-[3.25rem] sm:pl-0">{t('registration.closed')}</span>
+                                            <span className="text-xs font-bold text-[var(--nl-text-3)] uppercase tracking-widest pl-[3.25rem] sm:pl-0">{t('registration.closed')}</span>
                                         )}
                                     </div>
                                 ))}
@@ -553,10 +552,9 @@ export default function BusinessRegistrationForm() {
 
                         {/* Idiomas */}
                         <div className="space-y-3">
-                            <h3 className="text-sm font-semibold text-[var(--nl-text)] flex items-center gap-2">
-                                <Languages className="w-4 h-4 text-[var(--nl-accent)]" />
+                            <label className="block text-sm font-semibold text-[var(--nl-text)] mb-2">
                                 {t('registration.languagesTitle')}
-                            </h3>
+                            </label>
                             <div className="flex flex-wrap gap-2">
                                 {LANGUAGES.map(l => (
                                     <button

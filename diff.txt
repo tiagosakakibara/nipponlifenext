@@ -1,0 +1,13 @@
+diff --git a/src/app/[locale]/cadastro-empresa/BusinessRegistrationForm.tsx b/src/app/[locale]/cadastro-empresa/BusinessRegistrationForm.tsx
+index 78198e0..c7d8e9e 100644
+--- a/src/app/[locale]/cadastro-empresa/BusinessRegistrationForm.tsx
++++ b/src/app/[locale]/cadastro-empresa/BusinessRegistrationForm.tsx
+@@ -511,7 +511,7 @@ export default function BusinessRegistrationForm() {
+                         <div className="space-y-3">
+                             <h3 className="text-sm font-semibold text-[var(--nl-text)] flex items-center gap-2">
+                                 <Clock className="w-4 h-4 text-[var(--nl-accent)]" />
+-                                {t('registration.operatingHours')}
++                                {t('registration.hoursLabel')}
+                             </h3>
+                             <div className="space-y-2">
+                                 {DAYS.map(({ key, label }) => (
