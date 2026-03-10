@@ -101,9 +101,9 @@ export function GalleryAlbumCard({ album, isGrid }: GalleryAlbumCardProps) {
     return (
         <Link
             href={`/galeria/album/${album.id}`}
-            className={`${isGrid ? 'w-full' : 'carousel-item w-[280px] md:w-[320px]'} group cursor-pointer block`}
+            className={`${isGrid ? 'w-full' : 'carousel-item w-[280px] md:w-[301px]'} group cursor-pointer block`}
         >
-            <div className="relative h-[350px] w-full rounded-3xl overflow-hidden hover-lift shadow-lg hover:shadow-accent/20 transition-all duration-500 border border-white/10">
+            <div className="relative h-[350px] w-full rounded-2xl overflow-hidden hover-lift shadow-lg hover:shadow-accent/20 transition-all duration-500 border border-app">
                 {/* Background Images with Slideshow Effect */}
                 <div className="absolute inset-0 overflow-hidden bg-neutral-900">
                     {images.map((img, index) => (
@@ -197,7 +197,7 @@ export function GalleryAlbumCard({ album, isGrid }: GalleryAlbumCardProps) {
                 </div>
 
                 {/* Animated Inner Border on Hover */}
-                <div className="absolute inset-0 border-2 border-transparent group-hover:border-accent/50 rounded-3xl transition-all duration-300 pointer-events-none z-30" />
+                <div className="absolute inset-0 border-2 border-transparent group-hover:border-accent/50 rounded-2xl transition-all duration-300 pointer-events-none z-30" />
             </div>
         </Link>
     );

@@ -28,7 +28,7 @@ export function ReelsRow() {
 
     if (loading) {
         return (
-            <div className="flex lg:grid lg:grid-cols-5 gap-4 overflow-x-auto lg:overflow-visible pb-2 scrollbar-hide mb-6">
+            <div className="flex lg:grid lg:grid-cols-5 gap-4 lg:gap-8 overflow-x-auto lg:overflow-visible pb-2 scrollbar-hide mb-6">
                 {[...Array(5)].map((_, i) => (
                     <div key={i} className="shrink-0 lg:shrink w-[180px] lg:w-full h-[320px] rounded-2xl bg-[var(--nl-surface)]/50 animate-pulse border border-[var(--nl-border)]" />
                 ))}
@@ -53,7 +53,7 @@ export function ReelsRow() {
 
             <div
                 ref={scrollRef}
-                className="flex lg:grid lg:grid-cols-5 gap-4 overflow-x-auto lg:overflow-visible pb-4 scrollbar-hide"
+                className="flex lg:grid lg:grid-cols-5 gap-4 lg:gap-8 overflow-x-auto lg:overflow-visible pb-4 scrollbar-hide"
                 style={{ scrollSnapType: 'x mandatory' }}
             >
                 {reels.map((reel) => (

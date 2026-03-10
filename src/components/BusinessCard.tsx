@@ -20,7 +20,7 @@ export function BusinessCard({ business, inCarousel = false }: BusinessCardProps
             className={`${inCarousel ? 'carousel-item w-[280px] md:w-[301px]' : 'w-full'} group bg-surface border border-app rounded-2xl overflow-hidden hover:border-accent/50 transition-all duration-500 hover:shadow-lg hover:shadow-accent/20 flex flex-col h-[420px]`}
         >
             {/* Cover Image */}
-            <div className="relative h-[200px] overflow-hidden shrink-0 bg-white">
+            <div className="relative h-[200px] overflow-hidden shrink-0 bg-surface">
                 {business.cover_image_url ? (
                     <Image
                         src={business.cover_image_url}

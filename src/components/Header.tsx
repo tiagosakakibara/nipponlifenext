@@ -34,7 +34,7 @@ export function Header({ searchQuery = '', onSearchChange = () => { } }: HeaderP
     if (isAdmin) return null;
 
     return (
-        <header className="relative lg:sticky lg:top-0 z-50 bg-[var(--nl-bg)]/80 backdrop-blur-md border-b border-app transition-colors duration-300 h-[52px] flex items-center">
+        <header className="sticky top-0 z-50 bg-[var(--nl-bg)]/80 backdrop-blur-md border-b border-app transition-colors duration-300 h-[52px] flex items-center">
             <div className="max-w-[1000px] mx-auto px-4 w-full">
                 <div className="flex items-center justify-between gap-4">
                     {/* Logo */}
