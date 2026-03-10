@@ -184,7 +184,7 @@ export default function EventsClient() {
             </section>
 
             {/* Filters Bar */}
-            <section className="relative lg:sticky lg:top-[52px] z-30 bg-surface/80 backdrop-blur-xl border-b border-app shadow-sm">
+            <section className="sticky top-[52px] z-30 bg-surface/80 backdrop-blur-xl border-b border-app shadow-sm">
                 <div className="container mx-auto px-6 py-4">
                     <div className="flex flex-col lg:flex-row gap-4">
                         <div className="flex-1 relative group">
