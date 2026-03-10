@@ -43,6 +43,11 @@ export const eventService = {
                 .lt('starts_at', endDate);
         }
 
+        // Hide events that have already passed
+        const nowIso = new Date().toISOString();
+        const twelveHoursAgoIso = new Date(Date.now() - 12 * 60 * 60 * 1000).toISOString();
+        query = query.or(`ends_at.gte.${nowIso},and(ends_at.is.null,starts_at.gte.${twelveHoursAgoIso})`);
+
         query = query
             .order('starts_at', { ascending: true })
             .range(offset, offset + limit - 1);

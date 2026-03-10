@@ -27,7 +27,9 @@ export async function getMyProfile(userId: string) {
  * Update the profile of the currently logged-in user
  */
 export async function updateMyProfile(userId: string, updates: ProfileUpdate) {
-    // Cleanup old avatar if it's being replaced
+    // Fetch old avatar to potentially clean it up later
+    let oldAvatarUrl: string | null = null;
+
     if (updates.avatar_url) {
         const { data: existing } = await supabase
             .from('profiles')
@@ -36,10 +38,11 @@ export async function updateMyProfile(userId: string, updates: ProfileUpdate) {
             .single();
 
         if (existing?.avatar_url && existing.avatar_url !== updates.avatar_url) {
-            await storageService.deleteFile(existing.avatar_url);
+            oldAvatarUrl = existing.avatar_url;
         }
     }
 
+    // Update the DB first
     const { data, error } = await supabase
         .from('profiles')
         .update({
@@ -49,6 +52,13 @@ export async function updateMyProfile(userId: string, updates: ProfileUpdate) {
         .eq('id', userId)
         .select()
         .single();
+
+    // If update successful and we have an old avatar to clean up, do it now
+    if (!error && oldAvatarUrl) {
+        await storageService.deleteFile(oldAvatarUrl).catch((err) => {
+            console.error('Failed to cleanup old avatar after profile update', err);
+        });
+    }
 
     return { data, error };
 }
