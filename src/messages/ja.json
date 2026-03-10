@@ -254,6 +254,7 @@
     "saturday": "土曜",
     "sunday": "日曜",
     "closed": "休業",
+    "open": "営業中",
     "premium": "プレミアム",
     "foundCount": "{count}件の結果を表示中",
     "noResults": "ビジネスが見つかりませんでした",

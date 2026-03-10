@@ -292,6 +292,7 @@
     "saturday": "Sábado",
     "sunday": "Domingo",
     "closed": "Fechado",
+    "open": "Aberto",
     "premium": "PREMIUM",
     "foundCount": "Mostrando {count} resultados",
     "noResults": "Nenhuma empresa encontrada",

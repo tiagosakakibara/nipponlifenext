@@ -254,6 +254,7 @@
     "saturday": "Saturday",
     "sunday": "Sunday",
     "closed": "Closed",
+    "open": "Open",
     "premium": "PREMIUM",
     "foundCount": "Showing {count} results",
     "noResults": "No business found",
@@ -353,7 +354,17 @@
       "successTitle": "Thank you! 🎉",
       "successMessage": "Your company data has been successfully submitted.\nOur team will review and publish your profile shortly.",
       "successNote": "You will receive a confirmation once your profile is live. In the meantime, you can contact us via email: contact@nippon-life.com",
-      "uploadText": "Click or drag image here\nJPG, PNG, WEBP — max 10MB"
+      "uploadText": "Click or drag image here\nJPG, PNG, WEBP — max 10MB",
+      "days": {
+        "segunda": "Monday",
+        "terca": "Tuesday",
+        "quarta": "Wednesday",
+        "quinta": "Thursday",
+        "sexta": "Friday",
+        "sabado": "Saturday",
+        "domingo": "Sunday",
+        "feriados": "Holidays"
+      }
     }
   },
   "events": {

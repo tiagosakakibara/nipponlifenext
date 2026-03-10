@@ -58,11 +58,55 @@ export function BusinessCard({ business, inCarousel = false }: BusinessCardProps
                     {getTranslatedField(business, 'description_short', locale)}
                 </p>
 
-                <div className="flex items-center gap-2 text-secondary mt-auto">
-                    <MapPin className="w-3.5 h-3.5" />
-                    <span className="text-xs">
-                        {getTranslatedField(business, 'city', locale)}, {getTranslatedField(business, 'prefecture', locale)}
-                    </span>
+                <div className="flex items-center gap-4 mt-auto">
+                    <div className="flex items-center gap-2 text-secondary">
+                        <MapPin className="w-3.5 h-3.5" />
+                        <span className="text-xs">
+                            {getTranslatedField(business, 'city', locale)}, {getTranslatedField(business, 'prefecture', locale)}
+                        </span>
+                    </div>
+
+                    {/* Opening Status */}
+                    {(() => {
+                        const hours = business.opening_hours;
+                        if (!hours) return null;
+
+                        const now = new Date();
+                        const days = ['domingo', 'segunda', 'terca', 'quarta', 'quinta', 'sexta', 'sabado'];
+                        const dayKey = days[now.getDay()];
+                        const timeRange = hours[dayKey];
+
+                        if (!timeRange) {
+                            return (
+                                <span className="text-[10px] font-black uppercase tracking-widest text-accent flex items-center gap-1.5 ml-auto">
+                                    <span className="w-1.5 h-1.5 rounded-full bg-accent" />
+                                    {t('business.closed', { defaultValue: 'Fechado' })}
+                                </span>
+                            );
+                        }
+
+                        const [start, end] = timeRange.split(' - ');
+                        if (!start || !end) return null;
+
+                        const [startH, startM] = start.split(':').map(Number);
+                        const [endH, endM] = end.split(':').map(Number);
+
+                        const currentH = now.getHours();
+                        const currentM = now.getMinutes();
+
+                        const currentTotal = currentH * 60 + currentM;
+                        const startTotal = startH * 60 + startM;
+                        const endTotal = endH * 60 + endM;
+
+                        const isOpen = currentTotal >= startTotal && currentTotal < endTotal;
+
+                        return (
+                            <span className={`text-[10px] font-black uppercase tracking-widest flex items-center gap-1.5 ml-auto ${isOpen ? 'text-emerald-500' : 'text-accent'}`}>
+                                <span className={`w-1.5 h-1.5 rounded-full ${isOpen ? 'bg-emerald-500 animate-pulse' : 'bg-accent'}`} />
+                                {isOpen ? t('business.open', { defaultValue: 'Aberto' }) : t('business.closed', { defaultValue: 'Fechado' })}
+                            </span>
+                        );
+                    })()}
                 </div>
             </div>
         </Link>

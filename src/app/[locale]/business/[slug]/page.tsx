@@ -62,7 +62,7 @@ export default async function BusinessProfilePage({ params }: Props) {
     const address = getTranslatedField(b, 'address_line1', locale);
     const city = getTranslatedField(b, 'city', locale);
     const prefecture = getTranslatedField(b, 'prefecture', locale);
-    const category = t(`business.categories.${b.category}`, { defaultMessage: b.category });
+    const category = t(`business.categories.${b.category}`, { defaultValue: b.category });
 
     const pageUrl = `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/${locale}/business/${slug}`;
 
@@ -105,7 +105,7 @@ export default async function BusinessProfilePage({ params }: Props) {
 
                 <div className="absolute top-4 left-4 z-10 w-full px-4 max-w-7xl mx-auto">
                     <Link href="/business" className="inline-flex items-center gap-2 px-4 py-2 bg-black/40 backdrop-blur-md rounded-full text-sm text-white hover:bg-black/60 transition-colors border border-white/10">
-                        <ArrowLeft className="w-4 h-4" /> {t('business.back', { defaultMessage: 'Voltar' })}
+                        <ArrowLeft className="w-4 h-4" /> {t('business.back', { defaultValue: 'Voltar' })}
                     </Link>
                 </div>
             </div>
@@ -131,7 +131,7 @@ export default async function BusinessProfilePage({ params }: Props) {
                                 <div className="flex flex-wrap gap-2 mb-2 justify-center md:justify-start">
                                     {b.featured && (
                                         <span className="bg-gradient-to-r from-nippon-red to-sakura text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg shadow-nippon-red/20">
-                                            {t('business.premiumPartner', { defaultMessage: 'Parceiro Premium' })}
+                                            {t('business.premiumPartner', { defaultValue: 'Parceiro Premium' })}
                                         </span>
                                     )}
                                     <span className="bg-surface text-xs font-medium px-3 py-1 rounded-full text-primary border border-app shadow-sm">
@@ -148,7 +148,7 @@ export default async function BusinessProfilePage({ params }: Props) {
                                     </div>
                                     <div className="flex items-center gap-1.5">
                                         <Eye className="w-4 h-4 text-nippon-red" />
-                                        <span>{b.view_count || 0} {t('common.views', { defaultMessage: 'visualizações' })}</span>
+                                        <span>{b.view_count || 0} {t('common.views', { defaultValue: 'visualizações' })}</span>
                                     </div>
                                 </div>
                             </div>
@@ -156,11 +156,11 @@ export default async function BusinessProfilePage({ params }: Props) {
 
                         {/* Mobile Share Actions */}
                         <div className="md:hidden">
-                            <h3 className="text-xs font-bold text-muted mb-3 uppercase tracking-wider text-center">{t('common.share', { defaultMessage: 'Compartilhar' })}</h3>
+                            <h3 className="text-xs font-bold text-muted mb-3 uppercase tracking-wider text-center">{t('common.share', { defaultValue: 'Compartilhar' })}</h3>
                             <ShareActions
                                 url={pageUrl}
                                 title={name}
-                                text={t('business.shareText', { name, defaultMessage: `Confira ${name} no NipponLife` })}
+                                text={t('business.shareText', { name, defaultValue: `Confira ${name} no NipponLife` })}
                                 variant="inline"
                                 className="justify-center"
                             />
@@ -168,7 +168,7 @@ export default async function BusinessProfilePage({ params }: Props) {
 
                         {/* About */}
                         <div className="bg-surface border border-app rounded-3xl p-6 md:p-8 shadow-sm">
-                            <h2 className="text-2xl font-bold mb-6 font-display text-primary">{t('business.about', { defaultMessage: 'Sobre' })}</h2>
+                            <h2 className="text-2xl font-bold mb-6 font-display text-primary">{t('business.about', { defaultValue: 'Sobre' })}</h2>
                             <div className="text-lg text-secondary leading-relaxed whitespace-pre-line prose prose-invert max-w-none">
                                 {description}
                             </div>
@@ -179,7 +179,7 @@ export default async function BusinessProfilePage({ params }: Props) {
                             <div className="bg-surface border border-app rounded-3xl p-6 md:p-8 shadow-sm overflow-hidden">
                                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
                                     <h2 className="text-2xl font-bold font-display flex items-center gap-2 text-primary">
-                                        <span className="text-2xl">📄</span> {t('business.presentation', { defaultMessage: 'Apresentação' })}
+                                        <span className="text-2xl">📄</span> {t('business.presentation', { defaultValue: 'Apresentação' })}
                                     </h2>
                                     <a
                                         href={b.presentation_url}
@@ -187,18 +187,18 @@ export default async function BusinessProfilePage({ params }: Props) {
                                         rel="noopener noreferrer"
                                         className="text-sm font-bold text-white bg-gradient-to-r from-nippon-red to-rose-600 hover:to-rose-500 px-5 py-2.5 rounded-xl flex items-center justify-center gap-2 shadow-lg shadow-nippon-red/20 transition-all hover:-translate-y-0.5"
                                     >
-                                        {t('business.openNewTab', { defaultMessage: 'Abrir' })} <ExternalLink className="w-4 h-4" />
+                                        {t('business.openNewTab', { defaultValue: 'Abrir' })} <ExternalLink className="w-4 h-4" />
                                     </a>
                                 </div>
                                 <div className="w-full aspect-[16/9] bg-[#2a2a40] rounded-2xl overflow-hidden border border-white/10 relative group">
                                     <iframe
                                         src={`${b.presentation_url}#toolbar=0`}
                                         className="w-full h-full"
-                                        title={t('business.presentation', { defaultMessage: 'Apresentação' })}
+                                        title={t('business.presentation', { defaultValue: 'Apresentação' })}
                                     />
                                     {/* Overlay for mobile hint */}
                                     <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center pointer-events-none md:hidden">
-                                        <p className="text-white font-medium">{t('business.fullscreenHint', { defaultMessage: 'Toque para abrir' })}</p>
+                                        <p className="text-white font-medium">{t('business.fullscreenHint', { defaultValue: 'Toque para abrir' })}</p>
                                     </div>
                                 </div>
                             </div>
@@ -212,18 +212,18 @@ export default async function BusinessProfilePage({ params }: Props) {
                     <div className="space-y-6 pt-6 lg:pt-32">
                         {/* Desktop Share */}
                         <div className="hidden md:block bg-surface border border-app rounded-3xl p-6 shadow-sm">
-                            <h3 className="font-bold text-lg mb-4 text-primary">{t('common.share', { defaultMessage: 'Compartilhar' })}</h3>
+                            <h3 className="font-bold text-lg mb-4 text-primary">{t('common.share', { defaultValue: 'Compartilhar' })}</h3>
                             <ShareActions
                                 url={pageUrl}
                                 title={name}
-                                text={t('business.shareText', { name, defaultMessage: `Confira ${name} no NipponLife` })}
+                                text={t('business.shareText', { name, defaultValue: `Confira ${name} no NipponLife` })}
                                 variant="inline"
                             />
                         </div>
 
                         {/* Contact Info */}
                         <div className="bg-surface border border-app rounded-3xl p-6 shadow-sm">
-                            <h3 className="font-bold text-lg mb-6 text-primary">{t('business.contactReservations', { defaultMessage: 'Contato e Reservas' })}</h3>
+                            <h3 className="font-bold text-lg mb-6 text-primary">{t('business.contactReservations', { defaultValue: 'Contato e Reservas' })}</h3>
 
                             {b.whatsapp && (
                                 <a
@@ -289,7 +289,7 @@ export default async function BusinessProfilePage({ params }: Props) {
                                         className="bg-white text-primary px-8 py-3 rounded-full font-bold text-sm shadow-xl hover:scale-105 hover:shadow-2xl hover:bg-zinc-50 transition-all duration-300 flex items-center gap-3 group/btn"
                                     >
                                         <MapPin className="w-5 h-5 text-[#D70F24] group-hover/btn:animate-bounce" />
-                                        <span>{t('business.openGoogleMaps', { defaultMessage: 'Abrir no Maps' })}</span>
+                                        <span>{t('business.openGoogleMaps', { defaultValue: 'Abrir no Maps' })}</span>
                                     </a>
                                 </div>
                             </div>
@@ -300,24 +300,35 @@ export default async function BusinessProfilePage({ params }: Props) {
                         </div>
 
                         {/* Hours */}
-                        <div className="bg-surface border border-app rounded-3xl p-6 shadow-sm">
-                            <h3 className="font-bold text-sm mb-5 flex items-center gap-2 text-primary uppercase tracking-widest">
-                                <Clock className="w-4 h-4 text-sakura" />
-                                {t('business.businessHours', { defaultMessage: 'Horário de Funcionamento' })}
-                            </h3>
-                            <div className="space-y-3 text-sm">
-                                <div className="flex justify-between text-secondary border-b border-app/50 pb-2 border-dashed last:border-0 last:pb-0">
-                                    <span className="font-medium">{t('business.weekdays', { defaultMessage: 'Segunda a Sexta' })}</span>
-                                    <span>09:00 - 18:00</span>
-                                </div>
-                                <div className="flex justify-between text-secondary border-b border-app/50 pb-2 border-dashed last:border-0 last:pb-0">
-                                    <span className="font-medium">{t('business.saturday', { defaultMessage: 'Sábado' })}</span>
-                                    <span>10:00 - 15:00</span>
-                                </div>
-                                <div className="flex justify-between text-muted border-b border-app/50 pb-2 border-dashed last:border-0 last:pb-0">
-                                    <span className="font-medium">{t('business.sunday', { defaultMessage: 'Domingo' })}</span>
-                                    <span className="text-red-400 bg-red-400/10 px-2 rounded text-xs py-0.5 font-bold">{t('business.closed', { defaultMessage: 'Fechado' })}</span>
-                                </div>
+                        <div className="bg-surface border border-app rounded-3xl p-8 shadow-sm">
+                            <div className="flex items-center gap-3 mb-6">
+                                <Clock className="w-5 h-5 text-accent" />
+                                <h3 className="font-heading font-black text-xl text-primary tracking-tight uppercase">
+                                    {t('business.businessHours', { defaultValue: 'Horário de Funcionamento' })}
+                                </h3>
+                            </div>
+
+                            <div className="space-y-4">
+                                {(() => {
+                                    const days = ['segunda', 'terca', 'quarta', 'quinta', 'sexta', 'sabado', 'domingo', 'feriados'];
+                                    const hours = b.opening_hours || {};
+                                    
+                                    return days.map((day) => {
+                                        const time = hours[day];
+                                        const label = t(`business.registration.days.${day}`, { defaultValue: day });
+                                        
+                                        return (
+                                            <div key={day} className="flex justify-between items-center pb-4 border-b border-app/50 last:border-0 last:pb-0">
+                                                <span className="text-secondary font-medium">{label}</span>
+                                                {time ? (
+                                                    <span className="text-primary font-bold">{time}</span>
+                                                ) : (
+                                                    <span className="text-accent font-black uppercase text-xs tracking-widest">{t('business.closed', { defaultValue: 'Fechado' })}</span>
+                                                )}
+                                            </div>
+                                        );
+                                    });
+                                })()}
                             </div>
                         </div>
 
