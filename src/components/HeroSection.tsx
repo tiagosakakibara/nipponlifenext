@@ -15,7 +15,9 @@ interface HeroSectionProps {
         eventsCount: number;
         businessesCount: number;
         businessesCountError?: boolean;
-        closestEventImage?: string | null;
+        eventImages?: string[];
+        jobImages?: string[];
+        businessImages?: string[];
     };
 }
 
@@ -32,7 +34,7 @@ export function HeroSection({ featuredNews, stats }: HeroSectionProps) {
     const carouselItems = featuredNews ? featuredNews.slice(0, 3) : [];
     const activeItem = carouselItems[currentIndex];
 
-    // Auto-rotate effect
+    // Auto-rotate effect for main carousel
     useEffect(() => {
         if (isHovered || carouselItems.length <= 1) return;
 
@@ -42,6 +44,31 @@ export function HeroSection({ featuredNews, stats }: HeroSectionProps) {
 
         return () => clearInterval(interval);
     }, [isHovered, carouselItems.length]);
+
+    // Background Rotation Logic for Mini Cards (Jobs and Business)
+    const [bgIndex, setBgIndex] = useState(0);
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setBgIndex((prev) => prev + 1);
+        }, 5000);
+
+        return () => clearInterval(interval);
+    }, []);
+
+    // Get current image for each card
+    // Event image - Stay on the first (closest) one
+    const currentEventImage = stats.eventImages && stats.eventImages.length > 0 
+        ? stats.eventImages[0] 
+        : null;
+    
+    const currentJobImage = stats.jobImages && stats.jobImages.length > 0 
+        ? stats.jobImages[bgIndex % stats.jobImages.length] 
+        : null;
+        
+    const currentBusinessImage = stats.businessImages && stats.businessImages.length > 0 
+        ? stats.businessImages[bgIndex % stats.businessImages.length] 
+        : null;
 
     if (!activeItem) return null;
 
@@ -170,13 +197,13 @@ export function HeroSection({ featuredNews, stats }: HeroSectionProps) {
                         className="lg:col-span-4 lg:row-span-1 bg-surface border border-app rounded-[2.5rem] p-7 flex flex-col justify-between group hover:border-[var(--nl-accent)]/30 transition-all duration-500 cursor-pointer overflow-hidden relative shadow-sm hover:shadow-xl hover:shadow-[var(--nl-accent)]/5"
                         onClick={() => router.push('/eventos')}
                     >
-                        {stats.closestEventImage && (
+                        {currentEventImage && (
                             <div className="absolute inset-0 z-0 overflow-hidden rounded-[2.5rem]">
                                 <Image
-                                    src={storageService.getFileUrl(stats.closestEventImage)}
+                                    src={storageService.getFileUrl(currentEventImage)}
                                     alt="Próximo Evento"
                                     fill
-                                    className="object-cover opacity-60 group-hover:opacity-80 group-hover:scale-110 transition-all duration-700"
+                                    className="object-cover opacity-60 group-hover:opacity-80 group-hover:scale-110 transition-all duration-700 animate-fadeIn"
                                 />
                                 <div className="absolute inset-0 bg-gradient-to-r from-surface/95 via-surface/60 to-transparent" />
                             </div>
@@ -221,12 +248,23 @@ export function HeroSection({ featuredNews, stats }: HeroSectionProps) {
                             className="bg-surface border border-app rounded-[2.5rem] p-7 flex flex-col justify-between hover:border-[var(--nl-accent)]/30 transition-all duration-500 cursor-pointer group relative overflow-hidden shadow-sm hover:shadow-xl hover:shadow-[var(--nl-accent)]/5"
                             onClick={() => router.push('/jobs')}
                         >
+                            {currentJobImage && (
+                                <div key={`job-${bgIndex % (stats.jobImages?.length || 1)}`} className="absolute inset-x-0 top-0 h-[60%] z-0 overflow-hidden rounded-t-[2.5rem]">
+                                    <Image
+                                        src={storageService.getFileUrl(currentJobImage)}
+                                        alt="Novas Vagas"
+                                        fill
+                                        className="object-cover opacity-40 group-hover:opacity-60 group-hover:scale-110 transition-all duration-700 animate-fadeIn"
+                                    />
+                                    <div className="absolute inset-0 bg-gradient-to-b from-transparent via-surface/40 to-surface" />
+                                </div>
+                            )}
                             <div className="absolute -bottom-10 -right-10 w-24 h-24 bg-blue-500/5 rounded-full blur-2xl group-hover:bg-blue-500/10 transition-all" />
 
-                            <div className="w-10 h-10 rounded-2xl bg-blue-500/10 flex items-center justify-center group-hover:scale-110 group-hover:rotate-6 transition-all duration-500">
+                            <div className="w-10 h-10 rounded-2xl bg-blue-500/10 backdrop-blur-md flex items-center justify-center group-hover:scale-110 group-hover:rotate-6 transition-all duration-500 z-10 border border-white/20">
                                 <TrendingUp className="w-5 h-5 text-blue-500" />
                             </div>
-                            <div>
+                            <div className="z-10">
                                 <div className="flex items-baseline gap-1">
                                     <p className="text-4xl font-black text-primary leading-none tracking-tighter mb-1">{stats.jobsCount}</p>
                                     <div className="w-2 h-2 rounded-full bg-emerald-500 mb-1 animate-pulse" />
@@ -240,12 +278,23 @@ export function HeroSection({ featuredNews, stats }: HeroSectionProps) {
                             className="bg-surface border border-app rounded-[2.5rem] p-7 flex flex-col justify-between hover:border-[var(--nl-accent)]/30 transition-all duration-500 cursor-pointer group relative overflow-hidden shadow-sm hover:shadow-xl hover:shadow-[var(--nl-accent)]/5"
                             onClick={() => router.push('/business')}
                         >
+                            {currentBusinessImage && (
+                                <div key={`biz-${bgIndex % (stats.businessImages?.length || 1)}`} className="absolute inset-x-0 top-0 h-[60%] z-0 overflow-hidden rounded-t-[2.5rem]">
+                                    <Image
+                                        src={storageService.getFileUrl(currentBusinessImage)}
+                                        alt="Negócios"
+                                        fill
+                                        className="object-cover opacity-40 group-hover:opacity-60 group-hover:scale-110 transition-all duration-700 animate-fadeIn"
+                                    />
+                                    <div className="absolute inset-0 bg-gradient-to-b from-transparent via-surface/40 to-surface" />
+                                </div>
+                            )}
                             <div className="absolute -bottom-10 -right-10 w-24 h-24 bg-purple-500/5 rounded-full blur-2xl group-hover:bg-purple-500/10 transition-all" />
 
-                            <div className="w-10 h-10 rounded-2xl bg-purple-500/10 flex items-center justify-center group-hover:scale-110 group-hover:-rotate-6 transition-all duration-500">
+                            <div className="w-10 h-10 rounded-2xl bg-purple-500/10 backdrop-blur-md flex items-center justify-center group-hover:scale-110 group-hover:-rotate-6 transition-all duration-500 z-10 border border-white/20">
                                 <Globe className="w-5 h-5 text-purple-500" />
                             </div>
-                            <div>
+                            <div className="z-10">
                                 <p className="text-4xl font-black text-primary leading-none tracking-tighter mb-1">
                                     {stats.businessesCountError ? '-' : stats.businessesCount}
                                 </p>

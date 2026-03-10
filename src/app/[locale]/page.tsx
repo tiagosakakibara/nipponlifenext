@@ -70,18 +70,20 @@ export default async function HomePage() {
         .limit(8);
 
 
-    // 5. Fetch Counts (Parallel)
+    // 5. Fetch Counts and Images (Parallel)
     const [jobsRes, eventsRes, businessesRes] = await Promise.all([
-        supabase.from('jobs').select('*', { count: 'exact', head: true }).eq('status', 'published'),
-        supabase.from('calendar_events').select('cover_image_url', { count: 'exact' }).eq('status', 'published').gte('starts_at', now).order('starts_at', { ascending: true }).limit(1),
-        supabase.from('businesses').select('*', { count: 'exact', head: true }).eq('status', 'published')
+        supabase.from('jobs').select('cover_image_url', { count: 'exact' }).eq('status', 'published').order('created_at', { ascending: false }).limit(5),
+        supabase.from('calendar_events').select('cover_image_url', { count: 'exact' }).eq('status', 'published').gte('starts_at', now).order('starts_at', { ascending: true }).limit(5),
+        supabase.from('businesses').select('cover_image_url, logo_url', { count: 'exact' }).eq('status', 'published').order('created_at', { ascending: false }).limit(5)
     ]);
 
     const stats = {
         jobsCount: jobsRes.count || 0,
         eventsCount: eventsRes.count || 0,
         businessesCount: businessesRes.count || 0,
-        closestEventImage: eventsRes.data?.[0]?.cover_image_url || null
+        eventImages: (eventsRes.data || []).map(e => e.cover_image_url).filter(Boolean),
+        jobImages: (jobsRes.data || []).map(j => j.cover_image_url).filter(Boolean),
+        businessImages: (businessesRes.data || []).map(b => b.cover_image_url || b.logo_url).filter(Boolean)
     };
 
     // 4. Fetch Header Jobs (for small cards - limit 9)
