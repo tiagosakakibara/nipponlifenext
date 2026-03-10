@@ -185,7 +185,7 @@ export default function EventsClient() {
 
             {/* Filters Bar */}
             <section className="sticky top-[52px] z-30 bg-surface/80 backdrop-blur-xl border-b border-app shadow-sm">
-                <div className="container mx-auto px-6 py-4">
+                <div className="max-w-container mx-auto px-6 py-4">
                     <div className="flex flex-col lg:flex-row gap-4">
                         <div className="flex-1 relative group">
                             <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted group-focus-within:text-[#D70F24] transition-colors" />
@@ -226,7 +226,7 @@ export default function EventsClient() {
             </section>
 
             {/* Main Content */}
-            <main className="container mx-auto px-6 py-6 md:py-12">
+            <main className="max-w-container mx-auto px-6 py-6 md:py-12">
                 {loading ? (
                     <div className="flex flex-col items-center justify-center py-20 gap-4">
                         <Loader2 className="w-10 h-10 text-[#D70F24] animate-spin" />

@@ -41,7 +41,7 @@ export function FeaturedHighlights({ premiumBusiness, headerJobs }: FeaturedHigh
 
             {/* Small Cards - Jobs with Rotation */}
             {headerJobs.length > 0 && (
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-[25px]">
                     {/* We concat the array to itself to handle smooth infinite-like feeling if needed, 
                         or just slice it. The original code sliced from 'jobsIndex'.
                         Wait, slicing from jobsIndex to jobsIndex+3 on a rotated array is tricky if we don't wrap around.

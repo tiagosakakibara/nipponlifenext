@@ -199,7 +199,7 @@ export default async function HomePage() {
                     sectionId="negocios"
                     icon={<Building2 className="w-5 h-5" />}
                     titleLink="/business"
-                    containerClass="!px-6 !scroll-pl-6"
+                    containerClass="!px-6 !scroll-pl-6 lg:!gap-[25px]"
                 >
                     {businesses && businesses.length > 0 ? (
                         businesses.map((business: Business) => (
@@ -216,7 +216,7 @@ export default async function HomePage() {
                     sectionId="comunidades"
                     icon={<Users className="w-5 h-5" />}
                     titleLink="/comunidade"
-                    containerClass="!px-6 !scroll-pl-6"
+                    containerClass="!px-6 !scroll-pl-6 lg:!gap-[25px]"
                 >
                     {communities.map((item) => (
                         <CommunityCard key={item.id} item={item} />
@@ -240,7 +240,7 @@ export default async function HomePage() {
                         </Link>
                     </div>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-[25px]">
                         {galleryAlbums.length > 0 ? (
                             galleryAlbums.map((album, index) => (
                                 <div key={album.id} className={index === 2 ? 'hidden lg:block' : ''}>

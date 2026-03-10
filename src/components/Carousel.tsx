@@ -27,7 +27,7 @@ export function Carousel({ title, sectionId, icon, viewAllPath, titleLink, conta
 
     return (
         <section id={sectionId} className="py-2 scroll-mt-24">
-            <div className="max-w-container mx-auto">
+            <div className="max-w-container mx-auto overflow-hidden">
                 <div className="flex items-center justify-between mb-6 px-6">
                     <div
                         className={`flex items-center gap-3 ${titleLink ? 'cursor-pointer group' : ''}`}
