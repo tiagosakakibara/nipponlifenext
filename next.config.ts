@@ -58,6 +58,11 @@ const nextConfig: NextConfig = {
         protocol: 'https' as const,
         hostname: 'nippon-life.com',
         pathname: '/**',
+      },
+      {
+        protocol: 'https' as const,
+        hostname: 'i0.wp.com',
+        pathname: '/**',
       }
     ],
   },
