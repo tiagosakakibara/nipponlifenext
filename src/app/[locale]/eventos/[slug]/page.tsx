@@ -6,6 +6,7 @@ import { getTranslations } from 'next-intl/server';
 import { ArrowLeft, Calendar, MapPin, Info } from 'lucide-react';
 import { Link } from '@/i18n/routing';
 import { EventSidebar } from './components/EventSidebar';
+import { EventContactAction } from './components/EventContactAction';
 import { generateSEOMetadata, generateEventSchema, generateBreadcrumbSchema } from '@/lib/metadata';
 import { StructuredData } from '@/components/StructuredData';
 
@@ -146,7 +147,7 @@ export default async function EventDetailPage({ params }: EventPageProps) {
                         )}
 
                         <div className="flex-1 space-y-6 md:pb-8 text-center md:text-left z-10 w-full relative">
-                            <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-[var(--nl-accent)]/10 backdrop-blur-md text-[var(--nl-accent)] border border-[var(--nl-accent)]/30 rounded-full text-xs font-bold uppercase tracking-widest shadow-lg">
+                            <div className="hidden md:inline-flex items-center gap-2 px-4 py-1.5 bg-[var(--nl-accent)]/10 backdrop-blur-md text-[var(--nl-accent)] border border-[var(--nl-accent)]/30 rounded-full text-xs font-bold uppercase tracking-widest shadow-lg">
                                 <Info className="w-3.5 h-3.5" />
                                 {ct('event')}
                             </div>
@@ -171,6 +172,11 @@ export default async function EventDetailPage({ params }: EventPageProps) {
                             <div className="text-lg text-[var(--nl-secondary)] font-medium leading-relaxed whitespace-pre-line prose prose-zinc max-w-none">
                                 {description || t('noDescription')}
                             </div>
+                            {event.contact_url && (
+                                <div className="pt-4">
+                                    <EventContactAction contactUrl={event.contact_url} />
+                                </div>
+                            )}
                         </section>
 
                         {event.google_maps_url && event.location && (
