@@ -201,6 +201,7 @@ export default async function HomePage() {
                     sectionId="negocios"
                     icon={<Building2 className="w-5 h-5" />}
                     titleLink="/business"
+                    viewAllPath="/business"
                     containerClass="!px-6 !scroll-pl-6 lg:!gap-[25px]"
                 >
                     {businesses && businesses.length > 0 ? (
@@ -218,6 +219,7 @@ export default async function HomePage() {
                     sectionId="comunidades"
                     icon={<Users className="w-5 h-5" />}
                     titleLink="/comunidade"
+                    viewAllPath="/comunidade"
                     containerClass="!px-6 !scroll-pl-6 lg:!gap-[25px]"
                 >
                     {communities.map((item) => (

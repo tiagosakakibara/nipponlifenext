@@ -92,9 +92,12 @@ export function RightWidgets({ events }: RightWidgetsProps) {
                     </div>
                 )}
 
-                <button className="w-full py-2.5 rounded-xl border border-app text-primary text-xs font-bold hover:bg-app transition-colors">
-                    {t('community.widgets.viewAll', { defaultMessage: 'Ver Todos' })}
-                </button>
+                <Link 
+                    href="/eventos" 
+                    className="w-full py-2.5 rounded-xl border border-app text-primary text-xs font-bold hover:bg-app transition-colors inline-block text-center"
+                >
+                    {t('community.widgets.viewAll', { defaultMessage: 'Ver todos' })}
+                </Link>
             </div>
 
             {/* Contribuidores */}
