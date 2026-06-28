@@ -87,35 +87,64 @@
 }
 
 :root {
-  --nl-bg: #F2F4F8;
+  /* World Cup 2026 Theme: Green, Gold and Blue */
+  --nl-bg: #F0F6F1;
   --nl-surface: #FFFFFF;
-  --nl-border: #EAEAEA;
-  --nl-text: #002B52;
-  --nl-text-2: rgba(0, 43, 82, 0.85);
-  --nl-text-3: rgba(0, 43, 82, 0.75);
-  --nl-link: #5593C3;
-  --nl-accent: #D70F24;
+  --nl-border: #D2E4D4;
+  --nl-text: #06371B; /* Deep Forest Green for high readability and premium look */
+  --nl-text-2: rgba(6, 55, 27, 0.85);
+  --nl-text-3: rgba(6, 55, 27, 0.70);
+  --nl-link: #0047AB; /* Classic Soccer Blue */
+  --nl-accent: #009C3B; /* Brazil / Pitch Green */
 
   /* Semantic Card Colors */
   --bg-card: #FFFFFF;
-  --border-card: #E5E7EB;
+  --border-card: #D2E4D4;
+  
+  --nl-gold: #FDB813;
 }
 
 .dark {
-  --nl-bg: #0B1020;
-  --nl-surface: rgba(255, 255, 255, 0.08);
-  --nl-border: rgba(255, 255, 255, 0.12);
-  --nl-text: rgba(255, 255, 255, 0.95);
-  --nl-text-2: rgba(255, 255, 255, 0.85);
-  --nl-text-3: rgba(255, 255, 255, 0.70);
-  --nl-link: #5593C3;
-  --nl-accent: #D70F24;
+  /* World Cup Dark Mode */
+  --nl-bg: #07170D; /* Very dark forest green */
+  --nl-surface: rgba(0, 156, 59, 0.08);
+  --nl-border: rgba(0, 156, 59, 0.18);
+  --nl-text: rgba(240, 250, 240, 0.95);
+  --nl-text-2: rgba(240, 250, 240, 0.85);
+  --nl-text-3: rgba(240, 250, 240, 0.70);
+  --nl-link: #4A90E2;
+  --nl-accent: #FDB813; /* Gold accent in dark mode for contrast */
 
   /* Semantic Card Colors - Dark Mode */
-  --bg-card: rgba(255, 255, 255, 0.08);
-  /* #FFFFFF14 - Matches bg-surface */
-  --border-card: rgba(255, 255, 255, 0.12);
-  /* Matches border-app */
+  --bg-card: rgba(0, 156, 59, 0.05);
+  --border-card: rgba(0, 156, 59, 0.18);
+  
+  --nl-gold: #FDB813;
+}
+
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 15s linear infinite;
+}
+
+.soccer-bg-pattern {
+  background-image: radial-gradient(rgba(0, 156, 59, 0.03) 1px, transparent 0),
+                    radial-gradient(rgba(0, 156, 59, 0.03) 1px, transparent 0);
+  background-size: 24px 24px;
+  background-position: 0 0, 12px 12px;
+}
+
+.dark .soccer-bg-pattern {
+  background-image: radial-gradient(rgba(253, 184, 19, 0.02) 1px, transparent 0),
+                    radial-gradient(rgba(253, 184, 19, 0.02) 1px, transparent 0);
 }
 
 @layer base {

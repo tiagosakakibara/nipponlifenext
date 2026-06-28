@@ -34,20 +34,30 @@ export function Header({ searchQuery = '', onSearchChange = () => { } }: HeaderP
     if (isAdmin) return null;
 
     return (
-        <header className="sticky top-0 z-50 bg-[var(--nl-bg)]/80 backdrop-blur-md border-b border-app transition-colors duration-300 h-[52px] flex items-center">
-            <div className="max-w-[1000px] mx-auto px-4 w-full">
-                <div className="flex items-center justify-between gap-4">
-                    {/* Logo */}
-                    <Link
-                        href="/"
-                        className="flex items-center gap-2 lg:gap-3 flex-shrink-0 cursor-pointer"
-                    >
-                        <img
-                            src="/images/logo.svg"
-                            alt="NipponLife"
-                            className="h-6 lg:h-8 w-auto"
-                        />
-                    </Link>
+        <>
+            {/* World Cup 2026 Banner */}
+            <div className="w-full bg-gradient-to-r from-[#009c3b] via-[#ffdf00] to-[#002776] text-white text-center py-1 text-[10px] font-black uppercase tracking-[0.2em] flex items-center justify-center gap-2 select-none shadow-sm border-b border-yellow-400/20">
+                <span className="animate-bounce">⚽</span>
+                <span>Copa do Mundo 2026 • NipponLife na Torcida!</span>
+                <span className="animate-pulse">🏆</span>
+            </div>
+            <header className="sticky top-0 z-50 bg-[var(--nl-bg)]/85 backdrop-blur-md border-b border-app transition-colors duration-300 h-[52px] flex items-center">
+                <div className="max-w-[1000px] mx-auto px-4 w-full">
+                    <div className="flex items-center justify-between gap-4">
+                        {/* Logo */}
+                        <Link
+                            href="/"
+                            className="flex items-center gap-2 lg:gap-3 flex-shrink-0 cursor-pointer"
+                        >
+                            <img
+                                src="/images/logo.svg"
+                                alt="NipponLife"
+                                className="h-6 lg:h-8 w-auto"
+                            />
+                            <span className="hidden sm:inline-flex items-center justify-center w-5 h-5 rounded-full bg-yellow-400 text-zinc-950 font-bold text-[10px] shadow-sm animate-pulse">
+                                ⚽
+                            </span>
+                        </Link>
 
                     {/* Search Bar - Desktop */}
                     <div className="hidden lg:flex flex-1 max-w-2xl">
@@ -125,5 +135,6 @@ export function Header({ searchQuery = '', onSearchChange = () => { } }: HeaderP
                 )}
             </div>
         </header>
+    </>
     );
 }
