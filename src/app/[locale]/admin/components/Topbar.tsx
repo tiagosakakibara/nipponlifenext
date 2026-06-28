@@ -2,7 +2,7 @@
 
 import { User, LogOut, Menu, Home, Sun, Moon } from 'lucide-react';
 import { supabase } from '@/lib/supabaseClient';
-import { useRouter } from '@/i18n/routing';
+import { Link, useRouter } from '@/i18n/routing';
 import { useAuth } from '@/hooks/useAuth';
 import { useTheme } from 'next-themes';
 import { useLocale } from 'next-intl';
@@ -57,13 +57,13 @@ export function Topbar({ onToggleSidebar }: TopbarProps) {
             <div className="flex items-center gap-1.5 md:gap-4">
                 <div className="flex items-center gap-1.5 md:gap-2 pr-1.5 md:pr-4 border-r border-app/60">
                     {/* Home Button */}
-                    <button
-                        onClick={() => router.push('/')}
+                    <Link
+                        href="/"
                         title="Voltar para Home"
                         className="flex items-center justify-center p-2 rounded-lg bg-app/50 border border-app/60 text-secondary hover:text-accent hover:border-accent/30 transition-all group"
                     >
                         <Home className="w-4 h-4 transition-transform group-hover:scale-110" />
-                    </button>
+                    </Link>
 
                     {/* Theme Toggle */}
 
